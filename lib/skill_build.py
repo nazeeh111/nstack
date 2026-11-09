@@ -30,6 +30,8 @@ def patch_p001(out,name):
 
 def materialize(source,out,s,c,m,support=None,_inside=False):
  path=P(s['source_path']);name=path.parent.name
+ from patch_native34 import handles,materialize as native34
+ if handles(s):return native34(source,out,s,c)
  if s['candidate_id']=='P333':
   from patch_office import materialize as office_pack
   return office_pack(source,out,s,c)

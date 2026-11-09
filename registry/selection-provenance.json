@@ -1,0 +1,17 @@
+{
+  "version": "3.4-final-native",
+  "input": "FINAL_LIST.md",
+  "sha256": "88d6f425f42740ffe780df0cc005402a35eb176e29ee2a89d3c44f573bbb89aa",
+  "package_sha256_entries_verified": 31,
+  "components": 262,
+  "exact_paths": 243,
+  "discovery_decisions": 539,
+  "default_native_entries": 170,
+  "separate_optional_additions": ["Agent Reach", "repository-docs", "Academic Research Skills (5, CC-BY-NC)", "ECC onboarding and offline evaluation (2)"],
+  "karpathy_review": {
+    "repository": "multica-ai/andrej-karpathy-skills",
+    "revision": "2c606141936f1eeef17fa3043a72095b4765b9c2",
+    "decision": "Reference only; generic principles already covered by existing user guidance"
+  },
+  "scope": "Portable selection and provenance only. Private setup, vault, accounts, research receipts and runtime caches are not published. Readiness is distinct from actual target acceptance."
+}

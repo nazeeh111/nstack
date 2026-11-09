@@ -31,9 +31,9 @@ class NativeSetup(unittest.TestCase):
     bundle=release/'bundles/obsidian-markdown';bundle.chmod(0o755);(bundle/'NATIVE-MANIFEST.json').write_text('unexpected nested file')
     with self.assertRaisesRegex(ValueError,'release changed'):native.prepare(state,[('obsidian-markdown',leaf)],[])
  def test_exact_selection_excludes_conditional_and_reference_paths(self):
-  rows=native.selection();self.assertEqual(len(rows),126);self.assertEqual(len({n for n,_ in rows}),126)
+  rows=native.selection();self.assertEqual(len(rows),170);self.assertEqual(len({n for n,_ in rows}),170)
   for name,s in rows:
-   self.assertIn(s['delivery'],['intact upstream leaf','narrow-patched leaf']);self.assertFalse(name.startswith(s['candidate_id'].lower()+'-'))
+   self.assertIn(s['delivery'],['intact upstream leaf','narrow-patched leaf','native runtime/method adapter']);self.assertFalse(name.startswith(s['candidate_id'].lower()+'-'))
    self.assertEqual(native.nstack.component(s['candidate_id'])['deployment'],'on demand')
  def test_repeat_and_terminal_rollback_preserve_original_dirty_bytes_and_new_data(self):
   with tempfile.TemporaryDirectory() as temp:

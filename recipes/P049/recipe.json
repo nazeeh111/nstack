@@ -1,0 +1,23 @@
+{
+  "id": "P049",
+  "operation": "cli",
+  "adapter": "npm-bin",
+  "package": "repomix",
+  "version": "1.19.0",
+  "bin": "repomix",
+  "integrity": "sha512-MzzbJjbZ4OmcBDzMFNM41FxtMxQANsEcjnOpJB9X4fYJZVxuU70t3v8rRXwOqSTj9629ZOQqi9k7zEsBCPElSA==",
+  "artifact_url": "https://registry.npmjs.org/repomix/-/repomix-1.19.0.tgz",
+  "runtime_source_revision": "not declared by npm; separate package integrity",
+  "reviewed_source_revision": "758c3d716907abff2b902aff0447c347e455a2da",
+  "license": "MIT",
+  "prerequisites": [
+    "Node>=22",
+    "npm"
+  ],
+  "acquire": "nstack commission P049 cli",
+  "invoke": "nstack run P049 cli -- EXPLICIT_INPUT --output EXPLICIT_OUTPUT",
+  "verify": "nstack check P049 cli",
+  "deactivate": "Each invocation exits. No remote scan, shell hook, server, clipboard operation or automatic package update is configured.",
+  "remove": "nstack remove-runtime P049 cli",
+  "lock_resolution": "Exact1.19.0 npm integrity plus frozen package-lock. Source skill pin is separate provenance; no release equivalence is assumed."
+}

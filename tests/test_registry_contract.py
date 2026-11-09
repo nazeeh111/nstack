@@ -11,8 +11,8 @@ class RegistryContract(unittest.TestCase):
      algorithm,value=digest.split('=',1);self.assertEqual(algorithm,'sha256');self.assertEqual(base64.urlsafe_b64encode(hashlib.sha256(file.read_bytes()).digest()).rstrip(b'=').decode(),value);self.assertEqual(file.stat().st_size,int(size))
  def test_complete_decisions_and_routes_preserve_permissions(self):
   manifest=json.loads((ROOT/'registry/manifest.json').read_text());routes=json.loads((ROOT/'registry/routes.json').read_text());discovery=json.loads((ROOT/'registry/discovery.json').read_text());components={x['id']:x for x in manifest['components']}
-  self.assertEqual(len(components),242);self.assertEqual(len(manifest['skills']),202);self.assertEqual(len(discovery),535);self.assertEqual(set(routes),set(components));self.assertEqual(collections.Counter(x['deployment'] for x in components.values()),{'on demand':198,'trial':28,'substitute':7,'consult':9})
-  tuples=[tuple(x[k] for k in ('candidate_id','source_repository','revision','source_path')) for x in manifest['skills']];self.assertEqual(len(set(tuples)),202)
+  self.assertEqual(len(components),262);self.assertEqual(len(manifest['skills']),243);self.assertEqual(len(discovery),539);self.assertEqual(set(routes),set(components));self.assertEqual(collections.Counter(x['deployment'] for x in components.values()),{'on demand':219,'trial':29,'substitute':9,'consult':5})
+  tuples=[tuple(x[k] for k in ('candidate_id','source_repository','revision','source_path')) for x in manifest['skills']];self.assertEqual(len(set(tuples)),243)
   for id,c in components.items():
    route=routes[id];self.assertEqual(route['deployment'],c['deployment']);self.assertEqual(route['source']['revision'],c['revision']);self.assertEqual(route['source']['repository'],c['repository'])
    if c['deployment']!='on demand':

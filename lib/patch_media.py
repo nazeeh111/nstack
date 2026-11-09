@@ -38,6 +38,13 @@ def patch(id,name,spec,out):
  if id=='P215':
   for file in out.rglob('*.md'):
    text=file.read_text();text=text.replace('npx hyperframes', '"$NSTACK_HYPERFRAMES"')
+   text=text.replace("Local or the person's own key (only when they ask)", 'Available native or free local tools')
+   text=text.replace('Use local tools only when the person asks, not as a fallback.','Use available native or free local tools when they fit the task.')
+   text=re.sub(r'(?m)^\*\*(?:Sign in|Host apps|HeyGen|Credits)\.\*\*.*$', 'Use current native subscription capabilities and free local tools first. No provider sign-in, new credential, credit purchase or paid API call is authorized by this skill. State consequential costs and dependency limits plainly; ask only for actual new spending or required access.',text)
+   text=text.replace('Never tell the person prices, estimates or usage','Disclose consequential costs and usage limits before seeking new spending')
+   text=text.replace('no cheaper or free swaps','prefer suitable existing native or free tools')
+   text=text.replace('the host pays', 'a host setting does not grant spending authority')
+
    text=re.sub(r'(?m)^After a verified render, send one `feedback.*$', 'Keep task-local diagnostics only. No feedback submission or unsolicited desktop/update promotion is part of this route.',text)
    text=re.sub(r'(?m)^.*feedback --search-miss.*$', 'If the registry has no suitable effect, record the gap locally and choose a brief-appropriate implementation. Do not submit feedback.',text)
    file.write_text(text)

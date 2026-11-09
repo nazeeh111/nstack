@@ -2,14 +2,29 @@ import pathlib,tempfile,sys,unittest
 ROOT=pathlib.Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'lib'))
 from skill_build import materialize
 class MediaScope(unittest.TestCase):
- def test_full_upstream_repository_exposes_only_selected_expertise_references(self):
+ def test_updated_production_expertise_keeps_six_references_and_tuned_sources(self):
   with tempfile.TemporaryDirectory() as temp:
-   root=pathlib.Path(temp);source=root/'source';source.mkdir();out=root/'out';out.mkdir();refs=source/'references';refs.mkdir()
-   (source/'SKILL.md').write_text('---\nname: upstream\ndescription: whole workflow\n---\n# Workbench\n')
-   (source/'LICENSE').write_text('MIT fixture\n');(source/'README_JA.md').write_text('[excluded](references/sfx-sourcing.md)\n');(source/'scripts').mkdir();(source/'scripts/legacy-upload.sh').write_text('do not install')
-   (refs/'pipeline.md').write_text('Original onboarding\n## 阶段 0：产品理解\nShot planning\n9. **为交付后的动效工作台留好接口** missing runtime\n**产出** `src/workbench.ts`\n## 阶段 6：声音设计\n1. 读 `references/sound-design.md` 与 `references/sfx-sourcing.md`，从 Freesound 下载。\n2. 用 `assets/scripts/sfx-source.py get` 下载。\n3. **BGM** preserve stems and timing\n## 阶段 7：验收\nnode workbench/scripts/open.mjs\n');(refs/'music-beat-sync.md').write_text('Beat alignment\n');(refs/'sound-design.md').write_text('新制作与换音统一从 **Freesound** 搜索、下载，操作见 [sfx-sourcing.md](sfx-sourcing.md)。\n[Beat](music-beat-sync.md) [Review](final-review.md)\n');(refs/'sfx-sourcing.md').write_text('excluded provider workflow');(refs/'final-review.md').write_text('excluded orchestration')
-   spec={'candidate_id':'P224','source_path':'SKILL.md','delivery':'narrow-patched leaf','source_repository':'Vincentwei1021/video-shotcraft','revision':'1'*40,'rights':'MIT'}
+   root=pathlib.Path(temp);source=root/'source';source.mkdir();out=root/'out';out.mkdir()
+   files={'SKILL.md':'---\nname: upstream\ndescription: shot production\n---\n# Shot production\nRead [pipeline](references/pipeline.md).\n',
+    'LICENSE':'MIT fixture\n','README_JA.md':'[excluded](missing.md)\n',
+    'references/pipeline.md':'Plan shots and preserve stems/timing.\n[Audio](sound-design.md)\n',
+    'references/aesthetic-rules.md':'Use actual visual brief.\n','references/final-review.md':'Inspect actual moving frames.\n',
+    'references/music-beat-sync.md':'Keep beat and frame origin.\n','references/sound-design.md':'[Sourcing](sfx-sourcing.md)\n','references/sfx-sourcing.md':'Check asset rights and existing user audio.\n',
+    'references/sequences/sample.md':'Keep substantive sequence choices.\n','references/shots/sample.md':'Keep shot math.\n',
+    'gallery/api/library.json':'{}','demos/tuned/math.ts':'const camera = Math.sin(t);',
+    'demos/_legacy/old.ts':'not selected','assets/lib/helper.ts':'export const frame = 1;',
+    'assets/scripts/capture-template.mjs':'// selected capture helper', 'shot-polish/decisions.json':'{}',
+    'workbench/README.md':'Not activated by default','template/TEMPLATE.md':'Separate runtime trigger',
+    'publish/upload.py':'not selected','jianying-export/old.py':'not selected'}
+   for rel,data in files.items():
+    p=source/rel;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(data)
+   spec={'candidate_id':'P224','source_path':'SKILL.md','native_name':'video-shotcraft','delivery':'narrow-patched leaf','source_repository':'Vincentwei1021/video-shotcraft','revision':'1'*40,'rights':'MIT'}
    materialize(source,out,spec,{}, {})
-   self.assertEqual({str(p.relative_to(out)) for p in out.rglob('*') if p.is_file()},{'SKILL.md','LICENSE','references/pipeline.md','references/sound-design.md','references/music-beat-sync.md'})
-   self.assertIn('/blob/'+'1'*40+'/references/final-review.md',(out/'references/sound-design.md').read_text());self.assertTrue((source/'scripts/legacy-upload.sh').exists());pipeline=(out/'references/pipeline.md').read_text();self.assertIn('User-supplied audio wins',pipeline);self.assertIn('preserve stems and timing',pipeline);self.assertNotIn('assets/scripts/sfx-source.py',pipeline);self.assertNotIn('workbench/scripts/open.mjs',pipeline);self.assertIn('pinned final-QA reference',pipeline)
+   bundle=out/'source'
+   for ref in ('pipeline','aesthetic-rules','final-review','music-beat-sync','sound-design','sfx-sourcing'):
+    self.assertTrue((bundle/f'references/{ref}.md').is_file())
+   self.assertEqual((bundle/'demos/tuned/math.ts').read_text(),'const camera = Math.sin(t);')
+   for rel in ('demos/_legacy','workbench','template','publish','jianying-export','README_JA.md'):
+    self.assertFalse((bundle/rel).exists(),rel)
+   self.assertIn('4.0.484',(bundle/'SKILL.md').read_text());self.assertTrue((source/'publish/upload.py').is_file())
 if __name__=='__main__':unittest.main()

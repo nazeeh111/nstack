@@ -100,18 +100,19 @@ def acquire(repo,rev):
  return dest
 
 def shelf_name(id,path,repo):
- raw=P(path).parent.name or repo.split('/')[-1]
+ selected=next((s for s in manifest()['skills'] if (s['candidate_id'],s['source_path'],s['source_repository'])==(id,path,repo)),{})
+ raw=selected.get('native_name') or P(path).parent.name or repo.split('/')[-1]
  return id.lower()+'-'+re.sub(r'[^a-z0-9-]+','-',raw.lower()).strip('-')
 
 def builder_identity():
- paths=[ROOT/'nstack.py',ROOT/'lib/skill_build.py',ROOT/'lib/publish_scope.py',ROOT/'lib/claim_evidence.py',ROOT/'lib/closure.py',ROOT/'lib/voltage_check.py',ROOT/'lib/gh_comments.py',ROOT/'lib/unreal_two_shot_probe.py']+sorted((ROOT/'lib').glob('patch_*.py'))
+ paths=[ROOT/'nstack.py',ROOT/'lib/skill_build.py',ROOT/'lib/publish_scope.py',ROOT/'lib/claim_evidence.py',ROOT/'lib/closure.py',ROOT/'lib/voltage_check.py',ROOT/'lib/gh_comments.py',ROOT/'lib/unreal_two_shot_probe.py',ROOT/'lib/gp_delivery_guard.py',ROOT/'lib/unreal_animation_probe.py']+sorted((ROOT/'lib').glob('patch_*.py'))
  return sha(json.dumps({p.name:sha(p.read_bytes()) for p in paths},sort_keys=True).encode())
 
 def build(id,path):
  c=component(id);s=leaf(id,path)
- if c['deployment']=='consult' or s['delivery'] not in ('intact upstream leaf','narrow-patched leaf') or P(path).name!='SKILL.md':raise ValueError('This entry must remain a reference, support file, link or entitled surface')
+ if c['deployment']=='consult' or s['delivery'] not in ('intact upstream leaf','narrow-patched leaf','native runtime/method adapter') or (P(path).name!='SKILL.md' and not s.get('native_name')):raise ValueError('This entry must remain a reference, support file, link or entitled surface')
  source=acquire(s['source_repository'],s['revision']);source_leaf=source/safe_relative(path).parent
- if not (source_leaf/'SKILL.md').is_file():raise ValueError('Pinned leaf is missing')
+ if not (source/safe_relative(path)).is_file():raise ValueError('Pinned source entry is missing')
  # The explicit builder defines lawful closure and exact patches. No generic "append override" patch.
  sys.path.insert(0,str(ROOT/'lib'))
  from skill_build import materialize
@@ -143,7 +144,8 @@ def registered_release(release):
   if r.get(field)!=s[field]:raise ValueError('Release source tuple differs from registry')
  if r.get('deployment')!=c['deployment'] or r.get('manifest_sha256')!=sha((ROOT/'registry/manifest.json').read_bytes()):raise ValueError('Stale release manifest')
  sys.path.insert(0,str(ROOT/'lib'));from closure import needs
- expected_entry=str(P(s['source_path']).parent) if needs(s) or (c['id']=='P343' and P(s['source_path']).parent.name in ('prospecting','cold-email')) else '.'
+ from patch_native34 import handles as handles34,entry as entry34
+ expected_entry=entry34(s) if handles34(s) else str(P(s['source_path']).parent) if needs(s) or (c['id']=='P343' and P(s['source_path']).parent.name in ('prospecting','cold-email')) else '.'
  if r.get('entry_dir','.')!=expected_entry:raise ValueError('Unexpected entry directory for this selected leaf')
  name=shelf_name(c['id'],s['source_path'],s['source_repository'])
  if r.get('name')!=name or not re.fullmatch(r'[a-z0-9][a-z0-9-]{0,127}',name):raise ValueError('Invalid effective shelf name')

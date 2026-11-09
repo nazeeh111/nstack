@@ -21,7 +21,7 @@ def env(root,readonly=False):
 
 def commission(n,id,op,r,folder):
  c=n.component(id)
- if c['deployment']!='on demand' or (id,op) not in [('P053','cli'),('P061','test')]:raise ValueError('No eligible npm operation adapter')
+ if c['deployment']!='on demand' or (id,op) not in [('P053','cli'),('P061','test'),('P049','cli')]:raise ValueError('No eligible npm operation adapter')
  if r['reviewed_source_revision']!=c['revision']:raise ValueError('Recipe does not match reviewed source')
  prefix=n.STATE/'runtimes'/id/op;prefix.mkdir(parents=True,exist_ok=True);receiptfile=n.STATE/'locks'/f'{id}-{op}.json';runenv=env(n.STATE)
  with n.lock(n.STATE/'runtime-writers'/f'{id}-{op}.lock'):

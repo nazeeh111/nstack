@@ -25,6 +25,22 @@ In a disposable owned project, use the two-shot probe where supplied to create t
 '''
   if name=='scenario-unreal-cinematics':shutil.copy2(P(__file__).parent/'unreal_two_shot_probe.py',out/'scripts/nstack_two_shot_probe.py')
  p.write_text(s)
+ if id=='X-CREATIVE-UNREAL':
+  for file in out.rglob('*.md'):
+   text=file.read_text()
+   text=text.replace('tests/code/unreal-animation/run_all.py --offline','delivered local offline helper checks (not an editor pass)')
+   text=text.replace('job_00_anim_probe.py','scripts/nstack_animation_probe.py')
+   text=text.replace('tests/code/unreal-pipeline-automation/in_engine/run_in_unreal.py','the actual project import/validator fixture using scripts/ue_pipeline.py; upstream test file is absent')
+   file.write_text(text)
+  if name=='scenario-unreal-animation':
+   shutil.copy2(P(__file__).parent/'unreal_animation_probe.py',out/'scripts/nstack_animation_probe.py')
+  helper=out/'scripts/ue_pipeline.py'
+  if helper.exists():
+   text=helper.read_text();start=text.index('    if not eng:',text.index('def _engine'));end=text.index('    return eng',start)
+   text=text[:start]+'    if not eng:\n        raise ValueError("Provide explicit version-checked engine or UE_ROOT; no guessed Mac path")\n'+text[end:];helper.write_text(text)
+ if id=='X-CREATIVE-BLENDER-SKILLS' and name=='scenario-blender-grease-pencil':
+  from patch_gp import patch as patch_gp
+  patch_gp(out)
  # Keep every copied helper explicit about the actual engine root, not auto-selected defaults.
  env=out/'scripts/ue_env.py'
  if env.exists():

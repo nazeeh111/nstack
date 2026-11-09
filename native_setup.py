@@ -30,7 +30,7 @@ def selection():
     modes = {c["id"]: c["deployment"] for c in nstack.manifest()["components"]}
     rows = []
     for s in nstack.manifest()["skills"]:
-        if modes[s["candidate_id"]] != "on demand" or s["delivery"] not in ("intact upstream leaf", "narrow-patched leaf"):
+        if modes[s["candidate_id"]] != "on demand" or s["delivery"] not in ("intact upstream leaf", "narrow-patched leaf", "native runtime/method adapter"):
             continue
         name = nstack.shelf_name(s["candidate_id"], s["source_path"], s["source_repository"])
         prefix = s["candidate_id"].lower() + "-"
@@ -44,7 +44,9 @@ def selection():
     return rows
 
 def addon_definition(name):
-    import academic_addon
+    import academic_addon, ecc_addon
+    if name in ecc_addon.DESCRIPTIONS:
+        return ecc_addon.definition(nstack, name)
     if name in academic_addon.DESCRIPTIONS:
         return academic_addon.definition(nstack, name)
     source = ROOT / "addons" / name
@@ -171,7 +173,8 @@ def prepare(state, chosen, addons):
             # Keep the original recipe receipt as provenance, not a seal on renamed bytes.
             (dest / ".nstack-release.json").rename(dest / "UPSTREAM-RELEASE.json")
             from closure import validate
-            validate(dest)
+            from patch_native34 import adapter as adapter34
+            validate(dest, provenance_roots=("upstream",) if adapter34(s) else ())
             final_entry = release / "bundles" / name / r.get("entry_dir", ".")
             (out / "skills" / name).symlink_to(final_entry)
         for name in addons:
@@ -309,6 +312,9 @@ def apply(args):
     if getattr(args, "academic_research", False):
         import academic_addon
         addons.extend(academic_addon.DESCRIPTIONS)
+    if getattr(args, "ecc", False):
+        import ecc_addon
+        addons.extend(ecc_addon.DESCRIPTIONS)
     if set(addons) & {name for name, _ in chosen}:
         raise ValueError("Addon name collides with selected skill")
     release, index = prepare(state, chosen, addons)
@@ -435,6 +441,7 @@ def main():
     a.add_argument("--agent-reach", action="store_true", help="Explicitly add the separately reviewed Agent Reach skill")
     a.add_argument("--repository-docs", action="store_true")
     a.add_argument("--academic-research", action="store_true", help="Fetch five pinned CC-BY-NC academic skills privately; no Claude hooks or paid providers")
+    a.add_argument("--ecc", action="store_true", help="Add the two reviewed ECC onboarding and offline evaluation skills")
     a.add_argument("--vault", help="Existing user-authorized vault path; does not create a vault")
     sub.add_parser("list")
     a = sub.add_parser("rollback")

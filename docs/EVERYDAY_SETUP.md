@@ -1,6 +1,6 @@
 # Everyday setup
 
-The default global collection contains all 126 installable on-demand leaves from
+The default global collection contains all 170 installable on-demand leaves from
 the evaluated manifest. It excludes trial/substitute/reference/rejected leaves.
 Natural names and complete bundles are verified independently against the
 registered original releases. Optional `--only EXACT-NAME` deliberately narrows
@@ -140,3 +140,43 @@ nstack repository contains authored integration code and attribution, not the
 upstream payload. Preserve upstream LICENSE/NOTICE and review its terms for your
 intended use. Installed references and scripts are not a claim of fully tested
 research validity, citation recall or journal-review independence.
+
+## Updated selection and optional additions
+
+The 3.4 selection has 170 installable on-demand entries with explicit natural
+names, including four independent gstack skills, six pstack skills, ten Remotion
+leaves, Grease Pencil, Unreal animation/pipeline techniques and scoped runtime
+adapters. Support is retained outside the exposed native entry list. Templates,
+heavy runtimes, provider services and hardware operations retain their task
+triggers. PaperBanana's three prepared sources remain a trial; generated plot
+execution refuses until a verified isolated executor exists. No blank placeholder
+image can count as successful generation.
+
+`--ecc` adds only `codebase-onboarding` and `eval-harness` from the pinned ECC
+source. Onboarding does not write AGENTS.md unless asked. Eval utilities support
+local synthetic fixtures, record integrity and replay; their candidate execution
+gate is unavailable on every OS and is kept closed. Capsules are not proof of
+truth, independent grading or operating-system containment. No ECC hooks,
+instinct store or controller is installed. Karpathy's general principles were
+reviewed as references because existing user guidance already covers them.
+
+Additional exercised Mac routes are Blender5.2.1, TLC1.7.4 with existing Node/Java,
+Worktrunk0.81.0, Repomix1.19.0 and PyVISA's simulator. Their recorded entrypoints
+belong in the private native-tools index. Worktrunk's selected skill revision and
+release binary are separate provenance fields; neither is silently equated.
+`recipes/P056/install.py` checks the official Mac ARM release digest and does not
+install shell hooks. `nstack commission P049 cli` installs the frozen Repomix
+package; `nstack check P049 cli` exercises packing and exclusion.
+
+For a simulator-only instrument trial, create a private Python3.12 environment
+and sync `recipes/X-HW-VISA/sim/requirements.lock` with hash checking, then run
+`recipes/X-HW-VISA/sim/check.py` with that environment's Python. It binds literal
+`@sim`; real instrument access and physical outputs are separate task authority.
+The Blender cache fixture in `tests/fixtures/blender_simulation.py` exercises an
+owned procedural rigid-body scene. Its baked-cache pass does not prove cloth,
+fluid, geometry-node or other simulation caches.
+
+The canonical vault stays one private Markdown/Git repository. Source-backed
+notes retain stable IDs, scope, source hashes and correction history. Existing
+notes and user changes are preserved. No new vault, filler taxonomy, background
+memory server, automatic API key or paid provider is added by this update.

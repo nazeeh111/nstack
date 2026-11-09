@@ -9,7 +9,7 @@ def links(file):
   target=target.split('#')[0]
   if target and ':' not in target and not target.startswith('/'):yield target
 
-def support(source,out,transform=None,relocations=None):
+def support(source,out,transform=None,relocations=None,text_transform=None):
  source=source.resolve();out=out.resolve();done=set()
  while True:
   pending=[f for f in out.rglob('*.md') if f not in done]
@@ -18,7 +18,7 @@ def support(source,out,transform=None,relocations=None):
    done.add(file)
    for rel in links(file):
     target=(file.parent/rel).resolve()
-    if not target.is_relative_to(out):raise ValueError('Support link escapes mirrored closure')
+    if not target.is_relative_to(out):raise ValueError('Support link escapes mirrored closure: '+str(file.relative_to(out))+' -> '+rel)
     if target.exists():continue
     virtual=target.relative_to(out);mapped=virtual;prefix=P('.')
     for virtual_prefix,source_prefix in (relocations or {}).items():
@@ -38,6 +38,7 @@ def support(source,out,transform=None,relocations=None):
      if src.is_symlink():raise ValueError('Linked support requires explicit review')
      if not src.is_file() or src.name=='.nstack-source.json' or any(p in src.parts for p in ('.git','node_modules','__pycache__')):continue
      dest=target if original.is_file() else target/src.relative_to(original);dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(src,dest)
+     if text_transform and dest.suffix=='.md':dest.write_text(text_transform(dest.read_text(),dest))
     # Preserve the support file's own ancestor notices without borrowing sibling grants.
     ancestor=original.parent if original.is_file() else original
     while ancestor.is_relative_to(source):
@@ -49,8 +50,9 @@ def support(source,out,transform=None,relocations=None):
      if ancestor==source:break
      ancestor=ancestor.parent
 
-def validate(out):
+def validate(out,provenance_roots=()):
  for file in out.rglob('*.md'):
+  if any(file.is_relative_to(out/root) for root in provenance_roots):continue
   for rel in links(file):
    target=(file.parent/rel).resolve()
    if not target.is_relative_to(out.resolve()) or not target.exists():raise ValueError('Unresolved closure link '+str(file.relative_to(out))+': '+rel)

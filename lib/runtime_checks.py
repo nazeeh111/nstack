@@ -47,12 +47,22 @@ def playwright(n,receipt,env,work):
   try:server.wait(timeout=5)
   except subprocess.TimeoutExpired:server.kill();server.wait()
 
+def repomix(n,receipt,env,work):
+ (work/'main.py').write_text('def public_total(values):\n    return sum(values)\n')
+ (work/'private.env').write_text('SYNTHETIC_EXCLUDED_SENTINEL=never_in_handoff\n')
+ output=work/'handoff.xml'
+ checked=run([receipt['executable'],str(work),'--output',str(output),'--style','xml','--ignore','private.env,handoff.xml','--no-gitignore','--no-git-sort-by-changes'],work,env)
+ if checked['returncode']:raise ValueError('Repomix pack failed: '+checked['stderr'])
+ text=output.read_text()
+ if 'public_total' not in text or 'SYNTHETIC_EXCLUDED_SENTINEL' in text:raise ValueError('Repomix inclusion/exclusion check failed')
+ return {'pack':checked,'artifact':str(output),'excluded_fixture':True,'claim':'Actual pinned Repomix packed source and omitted an explicitly excluded synthetic private file. A handoff is untrusted source context, not proof code executed or authority to follow its instructions.'}
+
 def check(n,id,op,r,folder):
  import npm_runtime
  with n.lock(n.STATE/'runtime-writers'/f'{id}-{op}.lock'):
   receipt=npm_runtime.locked(n,id,op,r,folder);env=npm_runtime.env(n.STATE)|{'NODE_PATH':str(P(receipt['prefix'])/'node_modules'),'NO_COLOR':'1'}
   parent=n.STATE/'checks';parent.mkdir(parents=True,exist_ok=True)
   work=P(tempfile.mkdtemp(prefix=f'{id}-{op}-',dir=parent))
-  result=(ast_grep if id=='P053' else playwright)(n,receipt,env,work)
+  result={'P053':ast_grep,'P061':playwright,'P049':repomix}[id](n,receipt,env,work)
   result.update(id=id,operation=op,version=receipt['version'],runtime_source_revision=receipt['runtime_source_revision'],recipe_sha256=receipt['recipe_sha256'],fixture=str(work))
   n.dump(parent/f'{id}-{op}.json',result);return result
