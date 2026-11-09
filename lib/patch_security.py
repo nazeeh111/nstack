@@ -22,6 +22,9 @@ For consequential trust-boundary changes, use a fresh independent reviewer when 
   s=s.replace('- Always generate the output file','- Save an output file when the scope or requested handoff needs it')
   s=s.replace('- Output report only to chat (file required)','- Omit material evidence or fail to save a file when one is required by the task')
  elif name=='dimensional-analysis':
+  s=change(s,'The same workflow applies in Claude Code and Codex. Legacy `allowed-tools` frontmatter is Claude metadata, not a Codex permission grant.','Use this workflow in Codex. Upstream `allowed-tools` metadata does not grant Codex permissions.')
+  s=change(s,'In Claude Code, use these registered namespaced plugin agent identifiers listed below as the dispatch type. In Codex, create workers','In Codex, create workers')
+  s=change(s,"In Codex, use the host's plan or a workspace status file; Claude Code may use its existing `TodoWrite` tool.","In Codex, use the host's plan or a workspace status file.")
   s=change(s,'Requires native agent dispatch and a writable, explicitly scoped target.','Requires a readable, explicitly scoped target. Source writes require annotation authority. Independent scanner/validator review may use supported host dispatch when proportionate.')
   s=change(s,'Invoking this skill authorizes dimensional comments and workspace analysis artifacts, not unrelated code fixes.','A review invocation authorizes findings and a unit inventory. It does not by itself authorize source annotations or unrelated code fixes.')
   s=change(s,'Runtime policy and explicit user constraints take priority over the default full-auto behavior.','Runtime policy and explicit user constraints control every stage.')

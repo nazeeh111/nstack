@@ -47,6 +47,7 @@ An adaptive selector is not semantic identity. Validate record ID, expected type
   s=change(s,'5. If neither local source is available, clone or download\n   `https://github.com/HKUDS/CLI-Anything` and use `cli-anything-plugin/HARNESS.md`.','5. If neither local source is available, fetch only the registry-pinned CLI-Anything commit and its methodology closure; do not silently use the default branch.')
   s=change(s,'test documentation, CLI-specific `SKILL.md` generation, and local installation.','test documentation, CLI-specific `SKILL.md` generation, and installation into an isolated project environment. Fit package layout to project conventions; publish or install globally only when specifically authorized.')
  elif id=='P066':
+  s=s.replace('(Cursor, Claude Code, Codex, Continue, Windsurf, etc.)','(Codex and other supported hosts)')
   s=re.sub(r'(?m)^description:.*$', 'description: CLI browser fallback for a concrete capability gap after checking the native connected browser. Use a task-isolated session and a reviewed version-matched core guide. Does not globally trigger on Slack, Electron apps or ordinary web research.',s)
   s=re.sub(r'(?m)^(?:allowed-tools:|hidden:).*\n','',s)
   s=change(s,'Install: `npm i -g agent-browser && agent-browser install`','Install only the reviewed immutable runtime in the nstack private environment at commissioning. Resolve its compatible browser artifact and lock; do not globally install or use latest.')
