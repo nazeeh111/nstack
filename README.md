@@ -35,7 +35,7 @@ python3 native_setup.py install --replace --agent-reach --repository-docs --acad
 "$HOME/.local/bin/nstack" doctor
 ```
 
-The last install command retires the complete personal skill collection into
+The base install command retires the complete old user-managed skill collection into
 private recovery storage, preserving built-ins. It merges only owned config
 keys and preserves unrelated settings and current model/effort choices. It
 does not read credential stores, move projects or conversations, manage hosted
