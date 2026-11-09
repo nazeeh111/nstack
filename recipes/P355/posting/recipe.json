@@ -1,0 +1,18 @@
+{
+  "id": "P355",
+  "operation": "posting",
+  "adapter": "stdlib-helper",
+  "source_repository": "ai-job-search-dev/ai-job-search",
+  "revision": "87d18571398f4afc367845c2dc2415be0868865f",
+  "files": {
+    "tools/posting_guard.py": "tools/posting_guard.py",
+    "tools/page_decode.py": "tools/page_decode.py",
+    "LICENSE": "LICENSE"
+  },
+  "prerequisites": "Python3 standard library only. No whole upstream skill, collection installer, model, service or global tool.",
+  "acquire": "nstack commission P355 posting",
+  "lock_resolution": "Copy only the exact registered helper files and root notice from Git-verified pinned source into a private immutable closure; hash every file and recipe. No external dependency resolution.",
+  "invoke": "nstack run P355 posting -- /absolute/project/posting.html",
+  "check": "nstack check P355 posting",
+  "deactivate": "No daemon or project skill registration. Each lookup exits; nstack remove-runtime P355 posting quarantines only its owned bytes."
+}

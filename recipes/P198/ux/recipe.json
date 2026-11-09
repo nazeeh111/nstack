@@ -1,0 +1,18 @@
+{
+  "id": "P198",
+  "operation": "ux",
+  "adapter": "stdlib-helper",
+  "source_repository": "nextlevelbuilder/ui-ux-pro-max-skill",
+  "revision": "ccce51cba388476d4f403091ddb91636d5cd9fed",
+  "files": {
+    "src/ui-ux-pro-max/scripts/core.py": "scripts/core.py",
+    "src/ui-ux-pro-max/data/ux-guidelines.csv": "data/ux-guidelines.csv",
+    "LICENSE": "LICENSE"
+  },
+  "prerequisites": "Python3 standard library only. No whole upstream skill, collection installer, model, service or global tool.",
+  "acquire": "nstack commission P198 ux",
+  "lock_resolution": "Copy only the exact registered helper files and root notice from Git-verified pinned source into a private immutable closure; hash every file and recipe. No external dependency resolution.",
+  "invoke": "nstack run P198 ux -- keyboard focus visible",
+  "check": "nstack check P198 ux",
+  "deactivate": "No daemon or project skill registration. Each lookup exits; nstack remove-runtime P198 ux quarantines only its owned bytes."
+}

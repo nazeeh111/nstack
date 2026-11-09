@@ -1,0 +1,36 @@
+{
+  "id": "P165",
+  "operation": "python",
+  "adapter": "python-source",
+  "source_repository": "sgl-project/sglang",
+  "revision": "b702f0d80e5c2161e7a4a0470e3435924f983ff8",
+  "source_subdirectory": "python",
+  "distribution": "sglang",
+  "import_name": "sglang",
+  "python": "3.12.13",
+  "inspected_build_metadata": {
+    "path": "python/pyproject.toml",
+    "sha256": "53aa6decc9cdb9e86240b9747810e153f5cdfc477dcd1be37de97fabe14d18ef",
+    "backend": "setuptools.build_meta"
+  },
+  "prerequisites": "Named supported Linux NVIDIA GPU/compiler target with exact matched PyTorch/CUDA/driver/kernel locks. Mac CPU is not this route. No remote worker, model, compiler or service is provisioned implicitly. Other accelerator backends require their own source-compatible target lock.",
+  "acquire": "nstack commission P165 python",
+  "lock_resolution": "Fetch and check out only this exact commit in a private owned build prefix. Resolve explicit source build-system requirements to a hash lock, build one wheel without build isolation, verify its distribution metadata, resolve runtime dependencies to a second hash lock, sync with required hashes. Retain source/wheel/interpreter/uv identity and all environment file hashes. Repeat commissioning verifies the existing lock without resolving upgrades.",
+  "invoke": "From a bounded project: nstack run P165 python -- /absolute/project/script.py [arguments]. Use only the registered package API, actual task inputs and current project permissions.",
+  "check": "nstack check P165 python (actual import and distribution identity only). Then execute the distinct output, negative control and independent comparison from the component acceptance checks; import success is not domain acceptance.",
+  "deactivate": "Each script exits normally; stop only a task-owned service started by that script after reconciling effects. nstack remove-runtime P165 python quarantines the exact owned environment and lock into private recovery. No global registration is created.",
+  "task_prerequisites": "Accelerator-specific runtime and kernels",
+  "task_acceptance": [
+    "Run vLLM and SGLang for the same checkpoint, prompt mix, prefix reuse, target load, precision and hardware; compare output, requests/sec, p95, memory and recovery."
+  ],
+  "supported_platforms": [
+    "Linux"
+  ],
+  "required_commands": [
+    "nvcc",
+    "nvidia-smi",
+    "cargo",
+    "rustc"
+  ],
+  "service_activation": "After source build, inspect the locked CLI --help, bind an explicit local weight path/revision/hash, host127.0.0.1, port, context/concurrency and time budget. Use the built vllm serve or sglang launch_server entry point only for the named task. Run fixed-output, cancellation and load controls; stop the owned process and reconcile actual served acknowledgements. Import health does not establish GPU/service acceptance."
+}

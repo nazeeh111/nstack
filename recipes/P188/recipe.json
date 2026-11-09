@@ -1,0 +1,24 @@
+{
+  "id": "P188",
+  "operation": "cli",
+  "adapter": "go-source",
+  "source_repository": "aquasecurity/trivy",
+  "revision": "e8a68c1b515b6fcd923ab7a2c98a2a74435c3659",
+  "source_subdirectory": ".",
+  "package": "./cmd/trivy",
+  "binary": "trivy",
+  "toolchain": "go-darwin-arm64",
+  "go_mod_sha256": "c0cc44dae69385444abe3343f99cf2c24e4a28b6b182e58f36f156ee31c1825e",
+  "version_arguments": [
+    "--help"
+  ],
+  "prerequisites": [
+    "Pinned Trivy binary",
+    "Current vulnerability database with freshness recorded"
+  ],
+  "acquire": "nstack commission P188 cli",
+  "lock_resolution": "Build the exact inspected source package with private digest-locked Go1.27.3, -mod=readonly, CGO_ENABLED=0 and no automatic toolchain update; preserve go.mod/go.sum and executable/module metadata hashes. No API, account, advisory DB or container is provisioned by a source build.",
+  "invoke": "nstack run P188 cli -- EXPLICIT_ARGUMENTS",
+  "check": "nstack check P188 cli (local command health only); complete the per-ID acceptance checks before relying on task output.",
+  "deactivate": "Each bounded command exits. Shut down only a task-owned stdio process/server if explicitly started; reconcile any effects first. nstack remove-runtime P188 cli retains the entire owned runtime under private recovery."
+}

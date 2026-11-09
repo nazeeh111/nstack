@@ -1,0 +1,30 @@
+{
+  "id": "P374",
+  "operation": "server",
+  "adapter": "python-source",
+  "source_repository": "opensandbox-group/OpenSandbox",
+  "revision": "e469081b9a7458dd4f77c5f9017f753d8eab84eb",
+  "source_subdirectory": "server",
+  "distribution": "opensandbox-server",
+  "import_name": "opensandbox_server",
+  "python": "3.12.13",
+  "inspected_build_metadata": {
+    "path": "server/pyproject.toml",
+    "sha256": "cead7fc669db4ca916bbec9f7aa2c78011add3632c7de28437dfe16df66f1c8f",
+    "backend": "hatchling.build"
+  },
+  "prerequisites": "Existing uv and Git; source-specific compiler/system libraries and backend prerequisites from nstack show P374. This recipe selects CPU/basic package only; it installs no weights, provider extras, device driver, daemon or global tool. Build/submodule incompatibility fails closed.",
+  "acquire": "nstack commission P374 server",
+  "lock_resolution": "Fetch and check out only this exact commit in a private owned build prefix. Resolve explicit source build-system requirements to a hash lock, build one wheel without build isolation, verify its distribution metadata, resolve runtime dependencies to a second hash lock, sync with required hashes. Retain source/wheel/interpreter/uv identity and all environment file hashes. Repeat commissioning verifies the existing lock without resolving upgrades.",
+  "invoke": "From a bounded project: nstack run P374 server -- /absolute/project/script.py [arguments]. Use only the registered package API, actual task inputs and current project permissions.",
+  "check": "nstack check P374 server (actual import and distribution identity only). Then execute the distinct output, negative control and independent comparison from the component acceptance checks; import success is not domain acceptance.",
+  "deactivate": "Each script exits normally; stop only a task-owned service started by that script after reconciling effects. nstack remove-runtime P374 server quarantines the exact owned environment and lock into private recovery. No global registration is created.",
+  "task_prerequisites": [
+    "Owned Docker/Kubernetes backend and separately pinned runtime image",
+    "Kubernetes pause requires controller, single replica, registry and push/pull credentials; durable data store for must-survive output"
+  ],
+  "task_acceptance": [
+    "Unrun: deny unauthorized egress, write checksum, force pod loss before and after successful snapshot, restore and prove which data/processes survived."
+  ],
+  "service_activation": "Server: use the built opensandbox-server init-config TASK_CONFIG --example docker, inspect its exact schema and bind loopback/explicit port plus the already-owned Docker backend. Start opensandbox-server --config TASK_CONFIG only for the named task. SDK: run a project script using Sandbox.create with an explicit image digest, execute a harmless command, export its result, test expiry/reconnect and destroy that same sandbox. Persist must-survive output outside ephemeral containers. No backend/account/credential is provisioned by commissioning."
+}

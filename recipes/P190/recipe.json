@@ -1,0 +1,22 @@
+{
+  "id": "P190",
+  "operation": "cli",
+  "adapter": "go-source",
+  "source_repository": "gitleaks/gitleaks",
+  "revision": "5f6ec56cfa6f8c67648d863582c7ae2f206d5c1c",
+  "toolchain": "go-darwin-arm64",
+  "source_subdirectory": ".",
+  "package": ".",
+  "binary": "gitleaks",
+  "version_variable": "github.com/zricethezav/gitleaks/v8/version.Version",
+  "build_version": "8.30.0-dev.nstack.5f6ec56cfa6f",
+  "version_arguments": ["version"],
+  "prerequisites": ["Native Darwin ARM64", "Git", "Official digest-locked private Go1.27.3 compiler; source requires Go1.24.11 or later"],
+  "acquire": "nstack commission P190 cli",
+  "lock_resolution": "Build the exact inspected source, not the divergent v8.30.1 or older v8.30.0 binary. Use registered compiler SHA, source go.mod/go.sum, -mod=readonly, CGO_ENABLED=0 and no Makefile/tidy/tag refresh. Record executable hash and Go module build metadata.",
+  "invoke": "nstack run P190 cli -- dir PROJECT --report PRIVATE_CHECKS/unique.json; or git EXACT_REPOSITORY_ROOT --revision FULL_40_CHARACTER_COMMIT_SHA --report PRIVATE_CHECKS/unique.json. Run from the bounded project. Existing reports, source ignore files, baselines and user config overrides are refused.",
+  "report_policy": "Persist only redacted locator fields in a new exclusive private report. Omit commit messages, matched text and author fields. Require all current scoped files readable and stable. Disable Git replacements, grafts, textconv, external diff and fsmonitor. Force text diffs, require a nonshallow exact root and explicit commit ancestry. Any unexpected scanner warning/error withholds the report.",
+  "check": "nstack check P190 cli",
+  "deactivate": "Each bounded scanner invocation exits. No daemon or global registration. nstack remove-runtime P190 cli quarantines only its owned runtime.",
+  "rights": "MIT scanner source and BSD Go toolchain remain in private source/toolchain cache with their original notices. No binary is redistributed by this repository."
+}

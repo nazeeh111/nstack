@@ -1,0 +1,22 @@
+{
+  "id": "L071",
+  "operation": "python",
+  "adapter": "python-source",
+  "source_repository": "stanfordnlp/dspy",
+  "revision": "b8485dde4a7abc239a204eea612d296a89f53ccc",
+  "source_subdirectory": ".",
+  "distribution": "dspy",
+  "import_name": "dspy",
+  "python": "3.12.13",
+  "inspected_build_metadata": {
+    "path": "pyproject.toml",
+    "sha256": "0de1e8791d35a2018d26f73dd56721fcfbd6c8c39db0866cca67a754ab4bbd56",
+    "backend": "setuptools.build_meta"
+  },
+  "prerequisites": "Existing uv and Git; source-specific compiler/system libraries and backend prerequisites from nstack show L071. This recipe selects CPU/basic package only; it installs no weights, provider extras, device driver, daemon or global tool. Build/submodule incompatibility fails closed.",
+  "acquire": "nstack commission L071 python",
+  "lock_resolution": "Fetch and check out only this exact commit in a private owned build prefix. Resolve explicit source build-system requirements to a hash lock, build one wheel without build isolation, verify its distribution metadata, resolve runtime dependencies to a second hash lock, sync with required hashes. Retain source/wheel/interpreter/uv identity and all environment file hashes. Repeat commissioning verifies the existing lock without resolving upgrades.",
+  "invoke": "From a bounded project: nstack run L071 python -- /absolute/project/script.py [arguments]. Use only the registered package API, actual task inputs and current project permissions.",
+  "check": "nstack check L071 python (actual import and distribution identity only). Then execute the distinct output, negative control and independent comparison from the component acceptance checks; import success is not domain acceptance.",
+  "deactivate": "Each script exits normally; stop only a task-owned service started by that script after reconciling effects. nstack remove-runtime L071 python quarantines the exact owned environment and lock into private recovery. No global registration is created."
+}

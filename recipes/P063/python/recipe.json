@@ -1,0 +1,22 @@
+{
+  "id": "P063",
+  "operation": "python",
+  "adapter": "python-source",
+  "source_repository": "unclecode/crawl4ai",
+  "revision": "cae74b203a33994f7e13b9052c3b0d5c93daa0e6",
+  "source_subdirectory": ".",
+  "distribution": "Crawl4AI",
+  "import_name": "crawl4ai",
+  "python": "3.12.13",
+  "inspected_build_metadata": {
+    "path": "pyproject.toml",
+    "sha256": "eb91415ecd274425525ad815fec168c18ecd4524e23e00b45925ff0aa2489663",
+    "backend": "setuptools.build_meta"
+  },
+  "prerequisites": "Existing uv and Git; source-specific compiler/system libraries and backend prerequisites from nstack show P063. This recipe selects CPU/basic package only; it installs no weights, provider extras, device driver, daemon or global tool. Build/submodule incompatibility fails closed.",
+  "acquire": "nstack commission P063 python",
+  "lock_resolution": "Fetch and check out only this exact commit in a private owned build prefix. Resolve explicit source build-system requirements to a hash lock, build one wheel without build isolation, verify its distribution metadata, resolve runtime dependencies to a second hash lock, sync with required hashes. Retain source/wheel/interpreter/uv identity and all environment file hashes. Repeat commissioning verifies the existing lock without resolving upgrades.",
+  "invoke": "From a bounded project: nstack run P063 python -- /absolute/project/script.py [arguments]. Use only the registered package API, actual task inputs and current project permissions.",
+  "check": "nstack check P063 python (actual import and distribution identity only). Then execute the distinct output, negative control and independent comparison from the component acceptance checks; import success is not domain acceptance.",
+  "deactivate": "Each script exits normally; stop only a task-owned service started by that script after reconciling effects. nstack remove-runtime P063 python quarantines the exact owned environment and lock into private recovery. No global registration is created."
+}

@@ -1,0 +1,21 @@
+{
+  "id": "X-OASDIFF",
+  "operation": "cli",
+  "adapter": "go-source",
+  "source_repository": "oasdiff/oasdiff",
+  "revision": "a4ba100f880c7579765c5e63915a99bf1acc6967",
+  "source_subdirectory": ".",
+  "package": ".",
+  "binary": "oasdiff",
+  "toolchain": "go-darwin-arm64",
+  "go_mod_sha256": "5f34c1e0581627e973201ade8643929c1ba4f3b4f280ae0a8c1547dbd1d1f2d3",
+  "version_arguments": [
+    "--help"
+  ],
+  "prerequisites": "Pinned standalone release for the host architecture; no API key. Use repository-owned base/revised specifications and a project-owned security.levels.",
+  "acquire": "nstack commission X-OASDIFF cli",
+  "lock_resolution": "Build the exact inspected source package with private digest-locked Go1.27.3, -mod=readonly, CGO_ENABLED=0 and no automatic toolchain update; preserve go.mod/go.sum and executable/module metadata hashes. No API, account, advisory DB or container is provisioned by a source build.",
+  "invoke": "nstack run X-OASDIFF cli -- EXPLICIT_ARGUMENTS",
+  "check": "nstack check X-OASDIFF cli (local command health only); complete the per-ID acceptance checks before relying on task output.",
+  "deactivate": "Each bounded command exits. Shut down only a task-owned stdio process/server if explicitly started; reconcile any effects first. nstack remove-runtime X-OASDIFF cli retains the entire owned runtime under private recovery."
+}

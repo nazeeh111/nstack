@@ -1,0 +1,26 @@
+{
+  "id": "P082",
+  "operation": "cli",
+  "adapter": "go-source",
+  "source_repository": "github/github-mcp-server",
+  "revision": "99d6d6503a7b2a133e2f8a595d6d0ba24b4086d3",
+  "source_subdirectory": ".",
+  "package": "./cmd/github-mcp-server",
+  "binary": "github-mcp-server",
+  "toolchain": "go-darwin-arm64",
+  "go_mod_sha256": "52179e6da738541be7515cdcc218971683c0db9b0d292985cd128e97f82697d5",
+  "version_arguments": [
+    "--help"
+  ],
+  "prerequisites": [
+    "Official remote MCP authentication, or Go/Docker built from pinned source"
+  ],
+  "acquire": "nstack commission P082 cli",
+  "lock_resolution": "Build the exact inspected source package with private digest-locked Go1.27.3, -mod=readonly, CGO_ENABLED=0 and no automatic toolchain update; preserve go.mod/go.sum and executable/module metadata hashes. No API, account, advisory DB or container is provisioned by a source build.",
+  "invoke": "nstack run P082 cli -- EXPLICIT_ARGUMENTS",
+  "check": "nstack check P082 cli (local command health only); complete the per-ID acceptance checks before relying on task output.",
+  "deactivate": "Each bounded command exits. Shut down only a task-owned stdio process/server if explicitly started; reconcile any effects first. nstack remove-runtime P082 cli retains the entire owned runtime under private recovery.",
+  "linker_arguments": [
+    "-X=main.commit=99d6d6503a7b2a133e2f8a595d6d0ba24b4086d3"
+  ]
+}

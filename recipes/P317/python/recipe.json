@@ -1,0 +1,22 @@
+{
+  "id": "P317",
+  "operation": "python",
+  "adapter": "python-source",
+  "source_repository": "qutip/qutip",
+  "revision": "2d2e35dea213db28ba85f737e80f64034c43786d",
+  "source_subdirectory": ".",
+  "distribution": "qutip",
+  "import_name": "qutip",
+  "python": "3.12.13",
+  "inspected_build_metadata": {
+    "path": "pyproject.toml",
+    "sha256": "c5960f02c6177ae61c64fb4d6eafe6035b82ede869829271d85fbe55b1671362",
+    "backend": "mesonpy"
+  },
+  "prerequisites": "Existing uv and Git; source-specific compiler/system libraries and backend prerequisites from nstack show P317. This recipe selects CPU/basic package only; it installs no weights, provider extras, device driver, daemon or global tool. Build/submodule incompatibility fails closed.",
+  "acquire": "nstack commission P317 python",
+  "lock_resolution": "Fetch and check out only this exact commit in a private owned build prefix. Resolve explicit source build-system requirements to a hash lock, build one wheel without build isolation, verify its distribution metadata, resolve runtime dependencies to a second hash lock, sync with required hashes. Retain source/wheel/interpreter/uv identity and all environment file hashes. Repeat commissioning verifies the existing lock without resolving upgrades.",
+  "invoke": "From a bounded project: nstack run P317 python -- /absolute/project/script.py [arguments]. Use only the registered package API, actual task inputs and current project permissions.",
+  "check": "nstack check P317 python (actual import and distribution identity only). Then execute the distinct output, negative control and independent comparison from the component acceptance checks; import success is not domain acceptance.",
+  "deactivate": "Each script exits normally; stop only a task-owned service started by that script after reconciling effects. nstack remove-runtime P317 python quarantines the exact owned environment and lock into private recovery. No global registration is created."
+}

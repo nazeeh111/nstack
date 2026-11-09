@@ -1,0 +1,22 @@
+{
+  "id": "L032",
+  "operation": "python",
+  "adapter": "python-source",
+  "source_repository": "microsoft/graphrag",
+  "revision": "34b2b67ae4601ad0b47bcd179fbe3f2a23aa0857",
+  "source_subdirectory": "packages/graphrag",
+  "distribution": "graphrag",
+  "import_name": "graphrag",
+  "python": "3.12.13",
+  "inspected_build_metadata": {
+    "path": "packages/graphrag/pyproject.toml",
+    "sha256": "ce215f2f0452030f12a1e7e561911e624663f843332c39b20d7fedbfcd003a76",
+    "backend": "hatchling.build"
+  },
+  "prerequisites": "Existing uv and Git; source-specific compiler/system libraries and backend prerequisites from nstack show L032. This recipe selects CPU/basic package only; it installs no weights, provider extras, device driver, daemon or global tool. Build/submodule incompatibility fails closed.",
+  "acquire": "nstack commission L032 python",
+  "lock_resolution": "Fetch and check out only this exact commit in a private owned build prefix. Resolve explicit source build-system requirements to a hash lock, build one wheel without build isolation, verify its distribution metadata, resolve runtime dependencies to a second hash lock, sync with required hashes. Retain source/wheel/interpreter/uv identity and all environment file hashes. Repeat commissioning verifies the existing lock without resolving upgrades.",
+  "invoke": "From a bounded project: nstack run L032 python -- /absolute/project/script.py [arguments]. Use only the registered package API, actual task inputs and current project permissions.",
+  "check": "nstack check L032 python (actual import and distribution identity only). Then execute the distinct output, negative control and independent comparison from the component acceptance checks; import success is not domain acceptance.",
+  "deactivate": "Each script exits normally; stop only a task-owned service started by that script after reconciling effects. nstack remove-runtime L032 python quarantines the exact owned environment and lock into private recovery. No global registration is created."
+}

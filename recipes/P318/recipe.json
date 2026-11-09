@@ -1,0 +1,22 @@
+{
+  "id": "P318",
+  "operation": "rt60",
+  "trigger": "Measure the reverberation time of a room impulse response or synthetic clap decay.",
+  "source_repository": "LCAV/pyroomacoustics",
+  "revision": "08d16968f8db414affaf84771a650358a7961446",
+  "source_path": "pyroomacoustics/experimental/rt60.py",
+  "adapter": "python-module",
+  "python": "3.12.13",
+  "entrypoint": "measure_rt60",
+  "prerequisites": [
+    "Git",
+    "uv",
+    "CPython 3.12 compatible with Mac ARM64"
+  ],
+  "acquire": "nstack commission P318 rt60",
+  "invoke": "nstack run P318 rt60 -- INPUT_WAV OUTPUT_JSON",
+  "check": "nstack check P318 rt60",
+  "deactivate": "Each invocation exits and starts no service; deactivate the project P112 shelf with nstack deactivate PROJECT p112-scientific-visualization. Cached source and environment remain dormant for reuse.",
+  "limits": "This operation uses the exact pinned pure-Python RT60 module and locked NumPy/SciPy. Compiled libroom, room simulation, microphone hardware and physical calibration are separate uncommissioned operations. Synthetic validation does not establish a physical room's measurement quality.",
+  "remove": "nstack remove-runtime P318 rt60"
+}

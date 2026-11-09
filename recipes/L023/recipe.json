@@ -1,0 +1,21 @@
+{
+  "id": "L023",
+  "operation": "cli",
+  "adapter": "go-source",
+  "source_repository": "google/osv-scanner",
+  "revision": "dcbda879b9129945362b1513c08ed5c0282c374e",
+  "source_subdirectory": ".",
+  "package": "./cmd/osv-scanner",
+  "binary": "osv-scanner",
+  "toolchain": "go-darwin-arm64",
+  "go_mod_sha256": "e525077db0a42bfb696c718aef7c1dae0636bdc2c0d512c88bb461a35ea129b6",
+  "version_arguments": [
+    "--help"
+  ],
+  "prerequisites": "OSV CLI, network advisory database or approved offline DB; no API key for OSV.dev.",
+  "acquire": "nstack commission L023 cli",
+  "lock_resolution": "Build the exact inspected source package with private digest-locked Go1.27.3, -mod=readonly, CGO_ENABLED=0 and no automatic toolchain update; preserve go.mod/go.sum and executable/module metadata hashes. No API, account, advisory DB or container is provisioned by a source build.",
+  "invoke": "nstack run L023 cli -- EXPLICIT_ARGUMENTS",
+  "check": "nstack check L023 cli (local command health only); complete the per-ID acceptance checks before relying on task output.",
+  "deactivate": "Each bounded command exits. Shut down only a task-owned stdio process/server if explicitly started; reconcile any effects first. nstack remove-runtime L023 cli retains the entire owned runtime under private recovery."
+}

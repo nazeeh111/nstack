@@ -1,0 +1,37 @@
+{
+  "id": "P162",
+  "operation": "python",
+  "adapter": "python-source",
+  "source_repository": "vllm-project/vllm",
+  "revision": "98468d0f66e4c75193014134d6b844d732e68260",
+  "source_subdirectory": ".",
+  "distribution": "vllm",
+  "import_name": "vllm",
+  "python": "3.12.13",
+  "inspected_build_metadata": {
+    "path": "pyproject.toml",
+    "sha256": "9f3264aa7b7722a024593f452c41eaac7e7c322c71a51081f54fcc88c8647379",
+    "backend": "setuptools.build_meta"
+  },
+  "prerequisites": "Named supported Linux NVIDIA GPU/compiler target with exact matched PyTorch/CUDA/driver/kernel locks. Mac CPU is not this route. No remote worker, model, compiler or service is provisioned implicitly. Other accelerator backends require their own source-compatible target lock.",
+  "acquire": "nstack commission P162 python",
+  "lock_resolution": "Fetch and check out only this exact commit in a private owned build prefix. Resolve explicit source build-system requirements to a hash lock, build one wheel without build isolation, verify its distribution metadata, resolve runtime dependencies to a second hash lock, sync with required hashes. Retain source/wheel/interpreter/uv identity and all environment file hashes. Repeat commissioning verifies the existing lock without resolving upgrades.",
+  "invoke": "From a bounded project: nstack run P162 python -- /absolute/project/script.py [arguments]. Use only the registered package API, actual task inputs and current project permissions.",
+  "check": "nstack check P162 python (actual import and distribution identity only). Then execute the distinct output, negative control and independent comparison from the component acceptance checks; import success is not domain acceptance.",
+  "deactivate": "Each script exits normally; stop only a task-owned service started by that script after reconciling effects. nstack remove-runtime P162 python quarantines the exact owned environment and lock into private recovery. No global registration is created.",
+  "task_prerequisites": "Matched accelerator drivers, PyTorch and engine dependencies; model memory",
+  "task_acceptance": [
+    "Compare same checkpoint/precision/prompt lengths/concurrency with SGLang; require output parity and target p95 latency/throughput within VRAM limit.",
+    "Use inspected CLI vllm serve, bind explicitly, test cancellation, health and restart; no arbitrary trust_remote_code."
+  ],
+  "supported_platforms": [
+    "Linux"
+  ],
+  "required_commands": [
+    "nvcc",
+    "nvidia-smi",
+    "cargo",
+    "rustc"
+  ],
+  "service_activation": "After source build, inspect the locked CLI --help, bind an explicit local weight path/revision/hash, host127.0.0.1, port, context/concurrency and time budget. Use the built vllm serve or sglang launch_server entry point only for the named task. Run fixed-output, cancellation and load controls; stop the owned process and reconcile actual served acknowledgements. Import health does not establish GPU/service acceptance."
+}

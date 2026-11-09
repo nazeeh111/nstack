@@ -1,0 +1,42 @@
+[
+  {
+    "owner": "P176",
+    "dataset": "Overture Maps Places",
+    "release": "2026-10-21.0",
+    "schema": "2.0.0",
+    "location": "s3://overturemaps-us-west-2/release/2026-10-21.0/theme=places/type=place/",
+    "environment": "Locked DuckDB with httpfs and Parquet access, public us-west-2. Prefer a user-owned eligible directory when provided.",
+    "query": "SELECT DISTINCT\n    id AS location_id,\n    version AS feature_version,\n    names.primary AS display_name,\n    taxonomy.primary AS primary_category,\n    operating_status,\n    confidence AS existence_confidence,\n    to_json(addresses) AS addresses_json,\n    to_json(websites) AS websites_json,\n    to_json(phones) AS phones_json,\n    to_json(sources) AS sources_json\nFROM read_parquet($asset)\nWHERE bbox.xmin BETWEEN $west AND $east\n  AND bbox.ymin BETWEEN $south AND $north\n  AND list_contains(taxonomy.hierarchy, $category)\nORDER BY location_id, feature_version\n",
+    "rights": "Read per-provider sources/notices, retain attribution and use scope. Coverage, branch identity, contact rights and freshness are separate checks. Archived source objects expire; preserve a permitted scoped snapshot, checksums and release lineage before later replay.",
+    "sources": [
+      "https://docs.overturemaps.org/guides/places/",
+      "https://docs.overturemaps.org/attribution/#places",
+      "https://docs.overturemaps.org/release-calendar/",
+      "https://docs.overturemaps.org/blog/2025/09/24/release-notes/"
+    ],
+    "engine_api": "duckdb.connect().execute(query, bindings)",
+    "example_bindings": {
+      "asset": "s3://overturemaps-us-west-2/release/2026-10-21.0/theme=places/type=place/*",
+      "west": -81.0,
+      "east": -80.0,
+      "south": 36.0,
+      "north": 38.0,
+      "category": "restaurant"
+    },
+    "schema_git_sha": "cb69ac3a3d31daa05f72a505af4f3234f191e77b",
+    "setup": "Use a permitted pinned asset list or trusted release path (httpfs for S3); SET s3_region='us-west-2'; params are bound. Validate −180 ≤ west ≤ east ≤ 180 and −90 ≤ south ≤ north ≤ 90, or split a box spanning the antimeridian into two and deduplicate. Bind a verified taxonomy identifier; list_contains(taxonomy.hierarchy,category) includes descendants. For exact leaf-only use taxonomy.primary = $category; spell out whether alternates should be included. Bound scan via source file manifest/row-group pruning, CPU/time/read budget and staged limit rather than assuming a result LIMIT caps billed bytes.",
+    "field_rights": "Retain all sources[] metadata (dataset, property JSON Pointer, record_id, update_time, confidence and in the schema license if present); a root pointer provides a fallback overridden by field-specific sources. The actual shard inspected contains optional license, provider, resource and version in the sources struct. Individual values or the entire list can be missing; verify projections at each new release. Resolve the inspected dataset/release attribution table and attach grant and required text/notices; quarantine fields without covered provenance. GERS/feature release snapshot, feature version, raw nullable fields and actual verified source remain distinct. Filter explicitly for or label an operating status when required; confidence only measures existence. Shared domain/name is insufficient to merge locations.",
+    "missing_bounds_query": "SELECT COUNT(DISTINCT id) AS taxonomy_matches_with_unknown_bounds_in_scanned_assets\nFROM read_parquet($asset)\nWHERE list_contains(taxonomy.hierarchy, $category)\n  AND (\n      bbox.xmin IS NULL OR bbox.ymin IS NULL\n      OR NOT isfinite(bbox.xmin) OR NOT isfinite(bbox.ymin)\n      OR bbox.xmin NOT BETWEEN -180 AND 180\n      OR bbox.ymin NOT BETWEEN -90 AND 90\n  )\n",
+    "missing_bounds_bindings": {
+      "asset": "the same inspected file manifest",
+      "category": "the same taxonomy node"
+    },
+    "missing_bounds_rule": "bbox is optional. Report distinct taxonomy-matched IDs with missing/invalid lon/lat anchors as an unlocated count across the scanned assets. These records cannot be assigned to the requested geography from bbox alone. State that scope separately and expose any skipped shards; avoid a regional coverage claim. The count may require a second bounded scan. Where exact completeness is needed, a separately tested point-geometry fallback can verify these rows.",
+    "optional_email_projection": {
+      "insert_after": "to_json(phones) AS phones_json,",
+      "sql": "to_json(emails) AS emails_json,",
+      "gate": "Only include optional business email for an explicitly requested use covered by source and field rights, with provenance and nullable output. Verified optional field binds on inspected file and remains excluded from default output. Presence does not establish current ownership, deliverability or permission to send."
+    },
+    "status_semantics": "Default query preserves unknown, open, temporarily_closed and permanently_closed as published. Distinguish unknown from open and a closure status from absence/tombstone. Status is independent of opening hours. Filter an operating-only result against explicit status criteria and report withheld unknowns; keep source fact separate from any later observation."
+  }
+]

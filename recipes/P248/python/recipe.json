@@ -1,0 +1,26 @@
+{
+  "id": "P248",
+  "operation": "python",
+  "adapter": "python-source",
+  "source_repository": "SYSTRAN/faster-whisper",
+  "revision": "2a3a857737d17d974f30d818ebec69ce11929e5c",
+  "source_subdirectory": ".",
+  "distribution": "faster-whisper",
+  "import_name": "faster_whisper",
+  "python": "3.12.13",
+  "inspected_build_metadata": {
+    "path": "setup.py",
+    "sha256": "ba954c16af3bb1577ebd57704e04c316bcd0cc9d8031b39216dc81c58a58ea9f",
+    "backend": "setuptools.build_meta:__legacy__"
+  },
+  "prerequisites": "Existing uv and Git; source-specific compiler/system libraries and backend prerequisites from nstack show P248. This recipe selects CPU/basic package only; it installs no weights, provider extras, device driver, daemon or global tool. Build/submodule incompatibility fails closed.",
+  "acquire": "nstack commission P248 python",
+  "lock_resolution": "Fetch and check out only this exact commit in a private owned build prefix. Resolve explicit source build-system requirements to a hash lock, build one wheel without build isolation, verify its distribution metadata, resolve runtime dependencies to a second hash lock, sync with required hashes. Retain source/wheel/interpreter/uv identity and all environment file hashes. Repeat commissioning verifies the existing lock without resolving upgrades.",
+  "invoke": "From a bounded project: nstack run P248 python -- /absolute/project/script.py [arguments]. Use only the registered package API, actual task inputs and current project permissions.",
+  "check": "nstack check P248 python (actual import and distribution identity only). Then execute the distinct output, negative control and independent comparison from the component acceptance checks; import success is not domain acceptance.",
+  "deactivate": "Each script exits normally; stop only a task-owned service started by that script after reconciling effects. nstack remove-runtime P248 python quarantines the exact owned environment and lock into private recovery. No global registration is created.",
+  "legacy_build_requirements": [
+    "setuptools>=40.8.0",
+    "wheel"
+  ]
+}

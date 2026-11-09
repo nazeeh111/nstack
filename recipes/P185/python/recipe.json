@@ -1,0 +1,22 @@
+{
+  "id": "P185",
+  "operation": "python",
+  "adapter": "python-source",
+  "source_repository": "py-why/dowhy",
+  "revision": "50d43ac9c04a9ba301349530fac0ef34db59c9ec",
+  "source_subdirectory": ".",
+  "distribution": "dowhy",
+  "import_name": "dowhy",
+  "python": "3.12.13",
+  "inspected_build_metadata": {
+    "path": "pyproject.toml",
+    "sha256": "72a625ecc4c9e0f49671b41b93fad4e78a7c76b4bf9c5d227277f0279c0c8550",
+    "backend": "poetry.core.masonry.api"
+  },
+  "prerequisites": "Existing uv and Git; source-specific compiler/system libraries and backend prerequisites from nstack show P185. This recipe selects CPU/basic package only; it installs no weights, provider extras, device driver, daemon or global tool. Build/submodule incompatibility fails closed.",
+  "acquire": "nstack commission P185 python",
+  "lock_resolution": "Fetch and check out only this exact commit in a private owned build prefix. Resolve explicit source build-system requirements to a hash lock, build one wheel without build isolation, verify its distribution metadata, resolve runtime dependencies to a second hash lock, sync with required hashes. Retain source/wheel/interpreter/uv identity and all environment file hashes. Repeat commissioning verifies the existing lock without resolving upgrades.",
+  "invoke": "From a bounded project: nstack run P185 python -- /absolute/project/script.py [arguments]. Use only the registered package API, actual task inputs and current project permissions.",
+  "check": "nstack check P185 python (actual import and distribution identity only). Then execute the distinct output, negative control and independent comparison from the component acceptance checks; import success is not domain acceptance.",
+  "deactivate": "Each script exits normally; stop only a task-owned service started by that script after reconciling effects. nstack remove-runtime P185 python quarantines the exact owned environment and lock into private recovery. No global registration is created."
+}

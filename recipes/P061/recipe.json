@@ -1,0 +1,25 @@
+{
+  "id": "P061",
+  "operation": "test",
+  "adapter": "npm-bin",
+  "package": "@playwright/test",
+  "version": "1.65.0",
+  "bin": "playwright",
+  "integrity": "sha512-iGURLGuKDLakSEl7Pgfv8h7f+XLT+V861Wfhz0zlEl5nyFuKUopdkFBPKqTllTUp06aOwPuH8iuUEb3yp3MpbQ==",
+  "artifact_url": "https://registry.npmjs.org/@playwright/test/-/test-1.65.0.tgz",
+  "runtime_source_revision": "a1f35e1955976e84411f9c10358228a80b763ebe",
+  "reviewed_source_revision": "1af60d94ac714d4007828bafa02b0f1cbd8646b9",
+  "license": "Apache-2.0",
+  "prerequisites": [
+    "Node.js >=20",
+    "npm",
+    "native target-compatible binaries"
+  ],
+  "acquire": "nstack commission P061 test",
+  "invoke": "nstack run P061 test -- ARGS",
+  "verify": "nstack check P061 test",
+  "deactivate": "Each CLI invocation exits and starts no persistent service; project test servers must be shut down by the test owner. The locked runtime stays dormant in private state.",
+  "remove": "nstack remove-runtime P061 test",
+  "lock_resolution": "Exact top-level artifact integrity verified from the official npm registry. Resolve transitive/platform dependencies once at commissioning, save package-lock.json, and never auto-update an existing lock.",
+  "compatibility_basis": "Reviewed source is1.66.0-next;1.65.0 is the explicitly resolved prior stable target. Only demonstrated target flows are accepted; no claim that later source-only features were tested."
+}

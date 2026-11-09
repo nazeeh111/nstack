@@ -1,0 +1,22 @@
+{
+  "id": "L064",
+  "operation": "python",
+  "adapter": "python-source",
+  "source_repository": "facebookresearch/faiss",
+  "revision": "b7c44bcc92e60e73e5cbc5b40b4c32d24d72652e",
+  "source_subdirectory": ".",
+  "distribution": "faiss-cpu",
+  "import_name": "faiss",
+  "python": "3.12.13",
+  "inspected_build_metadata": {
+    "path": "pyproject.toml",
+    "sha256": "46590cc8cb0ac368cea0b5d8532f3234116fe0d1965de995c2d3b3b7999e91bf",
+    "backend": "scikit_build_core.build"
+  },
+  "prerequisites": "Existing uv and Git; source-specific compiler/system libraries and backend prerequisites from nstack show L064. This recipe selects CPU/basic package only; it installs no weights, provider extras, device driver, daemon or global tool. Build/submodule incompatibility fails closed.",
+  "acquire": "nstack commission L064 python",
+  "lock_resolution": "Fetch and check out only this exact commit in a private owned build prefix. Resolve explicit source build-system requirements to a hash lock, build one wheel without build isolation, verify its distribution metadata, resolve runtime dependencies to a second hash lock, sync with required hashes. Retain source/wheel/interpreter/uv identity and all environment file hashes. Repeat commissioning verifies the existing lock without resolving upgrades.",
+  "invoke": "From a bounded project: nstack run L064 python -- /absolute/project/script.py [arguments]. Use only the registered package API, actual task inputs and current project permissions.",
+  "check": "nstack check L064 python (actual import and distribution identity only). Then execute the distinct output, negative control and independent comparison from the component acceptance checks; import success is not domain acceptance.",
+  "deactivate": "Each script exits normally; stop only a task-owned service started by that script after reconciling effects. nstack remove-runtime L064 python quarantines the exact owned environment and lock into private recovery. No global registration is created."
+}

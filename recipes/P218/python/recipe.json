@@ -1,0 +1,22 @@
+{
+  "id": "P218",
+  "operation": "python",
+  "adapter": "python-source",
+  "source_repository": "ManimCommunity/manim",
+  "revision": "16ea443e2a5f1d79db0a721161411ce916d6e733",
+  "source_subdirectory": ".",
+  "distribution": "manim",
+  "import_name": "manim",
+  "python": "3.12.13",
+  "inspected_build_metadata": {
+    "path": "pyproject.toml",
+    "sha256": "392ce34fddbd8e132860fd61e8feda2fdd06e464d263c148669f72eeb7493cd1",
+    "backend": "uv_build"
+  },
+  "prerequisites": "Existing uv and Git; source-specific compiler/system libraries and backend prerequisites from nstack show P218. This recipe selects CPU/basic package only; it installs no weights, provider extras, device driver, daemon or global tool. Build/submodule incompatibility fails closed.",
+  "acquire": "nstack commission P218 python",
+  "lock_resolution": "Fetch and check out only this exact commit in a private owned build prefix. Resolve explicit source build-system requirements to a hash lock, build one wheel without build isolation, verify its distribution metadata, resolve runtime dependencies to a second hash lock, sync with required hashes. Retain source/wheel/interpreter/uv identity and all environment file hashes. Repeat commissioning verifies the existing lock without resolving upgrades.",
+  "invoke": "From a bounded project: nstack run P218 python -- /absolute/project/script.py [arguments]. Use only the registered package API, actual task inputs and current project permissions.",
+  "check": "nstack check P218 python (actual import and distribution identity only). Then execute the distinct output, negative control and independent comparison from the component acceptance checks; import success is not domain acceptance.",
+  "deactivate": "Each script exits normally; stop only a task-owned service started by that script after reconciling effects. nstack remove-runtime P218 python quarantines the exact owned environment and lock into private recovery. No global registration is created."
+}

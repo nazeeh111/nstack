@@ -1,0 +1,22 @@
+{
+  "id": "P148",
+  "operation": "python",
+  "adapter": "python-source",
+  "source_repository": "axolotl-ai-cloud/axolotl",
+  "revision": "0987773357d22624aa39fdc66dbf8886444707f0",
+  "source_subdirectory": ".",
+  "distribution": "axolotl",
+  "import_name": "axolotl",
+  "python": "3.12.13",
+  "inspected_build_metadata": {
+    "path": "pyproject.toml",
+    "sha256": "b519488ee430c5cca03bdc498477723b7af189b8f7e0e8d9af275099aadd61ad",
+    "backend": "setuptools.build_meta"
+  },
+  "prerequisites": "Existing uv and Git; source-specific compiler/system libraries and backend prerequisites from nstack show P148. This recipe selects CPU/basic package only; it installs no weights, provider extras, device driver, daemon or global tool. Build/submodule incompatibility fails closed.",
+  "acquire": "nstack commission P148 python",
+  "lock_resolution": "Fetch and check out only this exact commit in a private owned build prefix. Resolve explicit source build-system requirements to a hash lock, build one wheel without build isolation, verify its distribution metadata, resolve runtime dependencies to a second hash lock, sync with required hashes. Retain source/wheel/interpreter/uv identity and all environment file hashes. Repeat commissioning verifies the existing lock without resolving upgrades.",
+  "invoke": "From a bounded project: nstack run P148 python -- /absolute/project/script.py [arguments]. Use only the registered package API, actual task inputs and current project permissions.",
+  "check": "nstack check P148 python (actual import and distribution identity only). Then execute the distinct output, negative control and independent comparison from the component acceptance checks; import success is not domain acceptance.",
+  "deactivate": "Each script exits normally; stop only a task-owned service started by that script after reconciling effects. nstack remove-runtime P148 python quarantines the exact owned environment and lock into private recovery. No global registration is created."
+}

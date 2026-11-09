@@ -1,0 +1,9 @@
+{
+  "fit_start_db": -5.0,
+  "fit_decay_db": 30.0,
+  "energy_fraction": 1.0,
+  "method": "Schroeder backward energy; ordinary least squares in dB",
+  "signal_units": "dimensionless full-scale amplitude: PCM16 / 32768",
+  "filtering": "none; broadband",
+  "time_origin": "first sample in the WAV; no onset shift"
+}

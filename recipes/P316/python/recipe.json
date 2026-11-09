@@ -1,0 +1,22 @@
+{
+  "id": "P316",
+  "operation": "python",
+  "adapter": "python-source",
+  "source_repository": "python-control/python-control",
+  "revision": "bfe9380eedcfbc6e57c0a7117e77e633575e3a18",
+  "source_subdirectory": ".",
+  "distribution": "control",
+  "import_name": "control",
+  "python": "3.12.13",
+  "inspected_build_metadata": {
+    "path": "pyproject.toml",
+    "sha256": "84a1da5ce5d216ef099d89c7daad4b965902216a2a27312e3e77e0e089602f58",
+    "backend": "setuptools.build_meta"
+  },
+  "prerequisites": "Existing uv and Git; source-specific compiler/system libraries and backend prerequisites from nstack show P316. This recipe selects CPU/basic package only; it installs no weights, provider extras, device driver, daemon or global tool. Build/submodule incompatibility fails closed.",
+  "acquire": "nstack commission P316 python",
+  "lock_resolution": "Fetch and check out only this exact commit in a private owned build prefix. Resolve explicit source build-system requirements to a hash lock, build one wheel without build isolation, verify its distribution metadata, resolve runtime dependencies to a second hash lock, sync with required hashes. Retain source/wheel/interpreter/uv identity and all environment file hashes. Repeat commissioning verifies the existing lock without resolving upgrades.",
+  "invoke": "From a bounded project: nstack run P316 python -- /absolute/project/script.py [arguments]. Use only the registered package API, actual task inputs and current project permissions.",
+  "check": "nstack check P316 python (actual import and distribution identity only). Then execute the distinct output, negative control and independent comparison from the component acceptance checks; import success is not domain acceptance.",
+  "deactivate": "Each script exits normally; stop only a task-owned service started by that script after reconciling effects. nstack remove-runtime P316 python quarantines the exact owned environment and lock into private recovery. No global registration is created."
+}

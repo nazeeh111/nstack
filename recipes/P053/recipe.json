@@ -1,0 +1,24 @@
+{
+  "id": "P053",
+  "operation": "cli",
+  "adapter": "npm-bin",
+  "package": "@ast-grep/cli",
+  "version": "0.51.1",
+  "bin": "ast-grep",
+  "integrity": "sha512-xdX9+jHTZLwpYtHFRmK4Zzoe0UPmZrn037wwCHKBqaFJPC12xiGTwrZEZDMbBwRwmsGYcG1yHsb7yvEFU8EzNw==",
+  "artifact_url": "https://registry.npmjs.org/@ast-grep/cli/-/cli-0.51.1.tgz",
+  "runtime_source_revision": "5a204b1ef3facef94de125d990dddc7cf90011c0",
+  "reviewed_source_revision": "e83806463b5fb5c34dd7808e82f4c8ae52333f52",
+  "license": "MIT",
+  "prerequisites": [
+    "Node.js >=20",
+    "npm",
+    "native target-compatible binaries"
+  ],
+  "acquire": "nstack commission P053 cli",
+  "invoke": "nstack run P053 cli -- ARGS",
+  "verify": "nstack check P053 cli",
+  "deactivate": "Each CLI invocation exits and starts no persistent service; project test servers must be shut down by the test owner. The locked runtime stays dormant in private state.",
+  "remove": "nstack remove-runtime P053 cli",
+  "lock_resolution": "Exact top-level artifact integrity verified from the official npm registry. Resolve transitive/platform dependencies once at commissioning, save package-lock.json, and never auto-update an existing lock."
+}

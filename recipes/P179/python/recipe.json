@@ -1,0 +1,22 @@
+{
+  "id": "P179",
+  "operation": "python",
+  "adapter": "python-source",
+  "source_repository": "marimo-team/marimo",
+  "revision": "6db872db3c37421f58513a2269e3d6956604a020",
+  "source_subdirectory": ".",
+  "distribution": "marimo",
+  "import_name": "marimo",
+  "python": "3.12.13",
+  "inspected_build_metadata": {
+    "path": "pyproject.toml",
+    "sha256": "b2c5521fec900331dbdd03d27a2436c80d490a00ba36290f8ea38a106c988082",
+    "backend": "uv_build"
+  },
+  "prerequisites": "Existing uv and Git; source-specific compiler/system libraries and backend prerequisites from nstack show P179. This recipe selects CPU/basic package only; it installs no weights, provider extras, device driver, daemon or global tool. Build/submodule incompatibility fails closed.",
+  "acquire": "nstack commission P179 python",
+  "lock_resolution": "Fetch and check out only this exact commit in a private owned build prefix. Resolve explicit source build-system requirements to a hash lock, build one wheel without build isolation, verify its distribution metadata, resolve runtime dependencies to a second hash lock, sync with required hashes. Retain source/wheel/interpreter/uv identity and all environment file hashes. Repeat commissioning verifies the existing lock without resolving upgrades.",
+  "invoke": "From a bounded project: nstack run P179 python -- /absolute/project/script.py [arguments]. Use only the registered package API, actual task inputs and current project permissions.",
+  "check": "nstack check P179 python (actual import and distribution identity only). Then execute the distinct output, negative control and independent comparison from the component acceptance checks; import success is not domain acceptance.",
+  "deactivate": "Each script exits normally; stop only a task-owned service started by that script after reconciling effects. nstack remove-runtime P179 python quarantines the exact owned environment and lock into private recovery. No global registration is created."
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P230",
+  "operation": "media",
+  "adapter": "ffmpeg-source",
+  "source_repository": "FFmpeg/FFmpeg",
+  "revision": "182bb23bf84869e8487a5b5c6253fc9e9c26adfc",
+  "prerequisites": ["Darwin ARM64", "Apple clang and make already installed", "Local filesystem output"],
+  "configuration": ["--disable-autodetect", "--disable-doc", "--disable-debug", "--disable-network", "--disable-everything", "--enable-ffmpeg", "--enable-ffprobe", "--enable-protocol=file", "--enable-muxer=matroska,wav,null,rawvideo", "--enable-demuxer=matroska,wav,image2", "--enable-encoder=ffv1,pcm_s16le,rawvideo", "--enable-decoder=ffv1,pcm_s16le,ppm", "--enable-filter=aresample,anull,scale,null,format"],
+  "invocation": "nstack run P230 media -- ffmpeg ARGS (or ffprobe ARGS)",
+  "acceptance": "nstack check P230 media: encode, decode, inspect streams, independently compare frame colors and audio onset; change cue frame and rerender",
+  "removal": "nstack remove-runtime P230 media retains all bytes in private recovery storage",
+  "rights": "Build only the pinned local-source LGPL configuration. No external codecs, network, models or media are acquired. Preserve source license files and actual -buildconf in the lock."
+}
