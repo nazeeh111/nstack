@@ -206,7 +206,7 @@ services and assets must use their official access and rights checks.
 
 ## Verification and supported scope
 
-Run the portable tests with the command above. `python3 tests/check_recovery.py`
+Run the portable tests with the command above. `python3 tests/check_recovery.py check --output /absolute/private/capture`
 uses a loopback capture receiver and synthetic identities to test lost
 acknowledgements, restart and exactly one business effect. It never sends mail.
 The registry contract test checks full component/path coverage and permissions;
