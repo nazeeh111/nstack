@@ -67,6 +67,9 @@ def materialize(source,out,s,c,m,support=None,_inside=False):
  if s['delivery']=='narrow-patched leaf' and not ((s['candidate_id']=='P001' and name in ('diagnosing-bugs','tdd','codebase-design')) or s['candidate_id'] in ('P112','P119') or s['candidate_id'] in ('P343','P347','P351','P354','P357','L036','X-AUTO-EVE','X-CREATIVE-BLENDER-SKILLS','X-CREATIVE-UNREAL','L006','L014','L020','L050','P183','P321','P094','P215','P226','P224','P238') or s['candidate_id'] in ('P200','P328','P403','X-CREATIVE-COLORFIGURES','X-CREATIVE-ARCHIFY') or s['candidate_id']=='P195' or s['candidate_id']=='P150' or s['candidate_id'] in ('P007','P016','P037','L010','P008','P011','P013','P028','P062','P064','P066','P068','P083')):raise ValueError('Required narrow patch not yet commissioned: '+s['candidate_id']+'/'+name)
  folder=source/path.parent
  for f in folder.rglob('*'):
+  # This root-level source is explicitly a three-reference expertise port,
+  # not the upstream workbench, provider tooling or translated orchestration.
+  if s['candidate_id']=='P224' and str(f.relative_to(folder)) not in ('SKILL.md','references/pipeline.md','references/sound-design.md','references/music-beat-sync.md'):continue
   if f.is_symlink():raise ValueError('Source closure symlink needs explicit review')
   if f.is_file():
    if f.name=='SKILL.md' and f!=folder/'SKILL.md':raise ValueError('Unexpected sibling skill in closure')

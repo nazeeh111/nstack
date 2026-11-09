@@ -8,6 +8,31 @@ The requested editable source controls dispatch: keep React scenes in Remotion, 
 def change(s,old,new):
  if old not in s:raise ValueError('Missing media patch anchor: '+old[:90])
  return s.replace(old,new)
+def scope_pipeline(text,spec):
+ # Retain the production expertise, not template onboarding or delivery promotion.
+ text=text[text.index('## 阶段 0：'):text.index('## 阶段 7：')]
+ start=text.index('9. **为交付后的动效工作台留好接口**')
+ end=text.index('**产出**',start)
+ text=text[:start]+'9. Keep one editable timeline/cue manifest. Derive subtitles, SFX and transitions from it; preserve the incumbent project without adding a workbench.\n\n'+text[end:]
+ start=text.index('1. 读 `references/sound-design.md` 与 `references/sfx-sourcing.md`')
+ end=text.index('3. **BGM**',start)
+ sourcing=f'https://github.com/{spec["source_repository"]}/blob/{spec["revision"]}/references/sfx-sourcing.md'
+ review=f'https://github.com/{spec["source_repository"]}/blob/{spec["revision"]}/references/final-review.md'
+ text=text[:start]+('1. Read the local sound-design reference. User-supplied audio wins; choose rights-cleared recordings, stock or procedural sounds for the task. '+
+       f'Consult the [pinned sourcing reference]({sourcing}) only for relevant methods; no provider or missing download script is installed.\n'+
+       '2. Record source, license, cue identity, actual quality and measured offsets in the project audio manifest. Preserve revisable stems.\n')+text[end:]
+ text=text.replace('`references/aesthetic-rules.md`','the brief-specific visual acceptance criteria')
+ text=text.replace('`references/shots/`',"the incumbent project's approved shot references")
+ text=text.replace('`references/sequences/`',"the incumbent project's sequence references")
+ text=text.replace('`src/workbench.ts`','the editable timeline/cue manifest').replace('`assets/audio/bgm/`','existing rights-cleared music')
+ text=text.replace('从 Freesound','从用户选定且许可清楚的音频来源').replace('用 Freesound 的','用许可清楚的')
+ return ('# Scoped production methods\n\nModified from the pinned upstream pipeline. This is read-only shot, timing, mix and QA expertise. '+
+         'The three retained local references are pipeline.md, sound-design.md and music-beat-sync.md. Other upstream project paths, commands, templates and example assets are illustrative, not installed tools or instructions to acquire a workflow. '+
+         'Preserve the brief, incumbent renderer, model/effort and current authority; no fixed brand style or agent team applies.\n\n'+text+
+         '\n## Final acceptance and handoff\n\n'+f'Consult the [pinned final-QA reference]({review}) for relevant checks, adapting to the supplied brief. '+
+         'Inspect current rendered frames and actual mux; check text, cuts, cue/frame offsets, loudness and peak, and reopen the final export. '+
+         'Use a fresh reviewer only when it earns the cost and is authorized. Preserve editable source, stems, cue/asset/license manifests and the last accepted render. '+
+         'Deliver the requested artifact; do not launch a workbench, publish, upload, solicit promotion or add another installer.\n')
 def patch(id,name,spec,out):
  p=out/'SKILL.md';s=p.read_text()
  if id=='P215':
@@ -42,6 +67,7 @@ def patch(id,name,spec,out):
   s+='\n## Version and artifact acceptance\n\nThis source leaf is4.0.540. Resolve create-video and all Remotion packages to exactly4.0.540 with artifact integrity and a saved dependency lock before execution; do not mix package versions or use @latest. Preserve existing project edits and its incumbent stack. Check installed help and use the version-matched bundled rendering browser. Produce the requested final artifact after frame/layout/audio checks, keep editable JSX/assets and reopen the final export.\n\n'+ROUTING
  elif id=='P224':
   # The manifest selects expertise references, explicitly not whole orchestration.
+  pipeline=out/'references/pipeline.md';pipeline.write_text(scope_pipeline(pipeline.read_text(),spec))
   sound=out/'references/sound-design.md';text=sound.read_text()
   text=change(text,'新制作与换音统一从 **Freesound** 搜索、下载，操作见 [sfx-sourcing.md](sfx-sourcing.md)。','优先沿用用户指定的音频；按任务选择许可清楚的实录、素材或程序化声音，不强制使用某个平台。')
   for name in ('sfx-sourcing','final-review'):
