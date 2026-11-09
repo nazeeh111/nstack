@@ -43,6 +43,28 @@ def selection():
         raise ValueError("Natural skill names collide")
     return rows
 
+def addon_definition(name):
+    import academic_addon
+    if name in academic_addon.DESCRIPTIONS:
+        return academic_addon.definition(nstack, name)
+    source = ROOT / "addons" / name
+    frozen = {}
+    for file in source.rglob("*"):
+        if file.is_symlink():
+            raise ValueError("Linked addon source is not allowed")
+        if file.is_file():
+            frozen[str(file.relative_to(source))] = (file.read_bytes(), 0o555 if file.stat().st_mode & 0o111 else 0o444)
+    return {"source": source, "entry": P("."), "provenance": json.loads(frozen["SOURCE.json"][0]), "overrides": {}, "frozen_files": frozen}
+
+def addon_files(spec):
+    files = dict(spec["frozen_files"])
+    for rel, data in spec["overrides"].items():
+        files[rel] = (data, 0o444)
+    # The original source receipt no longer seals the adapted bytes.
+    if ".nstack-source.json" in files:
+        files["UPSTREAM-SOURCE.json"] = files.pop(".nstack-source.json")
+    return files
+
 def index_rows(originals, addons, release):
     rows = []
     for name, s, _, r in originals:
@@ -55,9 +77,9 @@ def index_rows(originals, addons, release):
             "installation_adaptation": "Natural entry name; complete reviewed support bundle retained.",
         })
     for name in addons:
-        provenance = json.loads((ROOT / "addons" / name / "SOURCE.json").read_text())
-        rows.append({"name": name, "skill_path": str(release / "bundles" / name / "SKILL.md"),
-                     "deployment": "on demand", **provenance})
+        spec = addons[name]
+        rows.append({"name": name, "skill_path": str(release / "bundles" / name / spec["entry"] / "SKILL.md"),
+                     "deployment": "on demand", **spec["provenance"]})
     return rows
 
 def expected_tree(originals, addons, release, index):
@@ -91,20 +113,21 @@ def expected_tree(originals, addons, release, index):
     for name in addons:
         prefix = P("bundles") / name
         add_directory(prefix)
-        for file in (ROOT / "addons" / name).rglob("*"):
-            rel = prefix / file.relative_to(ROOT / "addons" / name)
-            if file.is_symlink():
-                raise ValueError("Linked addon source is not allowed")
-            if file.is_dir():
-                add_directory(rel)
-            elif file.is_file():
-                expected[str(rel)] = {"sha256": sha(file.read_bytes()), "mode": 0o555 if file.stat().st_mode & 0o111 else 0o444}
-        expected[str(P("skills") / name)] = {"link": str(release / prefix)}
+        spec = addons[name]
+        for rel, (data, mode) in addon_files(spec).items():
+            path = prefix / rel
+            for parent in path.parents:
+                if parent == P("."):
+                    break
+                add_directory(parent)
+            expected[str(path)] = {"sha256": sha(data), "mode": mode}
+        expected[str(P("skills") / name)] = {"link": str(release / prefix / spec["entry"])}
     raw = (json.dumps(index, sort_keys=True, indent=2) + "\n").encode()
     expected["index.json"] = {"sha256": sha(raw), "mode": 0o444}
     return expected
 
 def prepare(state, chosen, addons):
+    addons = {name: addon_definition(name) for name in addons}
     originals = []
     for name, s in chosen:
         release = nstack.build(s["candidate_id"], s["source_path"])
@@ -112,7 +135,7 @@ def prepare(state, chosen, addons):
         originals.append((name, s, release, r))
     inputs = {
         "leaves": [(name, r["content_sha256"], r["builder_sha256"]) for name, _, _, r in originals],
-        "addons": {name: tree(ROOT / "addons" / name) for name in addons},
+        "addons": {name: {rel: {"sha256": sha(data), "mode": mode} for rel, (data, mode) in addon_files(spec).items()} for name, spec in addons.items()},
         "adaptation": "full-bundle-natural-entry-v1",
     }
     digest = sha(json.dumps(inputs, sort_keys=True).encode())
@@ -152,12 +175,17 @@ def prepare(state, chosen, addons):
             final_entry = release / "bundles" / name / r.get("entry_dir", ".")
             (out / "skills" / name).symlink_to(final_entry)
         for name in addons:
-            source = ROOT / "addons" / name
-            if not (source / "LICENSE").is_file():
+            spec = addons[name]
+            if not (spec["source"] / "LICENSE").is_file():
                 raise ValueError("Addon license missing")
             dest = out / "bundles" / name
-            shutil.copytree(source, dest)
-            (out / "skills" / name).symlink_to(release / "bundles" / name)
+            dest.mkdir()
+            for rel, (data, mode) in addon_files(spec).items():
+                file = dest / rel
+                file.parent.mkdir(parents=True, exist_ok=True)
+                file.write_bytes(data)
+                file.chmod(mode)
+            (out / "skills" / name).symlink_to(release / "bundles" / name / spec["entry"])
         atomic_json(out / "index.json", index)
         for p in out.rglob("*"):
             if not p.is_symlink():
@@ -278,6 +306,11 @@ def apply(args):
             raise ValueError("Unknown or non-installable selected skill name")
         chosen = [(name, s) for name, s in chosen if name in names]
     addons = [name for name, enabled in [("agent-reach", args.agent_reach), ("repository-docs", args.repository_docs)] if enabled]
+    if getattr(args, "academic_research", False):
+        import academic_addon
+        addons.extend(academic_addon.DESCRIPTIONS)
+    if set(addons) & {name for name, _ in chosen}:
+        raise ValueError("Addon name collides with selected skill")
     release, index = prepare(state, chosen, addons)
     check_parent(agents)
     derived_before = fingerprint(agents)
@@ -401,6 +434,7 @@ def main():
     a.add_argument("--replace", action="store_true")
     a.add_argument("--agent-reach", action="store_true", help="Explicitly add the separately reviewed Agent Reach skill")
     a.add_argument("--repository-docs", action="store_true")
+    a.add_argument("--academic-research", action="store_true", help="Fetch five pinned CC-BY-NC academic skills privately; no Claude hooks or paid providers")
     a.add_argument("--vault", help="Existing user-authorized vault path; does not create a vault")
     sub.add_parser("list")
     a = sub.add_parser("rollback")

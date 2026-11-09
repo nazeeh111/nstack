@@ -5,7 +5,7 @@ the evaluated manifest. It excludes trial/substitute/reference/rejected leaves.
 Natural names and complete bundles are verified independently against the
 registered original releases. Optional `--only EXACT-NAME` deliberately narrows
 an installation; it is not the full setup. The explicit additions are
-`--agent-reach` and `--repository-docs`. The latter guides public repository
+`--agent-reach`, `--repository-docs` and `--academic-research`. The latter guides public repository
 lookups and strict version handling in Context7.
 
 ## Runtime connections
@@ -120,3 +120,23 @@ It restores journaled profile changes and chains previous owned recovery helpers
 It refuses conflicting later edits instead of overwriting them. Private vaults,
 new project artifacts and durable acquired dependencies are retained. Run from
 Terminal, outside the active Codex process, and retain the private state folder.
+
+## Academic research skills
+
+Explicit `--academic-research` fetches Imbad0202/academic-research-skills at
+`6d9388674de1ad0437ad95db3d52f92b92204d84` (suite 3.24.2) privately. It adds
+deep-research, academic-paper, academic-paper-reviewer, academic-pipeline and
+sr-screener. The entire 2,860-file source tree has a pinned aggregate hash;
+each entry retains complete root/sibling support and the untouched original.
+Codex adaptations narrow discovery, translate platform bindings and suppress
+Claude hooks, automatic updates, fixed swarms and provider/credential transports.
+No API-key environment or auth-copy helper is invoked. Local helpers require
+source review and explicit project-local input/output paths. Screening preparation
+uses a fresh dedicated work directory because upstream can clear existing batches.
+
+The upstream is CC BY-NC 4.0, copyright Cheng-I Wu. It is source-available for
+noncommercial use; it is not MIT-licensed or unrestricted open source. The public
+nstack repository contains authored integration code and attribution, not the
+upstream payload. Preserve upstream LICENSE/NOTICE and review its terms for your
+intended use. Installed references and scripts are not a claim of fully tested
+research validity, citation recall or journal-review independence.

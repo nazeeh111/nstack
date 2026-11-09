@@ -3,7 +3,8 @@
 A native-first Codex setup with 126 reviewed specialist skills available across
 ordinary projects. Skills use their actual names, retain their required support
 files, and load their full instructions when needed. Routine work stays native.
-Agent Reach and public repository documentation are two explicit optional additions.
+Agent Reach, public repository documentation and five academic research skills
+are explicit optional additions.
 
 The release registry contains 535 discovery decisions, 242 admitted component
 records and 202 exact skill/support paths. Admission is not proof of runtime
@@ -29,6 +30,8 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 python3 install.py install --stage-only --bootstrap-cli
 python3 install.py install --bootstrap-cli --retire-personal --run-id cutover
 python3 native_setup.py install --replace --agent-reach --repository-docs
+# Optional noncommercial academic suite, fetched privately from its pinned source:
+python3 native_setup.py install --replace --agent-reach --repository-docs --academic-research
 "$HOME/.local/bin/nstack" doctor
 ```
 
@@ -54,7 +57,8 @@ CLI entry elsewhere, pass its exact absolute path with `--cli-path`.
 Open an ordinary project and ask for the finished result. No project-init step
 is required. Codex discovers the installed skill summaries and reads the relevant
 complete SKILL.md and support when needed. The global collection contains only
-126 selected on-demand leaves, plus the two additions if explicitly enabled.
+126 selected on-demand leaves, plus explicit additions if enabled. The academic suite adds five skills and keeps
+its CC BY-NC source separate from this MIT repository.
 Heavy dependencies are separate and remain on demand. Search the full installed
 `native-skill-index.json` when the native summary list is truncated.
 
