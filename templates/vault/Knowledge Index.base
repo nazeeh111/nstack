@@ -1,0 +1,13 @@
+views:
+  - type: table
+    name: Current knowledge
+    filters:
+      and:
+        - 'state == "current"'
+        - '!file.inFolder("Archive")'
+        - '!file.inFolder("Templates")'
+    order:
+      - file.name
+      - scope
+      - source_revision
+      - observation_date

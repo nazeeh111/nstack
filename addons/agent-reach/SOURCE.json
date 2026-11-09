@@ -1,0 +1,7 @@
+{
+  "repository": "Panniantong/Agent-Reach",
+  "revision": "c70ae6da5d39bc90e09ad2ae0575ccc89f31e284",
+  "source_path": "agent_reach/skill/SKILL_en.md",
+  "license": "MIT",
+  "adaptation": "Scope and consent boundaries; no automatic credential/session import, setup or updates."
+}

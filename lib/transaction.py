@@ -43,6 +43,25 @@ def fingerprint(path):
  if path.is_dir():return {'kind':'directory','metadata':metadata(path),'entries':{str(f.relative_to(path)):fingerprint(f) for f in sorted(path.rglob('*'))}}
  raise ValueError('Unsupported target type')
 
+def replace_entry(source,target):
+ """Atomically exchange unlike directory types; retain the displaced entry."""
+ source=P(source);target=P(target)
+ source_dir=source.is_dir() and not source.is_symlink()
+ target_dir=target.is_dir() and not target.is_symlink()
+ if (target.exists() or target.is_symlink()) and source_dir!=target_dir:
+  # Darwin's RENAME_SWAP and Linux's RENAME_EXCHANGE both use flag 2.
+  # No delete-then-link gap, including when restoring an original directory.
+  lib=ctypes.CDLL('/usr/lib/libSystem.B.dylib' if sys.platform=='darwin' else None,use_errno=True)
+  if sys.platform=='darwin':
+   fn=lib.renamex_np;fn.argtypes=[ctypes.c_char_p,ctypes.c_char_p,ctypes.c_uint];args=(os.fsencode(source),os.fsencode(target),2)
+  elif sys.platform.startswith('linux') and hasattr(lib,'renameat2'):
+   fn=lib.renameat2;fn.argtypes=[ctypes.c_int,ctypes.c_char_p,ctypes.c_int,ctypes.c_char_p,ctypes.c_uint];args=(-100,os.fsencode(source),-100,os.fsencode(target),2)
+  else:raise ValueError('Atomic directory exchange is unavailable; original entry left untouched')
+  fn.restype=ctypes.c_int
+  if fn(*args)!=0:raise OSError(ctypes.get_errno(),'Atomic directory exchange failed; original entry retained')
+  return True
+ os.replace(source,target);return False
+
 def atomic_json(path,data):
  path=P(path);path.parent.mkdir(parents=True,exist_ok=True);raw=json.dumps(data,sort_keys=True,indent=2)+'\n'
  if path.exists() and path.read_text()==raw:return
@@ -149,10 +168,16 @@ class Transaction:
    if fingerprint(path)!=desired:
     same(path,row['before'])
     if path.parent.stat().st_dev!=stage.parent.stat().st_dev:raise ValueError('Replacement requires same-volume private state')
-    os.replace(stage,path);same(path,desired)
+    swapped=replace_entry(stage,path)
+    if swapped:
+     if fingerprint(stage)!=row['before']:
+      same(path,desired);replace_entry(stage,path)
+      raise ValueError('Concurrent change to replaced skill directory; restored current bytes')
+     row['displaced_entry']=str(stage)
+    same(path,desired)
    row.pop('rollback_result',None);row.pop('rollback_expected',None);row['phase']='applied';self.save()
   finally:
-   if stage is not None and stage.is_symlink():stage.unlink()
+   if stage is not None and (stage.is_symlink() or stage.is_file()):stage.unlink()
  def retire(self,path,expected=None):
   self.require_lock();path=P(path).absolute();row=self.prepare(path,{'kind':'absent'},'retire',expected=expected)
   if fingerprint(path)!=row['after']:
@@ -197,5 +222,5 @@ class Transaction:
   else:
    same(stage,row['rollback_result'])
    if path.parent.stat().st_dev!=stage.parent.stat().st_dev:raise ValueError('Restore must stay on one volume')
-   same(path,row['rollback_expected']);os.replace(stage,path);same(path,row['rollback_result'])
+   same(path,row['rollback_expected']);replace_entry(stage,path);same(path,row['rollback_result'])
   row['phase']='rolled-back';self.save()

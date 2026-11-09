@@ -1,8 +1,9 @@
 # nstack
 
-A native-first Codex setup with a reviewed, searchable specialist catalog and
-project-scoped activation. Routine edits use the project's existing tools.
-Specialist instructions stay outside global skill discovery until needed.
+A native-first Codex setup with 126 reviewed specialist skills available across
+ordinary projects. Skills use their actual names, retain their required support
+files, and load their full instructions when needed. Routine work stays native.
+Agent Reach and public repository documentation are two explicit optional additions.
 
 The release registry contains 535 discovery decisions, 242 admitted component
 records and 202 exact skill/support paths. Admission is not proof of runtime
@@ -27,6 +28,7 @@ From this checkout:
 python3 -m unittest discover -s tests -p 'test_*.py'
 python3 install.py install --stage-only --bootstrap-cli
 python3 install.py install --bootstrap-cli --retire-personal --run-id cutover
+python3 native_setup.py install --replace --agent-reach --repository-docs
 "$HOME/.local/bin/nstack" doctor
 ```
 
@@ -49,41 +51,39 @@ CLI entry elsewhere, pass its exact absolute path with `--cli-path`.
 
 ## First unfamiliar task
 
-First run an ordinary task with its normal checks. It needs no specialist.
-When a task needs one, configure only that project from a trusted Terminal:
+Open an ordinary project and ask for the finished result. No project-init step
+is required. Codex discovers the installed skill summaries and reads the relevant
+complete SKILL.md and support when needed. The global collection contains only
+126 selected on-demand leaves, plus the two additions if explicitly enabled.
+Heavy dependencies are separate and remain on demand. Search the full installed
+`native-skill-index.json` when the native summary list is truncated.
 
 ```sh
-nstack project-init /absolute/path/to/project --trust
 nstack search room clap decay
 nstack show P318
+python3 native_setup.py list
 ```
 
-Open a fresh Codex session normally in that project. The installed guidance
-directs Codex to search by artifact, operation and failure condition, inspect
-the exact decision, and use the bounded project publisher. That publisher has
-three operations: activate one selected leaf, deactivate one owned link, and
-verify its fixed project shelf. It cannot run arbitrary commands or change
-accounts, global settings, or another project's shelf. Read the returned
-reviewed `SKILL.md` before doing the specialist work. Activation alone is not
-evidence that the specialist was used.
+Candidate IDs remain provenance keys in the catalog and commands. Installed skill
+names have no candidate-number prefix. “Personal” in Codex is its category for
+user-installed skills, including this new collection.
 
-A Terminal owner can perform the same source-backed publication explicitly:
+`native_setup.py` privately backs up the actual root and instructions, rehearses
+restoration, publishes recovery before changing the profile, installs only the
+selected entries, and preserves complete support bundles outside discovery.
+It updates only the owned nstack instruction block. Repeating the same install
+leaves target bytes and the journal unchanged. It also repairs deletion of its
+exact owned root link without changing the original rollback baseline.
 
-```sh
-nstack build P011 skills/obsidian-markdown/SKILL.md
-nstack activate /absolute/project /absolute/release/path/from/build
-nstack verify /absolute/project
-nstack deactivate /absolute/project p011-obsidian-markdown
-nstack project-remove /absolute/project
-```
+The older project publisher remains available for deliberately temporary,
+project-scoped experiments. It is optional. Do not expose the same leaf through
+both mechanisms. Source fetches use full Git commits and verified blobs; trial,
+substitute, consultation and excluded entries are rejected by generic activation.
 
-Sources are fetched by full Git commit, their blobs verified, and exact selected
-leaves patched in staging. The source remains separate from the exposed leaf.
-Required local support and notices are retained; unrelated collection entries
-are not globally installed. Publisher ownership is private and bound to the
-project's path and filesystem identity. A project file cannot forge ownership
-to remove another shelf entry. The normal worker must remain unable to write
-private source/builds or protected `.agents`/`.codex` paths.
+For native tool connections, the knowledge vault, exact runtime revisions and
+what was actually checked, see [Everyday setup](docs/EVERYDAY_SETUP.md). The
+portable installer does not copy an author's private account, vault, plugins or
+runtime environments onto another Mac.
 
 ## On-demand routes
 

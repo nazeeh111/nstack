@@ -1,0 +1,12 @@
+# Original minimal override using Serena's supported template keys.
+prompts:
+  connection_prompt: |
+    Keep routine work native. Use Serena only for nontrivial semantic navigation or editing; before its semantic tools, read initial_instructions.
+  system_prompt: |
+    Use optional semantic tools when beneficial. Read the source needed for the task.
+    Symbol paths and file paths identify symbols. Returned line numbers are zero-based.
+    User instructions, native permissions and verification requirements remain controlling.
+    {{ context_system_prompt }}
+    {% for prompt in mode_system_prompts %}
+    {{ prompt }}
+    {% endfor %}

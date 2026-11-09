@@ -1,0 +1,122 @@
+import argparse,json,pathlib,subprocess,sys,tempfile,unittest
+from unittest.mock import patch
+ROOT=pathlib.Path(__file__).resolve().parents[1]
+sys.path[:0]=[str(ROOT),str(ROOT/'lib')]
+import native_setup as native
+import transaction
+from transaction import fingerprint
+
+class NativeSetup(unittest.TestCase):
+ def setUp(self):
+  saved=native.nstack.STATE;self.addCleanup(setattr,native.nstack,'STATE',saved)
+ def args(self,home,state):
+  return argparse.Namespace(home=str(home),state=str(state),only=['obsidian-markdown'],agent_reach=False,repository_docs=False,replace=True,vault=None)
+
+ def fixture(self,base):
+  source=base/'source';entry=source/'skills/entry';entry.mkdir(parents=True)
+  (entry/'SKILL.md').write_text('---\nname: p011-obsidian-markdown\ndescription: fixture\n---\nRead [required support](../../support.md).\n')
+  (source/'support.md').write_text('Required retained support.\n')
+  (source/'LICENSE').write_text('MIT fixture\n')
+  leaf=next(s for name,s in native.selection() if name=='obsidian-markdown')
+  receipt={'content_sha256':'fixture','builder_sha256':'fixture','entry_dir':'skills/entry','files':{str(p.relative_to(source)):native.sha(p.read_bytes()) for p in source.rglob('*') if p.is_file()}}
+  (source/'.nstack-release.json').write_text(json.dumps(receipt,sort_keys=True,indent=2,ensure_ascii=False)+'\n')
+  return source,leaf,receipt
+ def test_complete_support_is_retained_but_only_the_selected_entry_is_exposed(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();source,leaf,r=self.fixture(base);state=base/'state'
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
+    release,index=native.prepare(state,[('obsidian-markdown',leaf)],[])
+    entry=release/'skills/obsidian-markdown';self.assertEqual((entry/'../../support.md').resolve().read_text(),'Required retained support.\n')
+    self.assertEqual(list((release/'skills').iterdir()),[entry]);self.assertIn('name: obsidian-markdown\n',(entry/'SKILL.md').read_text());self.assertTrue((release/'bundles/obsidian-markdown/UPSTREAM-RELEASE.json').is_file())
+    bundle=release/'bundles/obsidian-markdown';bundle.chmod(0o755);(bundle/'NATIVE-MANIFEST.json').write_text('unexpected nested file')
+    with self.assertRaisesRegex(ValueError,'release changed'):native.prepare(state,[('obsidian-markdown',leaf)],[])
+ def test_exact_selection_excludes_conditional_and_reference_paths(self):
+  rows=native.selection();self.assertEqual(len(rows),126);self.assertEqual(len({n for n,_ in rows}),126)
+  for name,s in rows:
+   self.assertIn(s['delivery'],['intact upstream leaf','narrow-patched leaf']);self.assertFalse(name.startswith(s['candidate_id'].lower()+'-'))
+   self.assertEqual(native.nstack.component(s['candidate_id'])['deployment'],'on demand')
+ def test_repeat_and_terminal_rollback_preserve_original_dirty_bytes_and_new_data(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';state=base/'state';home.mkdir();source,leaf,r=self.fixture(base)
+   old=home/'.agents/skills/old';old.mkdir(parents=True);(old/'SKILL.md').write_text('dirty original bytes\n')
+   agents=home/'.codex/AGENTS.md';agents.parent.mkdir();agents.write_text('Unrelated user instructions.\n');old_root=fingerprint(old.parent);old_agents=fingerprint(agents)
+   args=argparse.Namespace(home=str(home),state=str(state),only=['obsidian-markdown'],agent_reach=False,repository_docs=False,replace=True,vault=None)
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
+    result=native.apply(args);journal=pathlib.Path(result['run'])/'journal.json';before=journal.read_bytes();self.assertFalse(native.apply(args)['changed']);self.assertEqual(journal.read_bytes(),before)
+   (home/'new-note.md').write_text('preserve after install\n');subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True)
+   self.assertEqual(fingerprint(old.parent),old_root);self.assertEqual(fingerprint(agents),old_agents);self.assertEqual((home/'new-note.md').read_text(),'preserve after install\n');self.assertFalse((state/'rollback.sh').exists())
+ def test_recovery_is_available_when_apply_is_interrupted_after_first_mutation(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';state=base/'state';home.mkdir();source,leaf,r=self.fixture(base)
+   args=argparse.Namespace(home=str(home),state=str(state),only=['obsidian-markdown'],agent_reach=False,repository_docs=False,replace=False,vault=None)
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)),patch.object(native.Transaction,'replace_file',side_effect=RuntimeError('interrupted')):
+    with self.assertRaisesRegex(RuntimeError,'interrupted'):native.apply(args)
+   self.assertTrue((home/'.agents/skills').is_symlink());self.assertTrue((state/'rollback.sh').is_symlink())
+   subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True);self.assertFalse((home/'.agents/skills').exists());self.assertFalse((state/'native-skill-index.json').exists())
+ def test_rewritten_self_seal_and_writable_modes_do_not_authenticate_tampering(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();source,leaf,r=self.fixture(base);state=base/'state'
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
+    release,_=native.prepare(state,[('obsidian-markdown',leaf)],[]);skill=release/'bundles/obsidian-markdown/skills/entry/SKILL.md'
+    skill.chmod(0o644)
+    with self.assertRaisesRegex(ValueError,'release changed'):native.prepare(state,[('obsidian-markdown',leaf)],[])
+    skill.write_text(skill.read_text()+'Unreviewed injected instruction.\n');skill.chmod(0o444)
+    seal=release/'NATIVE-MANIFEST.json';data=json.loads(seal.read_text());data['files']=native.tree(release);seal.chmod(0o600);seal.write_text(json.dumps(data));seal.chmod(0o444)
+    with self.assertRaisesRegex(ValueError,'release changed'):native.prepare(state,[('obsidian-markdown',leaf)],[])
+ def test_linked_instruction_parent_is_rejected_before_switching_skills(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';state=base/'state';home.mkdir();source,leaf,r=self.fixture(base)
+   old=home/'.agents/skills/old';old.mkdir(parents=True);(old/'SKILL.md').write_text('preserve original\n');before=fingerprint(old.parent)
+   shared=base/'shared';shared.mkdir();(shared/'AGENTS.md').write_text('shared instructions\n');(home/'.codex').symlink_to(shared)
+   args=argparse.Namespace(home=str(home),state=str(state),only=['obsidian-markdown'],agent_reach=False,repository_docs=False,replace=True,vault=None)
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
+    with self.assertRaisesRegex(ValueError,'Linked profile target parent'):native.apply(args)
+   self.assertEqual(fingerprint(old.parent),before);self.assertEqual((shared/'AGENTS.md').read_text(),'shared instructions\n');self.assertFalse((state/'rollback.sh').exists())
+ def test_concurrent_instruction_edit_is_preserved_before_profile_mutation(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';state=base/'state';home.mkdir();source,leaf,r=self.fixture(base)
+   agents=home/'.codex/AGENTS.md';agents.parent.mkdir();agents.write_text('before\n')
+   args=argparse.Namespace(home=str(home),state=str(state),only=['obsidian-markdown'],agent_reach=False,repository_docs=False,replace=False,vault=None)
+   original=native.guidance
+   def race(text,state,vault):
+    result=original(text,state,vault);agents.write_text('concurrent user edit\n');return result
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)),patch.object(native,'guidance',side_effect=race):
+    with self.assertRaisesRegex(ValueError,'Concurrent change'):native.apply(args)
+   self.assertEqual(agents.read_text(),'concurrent user edit\n');self.assertFalse((home/'.agents/skills').exists());self.assertFalse((state/'rollback.sh').exists())
+ def test_missing_owned_root_can_be_repaired_without_changing_original_rollback(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';home.mkdir();state=base/'state';source,leaf,r=self.fixture(base)
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
+    result=native.apply(self.args(home,state));journal=pathlib.Path(result['run'])/'journal.json';before=journal.read_bytes();root=home/'.agents/skills';root.unlink()
+    repaired=native.apply(self.args(home,state));self.assertTrue(repaired['repaired_removed_entry']);self.assertEqual(journal.read_bytes(),before);self.assertTrue(root.is_symlink())
+   subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True);self.assertFalse(root.exists())
+ def test_atomic_directory_exchange_interruption_restores_dirty_original(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';home.mkdir();state=base/'state';source,leaf,r=self.fixture(base)
+   old=home/'.agents/skills/old';old.mkdir(parents=True);(old/'dirty').write_text('original dirty bytes');before=fingerprint(old.parent);original=transaction.replace_entry
+   def crash(source,target):
+    original(source,target);raise RuntimeError('after exchange')
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)),patch.object(transaction,'replace_entry',side_effect=crash):
+    with self.assertRaisesRegex(RuntimeError,'after exchange'):native.apply(self.args(home,state))
+   subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True);self.assertEqual(fingerprint(old.parent),before)
+ def test_unwritable_instruction_parent_fails_before_root_switch(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';home.mkdir();state=base/'state';(home/'.codex').mkdir();(home/'.codex/AGENTS.md').write_text('keep')
+   old=home/'.agents/skills/old';old.mkdir(parents=True);(old/'dirty').write_text('keep');before=fingerprint(old.parent)
+   (home/'.codex').chmod(0o555)
+   try:
+    with self.assertRaisesRegex(ValueError,'not writable/searchable'):native.apply(self.args(home,state))
+    self.assertEqual(fingerprint(old.parent),before);self.assertFalse((state/'rollback.sh').exists())
+   finally:(home/'.codex').chmod(0o755)
+ def test_interrupted_previous_pointer_replacement_is_retryable(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';home.mkdir();state=base/'state';source,leaf,r=self.fixture(base)
+   previous=state/'runs/previous/rollback.sh';previous.parent.mkdir(parents=True);previous.write_text('#!/bin/sh\nexit 0\n');previous.chmod(0o700);(state/'rollback.sh').symlink_to(previous)
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
+    result=native.apply(self.args(home,state))
+   (state/'.native-rollback-previous').symlink_to(previous)
+   native.rollback(result['run'],True);self.assertEqual((state/'rollback.sh').resolve(),previous)
+ def test_upgrade_of_generated_block_removes_project_initialization_requirement(self):
+  old=native.profile_install.guidance('User safeguard.\n');new=native.guidance(old,pathlib.Path('/state'),'/vault')
+  self.assertIn('No project-init step is required.',new);self.assertNotIn('an authorized setup owner runs',new);self.assertIn('private local Git at /vault',new);self.assertTrue(new.startswith('User safeguard.'))
+if __name__=='__main__':unittest.main()

@@ -1,0 +1,31 @@
+{
+  "nodes": [
+    {
+      "id": "home",
+      "type": "file",
+      "file": "Home.md",
+      "x": 0,
+      "y": 0,
+      "width": 400,
+      "height": 300
+    },
+    {
+      "id": "index",
+      "type": "file",
+      "file": "Knowledge Index.base",
+      "x": 480,
+      "y": 0,
+      "width": 400,
+      "height": 300
+    }
+  ],
+  "edges": [
+    {
+      "id": "home-index",
+      "fromNode": "home",
+      "fromSide": "right",
+      "toNode": "index",
+      "toSide": "left"
+    }
+  ]
+}
