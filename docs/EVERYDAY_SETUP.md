@@ -88,6 +88,14 @@ retain prior generations in Git, and exclude historical/test/archive records fro
 current views. Project source and evidence stay with their owning project.
 Use explicit `vault=` and `path=` arguments with the native Obsidian CLI.
 
+Enable the core Templates plugin and set **Settings → Templates → Template
+folder location** to `Templates`. The folder existing on disk does not configure
+the plugin. Verify with `obsidian vault=YOUR_VAULT templates`, then create a
+disposable note with `obsidian vault=YOUR_VAULT create path="Archive/Template Check.md"
+template="Knowledge Note"`. Read it back and verify its properties before moving
+the check note to Trash. Keep the template's initial state as `draft`; a new note
+belongs in the current view only after its source and scope have been checked.
+
 Keep Obsidian core Markdown, Bases, Canvas, search and links. Enable link updates
 if desired through the ordinary app setting. No community plugin, remote sync,
 cloud memory or database is required. QMD needs an actual passage-recall need;
