@@ -235,7 +235,7 @@ def main():
  a=sub.add_parser('search');a.add_argument('terms',nargs='+');a.add_argument('--all',action='store_true');a.add_argument('--limit',type=int,default=12)
  a=sub.add_parser('show');a.add_argument('id')
  a=sub.add_parser('route');a.add_argument('id')
- a=sub.add_parser('inventory');a.add_argument('project',nargs='?',default=str(P.cwd()));a.add_argument('--binary')
+ a=sub.add_parser('inventory');a.add_argument('project',nargs='?',default=str(P.cwd()));a.add_argument('--binary');a.add_argument('--plugins',action='store_true')
  a=sub.add_parser('workspace');a.add_argument('id');a.add_argument('project');a.add_argument('--fresh',action='store_true')
  a=sub.add_parser('retire-workspace');a.add_argument('id');a.add_argument('project')
  a=sub.add_parser('source');a.add_argument('id')
@@ -276,7 +276,7 @@ def main():
    component(args.id);print(json.dumps(load(ROOT/'registry/routes.json')[args.id],indent=2))
   elif args.cmd=='inventory':
    sys.path.insert(0,str(ROOT/'lib'));import native_inventory
-   print(json.dumps(native_inventory.inspect(args.project,args.binary),indent=2))
+   print(json.dumps(native_inventory.inspect(args.project,args.binary,args.plugins),indent=2))
   elif args.cmd in ('workspace','retire-workspace'):
    sys.path.insert(0,str(ROOT/'lib'));import build_workspace
    print(json.dumps(build_workspace.prepare(sys.modules[__name__],args.id,args.project,getattr(args,'fresh',False),args.cmd=='retire-workspace'),indent=2))

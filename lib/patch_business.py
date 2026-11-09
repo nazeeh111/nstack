@@ -41,10 +41,8 @@ Choose a reviewable test only within the user's existing experiment authority.
   s=change(s,'Use a dedicated worker for every selected platform:','The following are source role references for platforms with actual data, not registered agents or an all-platform requirement:')
   s+='\n## Account audit boundary\n\nMap source exports to the retained canonical schemas and scoring helpers; preserve lineage, currency/timezone/date windows, missingness and scoring version. ads-math and audit remain separate selected leaves. Do not infer live account authority from an export. An audit is read-only; account changes need their specific existing authority and native permissions. No automatic per-platform team, paid API, budget/bid change, tracking edit, pause or launch. Preserve prior task authority without a ritual reconfirmation.\n'
  elif id=='P357':
-  s=s.replace('"title": "<Role> @ <Company>"','"title": "<Role> @ <Company>", "track_application": false')
-  s=s.replace('scores it and adds an Applied card to the tracker','scores it; with required track_application=false it must not add an Applied card to the tracker')
-  s=s.replace('every successful call adds another resume and tracker card','each successful call creates another resume; keep track_application=false and independently check that no tracker card was added')
-  s+='\n## Conditional agent-mode print trial\n\nActivate only for a difficult layout or repeated campaign where final-file print/parse checks add value. Set track_application=false on every save_tailored_resume and tailor_and_verify call; preserve master files. Independently verify every changed fact, number, unit, negation, ownership and skill against the immutable accepted profile. ATS/preservation scores and repair helpers are not truth oracles. Record exact backend/UI/runtime versions, inspect the actual reopened PDF and parse output, and verify zero application-tracker effects. Do not start persistent servers, use an API key or create an Applied record to prove installation.\n'
+  from patch_resume import materialize
+  s=materialize(source,out)
  elif id=='P354':
   from patch_career import materialize
   s=materialize(source,out)

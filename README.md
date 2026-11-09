@@ -156,6 +156,17 @@ environment values. It does not establish normal desktop relaunch, hosted plugin
 enablement or successful provider access. Hosted optional plugins must be retired
 through supported native controls while preserving built-ins and account access.
 
+Add `--plugins` to request fresh native plugin installation/enabled metadata and
+marketplace error counts. An error or an unobserved remote catalog cannot prove
+a plugin was removed. Installation, enabled state and actual tool use are separate
+checks. Keep personal plugin choices in private deployment records; do not copy
+account identifiers or preferences into the public registry. An explicitly retained
+official plugin can coexist with the on-demand catalog without a duplicate local
+skill collection. Its installation grants no new sending, spending or data access.
+The native effective-config response is held transiently to extract server names
+and local enablement flags. Configuration layers and credential files are not
+requested; raw configuration is discarded.
+
 ## Correctable knowledge and handoffs
 
 Keep one canonical project record, source attribution and current input hashes.
