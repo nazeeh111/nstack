@@ -1,0 +1,8 @@
+{
+  "repository": "gosom/google-maps-scraper",
+  "revision": "146aefe83844960bb534f335261a4435783a58cc",
+  "source_path": "authored native fast-mode integration; upstream MIT runtime",
+  "license": "MIT",
+  "runtime_release": "1.18.2",
+  "adaptation": "Native bounded local JSON extraction; no upstream self-update, Docker, sponsor recommendations, credentials or paid service; DISABLE_TELEMETRY=1."
+}

@@ -45,6 +45,9 @@ def selection():
 
 def addon_definition(name):
     import academic_addon, ecc_addon
+    if name == "unslop":
+        import unslop_addon
+        return unslop_addon.definition(nstack)
     if name in ecc_addon.DESCRIPTIONS:
         return ecc_addon.definition(nstack, name)
     if name in academic_addon.DESCRIPTIONS:
@@ -56,7 +59,14 @@ def addon_definition(name):
             raise ValueError("Linked addon source is not allowed")
         if file.is_file():
             frozen[str(file.relative_to(source))] = (file.read_bytes(), 0o555 if file.stat().st_mode & 0o111 else 0o444)
-    return {"source": source, "entry": P("."), "provenance": json.loads(frozen["SOURCE.json"][0]), "overrides": {}, "frozen_files": frozen}
+    provenance = json.loads(frozen["SOURCE.json"][0])
+    overrides = {}
+    if name == "google-maps-scraper":
+        # The recipe stays usable after the checkout is moved or removed.
+        code = profile_install.stage(nstack.STATE)
+        provenance["runtime_recipe"] = str(code / "recipes/maps_scraper.py")
+        overrides["SOURCE.json"] = (json.dumps(provenance, sort_keys=True, indent=2) + "\n").encode()
+    return {"source": source, "entry": P("."), "provenance": provenance, "overrides": overrides, "frozen_files": frozen}
 
 def addon_files(spec):
     files = dict(spec["frozen_files"])
@@ -315,6 +325,10 @@ def apply(args):
     if getattr(args, "ecc", False):
         import ecc_addon
         addons.extend(ecc_addon.DESCRIPTIONS)
+    if getattr(args, "unslop", False):
+        addons.append("unslop")
+    if getattr(args, "maps_scraper", False):
+        addons.append("google-maps-scraper")
     if set(addons) & {name for name, _ in chosen}:
         raise ValueError("Addon name collides with selected skill")
     release, index = prepare(state, chosen, addons)
@@ -442,6 +456,8 @@ def main():
     a.add_argument("--repository-docs", action="store_true")
     a.add_argument("--academic-research", action="store_true", help="Fetch five pinned CC-BY-NC academic skills privately; no Claude hooks or paid providers")
     a.add_argument("--ecc", action="store_true", help="Add the two reviewed ECC onboarding and offline evaluation skills")
+    a.add_argument("--unslop", action="store_true", help="Add pinned Unslop for existing-screen polish using native Codex tools")
+    a.add_argument("--maps-scraper", action="store_true", help="Add public-place extraction guidance; install the pinned runtime on demand")
     a.add_argument("--vault", help="Existing user-authorized vault path; does not create a vault")
     sub.add_parser("list")
     a = sub.add_parser("rollback")

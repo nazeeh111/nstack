@@ -5,6 +5,8 @@ ordinary projects. Skills use their actual names, retain their required support
 files, and load their full instructions when needed. Routine work stays native.
 Agent Reach, public repository documentation and five academic research skills
 are explicit optional additions. Two reviewed ECC additions provide scoped codebase onboarding and agent evaluation with offline evidence utilities.
+Unslop is an optional existing-screen polish skill using the same native tools.
+Google Maps Scraper is an optional bounded public-place extraction skill and local runtime.
 
 The release registry contains 539 discovery decisions, 262 admitted component
 records and 243 exact skill/support paths. Admission is not proof of runtime
@@ -34,6 +36,10 @@ python3 native_setup.py install --replace --agent-reach --repository-docs
 python3 native_setup.py install --replace --agent-reach --repository-docs --academic-research
 # Optional scoped ECC onboarding and offline evaluation utilities:
 python3 native_setup.py install --replace --agent-reach --repository-docs --academic-research --ecc
+# Include existing-screen polish, preserving the other explicitly chosen additions:
+python3 native_setup.py install --replace --agent-reach --repository-docs --academic-research --ecc --unslop
+# Also include the separately requested Maps extraction lane:
+python3 native_setup.py install --replace --agent-reach --repository-docs --academic-research --ecc --unslop --maps-scraper
 "$HOME/.local/bin/nstack" doctor
 ```
 

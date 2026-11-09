@@ -5,8 +5,30 @@ the evaluated manifest. It excludes trial/substitute/reference/rejected leaves.
 Natural names and complete bundles are verified independently against the
 registered original releases. Optional `--only EXACT-NAME` deliberately narrows
 an installation; it is not the full setup. The explicit additions are
-`--agent-reach`, `--repository-docs` and `--academic-research`. The latter guides public repository
-lookups and strict version handling in Context7.
+`--agent-reach`, `--repository-docs`, `--academic-research`, `--ecc`, `--unslop`
+and `--maps-scraper`.
+Repository Docs guides public repository lookups and strict version handling in Context7.
+
+`--unslop` adds Unslop by Damir Sokolovsky, pinned at
+`97daa3eb365670ea3f87ed85356cbfcee18105a5`, under CC BY 4.0. Use `$unslop` or
+ask for polish of an existing interface. It preserves product identity and behavior;
+its source's style recipes are examples. New UI design stays with frontend-design,
+reference-led art direction with taste-skill, and independent production audits
+with impeccable-audit. Full visual references and original source are retained;
+upstream snapshot/story helpers stay reference-only. No extra plugin, browser,
+video runtime or image provider is installed. Include previously chosen addon flags
+when replacing a collection; omitted optional additions are not silently retained.
+
+`--maps-scraper` adds scoped Google Maps public-place extraction. The pinned MIT
+runtime is v1.18.2 (`146aefe83844960bb534f335261a4435783a58cc`), official
+darwin-amd64 binary SHA256 `c166042f5bd00bc8ae48b9e05ab38dc029b55b8613c4d8ad2602b2f4e6b40ff4`.
+Run `python3 recipes/maps_scraper.py install`, then `help` or `run --query
+"public place in location" --geo "latitude,longitude" --outdir /owned/fresh/output`. Apple Silicon needs
+already-present Rosetta; installation is never automatic. The recipe disables
+telemetry and uses bounded fast HTTP mode without Docker or another browser.
+It preserves partial results and reports empty output as incomplete. Ordinary
+place lookups remain native. Full browser scraping, emails, reviews, paid proxies,
+cloud deployment and the upstream automatic updater are outside this install.
 
 ## Runtime connections
 

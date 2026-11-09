@@ -9,3 +9,18 @@ The vendored TOMLKit 0.13.3 parser is MIT licensed. Its complete notice remains 
 Patch modules encode the reviewed adaptations to the exact upstream coordinates in `registry/manifest.json`. The builder retains source copyright/license/notice files and the adopting leaf's own license. P343's scoped bundle retains the MIT notice, Copyright (c) 2025 Corey Haines. P001's named Caldo diagnostic excerpt retains its MIT notice, Copyright (c) 2026 Maze. The public repository contains original recipes and patch mechanisms; source caches, per-Mac builds, account bindings, personal knowledge and the private evaluation ledger are not part of its distribution.
 
 Link-only and entitled material remains a pointer or supported native surface. A registry entry does not grant an unverified data, model, asset or service entitlement. Missing rights or a missing target prerequisite blocks that lane while unrelated work can continue.
+
+The optional Unslop adaptation in `addons/unslop` is derived from
+[Unslop by Damir Sokolovsky (@heydamir)](https://github.com/heydamir/unslop),
+commit `97daa3eb365670ea3f87ed85356cbfcee18105a5`, under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+Changes narrow discovery to existing-screen polish, preserve user identity and
+authorization, treat style recipes as examples, and use native Codex tools.
+The installer fetches the complete pinned upstream source, license and attribution;
+original helpers remain reference material. These terms are separate from nstack's MIT code.
+
+The optional Google Maps Scraper integration invokes the MIT-licensed
+[gosom/google-maps-scraper](https://github.com/gosom/google-maps-scraper) v1.18.2
+at `146aefe83844960bb534f335261a4435783a58cc`. Its original MIT notice is retained
+in `addons/google-maps-scraper/LICENSE`; the binary is fetched from its official
+release with a fixed SHA256, rather than redistributed in this repository.

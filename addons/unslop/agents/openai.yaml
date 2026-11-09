@@ -1,0 +1,4 @@
+interface:
+  display_name: "Unslop"
+  short_description: "Polish an existing interface while preserving its identity"
+  default_prompt: "Use $unslop to refine this existing screen while preserving its product identity and working behavior."
