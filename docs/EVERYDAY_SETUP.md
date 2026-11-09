@@ -96,6 +96,11 @@ template="Knowledge Note"`. Read it back and verify its properties before moving
 the check note to Trash. Keep the template's initial state as `draft`; a new note
 belongs in the current view only after its source and scope have been checked.
 
+Check both app and installer versions in **Settings → General**. App updates can
+leave the underlying installer behind; follow Obsidian's [installer update
+instructions](https://obsidian.md/help/updates) when it reports that an update is
+needed, then reopen the vault and check its views and CLI again.
+
 Keep Obsidian core Markdown, Bases, Canvas, search and links. Enable link updates
 if desired through the ordinary app setting. No community plugin, remote sync,
 cloud memory or database is required. QMD needs an actual passage-recall need;
