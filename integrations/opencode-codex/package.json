@@ -1,0 +1,8 @@
+{
+  "name": "nstack-codex",
+  "version": "0.1.0",
+  "license": "MIT",
+  "exports": {
+    "./gui-experimental": "./gui-experimental.cjs"
+  }
+}

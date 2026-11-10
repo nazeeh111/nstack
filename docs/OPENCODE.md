@@ -40,6 +40,37 @@ protects that command, not arbitrary Markdown edits or host-generated memories.
 No synchronizing daemon, extra database, automatic-memory export or public-vault
 copy is needed. Native automatic memories and chat histories remain host-owned.
 
+## Actual Codex harness
+
+The optional Desktop launcher starts the installed native Codex CLI in an
+OpenCode session terminal. It adds `/codex` and **Open Codex harness** to the
+desktop command palette. This is a separate native Codex conversation beside
+the OpenCode chat. It does not replace OpenCode's own agent engine.
+
+```sh
+python3 opencode_setup.py install --codex-harness "$(command -v codex)"
+```
+
+The launcher targets OpenCode Desktop 2.2.6's experimental GUI and persistent
+terminal APIs. Recheck it before upgrading OpenCode. It runs only from a saved
+session on the app's own server, in that session's current project directory.
+Repeating the command selects its running Codex terminal. A normal OpenCode TUI
+terminal can run `codex` directly; the desktop command is not a TUI extension.
+
+No model request is made by opening the terminal. Codex inherits its own account,
+model/effort, instructions, discovered skills and permissions. The launcher
+does not send the OpenCode transcript or composer draft to another agent.
+Use the project's current task handoff file to continue work across hosts;
+review it in Codex and give the objective there. Both hosts still read the same
+shared skill collection and canonical vault. Their native chats and generated
+memories remain separate. Native refusals are reported without alternate routes.
+
+The installer accepts the exact original nstack adapter configuration or the
+exact desired launcher configuration. Customized config or plugin bytes require
+a scoped merge. Installation backups and rollback cover the two plugin files
+and configuration, while the existing adapter and user data remain recoverable.
+See [the harness decision](HARNESSES.md) for the alternatives reviewed.
+
 Codex's account connectors, app tools, built-ins, permissions, model support and
 native automatic memory are not OpenCode plugins. Shared skill discovery does
 not prove every host-dependent operation. Check actual available tools and use

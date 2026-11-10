@@ -1,4 +1,4 @@
-import importlib.util, pathlib, tempfile, unittest
+import importlib.util, json, pathlib, tempfile, unittest
 P = pathlib.Path
 ROOT = P(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('opencode_setup', ROOT / 'opencode_setup.py')
@@ -42,5 +42,37 @@ class OpenCodeSetupTests(unittest.TestCase):
             config = home / '.config/opencode/opencode.json'; config.write_text('later user bytes\n')
             with self.assertRaises(ValueError): m.rollback(result['run'])
             self.assertEqual(config.read_text(), 'later user bytes\n')
+
+    def test_native_codex_addition_repeats_and_restores_existing_adapter(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home, state, cli = self.fixture(P(tmp).resolve()); m.apply(home, state, cli)
+            config = home / '.config/opencode/opencode.json'; before = config.read_bytes()
+            parent = (state / 'rollback.sh').resolve()
+            codex = home.parent / 'codex'; codex.write_text('#!/bin/sh\necho "codex-cli 0.167.0"\n'); codex.chmod(0o755)
+            result = m.apply(home, state, cli, codex)
+            added = json.loads(config.read_text())
+            self.assertNotIn('model', added); self.assertNotIn('providers', added)
+            self.assertEqual(added['plugins'][0]['options'], {'codex': str(codex)})
+            plugin = home / '.config/opencode/plugins/nstack-codex'
+            self.assertTrue((plugin / 'gui-experimental.cjs').is_file())
+            journal = P(result['run']) / 'journal.json'; saved = journal.read_bytes()
+            self.assertFalse(m.apply(home, state, cli, codex)['changed']); self.assertEqual(journal.read_bytes(), saved)
+            m.rollback(result['run'])
+            self.assertEqual(config.read_bytes(), before); self.assertEqual((state / 'rollback.sh').resolve(), parent)
+            self.assertFalse((plugin / 'package.json').exists()); self.assertFalse((plugin / 'gui-experimental.cjs').exists())
+
+    def test_codex_upgrade_refuses_unowned_config_and_plugin_bytes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home, state, cli = self.fixture(P(tmp).resolve()); m.apply(home, state, cli)
+            codex = home.parent / 'codex'; codex.write_text('#!/bin/sh\necho "codex-cli 0.167.0"\n'); codex.chmod(0o755)
+            config = home / '.config/opencode/opencode.json'; before = config.read_bytes()
+            config.write_text('{"model":"user-choice"}\n')
+            with self.assertRaisesRegex(ValueError, 'preserved'): m.apply(home, state, cli, codex)
+            self.assertEqual(config.read_text(), '{"model":"user-choice"}\n')
+            config.write_bytes(before)
+            plugin = home / '.config/opencode/plugins/nstack-codex/package.json'; plugin.parent.mkdir(parents=True)
+            plugin.write_text('unowned plugin bytes\n')
+            with self.assertRaisesRegex(ValueError, 'preserved'): m.apply(home, state, cli, codex)
+            self.assertEqual(plugin.read_text(), 'unowned plugin bytes\n'); self.assertEqual(config.read_bytes(), before)
 
 if __name__ == '__main__': unittest.main()

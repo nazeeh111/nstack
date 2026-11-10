@@ -8,7 +8,7 @@ from transaction import Transaction, atomic_json, copy, fingerprint, same
 import install as profile_install
 
 
-def plan(home, state, cli):
+def plan(home, state, cli, codex=None):
     home, state, cli = P(home).resolve(), P(state).resolve(), P(cli).absolute()
     agents = home / '.codex/AGENTS.md'
     skills = home / '.agents/skills'
@@ -39,13 +39,28 @@ def plan(home, state, cli):
             'timeout': {'startup': 120000, 'execution': 120000}}
     directory = home / '.config/opencode'
     config_path = directory / 'opencode.json'
+    previous_config = (json.dumps(config, indent=2) + '\n').encode()
+    if codex is not None:
+        codex = P(codex).absolute()
+        if version != 'opencode v2.2.6':
+            raise ValueError('The optional Codex terminal launcher is checked against OpenCode 2.2.6')
+        if not codex.is_file() or not os.access(codex, os.X_OK):
+            raise ValueError('An existing executable native Codex CLI is required')
+        native_version = subprocess.run([str(codex), '--version'], check=True, text=True, capture_output=True).stdout.strip()
+        if not native_version.startswith('codex-cli '):
+            raise ValueError('Expected a native Codex CLI executable')
+        plugin = directory / 'plugins/nstack-codex'
+        for name in ('package.json', 'gui-experimental.cjs'):
+            files[plugin / name] = (ROOT / 'integrations/opencode-codex' / name).read_bytes()
+        config['plugins'] = [{'package': str(plugin), 'options': {'codex': str(codex)}}]
     files[config_path] = (json.dumps(config, indent=2) + '\n').encode()
     links = {directory / 'AGENTS.md': agents, home / '.local/bin/opencode': cli}
     # Do not parse provider configuration, credential stores or alternate JSONC.
     if (directory / 'opencode.jsonc').exists() or (directory / 'opencode.jsonc').is_symlink():
         raise ValueError('Existing OpenCode JSONC is preserved; merge this adapter manually after review')
     for path, data in files.items():
-        if path.is_symlink() or (path.exists() and (not path.is_file() or path.read_bytes() != data)):
+        accepted = (data, previous_config) if codex is not None and path == config_path else (data,)
+        if path.is_symlink() or (path.exists() and (not path.is_file() or path.read_bytes() not in accepted)):
             raise ValueError('Existing configuration is preserved; review before replacing: ' + str(path))
     for path, target in links.items():
         if (path.exists() or path.is_symlink()) and not (path.is_symlink() and os.readlink(path) == str(target)):
@@ -59,9 +74,9 @@ def plan(home, state, cli):
     return files, links, version
 
 
-def apply(home, state, cli):
+def apply(home, state, cli, codex=None):
     home, state = P(home).resolve(), P(state).resolve()
-    files, links, version = plan(home, state, cli)
+    files, links, version = plan(home, state, cli, codex)
     if all(p.is_file() and p.read_bytes() == d for p, d in files.items()) and all(
             p.is_symlink() and os.readlink(p) == str(t) for p, t in links.items()):
         return {'changed': False, 'version': version, 'shared_skills': str(home / '.agents/skills')}
@@ -72,7 +87,7 @@ def apply(home, state, cli):
     tx = Transaction(run)
     with tx.lock():
         # Revalidate after acquiring the shared profile writer lock.
-        plan(home, state, cli)
+        plan(home, state, cli, codex)
         before = {p: fingerprint(p) for p in [*files, *links]}
         for index, (path, old) in enumerate(before.items()):
             if old['kind'] != 'absent':
@@ -123,9 +138,10 @@ def main():
     install = sub.add_parser('install'); install.add_argument('--home', default=str(P.home()))
     install.add_argument('--state', default=str(P.home() / 'Library/Application Support/nstack'))
     install.add_argument('--cli', default='/Applications/OpenCode.app/Contents/Resources/opencode-cli')
+    install.add_argument('--codex-harness', metavar='EXECUTABLE', help='Add an explicit native Codex terminal command in OpenCode Desktop 2.2.6')
     undo = sub.add_parser('rollback'); undo.add_argument('run'); undo.add_argument('--chain', action='store_true')
     args = parser.parse_args()
-    result = apply(args.home, args.state, args.cli) if args.command == 'install' else rollback(args.run, args.chain)
+    result = apply(args.home, args.state, args.cli, args.codex_harness) if args.command == 'install' else rollback(args.run, args.chain)
     print(json.dumps(result, indent=2))
 
 if __name__ == '__main__': main()

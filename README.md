@@ -69,6 +69,11 @@ user instructions and canonical vault. It preserves the selected model and
 credentials, disables background warming, and adds only the existing documentation
 and semantic connections. Host-native accounts and automatic memories remain separate.
 
+For the actual Codex agent engine inside an OpenCode project terminal, use the
+optional [native harness launcher](docs/OPENCODE.md#actual-codex-harness).
+[DeepSeek Harness, Superagent and OpenHarness](docs/HARNESSES.md) have distinct
+roles; adding a model provider is not a harness replacement.
+
 The optional [untangle-codebase](https://github.com/caldoai/skills/tree/f3cf47774975a7d9fca45730babf4ff7ad765ada/skills/untangle-codebase)
 skill is shared by both hosts. Invoke it explicitly with `$untangle-codebase` in
 Codex or select it with `@untangle-codebase` in OpenCode. It stays out of automatic
