@@ -3,5 +3,5 @@
   "revision": null,
   "source_path": "addons/01",
   "license": "MIT",
-  "installation_adaptation": "Authored refinement of 01. Explicit, conversation-scoped adaptive selection; Codex remains the executor. No service, hook, model override or automatic skill rewrite."
+  "installation_adaptation": "Authored explicit, conversation-scoped capability selection with bounded installed-inventory lookup and complementary specialists. Active native host remains executor; no service, hook, model override or automatic rewrite."
 }

@@ -87,6 +87,10 @@ is required. Codex discovers the installed skill summaries and reads the relevan
 complete SKILL.md and support when needed. The global collection contains only
 170 selected on-demand leaves, plus explicit additions if enabled. The academic suite adds five skills and keeps
 its CC BY-NC source separate from this MIT repository.
+RAEA local GPU rendering is available with the optional native flag `--raea`.
+Its pinned runtime stays separate from this MIT toolkit and runs offline without
+upstream hooks, model downloads or provider connections. See [RAEA](docs/RAEA.md).
+
 Heavy dependencies are separate and remain on demand. Search the full installed
 `native-skill-index.json` when the native summary list is truncated.
 

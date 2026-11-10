@@ -40,6 +40,15 @@ class NativeSetup(unittest.TestCase):
    self.assertEqual([r['name'] for r in index],['agent-reach','repository-docs'])
    self.assertEqual(fingerprint(second),before)
    self.assertEqual(json.loads((first/'NATIVE-MANIFEST.json').read_text())['inputs']['adaptation'],'full-bundle-natural-entry-v2')
+ def test_addon_runtime_caches_do_not_change_deployable_inputs(self):
+  with tempfile.TemporaryDirectory() as temp:
+   root=pathlib.Path(temp);source=root/'addons/fixture';source.mkdir(parents=True)
+   (source/'SOURCE.json').write_text('{"license":"MIT"}');(source/'SKILL.md').write_text('fixture');(source/'LICENSE').write_text('MIT')
+   with patch.object(native,'ROOT',root):
+    before=native.addon_definition('fixture')['frozen_files']
+    cache=source/'scripts/__pycache__';cache.mkdir(parents=True);(cache/'helper.cpython-314.pyc').write_bytes(b'local path-bearing cache')
+    (source/'.DS_Store').write_bytes(b'local metadata')
+    self.assertEqual(native.addon_definition('fixture')['frozen_files'],before)
  def test_exact_selection_excludes_conditional_and_reference_paths(self):
   rows=native.selection();self.assertEqual(len(rows),170);self.assertEqual(len({n for n,_ in rows}),170)
   for name,s in rows:
@@ -74,6 +83,20 @@ class NativeSetup(unittest.TestCase):
     self.assertTrue((entry/'references/decisions.md').is_file());self.assertEqual((shared/'obsidian-markdown/../../support.md').resolve().read_text(),'Required retained support.\n')
     journal=pathlib.Path(result['run'])/'journal.json';before=journal.read_bytes();self.assertFalse(native.apply(args)['changed']);self.assertEqual(journal.read_bytes(),before)
    subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True);self.assertEqual(fingerprint(legacy.parent),original)
+ def test_raea_and_01_keep_support_and_use_durable_recipe_without_installing_engine(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';home.mkdir();state=base/'state';source,leaf,r=self.fixture(base)
+   args=self.args(home,state);args.adaptive_routing=True;args.raea=True
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
+    result=native.apply(args);shared=home/'.agents/skills'
+    self.assertEqual({p.name for p in shared.iterdir()},{'obsidian-markdown','01','raea'})
+    recipe=pathlib.Path(json.loads((shared/'raea/SOURCE.json').read_text())['runtime_recipe'])
+    self.assertTrue(recipe.is_relative_to(state/'releases'));self.assertEqual(recipe.read_bytes(),(ROOT/'recipes/raea.py').read_bytes())
+    self.assertTrue((shared/'01/scripts/capabilities.py').is_file());self.assertFalse((state/'native-tools/raea').exists())
+    journal=pathlib.Path(result['run'])/'journal.json';old=journal.read_bytes()
+    self.assertFalse(native.apply(args)['changed']);self.assertEqual(journal.read_bytes(),old)
+   subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True)
+   self.assertFalse(shared.exists())
  def test_repeat_and_terminal_rollback_preserve_original_dirty_bytes_and_new_data(self):
   with tempfile.TemporaryDirectory() as temp:
    base=pathlib.Path(temp).resolve();home=base/'home';state=base/'state';home.mkdir();source,leaf,r=self.fixture(base)

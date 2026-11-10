@@ -1,0 +1,13 @@
+{
+  "repository": "shinyobjectz/raea",
+  "revision": "d6f41c605ab71275162050cd08632cb56bd00e8a",
+  "version": "0.1.0",
+  "runtime_recipe": "recipes/raea.py",
+  "engine_license": "FSL-1.1-ALv2; downloaded separately, not vendored",
+  "skills_repository": "shinyobjectz/raea-skills",
+  "skills_revision": "c507860150995eb7c22ef9db23dee636c832428a",
+  "skills_license": "Apache-2.0; complete matching support acquired privately by the recipe",
+  "integration_license": "MIT",
+  "activation": "On demand; pinned offline bounded local render only; no upstream skill installer, hooks, MCP, models or provider setup",
+  "known_limit": "Pinned binary predates upstream GPU-error-reporting fix; artifact validation and current visual inspection required."
+}

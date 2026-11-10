@@ -55,16 +55,18 @@ def addon_definition(name):
     source = ROOT / "addons" / name
     frozen = {}
     for file in source.rglob("*"):
+        if "__pycache__" in file.parts or file.suffix in (".pyc", ".pyo") or file.name == ".DS_Store":
+            continue
         if file.is_symlink():
             raise ValueError("Linked addon source is not allowed")
         if file.is_file():
             frozen[str(file.relative_to(source))] = (file.read_bytes(), 0o555 if file.stat().st_mode & 0o111 else 0o444)
     provenance = json.loads(frozen["SOURCE.json"][0])
     overrides = {}
-    if name == "google-maps-scraper":
+    if name in ("google-maps-scraper", "raea"):
         # The recipe stays usable after the checkout is moved or removed.
         code = profile_install.stage(nstack.STATE)
-        provenance["runtime_recipe"] = str(code / "recipes/maps_scraper.py")
+        provenance["runtime_recipe"] = str(code / "recipes" / ("maps_scraper.py" if name == "google-maps-scraper" else "raea.py"))
         overrides["SOURCE.json"] = (json.dumps(provenance, sort_keys=True, indent=2) + "\n").encode()
     return {"source": source, "entry": P("."), "provenance": provenance, "overrides": overrides, "frozen_files": frozen}
 
@@ -333,6 +335,8 @@ def apply(args):
         addons.append("untangle-codebase")
     if getattr(args, "adaptive_routing", False):
         addons.append("01")
+    if getattr(args, "raea", False):
+        addons.append("raea")
     if set(addons) & {name for name, _ in chosen}:
         raise ValueError("Addon name collides with selected skill")
     release, index = prepare(state, chosen, addons)
@@ -464,6 +468,7 @@ def main():
     a.add_argument("--maps-scraper", action="store_true", help="Add public-place extraction guidance; install the pinned runtime on demand")
     a.add_argument("--untangle-codebase", action="store_true", help="Add the pinned, explicitly invoked codebase refactoring skill")
     a.add_argument("--adaptive-routing", action="store_true", help="Add explicit 01 for adaptive skill/tool selection throughout a conversation")
+    a.add_argument("--raea", action="store_true", help="Add RAEA guidance for offline local GPU rendering; pinned runtime installed separately")
     a.add_argument("--vault", help="Existing user-authorized vault path; does not create a vault")
     sub.add_parser("list")
     a = sub.add_parser("rollback")

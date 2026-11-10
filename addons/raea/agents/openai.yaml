@@ -1,0 +1,4 @@
+interface:
+  display_name: "RAEA"
+  short_description: "Offline native GPU composition rendering"
+  default_prompt: "Use RAEA for the requested local composition and verify the finished export."

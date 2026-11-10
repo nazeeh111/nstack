@@ -11,8 +11,8 @@ then reads and applies the selected complete skills and needed support.
 It reconsiders capabilities at stage changes, failures, new evidence or a
 materially better option. It combines complementary expertise, uses independent
 scrutiny when useful and checks actual outputs rather than trusting success
-messages. Native Codex still executes work with the user's existing model,
-reasoning effort, account and permissions. No daemon, hook or compulsory plan,
+messages. The active host executes work with the user's existing model,
+reasoning effort, account and permissions; 01 does not switch harnesses. No daemon, hook or compulsory plan,
 team, report, global memory store or automatic self-edit is installed.
 
 ## Install
@@ -37,6 +37,20 @@ The shared collection also exposes01 to OpenCode. Its supported
 `disable-model-invocation` frontmatter and Codex's `allow_implicit_invocation`
 metadata both preserve explicit entry. Use the host's own skill selector;
 sharing the files does not merge generated memories or conversations.
+
+## Capability lookup
+
+01 owns specialist selection so the user does not need to name individual
+skills. It considers native tools, connected plugins/MCPs, skills and installed
+runtimes together, and reuses effective specialists across task stages.
+
+When native summaries are incomplete, its bundled scripts/capabilities.py
+searches the current installed skill and runtime indexes, including additions
+outside the original catalog. It reads bounded skill descriptions, returns a
+small ranked result and records the index hashes. It does not install anything,
+read provider/account stores or claim that a catalog match executed. Native
+connected-tool discovery remains separate. The selected complete skills and
+relevant support still need to be applied to the actual artifact.
 
 ## Proof and limits
 
