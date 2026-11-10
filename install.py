@@ -11,7 +11,7 @@ def portable_files():
   if any(x.startswith('.') or x in ['__pycache__','node_modules','private'] for x in rel.parts):continue
   if p.is_symlink():raise ValueError('Portable source must not contain linked files')
   if p.name=='INSTALL-MANIFEST.json':continue
-  if p.is_file() and (p.suffix in ['.py','.json','.md','.txt','.in','.lock','.sh','.yml','.yaml','.base','.canvas'] or p.name in ('LICENSE','METADATA','RECORD','WHEEL','py.typed')):yield p,rel
+  if p.is_file() and (p.suffix in ['.py','.cjs','.json','.md','.txt','.in','.lock','.sh','.yml','.yaml','.base','.canvas'] or p.name in ('LICENSE','METADATA','RECORD','WHEEL','py.typed')):yield p,rel
 
 def stage(state):
  files=list(portable_files());hashes={str(rel):hashlib.sha256(p.read_bytes()).hexdigest() for p,rel in files};digest=hashlib.sha256(json.dumps(hashes,sort_keys=True).encode()).hexdigest();dest=state/'releases'/digest

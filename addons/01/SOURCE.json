@@ -1,0 +1,7 @@
+{
+  "repository": "nazeeh111/nstack",
+  "revision": null,
+  "source_path": "addons/01",
+  "license": "MIT",
+  "installation_adaptation": "Authored refinement of 01. Explicit, conversation-scoped adaptive selection; Codex remains the executor. No service, hook, model override or automatic skill rewrite."
+}

@@ -66,8 +66,8 @@ shared skill collection and canonical vault. Their native chats and generated
 memories remain separate. Native refusals are reported without alternate routes.
 
 The installer accepts the exact original nstack adapter configuration or the
-exact desired launcher configuration. Customized config or plugin bytes require
-a scoped merge. Installation backups and rollback cover the two plugin files
+exact desired launcher configuration. User-owned `permissions` and `policies`
+are retained; other customized configuration or plugin bytes require a scoped merge. Installation backups and rollback cover the two plugin files
 and configuration, while the existing adapter and user data remain recoverable.
 See [the harness decision](HARNESSES.md) for the alternatives reviewed.
 
@@ -100,3 +100,22 @@ and separating reusable skills from global rules in its [best practices](https:/
 Keep supported [permission configuration](https://learn.chatgpt.com/docs/permissions)
 consistent; legacy sandbox settings override mixed modern defaults. Preserve the
 current effective permissions when cleaning up redundant fields.
+
+## Permissions and secrets
+
+Shared instructions do not give OpenCode Codex's operating-system sandbox.
+[OpenCode permissions](https://opencode.ai/docs/permissions/) and
+[hard-deny policies](https://opencode.ai/docs/policies/) are separate controls.
+Prompt before shell commands and outside-project access when that matches the
+user's authority. A shell command approved to run still has the host user's
+access; file-tool deny rules are not a shell sandbox. Verify effective rules
+for each agent, including agents with their own overrides.
+
+Keep API keys in native credential handling, outside this repository. The
+repository ignores local environment and account-store files while retaining
+nonsecret example templates. Ignore rules do not protect already tracked or
+force-added files; scan both the proposed tree and commit ancestry before
+publishing. For ordinary OpenAI coding, restrict the existing project key to
+the inference endpoints actually used, plus model listing when needed. Key
+permissions, model access and spend limits are separate account controls;
+verify whether the selected spend limit is enforced or only alerts.

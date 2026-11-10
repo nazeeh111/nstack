@@ -62,6 +62,18 @@ class NativeSetup(unittest.TestCase):
     for p,value in before.items():self.assertEqual(fingerprint(p),value)
    subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True)
    self.assertFalse(shared.exists());self.assertFalse((home/'.codex/AGENTS.md').exists())
+ def test_01_addition_preserves_selected_skill_dirty_original_and_manual_policy(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';home.mkdir();state=base/'state';source,leaf,r=self.fixture(base)
+   legacy=home/'.agents/skills/01';legacy.mkdir(parents=True);(legacy/'SKILL.md').write_text('Original dirty01 bytes\n');original=fingerprint(legacy.parent)
+   args=self.args(home,state);args.adaptive_routing=True
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
+    result=native.apply(args);shared=home/'.agents/skills';self.assertEqual({p.name for p in shared.iterdir()},{'obsidian-markdown','01'})
+    entry=shared/'01';self.assertIn("name: '01'\n",(entry/'SKILL.md').read_text())
+    self.assertIn('disable-model-invocation: true\n',(entry/'SKILL.md').read_text());self.assertIn('allow_implicit_invocation: false\n',(entry/'agents/openai.yaml').read_text())
+    self.assertTrue((entry/'references/decisions.md').is_file());self.assertEqual((shared/'obsidian-markdown/../../support.md').resolve().read_text(),'Required retained support.\n')
+    journal=pathlib.Path(result['run'])/'journal.json';before=journal.read_bytes();self.assertFalse(native.apply(args)['changed']);self.assertEqual(journal.read_bytes(),before)
+   subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True);self.assertEqual(fingerprint(legacy.parent),original)
  def test_repeat_and_terminal_rollback_preserve_original_dirty_bytes_and_new_data(self):
   with tempfile.TemporaryDirectory() as temp:
    base=pathlib.Path(temp).resolve();home=base/'home';state=base/'state';home.mkdir();source,leaf,r=self.fixture(base)

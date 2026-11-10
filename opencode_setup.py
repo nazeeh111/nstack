@@ -53,13 +53,37 @@ def plan(home, state, cli, codex=None):
         for name in ('package.json', 'gui-experimental.cjs'):
             files[plugin / name] = (ROOT / 'integrations/opencode-codex' / name).read_bytes()
         config['plugins'] = [{'package': str(plugin), 'options': {'codex': str(codex)}}]
-    files[config_path] = (json.dumps(config, indent=2) + '\n').encode()
+    configured = (json.dumps(config, indent=2) + '\n').encode()
+    existing_config = None
+    # Keep explicit user security policy without adopting provider configuration.
+    # All adapter-owned fields must still match this or the pre-launcher adapter.
+    if config_path.is_file() and not config_path.is_symlink():
+        raw = config_path.read_bytes()
+        existing_config = raw
+        try:
+            current = json.loads(raw)
+        except (ValueError, UnicodeError):
+            raise ValueError('Existing configuration is preserved; review before replacing: ' + str(config_path)) from None
+        allowed = set(config) | {'permissions', 'policies'}
+        if not isinstance(current, dict) or set(current) - allowed:
+            raise ValueError('Existing configuration is preserved; review before replacing: ' + str(config_path))
+        extra = {k: current[k] for k in ('permissions', 'policies') if k in current}
+        owned = {k: v for k, v in current.items() if k not in extra}
+        if any(not isinstance(v, list) for v in extra.values()):
+            raise ValueError('Existing configuration is preserved; review before replacing: ' + str(config_path))
+        if owned == config:
+            configured = raw
+        elif codex is not None and owned == json.loads(previous_config):
+            configured = (json.dumps({**config, **extra}, indent=2) + '\n').encode()
+        else:
+            raise ValueError('Existing configuration is preserved; review before replacing: ' + str(config_path))
+    files[config_path] = configured
     links = {directory / 'AGENTS.md': agents, home / '.local/bin/opencode': cli}
     # Do not parse provider configuration, credential stores or alternate JSONC.
     if (directory / 'opencode.jsonc').exists() or (directory / 'opencode.jsonc').is_symlink():
         raise ValueError('Existing OpenCode JSONC is preserved; merge this adapter manually after review')
     for path, data in files.items():
-        accepted = (data, previous_config) if codex is not None and path == config_path else (data,)
+        accepted = (data, existing_config) if path == config_path and existing_config is not None else (data,)
         if path.is_symlink() or (path.exists() and (not path.is_file() or path.read_bytes() not in accepted)):
             raise ValueError('Existing configuration is preserved; review before replacing: ' + str(path))
     for path, target in links.items():
@@ -87,7 +111,9 @@ def apply(home, state, cli, codex=None):
     tx = Transaction(run)
     with tx.lock():
         # Revalidate after acquiring the shared profile writer lock.
-        plan(home, state, cli, codex)
+        checked_files, checked_links, checked_version = plan(home, state, cli, codex)
+        if checked_files != files or checked_links != links or checked_version != version:
+            raise ValueError('OpenCode configuration changed during preparation; preserved for review')
         before = {p: fingerprint(p) for p in [*files, *links]}
         for index, (path, old) in enumerate(before.items()):
             if old['kind'] != 'absent':

@@ -90,6 +90,11 @@ its CC BY-NC source separate from this MIT repository.
 Heavy dependencies are separate and remain on demand. Search the full installed
 `native-skill-index.json` when the native summary list is truncated.
 
+For one explicit entry to adaptive selection across the conversation, add
+`--adaptive-routing` to the native install command and invoke `$01` once.
+It keeps ordinary work direct and applies relevant specialists as the task
+changes. [Behavior, testing and limits](docs/ADAPTIVE_ROUTING.md).
+
 ```sh
 nstack search room clap decay
 nstack show P318

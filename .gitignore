@@ -6,3 +6,14 @@ node_modules/
 /state/
 /examples/clap/outputs/
 /examples/clap/*.wav
+
+# Local secrets never belong in the reusable toolkit. Keep safe templates.
+.env
+.env.*
+*.env
+!.env.example
+!.env.sample
+# OpenCode's account store and local provider credentials are not configuration.
+auth.json
+.opencode/auth.json
+.opencode/secrets/
