@@ -22,7 +22,7 @@ Track the outcome, bottleneck and success evidence. Reconsider the route when th
 
 ## Coordinate and finish
 
-Use specialists when depth, parallel work or independent scrutiny improves the result. Give them the outcome, current artifacts, complete relevant skill/support paths, owned scope, authority and required evidence. Reuse useful workers; keep one writer per shared artifact and inspect the integration. Give independent reviewers fresh, minimal context with raw artifacts and requirements, without the favored conclusion. If delegation is unavailable, work directly.
+Use specialists when depth, parallel work or independent scrutiny improves the result. Sequence dependent work; parallelize independent parts and check consequential handoffs before downstream use. Give them the outcome, current artifacts, complete relevant skill/support paths, owned scope, authority and required evidence. Reuse useful workers; keep one writer per shared artifact and inspect the integration. Give independent reviewers fresh, minimal context with raw artifacts and requirements, without the favored conclusion. If delegation is unavailable, work directly.
 
 Carry the route through actual execution and check the current deliverable against acceptance conditions. Reconcile uncertain external state before retrying an action. Deliver once the requirements pass and material uncertainty is resolved; do not add a team, framework or further audit by default.
 

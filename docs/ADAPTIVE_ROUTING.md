@@ -97,3 +97,8 @@ Comparable Superpowers, Everything Claude Code and gstack workflows were reviewe
 for routing and evaluation ideas. Their bootstrap hooks, compulsory roles and
 startup procedures are not installed: no demonstrated gap justified that overlap.
 Behavioral comparisons establish the tested cases, not universal superiority.
+
+CrewAI’s [task dependencies and guardrails](https://docs.crewai.com/en/concepts/tasks)
+inform one compact coordination rule: sequence dependencies, parallelize
+independent work, and check consequential handoffs before downstream use.
+These are host-native workflow choices; CrewAI is not a required runtime.
