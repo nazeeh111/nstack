@@ -40,6 +40,8 @@ python3 native_setup.py install --replace --agent-reach --repository-docs --acad
 python3 native_setup.py install --replace --agent-reach --repository-docs --academic-research --ecc --unslop
 # Also include the separately requested Maps extraction lane:
 python3 native_setup.py install --replace --agent-reach --repository-docs --academic-research --ecc --unslop --maps-scraper
+# Also include the explicitly invoked codebase refactoring skill:
+python3 native_setup.py install --replace --agent-reach --repository-docs --academic-research --ecc --unslop --maps-scraper --untangle-codebase
 "$HOME/.local/bin/nstack" doctor
 ```
 
@@ -66,6 +68,12 @@ An optional [OpenCode V2 adapter](docs/OPENCODE.md) reuses the same skills,
 user instructions and canonical vault. It preserves the selected model and
 credentials, disables background warming, and adds only the existing documentation
 and semantic connections. Host-native accounts and automatic memories remain separate.
+
+The optional [untangle-codebase](https://github.com/caldoai/skills/tree/f3cf47774975a7d9fca45730babf4ff7ad765ada/skills/untangle-codebase)
+skill is shared by both hosts. Invoke it explicitly with `$untangle-codebase` in
+Codex or select it with `@untangle-codebase` in OpenCode. It stays out of automatic
+skill selection because it requests a substantial refactor. Its pinned MIT source
+and license are bundled; no additional runtime, service or provider is needed.
 
 ## First unfamiliar task
 

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Untangle Codebase"
+  short_description: "Refactor a codebase with an explicit decision log"
+  default_prompt: "Use $untangle-codebase to refactor this codebase while preserving its behavior."
+policy:
+  allow_implicit_invocation: false

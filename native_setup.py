@@ -329,6 +329,8 @@ def apply(args):
         addons.append("unslop")
     if getattr(args, "maps_scraper", False):
         addons.append("google-maps-scraper")
+    if getattr(args, "untangle_codebase", False):
+        addons.append("untangle-codebase")
     if set(addons) & {name for name, _ in chosen}:
         raise ValueError("Addon name collides with selected skill")
     release, index = prepare(state, chosen, addons)
@@ -458,6 +460,7 @@ def main():
     a.add_argument("--ecc", action="store_true", help="Add the two reviewed ECC onboarding and offline evaluation skills")
     a.add_argument("--unslop", action="store_true", help="Add pinned Unslop for existing-screen polish using native Codex tools")
     a.add_argument("--maps-scraper", action="store_true", help="Add public-place extraction guidance; install the pinned runtime on demand")
+    a.add_argument("--untangle-codebase", action="store_true", help="Add the pinned, explicitly invoked codebase refactoring skill")
     a.add_argument("--vault", help="Existing user-authorized vault path; does not create a vault")
     sub.add_parser("list")
     a = sub.add_parser("rollback")

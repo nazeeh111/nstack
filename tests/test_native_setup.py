@@ -45,6 +45,23 @@ class NativeSetup(unittest.TestCase):
   for name,s in rows:
    self.assertIn(s['delivery'],['intact upstream leaf','narrow-patched leaf','native runtime/method adapter']);self.assertFalse(name.startswith(s['candidate_id'].lower()+'-'))
    self.assertEqual(native.nstack.component(s['candidate_id'])['deployment'],'on demand')
+ def test_explicit_untangle_addition_preserves_base_repeat_and_rollback(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';home.mkdir();state=base/'state';source,leaf,r=self.fixture(base)
+   args=self.args(home,state);args.untangle_codebase=True
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
+    result=native.apply(args);self.assertEqual(result['skills'],2)
+    shared=home/'.agents/skills';self.assertEqual({p.name for p in shared.iterdir()},{'obsidian-markdown','untangle-codebase'})
+    entry=shared/'untangle-codebase';provenance=json.loads((entry/'SOURCE.json').read_text())
+    self.assertEqual(provenance['revision'],'f3cf47774975a7d9fca45730babf4ff7ad765ada')
+    for name,receipt in provenance['upstream_files'].items():self.assertEqual(native.sha((entry/name).read_bytes()),receipt['sha256'])
+    self.assertIn('disable-model-invocation: true\n',(entry/'SKILL.md').read_text())
+    self.assertIn('allow_implicit_invocation: false\n',(entry/'agents/openai.yaml').read_text())
+    before={p:fingerprint(p) for p in [shared,home/'.codex/AGENTS.md',state/'native-skill-index.json',pathlib.Path(result['run'])/'journal.json']}
+    self.assertFalse(native.apply(args)['changed'])
+    for p,value in before.items():self.assertEqual(fingerprint(p),value)
+   subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True)
+   self.assertFalse(shared.exists());self.assertFalse((home/'.codex/AGENTS.md').exists())
  def test_repeat_and_terminal_rollback_preserve_original_dirty_bytes_and_new_data(self):
   with tempfile.TemporaryDirectory() as temp:
    base=pathlib.Path(temp).resolve();home=base/'home';state=base/'state';home.mkdir();source,leaf,r=self.fixture(base)
