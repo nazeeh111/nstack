@@ -225,11 +225,8 @@ def knowledge_guidance(vault):
 def guidance(current, state, vault):
     begin, end = "<!-- nstack:start -->", "<!-- nstack:end -->"
     paragraph = (
-        "Keep routine tasks native and use the project's ordinary checks. Reviewed skills are available "
-        "across ordinary projects in ~/.agents/skills, with natural names and complete support files. "
-        "No project-init step is required. Read the relevant complete SKILL.md and required support on demand. "
-        f"If native summaries are limited, search {state / 'native-skill-index.json'} or use nstack search "
-        "ARTIFACT OPERATION FAILURE. A catalog match or prepared source is not an executed operation."
+        "Installed skills are in ~/.agents/skills. If native summaries are insufficient, search "
+        f"{state / 'native-skill-index.json'}. No project-init step is required."
     )
     if current.count(begin) != current.count(end) or current.count(begin) > 1:
         raise ValueError("Ambiguous nstack instructions")
@@ -237,7 +234,7 @@ def guidance(current, state, vault):
         # Preserve the user's retained-plugin, model, runtime and knowledge instructions.
         a, b = current.index(begin), current.index(end)
         body = current[a:b]
-        match = re.search(r"(?m)^Keep routine[^\n]*(?:\n(?!\n)[^\n]*)*", body)
+        match = re.search(r"(?m)^(?:Keep routine|Installed skills)[^\n]*(?:\n(?!\n)[^\n]*)*", body)
         if not match:
             raise ValueError("Existing nstack block has no recognized native guidance paragraph")
         # Preserve an existing runtime pointer in the first paragraph.

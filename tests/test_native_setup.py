@@ -80,7 +80,7 @@ class NativeSetup(unittest.TestCase):
     result=native.apply(args);shared=home/'.agents/skills';self.assertEqual({p.name for p in shared.iterdir()},{'obsidian-markdown','01'})
     entry=shared/'01';self.assertIn("name: '01'\n",(entry/'SKILL.md').read_text())
     self.assertIn('disable-model-invocation: true\n',(entry/'SKILL.md').read_text());self.assertIn('allow_implicit_invocation: false\n',(entry/'agents/openai.yaml').read_text())
-    self.assertTrue((entry/'references/decisions.md').is_file());self.assertEqual((shared/'obsidian-markdown/../../support.md').resolve().read_text(),'Required retained support.\n')
+    self.assertTrue((entry/'scripts/capabilities.py').is_file());self.assertEqual((shared/'obsidian-markdown/../../support.md').resolve().read_text(),'Required retained support.\n')
     journal=pathlib.Path(result['run'])/'journal.json';before=journal.read_bytes();self.assertFalse(native.apply(args)['changed']);self.assertEqual(journal.read_bytes(),before)
    subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True);self.assertEqual(fingerprint(legacy.parent),original)
  def test_raea_and_01_keep_support_and_use_durable_recipe_without_installing_engine(self):
@@ -181,4 +181,21 @@ class NativeSetup(unittest.TestCase):
  def test_upgrade_of_generated_block_removes_project_initialization_requirement(self):
   old=native.profile_install.guidance('User safeguard.\n');new=native.guidance(old,pathlib.Path('/state'),'/vault')
   self.assertIn('No project-init step is required.',new);self.assertNotIn('an authorized setup owner runs',new);self.assertIn('private local Git at /vault',new);self.assertTrue(new.startswith('User safeguard.'))
+ def test_instruction_refresh_is_idempotent_and_preserves_user_rules(self):
+  state=pathlib.Path('/state');vault='/vault'
+  old='User safeguard.\n\n<!-- nstack:start -->\n## Selected toolkit\n\nKeep routine tasks native. Old inventory paragraph.\n\nRetain approved plugins.\n\nPrivate vault policy and correction rules.\n<!-- nstack:end -->\n\nUser footer.\n'
+  first=native.guidance(old,state,vault)
+  self.assertTrue(first.startswith('User safeguard.'))
+  self.assertIn('User footer.',first)
+  self.assertIn('Retain approved plugins.',first)
+  self.assertIn('Private vault policy and correction rules.',first)
+  self.assertIn('Installed skills are in ~/.agents/skills.',first)
+  self.assertNotIn('Old inventory paragraph.',first)
+  self.assertEqual(native.guidance(first,state,vault),first)
+ def test_routing_bundle_keeps_same_modes_in_saved_installer(self):
+  with tempfile.TemporaryDirectory() as temp:
+   before=native.addon_files(native.addon_definition('01'))
+   staged=native.profile_install.stage(pathlib.Path(temp))
+   with patch.object(native,'ROOT',staged):after=native.addon_files(native.addon_definition('01'))
+   self.assertEqual(before,after)
 if __name__=='__main__':unittest.main()
