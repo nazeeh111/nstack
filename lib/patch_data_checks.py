@@ -29,6 +29,8 @@ Before running, resolve the pinned v1 source and its compatible connector depend
    t=f.read_text();prefix='./' if f.parent==out else '../';t=t.replace('{baseDir}/',prefix);f.write_text(t)
   s=s.replace('{baseDir}/','./')
  elif id=='P195' and name=='codeql':
+  s=re.sub(r'(?m)^allowed-tools:.*\n','',s)
+  s=s.replace('produce it, use the sarif-parsing skill.', 'produce it, use the bundled references/sarif-processing.md with native JSON tools.')
   file=out/'scripts/check_db_quality.py';t=file.read_text();t=change(t,'    loc = baseline_lines_of_code(database)','    if not is_finalised(database):\n        raise QualityFailure("Database is not explicitly finalised; incomplete extraction cannot be accepted.")\n\n    loc = baseline_lines_of_code(database)');file.write_text(t)
   start=s.index('**When multiple databases are found:**');end=s.index('\n',start)
   s=s[:start]+'''**Database identity gate:** Reuse only an exact current-source database matched by repository revision, language, build command/toolchain and extraction fingerprint, and passing finalized/source-file/LoC and nonempty suite checks. Rebuild when that identity is absent or stale. Do not select by recency alone. An unambiguous matching database or a clearly required rebuild does not need a user question. Ask only for a material unresolved target choice.'''+s[end:]
@@ -42,8 +44,34 @@ Before running, resolve the pinned v1 source and its compatible connector depend
 Use the identity gate above. An explicit caller target still requires source/build verification. Keep all valid extraction, data extension and explicit query-suite checks. For ambiguous targets, present only the decision that cannot be inferred from the source and request.
 '''+s[end:]
   s=s.replace('{baseDir}/','./')
+  start=s.index('### Building unattended');end=s.index('### Auto-Detection Logic',start)
+  s=s[:start]+'''### Native build execution
+
+Execute [build-database.md](workflows/build-database.md) with the actual CodeQL CLI and bundled scripts. Resolve resource paths against this skill directory, not the target repository or a previous shell. Use native task tracking when useful; no plugin slash command or named task tool is required. Preserve the build-method ladder, finalized/source-coverage quality guard, logs and supported failure states. Report missing tools or unresolved build constraints honestly; a failed build is not a clean scan.
+
+'''+s[end:]
   # Workflows may still instruct asking for a DB; apply the same selection gate there.
   for f in (out/'workflows').glob('*.md'):
    t=f.read_text();t='> Select/rebuild by exact current source, language and build fingerprint. Ask only for a genuinely ambiguous target; use the patched finalized extraction guard.\n\n'+t;t=t.replace('{baseDir}/','../');f.write_text(t)
+  # Port active support too: an adapted entry cannot repair a later foreign-tool gate.
+  for f in out.rglob('*.md'):
+   t=s if f==p else f.read_text()
+   t=t.replace('AskUserQuestion','native user input for a material unresolved choice')
+   if f.name=='run-analysis.md':
+    t=t.replace('### Step 3: Confirm the Plan','### Step 3: Record the Scoped Plan')
+    t=t.replace('**Exit:** User confirmed; flag arrays built', '**Exit:** Existing authority and scoped plan recorded; flag arrays built')
+    t=t.replace('Present the whole plan in one `native user input for a material unresolved choice`, defaults filled in, and let the user\nchange any part before proceeding:', 'Record the plan using the stated target and exclusions. Resolve unambiguous settings from the source and task; ask through native user input only for a material choice that remains unresolved:')
+    t=t.replace('Change anything, or say proceed.', 'Record any explicit user overrides; existing scan authority persists.')
+    t=t.replace('Build the flags from the answer as arrays:', 'Build the flags from the resolved scope as arrays:')
+   if f.name=='create-data-extensions.md':
+    start=t.index('Present findings and use `native user input');end=t.index('\n---\n',start)
+    t=t[:start]+'''Report source-backed model gaps. Within an authorized full-analysis or modeling task, create the required extension artifacts in the scoped output directory and preserve existing project models. Ask through native user input only when the modeling choice or authority is materially unresolved. Unknown API semantics remain unknown; do not invent a source/sink classification to complete the phase.
+'''+t[end:]
+    t=t.replace('Step 3 identified gaps and user confirmed which to model', 'Step 3 identified source-backed gaps within the resolved task scope')
+    t=t.replace('the gaps confirmed by the user.', 'the source-backed gaps selected within the authorized scope.')
+   if f==p:s=t
+   else:f.write_text(t)
+  from codeql_scope_port import patch as local_models
+  local_models(out)
  else:raise ValueError('Unimplemented data-check leaf')
  p.write_text(s)

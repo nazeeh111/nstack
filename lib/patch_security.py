@@ -61,6 +61,47 @@ Run `bash scripts/run-scans.sh --target "$TARGET" --output-dir "$OUTPUT_DIR" --m
   s=re.sub(r'(?m)^\| "Just use default rulesets.*$', '| "Choose rulesets" | Use the source/stack and requested scope; record exact immutable revisions |',s)
   s=s.replace('- [ ] User explicitly approved the scan plan (Step 3 gate passed)','- [ ] Target, rulesets, engine, source revision and existing task authority recorded')
   s=s.replace('at the Step 3 gate','before execution')
+  s=s.replace('use `semgrep-rule-creator` skill', 'use the project rule-authoring workflow and its tests; this leaf covers scanning')
+  s=s.replace('use `semgrep-rule-variant-creator` skill', 'use the project rule-porting workflow and its tests; this leaf covers scanning')
+  s=s.replace('Use `semgrep-rule-creator` skill', 'Use the project rule-authoring workflow and its tests; this leaf covers scanning')
+  s=s.replace('Use `semgrep-rule-variant-creator` skill', 'Use the project rule-porting workflow and its tests; this leaf covers scanning')
+  s=s.replace('Use Glob, not Bash', 'Use native scoped file discovery')
+  s=s.replace('Assumptions cause scanning wrong directories/rulesets. Present plan for verification', 'Resolve target and rulesets from the task and source; ask only for material ambiguity')
+  s=s.replace('Modifying approved list without consent breaks trust', 'Preserve explicit exclusions; resolve routine ruleset choices within existing scan authority')
+  s=s.replace('Pro enables cross-file taint tracking and catches ~250% more true positives. Skipping the check means silently missing critical inter-file vulnerabilities.', 'Use already authorized Pro access only when available; record the actual engine and cross-file coverage. Do not buy access or infer coverage from a promotional multiplier.')
+  s=s.replace('Cross-file analysis catches 250% more true positives; worth the time', 'Use existing authorized cross-file capability when relevant; report unavailable coverage')
+  s=s.replace('Read-only Semgrep security scan with actual ruleset/engine locks, coverage records, raw outputs and false-positive review.', 'Read-only Semgrep security scan with explicit ruleset/engine provenance, coverage records, raw outputs and false-positive review.')
+  workflow=out/'workflows/scan-workflow.md';t=workflow.read_text()
+  start=t.index('## Task System Enforcement');end=t.index('## Step 1:',start)
+  t=t[:start]+'''## Native execution and authority
+
+Use proportionate native task tracking, not a named foreign-host task API. Preserve the ordered dependencies: source/language detection, ruleset selection, scoped plan, execution, merge and report. Existing explicit scan authority persists. Ask only for material missing scope, access or new spending. Resolve every script/reference path against the owning skill directory before running it; relative examples are resource locations, not a required shell working directory.
+
+'''+t[end:]
+  start=t.index('**First, select scan mode**');end=t.index('Record the selected mode.',start)
+  t=t[:start]+'''Use the user's requested mode. For an ordinary full scan, choose run-all; use important-only for an explicitly focused security triage. Ask only when the requested coverage is materially ambiguous.
+
+'''+t[end:]
+  start=t.index('## Step 3: CRITICAL GATE');end=t.index('### Log Approved Rulesets',start)
+  t=t[:start]+'''## Step 3: Record Scope, Provenance and Existing Authority
+
+Record the exact absolute target/output paths, engine/version, scan mode, detected languages, rulesets and explicit exclusions. Keep the plan within the authorized request; no second approval is required for an already authorized scan. Ask only for material missing scope, access or new spending.
+
+Before claiming reproducible rule locks, record the resolved rule revisions and content hashes actually used. Registry IDs and unversioned repository URLs are mutable references, not locks. If exact inputs cannot be established, disclose that limit rather than describing the scan as locked or complete.
+
+'''+t[end:]
+  t=t.replace('### Log Approved Rulesets','### Save the Executed Ruleset Plan')
+  t=t.replace('After approval, write the approved plan', 'Within existing authority, write the resolved plan')
+  t=t.replace('what the user approved and what runs are one artifact', 'the recorded plan and what runs are one artifact')
+  t=t.replace('Fill in the plan that was just approved.', 'Fill in the scoped plan resolved above.')
+  t=t.replace('> **Entry:** Step 3 approved — user explicitly confirmed the plan.', '> **Entry:** Step 3 recorded the scoped plan and existing authority.')
+  t=t.replace('It is the plan the user approved at the Step 3 gate, and', 'It is the recorded scoped plan, and')
+  t=t.replace('go back to Step 3 and get the change approved.', 'reconcile the change with scope and explicit exclusions before updating Step 3.')
+  t=t.replace('because the approved plan is what produced them.', 'until the failure is diagnosed and the revised route is checked against the existing scope.')
+  t=t.replace('**Detect languages** using Glob (not Bash).', '**Detect languages** using native scoped file discovery.')
+  t=t.replace('# *after* the user has passed the hard gate, so a path this skill generated itself would send\n# them back through approval.', '# after scope resolution. Normalize it here rather than generating a path the runner rejects.')
+  t=t.replace('# the user has approved anything.', '# execution starts.')
+  workflow.write_text(t)
   for f in out.rglob('*.md'):
    t=f.read_text();t=t.replace('{baseDir}/','./' if f.parent==out else '../');f.write_text(t)
   s=s.replace('{baseDir}/','./')

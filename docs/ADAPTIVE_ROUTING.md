@@ -1,9 +1,14 @@
 # 01 adaptive routing
 
-`01` is an explicitly invoked skill, not another agent engine. Start a chat
+`01` is an explicitly invoked skill, not another agent engine. Start a session
 with `$01` and the desired result. Its instructions stay relevant to later
-requests in that conversation until the user disables 01. A saved task status
-does not activate it in an unrelated chat.
+requests in that session until the user disables 01. A saved task status
+does not activate it in an unrelated session.
+
+For nontrivial work, it binds each stage to an available capability, inputs,
+a deliverable and an acceptance check, orders dependencies and executes.
+The route stays internal or in the existing task entrypoint; advice alone is
+a deliverable only when the user requested advice.
 
 It keeps ordinary requests direct. For substantial or specialist work, it
 examines relevant expertise and verification methods before choosing a route,
@@ -44,13 +49,23 @@ sharing the files does not merge generated memories or conversations.
 skills. It considers native tools, connected plugins/MCPs, skills and installed
 runtimes together, and reuses effective specialists across task stages.
 
+For broad requests such as maximizing a presentation, 01 derives the relevant
+quality dimensions from the audience, artifact and constraints. It considers
+complementary expertise across disciplines, instead of mapping a task noun to
+one skill. Categories are temporary views of the current capabilities, not a
+maintained task-to-skill table or a requirement to use every available tool.
+
 When native summaries are incomplete, its bundled scripts/capabilities.py
-searches nstack’s recorded skill and runtime indexes. It does not inventory
-every installed capability. It reads bounded skill descriptions, returns a
-small ranked result and records the index hashes. It does not install anything,
-read provider/account stores or claim that a catalog match executed. Native
-connected-tool discovery remains separate. The selected complete skills and
-relevant support still need to be applied to the actual artifact.
+refreshes bounded metadata from current user/project skill roots and searches
+nstack’s recorded skill/runtime indexes. Added skills can be found on the next
+lookup without regenerating a category file. It reads frontmatter rather than
+executing skill bodies, returns a small ranked result and records discovery
+provenance. Explicit isolated-state lookup does not read unrelated host skills.
+
+This file discovery does not establish host enablement, permissions, current
+runtime callability or that a method actually ran. Native connected-tool/plugin
+discovery remains separate. Read and apply selected complete skills and needed
+support to the actual artifact; verify its outputs.
 
 ## Proof and limits
 

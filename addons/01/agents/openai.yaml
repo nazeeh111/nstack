@@ -1,6 +1,6 @@
 interface:
   display_name: "01"
-  short_description: "Adapt expertise and tools throughout this chat"
-  default_prompt: "Use $01 for this chat and complete my requested outcome."
+  short_description: "Own execution and adaptive workflows this session"
+  default_prompt: "Use $01 for this session and complete my requested outcome."
 policy:
   allow_implicit_invocation: false

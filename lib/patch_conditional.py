@@ -5,12 +5,37 @@ P=pathlib.Path
 def patch(id,out):
  p=out/'SKILL.md';s=p.read_text()
  if id=='X-AUTO-EVE':
-  s=s.replace('npm install eve','npm install --save-exact eve@1.0.0-rc.4').replace('npx eve init','npx --yes eve@1.0.0-rc.4 init')
+  bootstrap = ('If `eve` is not installed yet, install it (`npm install eve`) or scaffold a new\n'
+               'agent with `npx eve init <agent-name>`, then read the bundled docs.')
+  if s.count(bootstrap) != 1 or s.count('## Source of truth\n') != 1:
+   raise ValueError('Pinned Eve bootstrap/source-of-truth shape changed')
+  s, count = re.subn(r'(?m)^description:.*$', 'description: Develop an existing Eve product project or a requested always-on user-facing agent needing durable sessions, channels and suspendable human/tool interactions. Not a Codex/OpenCode workflow router.', s, count=1)
+  if count != 1:
+   raise ValueError('Pinned Eve skill description is missing')
+  s=s.replace('## Source of truth\n', '''## Activation and project scope
+
+This globally discoverable entry does not activate a runtime. Keep Eve
+dependencies, project guidance and version-matched docs inside the owning
+project. Do not overlay Eve on Codex, OpenCode or 01.
+
+## Source of truth
+''')
+  s=s.replace(bootstrap, '''## Project commissioning
+
+Inspect the owning project's Eve version, lock and Node runtime. Treat a
+different version as a migration. If absent, commission the selected runtime
+there or in disposable staging under the artifact/dependency-lock gate below.
+An exact direct version is not a full lock.
+
+Install from the reviewed lock and use the verified local CLI. Its `init`
+installs dependencies and may modify a containing workspace; inspect that scope
+and review resulting locks. Reconcile generated guidance with the selected
+version and existing authority.''')
   s+='''\n## Immutable world and effect ownership
 
 The reviewed source declares eve1.0.0-rc.4 and Node>=24. Commission a compatible exact artifact/dependency integrity lock and verify its installed version/docs before invoking it; no @latest or mutable scaffold. Use one locked runtime per self-hosted world and a durable local volume for one instance, or a supported Postgres world for replicas. Keep provider/API or service access conditional on an already authorized free/subscription route; this skill grants no paid API, cloud service or new credentials.
 
-Coordinate version upgrades and drain/run handoffs, preserving rollback and accepted sessions before retiring the old world. Key inbound event deliveries separately from external business effects. Bind callback origin/audience and account/payload authorization; protocol3 keyed follow-ups and protocol2 guarantees differ. An unreadable accepted receipt is unknown: reconcile authoritative remote state before retry. Keep this leaf local to the owning Eve project, and do not start a service merely because the source was staged.
+Coordinate version upgrades and drain/run handoffs, preserving rollback and accepted sessions before retiring the old world. Key inbound event deliveries separately from external business effects. Bind callback origin/audience and account/payload authorization; protocol3 keyed follow-ups and protocol2 guarantees differ. An unreadable accepted receipt is unknown: reconcile authoritative remote state before retry. Keep project-specific Eve guidance local to its owning project; the global entry remains a discovery adapter. Do not start a service merely because the source was staged.
 '''
  elif id=='L036':
   s=re.sub(r'(?m)^description:.*$', 'description: Explicit bounded SkillOpt-Sleep trial on disposable Codex transcripts and an absolute selected skill target. Stages a proposal only; no global memory evolution, auto-adoption or automatic schedule.',s)

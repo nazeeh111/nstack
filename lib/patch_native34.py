@@ -8,6 +8,12 @@ def handles(s):return s['candidate_id'] in FULL or adapter(s)
 def entry(s):
  return str(P('native')/s['native_name']) if adapter(s) else str(P('source')/P(s['source_path']).parent)
 def front(text,name,description=None):
+ descriptions={
+  'p092-trigger-authoring-tasks':'Author Trigger.dev TypeScript background jobs with durable waits, bounded retries, queues, idempotency and cancellation when an application needs that runtime.',
+  'p092-trigger-cost-savings':'Audit Trigger.dev background-job costs, machine sizing, retries, concurrency and schedules from source and already authorized run data.',
+  'l013-finance-comps-analysis':'Build comparable-company valuation spreadsheets with justified peer selection, consistent financial periods, valuation multiples and audited formulas.',
+ }
+ description=descriptions.get(name,description)
  body=text
  if text.startswith('---\n') and '\n---\n' in text[4:]:
   metadata,body=text[4:].split('\n---\n',1)
@@ -29,6 +35,11 @@ def replace_sections(text,names):
  return ''.join(result)
 
 def native_text(text,kind,file,source_root):
+ if kind=='P092':
+  text=text.replace("If they're not available, tell the user to install the MCP server:", 'If live-run tools are unavailable, use the static analysis route:')
+  text=text.replace('```bash\nnpx trigger.dev@latest install-mcp\n```', 'Use existing connected Trigger.dev tools. If unavailable, finish static analysis and report live-run access unavailable; project-local integration setup requires its own concrete need and verified version.')
+  text=text.replace('This skill is bundled inside `@trigger.dev/sdk` and read directly from `node_modules`, so it always matches your installed SDK version (see the adjacent `package.json`).', 'This discovery copy comes from the reviewed @trigger.dev/sdk4.8.3 source. Apply it only to a matching project-local SDK and read that installed package’s version-matched docs; global discovery does not establish the project version.')
+  text=text.replace('The `sources:` frontmatter above lists every doc this skill draws from, all under `@trigger.dev/sdk/docs/`.', 'The source package contains the supporting docs under `@trigger.dev/sdk/docs/`; verify the owning project’s installed SDK version before using them.')
  if kind=='P006':
   from patch_gstack_ranges import patch as raw_gstack
   text=raw_gstack(text,file)
@@ -96,6 +107,8 @@ def native_text(text,kind,file,source_root):
   text=text.replace('single Codex session','single native session')
   text=re.sub(r'(?m)^\*\*Do not\*\* use `Agent \{ isolation:.*$', 'Use supported native delegation when authorized; create a named owned worktree explicitly and pass its exact path. Do not assume another host agent-ID or hook protocol exists.',text)
   text=text.replace('which claude codex opencode llm aichat','command -v codex').replace('-x claude','-x codex')
+ if kind=='L013':
+  text=text.replace('This skill teaches Claude to build', 'This skill guides the active agent in building')
  if kind in ('P021','P032','P056','P111','P121','P283','P335','L013'):
   text=text.replace('AskUserQuestion','the native input tool only for material missing information')
   # Remove provider/model dispatch directives, not specialist methods or examples.
