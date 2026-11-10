@@ -29,7 +29,7 @@ anything. It never reads auth stores or service registration, copies provider
 configuration, or rewrites existing JSONC. Existing customized configurations
 require a scoped manual merge rather than an automatic reset.
 
-Both hosts follow the same canonical Markdown knowledge and task handoffs.
+Local hosts share canonical Markdown knowledge and project task handoffs.
 On the author Mac the private vault is `~/Knowledge`, with private local Git
 history. Keep source, scope, note ID, generation/hash, dates and correction path
 with each claim. Re-read the current note and source before reuse. Give concurrent
@@ -39,6 +39,16 @@ serializes writers and rejects stale updates. Creation uses generation 0. This
 protects that command, not arbitrary Markdown edits or host-generated memories.
 No synchronizing daemon, extra database, automatic-memory export or public-vault
 copy is needed. Native automatic memories and chat histories remain host-owned.
+
+| Host | Shared local layer | Boundary |
+|---|---|---|
+| Codex CLI and desktop backend | User skills, instructions, canonical vault and project handoffs | Native accounts, tools and memories retain Codex permissions |
+| ChatGPT desktop Work | Local files and skills when local access/tools are available | A cloud-only chat cannot read the Mac's vault; verify a fresh local chat |
+| OpenCode | The same user skills, linked instructions, vault and handoffs | Its own tools, approvals, provider connection and chat history |
+
+For a correction, update the owned canonical note once with its new generation
+and source. Each host re-reads that note before reuse. This is shared knowledge,
+not automatic synchronization of native memories. See [Work local access](https://learn.chatgpt.com/docs/get-started-with-work).
 
 ## Actual Codex harness
 
@@ -119,3 +129,23 @@ publishing. For ordinary OpenAI coding, restrict the existing project key to
 the inference endpoints actually used, plus model listing when needed. Key
 permissions, model access and spend limits are separate account controls;
 verify whether the selected spend limit is enforced or only alerts.
+
+## Agents and media
+
+Use OpenCode's native agents for its own delegated work. The OpenAI Agents API
+is a separate application interface, with additional key permissions and optional
+hosted resources; it is not required to use OpenCode agents. The Decisions API
+returns typed classifications and scores, rather than replacing the agent engine.
+Do not add either service merely to route ordinary tasks.
+
+For image input, choose a model whose current native catalog supports images and
+attach a supported image. Audio attachments are not automatically sent to the
+model, even when a listed model supports audio. Use an explicitly available
+transcription or speech workflow for a real audio task. Catalog availability does
+not prove endpoint permission, budget or successful execution. Keep existing
+key restrictions; expand only for a concrete authorized task.
+
+Sources: [OpenCode agents](https://opencode.ai/docs/agents/),
+[attachments](https://opencode.ai/docs/attachments/),
+[OpenAI Agents API](https://developers.openai.com/api/docs/guides/agents-api/quickstart),
+[Decisions API](https://developers.openai.com/api/docs/guides/decisions).

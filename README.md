@@ -25,25 +25,21 @@ Python runtime recipes; Node/npm and browser downloads are needed only for the
 selected JavaScript recipes. The FFmpeg recipe uses the existing Apple compiler
 and make.
 
-From this checkout:
+From this checkout, install the base collection:
 
 ```sh
 python3 -m unittest discover -s tests -p 'test_*.py'
 python3 install.py install --stage-only --bootstrap-cli
 python3 install.py install --bootstrap-cli --retire-personal --run-id cutover
 python3 native_setup.py install --replace --agent-reach --repository-docs
-# Optional noncommercial academic suite, fetched privately from its pinned source:
-python3 native_setup.py install --replace --agent-reach --repository-docs --academic-research
-# Optional scoped ECC onboarding and offline evaluation utilities:
-python3 native_setup.py install --replace --agent-reach --repository-docs --academic-research --ecc
-# Include existing-screen polish, preserving the other explicitly chosen additions:
-python3 native_setup.py install --replace --agent-reach --repository-docs --academic-research --ecc --unslop
-# Also include the separately requested Maps extraction lane:
-python3 native_setup.py install --replace --agent-reach --repository-docs --academic-research --ecc --unslop --maps-scraper
-# Also include the explicitly invoked codebase refactoring skill:
-python3 native_setup.py install --replace --agent-reach --repository-docs --academic-research --ecc --unslop --maps-scraper --untangle-codebase
 "$HOME/.local/bin/nstack" doctor
 ```
+
+Choose optional additions in that single `native_setup.py` command rather than
+running successive replacements: `--academic-research`, `--ecc`, `--unslop`,
+`--maps-scraper`, `--untangle-codebase`, `--raea` and `--adaptive-routing`.
+Academic sources are fetched privately under their noncommercial license.
+When replacing a collection, include all additions you intend to retain.
 
 The base install command retires the complete old user-managed skill collection into
 private recovery storage, preserving built-ins. It merges only owned config
@@ -94,7 +90,7 @@ upstream hooks, model downloads or provider connections. See [RAEA](docs/RAEA.md
 Heavy dependencies are separate and remain on demand. Search the full installed
 `native-skill-index.json` when the native summary list is truncated.
 
-For one explicit entry to adaptive selection across the conversation, add
+For one explicit entry to adaptive selection across the session, add
 `--adaptive-routing` to the native install command and invoke `$01` once.
 It keeps ordinary work direct and applies relevant specialists as the task
 changes. [Behavior, testing and limits](docs/ADAPTIVE_ROUTING.md).
