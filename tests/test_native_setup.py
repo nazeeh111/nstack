@@ -30,6 +30,16 @@ class NativeSetup(unittest.TestCase):
     self.assertEqual(list((release/'skills').iterdir()),[entry]);self.assertIn('name: obsidian-markdown\n',(entry/'SKILL.md').read_text());self.assertTrue((release/'bundles/obsidian-markdown/UPSTREAM-RELEASE.json').is_file())
     bundle=release/'bundles/obsidian-markdown';bundle.chmod(0o755);(bundle/'NATIVE-MANIFEST.json').write_text('unexpected nested file')
     with self.assertRaisesRegex(ValueError,'release changed'):native.prepare(state,[('obsidian-markdown',leaf)],[])
+ def test_addon_order_has_one_identity_and_identical_index_on_repeat(self):
+  with tempfile.TemporaryDirectory() as temp:
+   state=pathlib.Path(temp).resolve()/'state'
+   first,index=native.prepare(state,[],['repository-docs','agent-reach'])
+   before=fingerprint(first)
+   second,repeated=native.prepare(state,[],['agent-reach','repository-docs'])
+   self.assertEqual(first,second);self.assertEqual(index,repeated)
+   self.assertEqual([r['name'] for r in index],['agent-reach','repository-docs'])
+   self.assertEqual(fingerprint(second),before)
+   self.assertEqual(json.loads((first/'NATIVE-MANIFEST.json').read_text())['inputs']['adaptation'],'full-bundle-natural-entry-v2')
  def test_exact_selection_excludes_conditional_and_reference_paths(self):
   rows=native.selection();self.assertEqual(len(rows),170);self.assertEqual(len({n for n,_ in rows}),170)
   for name,s in rows:

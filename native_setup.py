@@ -88,7 +88,7 @@ def index_rows(originals, addons, release):
             "deployment": "on demand",
             "installation_adaptation": "Natural entry name; complete reviewed support bundle retained.",
         })
-    for name in addons:
+    for name in sorted(addons):
         spec = addons[name]
         rows.append({"name": name, "skill_path": str(release / "bundles" / name / spec["entry"] / "SKILL.md"),
                      "deployment": "on demand", **spec["provenance"]})
@@ -148,7 +148,7 @@ def prepare(state, chosen, addons):
     inputs = {
         "leaves": [(name, r["content_sha256"], r["builder_sha256"]) for name, _, _, r in originals],
         "addons": {name: {rel: {"sha256": sha(data), "mode": mode} for rel, (data, mode) in addon_files(spec).items()} for name, spec in addons.items()},
-        "adaptation": "full-bundle-natural-entry-v1",
+        "adaptation": "full-bundle-natural-entry-v2",
     }
     digest = sha(json.dumps(inputs, sort_keys=True).encode())
     release = state / "native-releases" / digest
