@@ -40,6 +40,8 @@ environment. Its MCP entry uses `start-mcp-server --context /absolute/codex.yml
 in `templates/serena`, copied into a private SERENA_HOME. The supported prompt
 override belongs at `SERENA_HOME/prompt_templates/system_prompt.yml`.
 Do not substitute a session-wide mandatory startup or Claude runtime workflow.
+Do not add `--project-from-cwd`: ordinary sessions must not create a Serena
+project before semantic work is needed. Activate the exact project on demand.
 
 Use Codex's supported `codex mcp add` and `codex mcp --help`, retaining current
 permissions and unrelated entries. Context7's free read-only URL is

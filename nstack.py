@@ -252,7 +252,7 @@ def main():
   a=sub.add_parser(command);a.add_argument('id');a.add_argument('operation');
   if command=='run':a.add_argument('arguments',nargs=argparse.REMAINDER)
  a=sub.add_parser('doctor')
- a=sub.add_parser('knowledge');a.add_argument('action',choices=['set','read','delete']);a.add_argument('project');a.add_argument('id');a.add_argument('--claim');a.add_argument('--source')
+ a=sub.add_parser('knowledge');a.add_argument('action',choices=['set','read','delete']);a.add_argument('project');a.add_argument('id');a.add_argument('--claim');a.add_argument('--source');a.add_argument('--expected-generation',type=int,default=0)
  args=p.parse_args()
  try:
   if args.cmd=='search':
@@ -308,7 +308,7 @@ def main():
    if args.action=='read':result=knowledge.recall(args.project,args.id)
    else:
     if args.action=='set' and (not args.claim or not args.source):raise ValueError('set requires claim and source')
-    result=knowledge.change(args.project,args.id,args.claim,args.source,args.action=='delete',dump)
+    result=knowledge.change(args.project,args.id,args.claim,args.source,args.action=='delete',dump,args.expected_generation)
    print(json.dumps(result,indent=2))
   elif args.cmd=='doctor':
    m=manifest();print(json.dumps({'registry':str(ROOT/'registry/manifest.json'),'manifest_version':m['version'],'components':len(m['components']),'paths':len(m['skills']),'decisions':len(load(ROOT/'registry/discovery.json')),'state':str(STATE),'codex':shutil.which('codex'),'git':shutil.which('git'),'python':sys.version.split()[0]},indent=2))

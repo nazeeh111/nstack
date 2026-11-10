@@ -60,6 +60,13 @@ runtime locks, private backups and restart-safe ownership journals live there.
 `$HOME/.local/bin` to your normal PATH if it is absent. To replace an existing
 CLI entry elsewhere, pass its exact absolute path with `--cli-path`.
 
+## OpenCode
+
+An optional [OpenCode V2 adapter](docs/OPENCODE.md) reuses the same skills,
+user instructions and canonical vault. It preserves the selected model and
+credentials, disables background warming, and adds only the existing documentation
+and semantic connections. Host-native accounts and automatic memories remain separate.
+
 ## First unfamiliar task
 
 Open an ordinary project and ask for the finished result. No project-init step
@@ -187,11 +194,14 @@ From inside the owning project:
 ```sh
 nstack knowledge set /absolute/project fixture-level --claim '30 dB' --source evidence.txt
 nstack knowledge read /absolute/project fixture-level
-nstack knowledge delete /absolute/project fixture-level
+nstack knowledge delete /absolute/project fixture-level --expected-generation 1
 ```
 
 Retrieval checks current project scope and actual source bytes. A correction
-supersedes the prior generation; deletion leaves a tombstone. Commit durable
+supersedes the prior generation; deletion leaves a tombstone. Updates and
+deletions must pass `--expected-generation N` using the generation returned by
+`read`. Competing writers serialize; a stale generation is refused without
+changing the accepted record. Creation expects generation 0. Commit durable
 records through the project's authorized Git workflow. Reject stale derived
 results at handoff and regenerate affected artifacts. Native automatic memory
 remains separate and can skip externally sourced sessions; do not claim a
