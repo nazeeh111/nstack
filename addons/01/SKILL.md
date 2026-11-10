@@ -1,7 +1,8 @@
 ---
 name: '01'
 description: Own adaptive workflow selection and execution for the active session when explicitly invoked.
-disable-model-invocation: true
+metadata:
+  opencode/autoinvoke: false
 ---
 
 # 01

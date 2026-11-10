@@ -79,7 +79,7 @@ class NativeSetup(unittest.TestCase):
    with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
     result=native.apply(args);shared=home/'.agents/skills';self.assertEqual({p.name for p in shared.iterdir()},{'obsidian-markdown','01'})
     entry=shared/'01';self.assertIn("name: '01'\n",(entry/'SKILL.md').read_text())
-    self.assertIn('disable-model-invocation: true\n',(entry/'SKILL.md').read_text());self.assertIn('allow_implicit_invocation: false\n',(entry/'agents/openai.yaml').read_text())
+    self.assertIn('  opencode/autoinvoke: false\n',(entry/'SKILL.md').read_text());self.assertIn('allow_implicit_invocation: false\n',(entry/'agents/openai.yaml').read_text())
     self.assertTrue((entry/'scripts/capabilities.py').is_file());self.assertEqual((shared/'obsidian-markdown/../../support.md').resolve().read_text(),'Required retained support.\n')
     journal=pathlib.Path(result['run'])/'journal.json';before=journal.read_bytes();self.assertFalse(native.apply(args)['changed']);self.assertEqual(journal.read_bytes(),before)
    subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True);self.assertEqual(fingerprint(legacy.parent),original)

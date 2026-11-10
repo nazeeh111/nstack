@@ -60,6 +60,17 @@ class DiscoveryTests(unittest.TestCase):
 
 
 class CurrentSkillDiscoveryTests(unittest.TestCase):
+    def test_native_opencode_manual_metadata_is_reported_and_refreshes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp); state = base / 'state'; state.mkdir(); root = base / 'skills'
+            entry = root / 'manual' / 'SKILL.md'; entry.parent.mkdir(parents=True)
+            entry.write_text('---\nname: manual\ndescription: Calibrate beacon logs\nmetadata: # invocation policy\n# comment before mapping children\n  opencode/autoinvoke: false # explicit only\n---\nInstructions.\n')
+            self.assertTrue(module.search(state, ['beacon'], skill_roots=[root])['matches'][0]['manual_only'])
+            entry.write_text(entry.read_text().replace('false # explicit only', 'true'))
+            self.assertNotIn('manual_only', module.search(state, ['beacon'], skill_roots=[root])['matches'][0])
+            entry.write_text(entry.read_text().replace('  opencode/autoinvoke: true', '  other:\n    opencode/autoinvoke: false'))
+            self.assertNotIn('manual_only', module.search(state, ['beacon'], skill_roots=[root])['matches'][0])
+
     def skill(self, root, name, description, body=b'Body must never be decoded: \xff'):
         path = root / name / 'SKILL.md'
         path.parent.mkdir(parents=True)

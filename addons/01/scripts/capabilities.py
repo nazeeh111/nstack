@@ -82,6 +82,21 @@ def frontmatter(entry):
                 lines = raw.decode('utf-8').splitlines()[1:-1]
                 values = {}
                 for i, line in enumerate(lines):
+                    if re.fullmatch(r'metadata:\s*(?:#.*)?', line):
+                        children = []
+                        for following in lines[i + 1:]:
+                            if following.lstrip().startswith('#'):
+                                continue
+                            if following.strip() and not following[0].isspace():
+                                break
+                            if following.strip():
+                                children.append(following)
+                        indent = min((len(v) - len(v.lstrip()) for v in children), default=0)
+                        for child in children:
+                            if len(child) - len(child.lstrip()) == indent:
+                                policy = re.fullmatch(r'opencode/autoinvoke:\s*(true|false)(?:\s+#.*)?', child.strip())
+                                if policy:
+                                    values['opencode/autoinvoke'] = policy.group(1)
                     match = re.match(r'^(name|description|disable-model-invocation):\s*(.*)$', line)
                     if not match:
                         continue
@@ -122,7 +137,8 @@ def skill_record(entry, name, deployment, metadata=None):
         record['description'] = values.get('description', '')
         record['metadata_sha256'] = hashlib.sha256(raw).hexdigest()
         record['hash_scope'] = 'SKILL.md frontmatter only'
-        if values.get('disable-model-invocation', '').casefold() == 'true':
+        if (values.get('disable-model-invocation', '').casefold() == 'true'
+                or values.get('opencode/autoinvoke') == 'false'):
             record['manual_only'] = True
     return record
 

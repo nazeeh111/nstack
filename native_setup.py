@@ -464,7 +464,7 @@ def main():
     a.add_argument("--unslop", action="store_true", help="Add pinned Unslop for existing-screen polish using native Codex tools")
     a.add_argument("--maps-scraper", action="store_true", help="Add public-place extraction guidance; install the pinned runtime on demand")
     a.add_argument("--untangle-codebase", action="store_true", help="Add the pinned, explicitly invoked codebase refactoring skill")
-    a.add_argument("--adaptive-routing", action="store_true", help="Add explicit 01 for adaptive skill/tool selection throughout a conversation")
+    a.add_argument("--adaptive-routing", action="store_true", help="Add explicit 01 for adaptive skill/tool selection throughout a session")
     a.add_argument("--raea", action="store_true", help="Add RAEA guidance for offline local GPU rendering; pinned runtime installed separately")
     a.add_argument("--vault", help="Existing user-authorized vault path; does not create a vault")
     sub.add_parser("list")
