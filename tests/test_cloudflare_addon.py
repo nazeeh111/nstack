@@ -1,5 +1,6 @@
 """Pinned closure and detached offline validator contracts; no audit target."""
 import hashlib
+import difflib
 import json
 import os
 from pathlib import Path
@@ -45,13 +46,26 @@ class CloudflareAddonTests(unittest.TestCase):
             self.assertEqual(sha((ADDON / relative).read_bytes()), entry['sha256'], relative)
         self.assertEqual({str(p.relative_to(ADDON)) for p in ADDON.rglob('SKILL.md')}, {'SKILL.md'})
         self.assertFalse(any(p.is_symlink() for p in ADDON.rglob('*')))
-        self.assertEqual(set(files(ADDON)), set(upstream) | {'SKILL.md', 'SOURCE.json'})
+        self.assertEqual(set(files(ADDON)), set(upstream) | {'SKILL.md', 'SOURCE.json', 'PORT.patch'})
+        self.assertEqual(sha((ADDON / 'PORT.patch').read_bytes()), receipt['port_patch_sha256'])
         self.assertIn('Copyright (c) 2025-2026 Cloudflare, Inc.', (ADDON / 'LICENSE').read_text())
         original_entry = upstream['upstream/ORIGINAL-SKILL.md']
         self.assertEqual(original_entry['source_path'], 'skills/security-audit/SKILL.md')
         self.assertTrue(receipt['modifications'])
         self.assertNotIn('/Users/', json.dumps(receipt))
         self.assertNotIn('/private/tmp/', json.dumps(receipt))
+
+    def test_active_method_preserves_upstream_except_name_and_support_bindings(self):
+        original = (ADDON / 'upstream/ORIGINAL-SKILL.md').read_text()
+        active = (ADDON / 'SKILL.md').read_text()
+        restored = active.replace('name: cloudflare-security-audit\n', 'name: security-audit\n', 1)
+        restored = restored.replace('**Skill directory**: the absolute `upstream/` subdirectory beside this active `SKILL.md`, containing the retained companions, schema and validators.', '**Skill directory**: the absolute directory containing this `SKILL.md`.')
+        restored = restored.replace('](upstream/', '](')
+        self.assertEqual(restored, original)
+        expected = ''.join(difflib.unified_diff(original.splitlines(keepends=True), active.splitlines(keepends=True), fromfile='upstream/skills/security-audit/SKILL.md', tofile='active/SKILL.md'))
+        self.assertEqual((ADDON / 'PORT.patch').read_text(), expected)
+        self.assertIn('Reserve the four baseline reconnaissance calls', active)
+        self.assertIn('budget_cannot_fund_reconnaissance_and_reserves', active)
 
     def test_all_relative_markdown_references_stay_in_retained_bundle(self):
         for path in ADDON.rglob('*.md'):

@@ -50,24 +50,12 @@ def patch(out,name):
   text=p.read_text();text=text.replace('## Dependencies','Use native primary-source retrieval for scoping and supplementary discovery, preserving query, date, response state, source locator, raw exports and incomplete coverage. Ranked excerpts never establish full-text access or a complete corpus.\n\n## Dependencies')
   generator=out/'scripts/generate_schematic.py'
   if generator.exists():generator.unlink()  # Disposable staging copy; original pinned source remains intact.
- elif name=='uncertainty-and-units':
-  text+='\n## Acceptance boundary for a GUM claim\n\nThe local helpers are bounded numerical/static checks. Preserve covariance, the input distributions, model validity and the unit frame. A GUM-validation claim additionally needs study-specific Monte Carlo/numerical convergence and model evidence; a passing helper alone is insufficient.\n'
- elif name in ('hypothesis-generation','experimental-design','statistical-power'):
-  text+='\n## Scoped study handoff\n\nCarry the independent unit, estimand, rival predictions, outcome-exposure history, randomization and preregistration state into the next selected procedure. Choose a study-specific seed and archive the actual allocation/design, environment and accepted input hashes. Power simulation must retain failed-run denominators and a Monte Carlo interval; do not convert a completed helper into a finding or retention claim.\n'
- elif name=='citation-management':
-  text+='\n## Separate citation checks\n\nTreat identifier registration, metadata agreement and support for the manuscript claim as three distinct checks. Reopen the primary source and cite the actual supporting passage/record; matching a DOI or title does not prove the claim.\n'
- elif name=='lab-hardware-cad':
-  text+='\n## Target standards and fabrication evidence\n\nReverify dated standards and vendor drawings for the actual target. Preserve editable build123d source, dimensions/units, interfaces, clearance assumptions, part/export hashes and a reopened STEP/STL/DXF. A lookup or successful export alone does not establish physical fit or fabrication safety.\n'
- elif name=='scientific-writing':
-  text+='\n## Accepted evidence revision\n\nBind every consequential claim/table/figure to the actual source row or field, units, producing revision and raw evidence hash. Verify current reporting requirements for the target; reject stale outputs after a correction and preserve editable source. This is the single general manuscript leaf, not a reason to activate unrelated writing or diagram collections.\n'
  elif name=='peer-review':
-  text+='\n## Review boundary\n\nUse only the authorized manuscript and current venue policy. Keep confidential reviewer notes separate from author-facing comments. Do not send manuscript content to external services by default. Source-backed concerns, contrary evidence, uncertainty and an actionable remedy belong in the review.\n'
+  text+='\nKeep confidential reviewer notes separate from author-facing comments. Do not send manuscript content to external services without specific authority.\n'
  elif name=='qiskit':
   text=text.replace('## IBM QPU Sampling','## IBM QPU Sampling (separately authorized target only)').replace('## IBM QPU Estimation','## IBM QPU Estimation (separately authorized target only)')
   text+='\n## Source-to-joint-result acceptance\n\nLocal simulation is the default. Remote jobs, sessions/batches and hardware access need a task-specific authorized backend/account, budget and scope before submission. Persist shot-aligned arrays, explicit register/bit order, circuit/layout and target/noise metadata. Test asymmetric mappings and joint probabilities against a local oracle; per-register marginals lose correlation. Apply layouts to observables before execution and keep shot uncertainty explicit.\n'
  elif name=='pennylane':
   text=text.replace('then select a current accessible hardware backend and execution budget.', 'then keep local results unless the task separately authorizes a named hardware backend and execution budget.')
   text+='\n## Backend and oracle boundary\n\nKeep the QNode separate from its backend. Compare against the appropriate classical sector/oracle, verify analytic gradients before finite-shot/noisy checks, and retain register/measurement conventions. Provider plugins and hardware require separate task-specific access, scope and acceptance.\n'
- # A scientific method does not authorize automatic sibling collection installation.
- text+='\nUse this leaf only for its concrete scientific deliverable. Other named skills/runtimes remain independently admitted and activated; a related-source mention is not installation authority.\n'
  p.write_text(text)

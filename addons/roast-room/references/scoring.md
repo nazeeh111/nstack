@@ -1,7 +1,3 @@
-# Native interpretation
-
-Compute only from actual completed cards; missing/unparseable cards remain missing, never endorsement. Keep the full selected-board coverage visible and mark any partial tally incomplete. These weighted scores and confidence are descriptive simulated judgments, not expert votes, calibrated probabilities or authorization. Independently checked decisive facts override a score.
-
 # Scoring
 
 All numbers come from the seats' cards. The Chair computes, never invents. Use the last round that ran (Round 3 if it ran, else Round 2).

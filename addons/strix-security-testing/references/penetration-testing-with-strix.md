@@ -1,33 +1,162 @@
-# Strix pentest method
+---
+name: penetration-testing-with-strix
+description: Pentest a web app, API, codebase, repository, URL, domain, or IP with Strix — autonomous AI penetration testing that exploits and proves vulnerabilities (OWASP Top 10 and beyond — injection, XSS, SSRF, auth/access-control flaws, IDOR, business logic) instead of just flagging them. Runs self-hosted with the open-source CLI or via the managed app.strix.ai cloud, and returns validated findings with proof-of-concept exploits (Markdown, JSON, CSV, SARIF). Use when the user asks to pentest, hack, security-scan, security-audit, or find vulnerabilities in an app, API, website, or repo.
+license: Apache-2.0
+metadata:
+  author: usestrix
+  homepage: https://docs.strix.ai
+---
 
-Modified by nstack from the pinned usestrix method recorded in [SOURCE.md](../SOURCE.md). This reference prepares or executes a specifically authorized run; it does not activate a runtime during skill installation.
+# Run a Strix pentest
 
-## Choose a feasible runtime
+Strix runs autonomous AI pentesting agents that dynamically exploit a target and only report findings validated with a working proof-of-concept. There are **two ways to run it, built on the same engine and producing the same findings** — pick per situation, and mix them freely:
 
-Local Strix runs in a Docker sandbox with a selected model backend. Managed Strix runs on the provider's infrastructure and needs separate account, data and spending authority. Missing Docker or model access does not select cloud automatically. Read the [managed method](managed-pentesting-with-strix.md) only when that route is requested or selected with the user.
+- **Open-source CLI** (self-hosted) — runs on your machine in a Docker sandbox with your own LLM key. Free, fully local, BYO-LLM, air-gap capable. Docs: [docs.strix.ai](https://docs.strix.ai).
+- **Managed cloud** — runs on Strix's infrastructure, driven from the same CLI (`strix cloud ...`) or the REST API at `https://app.strix.ai/api/v1`. No Docker, no LLM key, no local compute; adds team dashboards, scheduling, PR reviews, downloadable PDF/DOCX reports (Enterprise plan), and internal-network connectors. Docs: [docs.app.strix.ai](https://docs.app.strix.ai). Full workflow in the **managed-pentesting-with-strix** skill.
 
-For a local route, check executable presence with `command -v strix` and `command -v docker`. An existing, reviewed CLI can later be checked with `strix --version` and `strix --help`; do not execute an unknown binary as a discovery test. Python source installation requires Python 3.12 or newer. Docker must be running, and the first scan normally downloads a sandbox image. Review the exact runtime package, dependency lock and image digest before acquisition. Floating installers and downloading/running a shell installer are not part of this method.
+## Which one? (decide, do not default)
 
-Select the model without changing the user's active host model or effort. A local OpenAI-compatible or Ollama endpoint still needs structured tool calls, sufficient context and adequate resources; compatibility is untested until demonstrated. A remote LLM sends source-derived context to that provider. Existing host subscriptions do not establish a usable or authorized Strix authentication route. Do not read existing account/config stores to discover secrets. Keep Strix MCP connections absent or explicitly task-scoped; configured connections can expose all server tools. Choose the telemetry policy before a run; upstream enables telemetry by default and documents `STRIX_TELEMETRY=0` to disable it.
+Choose honestly based on the situation — neither is "better":
 
-## Bound the scan
+| Situation | Prefer |
+|---|---|
+| No Docker available, or a sandboxed/hosted agent/CI environment | **Cloud** |
+| User has no LLM key / does not want to pay per-token or manage models | **Cloud** |
+| Team visibility, shareable dashboard, scheduled/continuous scans, PR reviews, downloadable PDF/DOCX report (Enterprise) | **Cloud** |
+| Scanning internal/private infrastructure not reachable from your machine | **Cloud** (network connector) |
+| Source must never leave local infra (privacy/air-gap), or fully offline | **OSS CLI** |
+| Free / one-off / local dev-loop scan, Docker already present | **OSS CLI** |
+| BYO or self-hosted LLM, or a specific model not offered by the platform | **OSS CLI** |
+| CI: runner already has Docker and you want a self-contained gate | **OSS CLI** |
+| CI: no Docker, or you want results tracked centrally | **Cloud** |
 
-The documented command shape below is an active scan, not a setup check. Replace placeholders only after scope and budget are authorized:
+**Mix them:** use the OSS CLI for the fast local dev-loop while writing/fixing code, and the Cloud for the authoritative, team-visible scan + report + tracking; or gate PRs with the OSS CLI in CI while the Cloud runs scheduled deep scans and PR reviews across the org. Both emit the same SARIF 2.1.0, so findings line up across environments.
 
-```text
-strix -n -t <task-owned-target> --scan-mode quick --scope-mode full --max-budget <approved-USD> --max-turns <per-agent-turns>
+If unsure and the user has (or will create) an app.strix.ai account, prefer **Cloud** — it avoids all local-infra friction. If they want zero signup / full local control, use the **OSS CLI**.
+
+---
+
+# Option A — Open-source CLI (self-hosted)
+
+## Prerequisites
+
+1. **Docker running** — check with `docker info`. The first scan pulls the sandbox image automatically.
+2. **Strix installed** — check with `strix --version`. Install if missing:
+   ```bash
+   curl -sSL https://strix.ai/install | bash   # or: pipx install strix-agent
+   ```
+3. **LLM configured** — two environment variables:
+   ```bash
+   export STRIX_LLM="openrouter/z-ai/glm-5.3"      # any LiteLLM model id (openai/..., anthropic/..., openrouter/...)
+   export LLM_API_KEY="<provider api key>"
+   ```
+   Ask the user for these if unset. Never hardcode or commit keys.
+
+## Running a scan
+
+Always use `-n` (non-interactive/headless) — the default TUI blocks agents. Always set `--max-budget` unless the user says otherwise.
+
+```bash
+# Local code (white-box)
+strix -n -t ./ --scan-mode standard --max-budget 10
+
+# Deployed app / API (black-box)
+strix -n -t https://staging.example.com --max-budget 20
+
+# Repo + deployed app together (best coverage)
+strix -n -t https://github.com/org/app -t https://staging.example.com
+
+# Focused testing with credentials or scope hints
+strix -n -t https://app.example.com \
+  --instruction "Use credentials user@example.com:pass123. Focus on IDOR and auth bypass."
+
+# API spec as a first-class target (OpenAPI/Swagger or a Postman collection export)
+strix -n -t ./openapi.yaml -t https://api.staging.example.com
+
+# Many targets from a file, one per line
+strix -n --target-list ./targets.txt --max-budget 30
+
+# Give the agents a file to work with (wordlist, spec, notes) without making it a target
+strix -n -t https://staging.example.com --workspace-file ./wordlist.txt --max-budget 20
 ```
 
-Use `quick`, `standard` or `deep` to match the task; unqualified mode defaults to deep. `-n` selects headless execution. `--max-turns` applies to each agent, not the whole run. The budget check occurs after responses, may overshoot with in-flight calls and depends on price estimates. Bound provider spending separately when a true ceiling is needed. Interactive mode can extend the budget when resumed, so do not use it for an unattended bounded run.
+A local path passed with `-t` is mounted into the sandbox **writable** — the agents can read and modify it, so point at a clean checkout, not uncommitted work you care about.
 
-Targets may be local directories, repository URLs, URLs/domains/IPs, API specifications or target lists. Review ownership and declared hosts, including those an API specification introduces. Local directory targets are mounted writable. Work in an isolated task-owned checkout/copy, and keep the run artifacts with that task. Use `--instruction-file` for non-secret scope/context; do not insert real credentials into CLI arguments or evidence. A live test account requires an approved secret-handling path and its own authorized test scope.
+Key flags:
 
-Use `--scope-mode diff --diff-base <actual-base>` only when reviewing changes. Resolve and verify the intended base; a branch's own upstream can yield an empty diff. Use `--workspace-file <path>` for an authorized non-secret support file rather than expanding targets. `--target-list` combines targets, so inspect every entry. Follow long scans in the active task with bounded polling.
+| Flag | Meaning |
+|---|---|
+| `-t, --target` | URL, repo URL, local path, domain, IP, OpenAPI/Postman spec, or `postman://<uuid>`. Repeatable. |
+| `--target-list PATH` | File of targets, one per line (`#` comments allowed). Repeatable, combines with `-t`. |
+| `-n, --non-interactive` | Headless, exits on completion. Required for agents. |
+| `-m, --scan-mode` | `quick` (minutes) / `standard` (~30 min) / `deep` (hours, default). |
+| `--instruction` / `--instruction-file` | Credentials, focus areas, scope rules. |
+| `--workspace-file PATH[:DEST]` | Copy a file from this machine into `/workspace` before the scan, for a wordlist, a spec, or notes. Repeatable. |
+| `--max-budget USD` | Hard LLM spend cap; scan wraps up cleanly at the limit. |
+| `--max-turns N` | Per-agent turn cap (default 500). |
+| `--fail-on SEVERITY` | Headless only: exit `2` only for findings at or above `critical`/`high`/`medium`/`low`/`info`. Default: any finding. |
+| `-r`, `--resume RUN_NAME` | Resume a prior run from `strix_runs/`, with its agent history and targets. Cannot be combined with `-t`. |
+| `--scope-mode` | For code targets: `auto` (diff-scope in CI/headless), `diff` (force changed files only), `full` (whole tree). |
+| `--diff-base REF` | Branch or commit that `diff` scope compares against. Defaults to the repo's default branch. |
 
-## Read actual results
+Scans take minutes (`quick`) to hours (`deep`). Run them in the background and poll for completion rather than blocking.
 
-Artifacts under `strix_runs/<run-name>/` include `penetration_test_report.md`, `vulnerabilities/*.md`, `vulnerabilities.json`, `vulnerabilities.csv`, `findings.sarif` and `run.json`. Match the run name, input revision and target scope rather than choosing an arbitrary newest directory.
+### Exit codes (headless)
 
-Headless exit 1 means a fatal error; exit 2 means findings meeting the selected threshold; exit 0 means none proven at that threshold in what was analyzed. Lower-severity findings remain when `--fail-on` is used. A hard budget stop may record `stopped`; a warning-triggered early wrap-up can record `completed` despite partial coverage. Inspect status, errors, cost, target/path coverage and the report together.
+- `0` — finished with no validated vulnerabilities **in what was analyzed** (with `--fail-on`, none at or above the threshold; lower ones are still in the artifacts)
+- `1` — fatal error (missing env vars, Docker down, bad config)
+- `2` — vulnerabilities found (with `--fail-on`, at least one at or above that severity)
 
-Read each claimed finding's request, response, code path and impact. Distinguish proven exploit, plausible observation and untested category. Do not infer no false positives or complete coverage from upstream marketing. Hand an authorized fix to [remediation](fix-security-vulnerabilities-with-strix.md); use [CI drafting](ci-security-scanning-with-strix.md) only for a requested pipeline change.
+A `0` is not proof of full coverage: if `--max-budget`/`--max-turns` is reached before the scan completes, it wraps up early and still exits `0`. When you need assurance the scan finished, give it enough budget and check `strix_runs/<run>/run.json`: a hard budget stop leaves `status: "stopped"`, but an agent that wrapped up early on a budget *warning* still calls `finish_scan` and records `"completed"` — so also sanity-check the run's cost against `--max-budget` and the report's stated coverage before treating a clean result as full coverage.
+
+### Reading results
+
+Artifacts land in `strix_runs/<run-name>/`:
+
+| File | Contents |
+|---|---|
+| `penetration_test_report.md` | Executive report — read this first. |
+| `vulnerabilities/*.md` | One file per validated finding, with PoC and remediation. |
+| `vulnerabilities.json` / `vulnerabilities.csv` | All findings as structured JSON / CSV index. |
+| `findings.sarif` | SARIF 2.1.0 for GitHub code scanning / ASPM ingestion. |
+| `run.json` | Run metadata, status, targets, usage/cost. |
+
+---
+
+# Option B — Managed cloud (no local infra)
+
+The same `strix` binary drives the managed platform. Every command starts with `strix cloud`. Full details — asset registration, source uploads, reports, PR reviews, schedules, webhooks, and billing — are in the **managed-pentesting-with-strix** skill. Minimal flow:
+
+```bash
+# 1. Sign in (device flow — the user confirms a code in the browser; this also
+#    creates the account and workspace when needed)
+strix cloud login
+
+# If you need specific scopes, request them with --scopes:
+#   strix cloud login --scopes scans:read scans:write assets:read assets:write \
+#     vulnerabilities:read billing:read billing:write
+
+# 2. Register and verify the target domain (verification prints a DNS record for the user)
+strix cloud domains add --domain staging.example.com --asset-type web_app
+strix cloud domains verify <domain-id>
+
+# 3. Launch and wait
+strix cloud scans start --engagement-type live_test --domain-ids <domain-id> --wait
+
+# 4. Read validated findings
+strix cloud vulns list --severity critical
+```
+
+For a local repository, `strix cloud scans start --source .` uploads the working tree (needs `uploads:write`) and infers a code review. When credits run out, `strix cloud billing topup` starts an agent-payable Stripe challenge — the managed skill covers the payment flow. Output is JSON when stdout is not a terminal, so the commands compose in scripts.
+
+The raw REST API works too (`https://app.strix.ai/api/v1`, org-scoped bearer token — see [docs.app.strix.ai](https://docs.app.strix.ai)). If Docker or local prerequisites are not already satisfied, use this path instead of trying to install infra.
+
+---
+
+## Reporting & next steps
+
+Summarize findings by severity (critical/high/medium/low/info) and include the PoC evidence. To remediate and verify fixes (via either path), use the **fix-security-vulnerabilities-with-strix** skill. To wire scanning into CI/CD, use the **ci-security-scanning-with-strix** skill.
+
+## Safety
+
+Only scan targets the user owns or is authorized to test. The Cloud platform enforces domain verification before external scans; for the OSS CLI, confirm authorization yourself if the target looks like third-party infrastructure.

@@ -5,21 +5,27 @@
     "runtime": "Existing Node.js built-ins; O_NOFOLLOW and O_NONBLOCK required for validator CLI inputs",
     "tests": "Node.js built-in test runner; mkfifo for POSIX-only FIFO tests"
   },
-  "installation_adaptation": "Authored native scheduling and task-local output entry; complete pinned method/domain/validator/test closure retained unchanged with original entry renamed for reference-only storage. No provider, scan service, account access or sandbox installed.",
+  "installation_adaptation": "Pinned upstream active method with public skill-name and relocated support-path bindings only. Complete original, domain prompts, schema, offline validators and tests retained unchanged; no provider, scan service, account access or sandbox installed.",
   "license": "MIT",
   "modifications": [
     {
-      "change": "Authored native entry with explicit scheduling/output differences: cover every reconnaissance lens without mandatory four-agent baseline, budget actual native calls, preserve independent critics/verifiers and OS sandbox/promotion rules; keep selected host/model/effort.",
+      "change": "Full upstream active entry; name changed to cloudflare-security-audit, relative companion links prefixed with upstream/, and Skill directory bound to that relocated support directory. Scheduling, baseline agents, strict budgets, output default and workflow unchanged.",
       "file": "SKILL.md"
     },
     {
       "change": "Original skills/security-audit/SKILL.md bytes unchanged; filename-only relocation prevents a second active entry.",
       "file": "upstream/ORIGINAL-SKILL.md"
+    },
+    {
+      "change": "Exact unified diff from pinned original entry to active entry.",
+      "file": "PORT.patch"
     }
   ],
   "native_files": [
-    "SKILL.md"
+    "SKILL.md",
+    "PORT.patch"
   ],
+  "port_patch_sha256": "d7087429e51bac5d681885d8806e4b6fae6b206127e67878e1115e4c4031e86c",
   "repository": "cloudflare/security-audit-skill",
   "revision": "c1c8a8c1471069fb0e188eeaff69b8e8db6564a8",
   "source_path": "skills/security-audit/SKILL.md",

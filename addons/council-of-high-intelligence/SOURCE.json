@@ -133,22 +133,24 @@
       "upstream_path": "SKILL.codex.md",
       "path": "SKILL.md",
       "upstream_sha256": "e55c21f434313c0ce169b02a48852b2967021af1224401e6f76ae0de5bb67fd1",
-      "sha256": "d061918e7f56e8f6956aedff09e40b242a74f60eb7d1948612adb7c977aaa615",
+      "sha256": "a4bca390d632ca1e32de96480c7a5b5cdb2dbad3a458127ce58b9c05eabf8251",
       "state": "native-adapted"
     }
   ],
-  "adaptation": "Native host execution only; see patches/native.patch. Upstream coordinator files are archival data, never executable instructions. Persona frontmatter models/tools do not configure the host.",
-  "source_path": "SKILL.md",
+  "adaptation": "Original core method restored; native tool/path/model bindings and credential/provider restrictions only. Label source sequential/degraded simulations honestly; no independent-call claim for local cards. Exact personas/original coordinators and changed-file diff retained.",
+  "source_path": "SKILL.codex.md",
   "changes": [
-    "Preserve native host/model/effort; no detector, provider, key, headless app or automatic high-tier switch",
-    "Read full original personas as method data; no automatic subagent registration/model frontmatter execution",
-    "Fresh first contexts, bounded native waves and actual returned-call accounting",
-    "No simulated recovery, missing/unparseable votes never assent; incomplete coverage explicit",
-    "Original numeric summaries retained as descriptive simulation only, decisive facts independently checked",
-    "Source support and licenses retained; source-only names prevent archival coordinators becoming discoverable skills"
+    "Natural-name discovery metadata and actual skill/persona/private-brain paths",
+    "Active host/model/effort retained; tool lifecycle mapped to supported native APIs and available capacity",
+    "Provider/credential discovery, external HTTP/headless-host dispatch and automatic model-tier changes remain unadmitted",
+    "Original board/round/prompt/scoring/consensus/ratification defaults restored, including labelled source simulation fallback",
+    "Simulation/recovery cards never count as additional actual independent calls; missing calls never assent",
+    "Immutable installed source remains unchanged; board edits use a task-owned roster; optional viewer requires observed separate runtime",
+    "Original no_auto_route, two retries, confidence-weighted2/3 winner, dissent/enforcement/failure labels retained"
   ],
-  "patch_sha256": "12feeaf7d9ccd81f48a7b77e19a2d4dae0f077222ab97106a679c01be01863a5",
+  "patch_sha256": "892e5f163ecfd8be28d9da3eaa48f8eb0aac6d2f245252618333385d1138119f",
   "authored_files": {
     "agents/openai.yaml": "0724fb253946251b2bb17b8a172c67307fe3374b249f73544252cddcbae2ab4b"
-  }
+  },
+  "patch_format": "Unified review diff with zero context; exact original hash in files[] binds the base."
 }

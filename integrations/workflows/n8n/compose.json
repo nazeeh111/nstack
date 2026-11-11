@@ -1,0 +1,77 @@
+{
+  "services": {
+    "n8n": {
+      "image": "docker.io/n8nio/n8n:2.47.4@sha256:56a3f0d56c2888b53ca7d89de4aa3de702888f33667c96a1f1d7118548f979e9",
+      "restart": "no",
+      "user": "1000:1000",
+      "ports": [
+        {
+          "target": 5678,
+          "published": "5678",
+          "host_ip": "127.0.0.1",
+          "protocol": "tcp"
+        }
+      ],
+      "environment": {
+        "TZ": "America/New_York",
+        "GENERIC_TIMEZONE": "America/New_York",
+        "N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS": "true",
+        "N8N_DIAGNOSTICS_ENABLED": "false",
+        "N8N_VERSION_NOTIFICATIONS_ENABLED": "false",
+        "N8N_TEMPLATES_ENABLED": "false",
+        "EXTERNAL_FRONTEND_HOOKS_URLS": "",
+        "N8N_DIAGNOSTICS_CONFIG_FRONTEND": "",
+        "N8N_DIAGNOSTICS_CONFIG_BACKEND": "",
+        "N8N_COMMUNITY_PACKAGES_ENABLED": "false",
+        "N8N_BLOCK_ENV_ACCESS_IN_NODE": "true",
+        "N8N_EDITOR_BASE_URL": "http://localhost:5678/",
+        "WEBHOOK_URL": "http://localhost:5678/",
+        "EXECUTIONS_DATA_PRUNE": "true",
+        "EXECUTIONS_DATA_MAX_AGE": "168",
+        "EXECUTIONS_DATA_PRUNE_MAX_COUNT": "1000",
+        "N8N_LOG_LEVEL": "info",
+        "NODE_OPTIONS": "--max-old-space-size=1536"
+      },
+      "volumes": [
+        "data:/home/node/.n8n"
+      ],
+      "networks": [
+        "default"
+      ],
+      "labels": {
+        "io.nstack.workflow-owner": "prepared-runtime-only"
+      },
+      "mem_limit": "2g",
+      "cpus": 2,
+      "pids_limit": 256,
+      "security_opt": [
+        "no-new-privileges:true"
+      ],
+      "cap_drop": [
+        "ALL"
+      ],
+      "logging": {
+        "driver": "local",
+        "options": {
+          "max-size": "5m",
+          "max-file": "2"
+        }
+      }
+    }
+  },
+  "volumes": {
+    "data": {
+      "labels": {
+        "io.nstack.workflow-owner": "prepared-runtime-only"
+      }
+    }
+  },
+  "networks": {
+    "default": {
+      "internal": false,
+      "labels": {
+        "io.nstack.workflow-owner": "prepared-runtime-only"
+      }
+    }
+  }
+}

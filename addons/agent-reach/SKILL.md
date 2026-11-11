@@ -18,7 +18,7 @@ metadata:
 
 One command for every platform: `agent-reach`. Read-only; prints one JSON object by default.
 
-Use this skill only for the requested content operation. Keep routine work native.
+Before acting, say "using the agent-reach skill (channel X)". Once invoked, these rules apply for the whole session.
 
 ## Choosing a route
 

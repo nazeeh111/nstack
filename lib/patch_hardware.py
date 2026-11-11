@@ -62,24 +62,42 @@ def patch(name,source,out):
   targets=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ('evaluate_voltage_divider','evaluate_feedback_network')]
   if len(targets)!=2:raise ValueError('Pinned divider/feedback helper anchors changed')
   for node in reversed(targets):
-   kind='voltage_divider' if node.name=='evaluate_voltage_divider' else 'feedback_network'
-   replacement=f'''def {node.name}(det, sim_results):
-    """Unverified upstream expected/error is never report acceptance."""
-    from voltage_check import evaluate
-    model = det.get("nstack_accepted_circuit_model")
-    if model is None:
-        return {{"subcircuit_type": "{kind}", "status": "skip", "note": "Independent accepted circuit/load/rail model and same-run identity required; legacy helper pass is disabled"}}
-    result = evaluate(model, sim_results.get("vout_sim"), sim_results.get("error_pct"))
-    # This helper alone cannot establish netlist/simulator/output causal identity.
-    result["numerical_status"] = result["status"]
-    result["status"] = "warn" if result["status"] == "pass" else "fail" if result["status"] == "fail" else "skip"
-    result["subcircuit_type"] = "{kind}"
-    result["note"] = "Independent numeric comparison only; bind accepted model, netlist, simulator and output to one actual run before report acceptance"
-    return result
+   original=''.join(lines[node.lineno-1:node.end_lineno])
+   updated=original.replace('    ratio = det["ratio"]', '    import math\n    ratio = det["ratio"]',1)
+   updated=updated.replace('    expected_vout = float(expected_str) if expected_str else None', '    try:\n        expected_vout = float(expected_str) if expected_str is not None else None\n    except (TypeError, ValueError, OverflowError):\n        expected_vout = None',1)
+   updated=updated.replace('    if expected_vout:', '    if expected_vout is not None:',1)
+   start=updated.index('    if error_pct is not None:');end=updated.rindex('    return result')
+   updated=updated[:start]+'''    # Compare the generated testbench expectation with its measured output;
+    # do not accept an output-supplied percent as an independent verdict.
+    try:
+        measured = float(sim_vout)
+        if expected_vout is None or not all(math.isfinite(v) for v in (expected_vout, measured)):
+            raise ValueError("Missing or non-finite expected/measured voltage")
+        if expected_vout == 0:
+            raise ValueError("Relative error is undefined for a zero expected voltage")
+        err = abs(measured - expected_vout) / abs(expected_vout) * 100
+        if error_pct is not None:
+            reported = float(error_pct)
+            if not math.isfinite(reported) or not math.isclose(reported, err, rel_tol=1e-6, abs_tol=1e-6):
+                raise ValueError("Output-reported percent disagrees with measured/expected voltage")
+        result["delta"]["vout_error_pct"] = round(err, 3)
+        result["status"] = "pass" if err < 0.1 else "warn" if err < 1 else "fail"
+    except (TypeError, ValueError, OverflowError) as error:
+        result["status"] = "skip"
+        result["note"] = str(error)
 
-'''
-   lines[node.lineno-1:node.end_lineno]=[replacement]
-  file.write_text(''.join(lines));shutil.copy2(P(__file__).parent/'voltage_check.py',out/'scripts/voltage_check.py')
+'''+updated[end:]
+   lines[node.lineno-1:node.end_lineno]=[updated]
+  file.write_text(''.join(lines))
+  # Keep the source generator's percent consistent on negative supply rails.
+  template=out/'scripts/spice_templates.py';t=template.read_text();parts=t.splitlines(keepends=True)
+  generators=[n for n in ast.parse(t).body if isinstance(n,ast.FunctionDef) and n.name in ('generate_voltage_divider','generate_feedback_network')]
+  if len(generators)!=2:raise ValueError('Pinned divider/feedback generator anchors changed')
+  for node in reversed(generators):
+   raw=''.join(parts[node.lineno-1:node.end_lineno]);old='f"abs(vout_sim - {expected_vout}) / {expected_vout} * 100"'
+   if raw.count(old)!=1:raise ValueError('Pinned negative-rail percent anchor changed')
+   parts[node.lineno-1:node.end_lineno]=[raw.replace(old,'f"abs(vout_sim - {expected_vout}) / {abs(expected_vout)} * 100"')]
+  template.write_text(''.join(parts))
   def replace_once(text,old,new):
    if text.count(old)!=1:raise ValueError('SPICE execution/report anchor changed: '+old[:70])
    return text.replace(old,new)
@@ -128,8 +146,7 @@ def patch(name,source,out):
 
 '''+anchor)
   ast.parse(t);file.write_text(t)
-  s+='\n## Divider/feedback report gate\n\nLegacy divider/feedback pass output is disabled. The independent helper uses the accepted rail/resistance/load model, never the simulator-output expected or percent fields. Missing target, non-finite readings or inconsistent percent are unknown/skip. Relative error divides by the magnitude of the target; zero targets use absolute tolerance. Even a matching numeric result stays warn until netlist, simulator executable/version, model and output hashes and actual run identity are reconciled. Test the actual helper and simulator target before promoting report evidence.\n'
+  s+='\n## Divider/feedback numerical check\n\nThe original evaluators retain component/regulator metadata and 0.1%/1% thresholds. They recompute percent from the generated testbench expected/measured voltages using an absolute denominator; missing, non-finite, zero-target or inconsistent reported-error inputs remain skipped. This is an ideal isolated testbench comparison, not physical circuit acceptance.\n'
  s+='\n## Native paths and dispatch\n\nResolve `skills/...` paths from the retained bundle root, two levels above this SKILL.md directory. Use absolute installed script paths and explicit project-owned cache/output paths; do not write into the installed bundle. Datasheet extraction uses the retained native dispatcher contract, with supported delegation or direct execution and the user-selected model/effort.\n'
  s=s.replace('simulate_subcircuits.py ', 'simulate_subcircuits.py --simulator ngspice --offline ')
- s+='\n## Evidence limits\n\nKeep the editable circuit and independent source facts. A heuristic, parser exit, ideal isolated subcircuit or clean simulator log does not establish physical validity or regulatory compliance. Preserve missing inputs, skipped models, timeout and execution failure distinctly. No datasheet guess becomes a verified part specification; inspect the exact manufacturer/revision and pin map.\n'
  p.write_text(s)

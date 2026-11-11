@@ -1,0 +1,1168 @@
+{
+  "target": "macOS arm64 CPython3.12",
+  "source": "exact wheel metadata inspected before installation; no optional extras",
+  "packages": [
+    {
+      "name": "networkx",
+      "version": "3.7",
+      "scope": "core",
+      "requires_python": "!=3.14.1,>=3.12",
+      "license_expression": "BSD-3-Clause",
+      "license_metadata": null,
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "Intended Audience :: Science/Research",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
+        "Programming Language :: Python :: 3 :: Only",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Scientific/Engineering :: Bio-Informatics",
+        "Topic :: Scientific/Engineering :: Information Analysis",
+        "Topic :: Scientific/Engineering :: Mathematics",
+        "Topic :: Scientific/Engineering :: Physics"
+      ],
+      "requires_dist": [
+        "asv>=0.6.5; extra == \"benchmarking\"",
+        "py-rattler<0.22,>=0.21; extra == \"benchmarking\"",
+        "virtualenv; extra == \"benchmarking\"",
+        "numpy>=2.2; extra == \"default\"",
+        "scipy>=1.15; extra == \"default\"",
+        "matplotlib>=3.10; extra == \"default\"",
+        "pandas>=2.3; extra == \"default\"",
+        "pre-commit>=4.1; extra == \"developer\"",
+        "mypy>=1.15; extra == \"developer\"",
+        "sphinx>=8.0; extra == \"doc\"",
+        "pydata-sphinx-theme>=0.16; extra == \"doc\"",
+        "sphinx-gallery>=0.18; extra == \"doc\"",
+        "numpydoc>=1.8.0; extra == \"doc\"",
+        "pillow>=10; extra == \"doc\"",
+        "texext>=0.6.7; extra == \"doc\"",
+        "myst-nb>=1.1; extra == \"doc\"",
+        "intersphinx-registry; extra == \"doc\"",
+        "osmnx>=2.0.0; extra == \"example\"",
+        "momepy>=0.7.2; extra == \"example\"",
+        "contextily>=1.6; extra == \"example\"",
+        "seaborn>=0.13; extra == \"example\"",
+        "cairocffi>=1.7; extra == \"example\"",
+        "igraph>=0.11; extra == \"example\"",
+        "scikit-learn>=1.6; extra == \"example\"",
+        "iplotx>=0.9.0; extra == \"example\"",
+        "hiveplotlib>=0.28; extra == \"example\"",
+        "lxml>=4.6; extra == \"extra\"",
+        "pygraphviz>=2.0; extra == \"extra\"",
+        "pydot>=3.0.1; extra == \"extra\"",
+        "sympy>=1.10; extra == \"extra\"",
+        "build>=0.10; extra == \"release\"",
+        "twine>=4.0; extra == \"release\"",
+        "wheel>=0.40; extra == \"release\"",
+        "changelist==0.5; extra == \"release\"",
+        "pytest>=7.2; extra == \"test\"",
+        "pytest-cov>=4.0; extra == \"test\"",
+        "pytest-xdist>=3.0; extra == \"test\"",
+        "pytest-mpl; extra == \"test-extras\"",
+        "pytest-randomly; extra == \"test-extras\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "networkx-3.7.dist-info/licenses/LICENSE.txt",
+          "path": "licenses/networkx/00-LICENSE.txt",
+          "sha256": "6025f323ea29dc2f0ee0abd9523bf910186f55b0e148e6ebf646c55566278e2e"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "e3fd2c13a7814cee3746340d8d7f8598a67f16a58bf47fb7f8793fab6efca1b0"
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.4",
+      "scope": "core",
+      "requires_python": ">=3.12",
+      "license_expression": "BSD-3-Clause AND 0BSD AND MIT AND Zlib AND CC0-1.0",
+      "license_metadata": null,
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Science/Research",
+        "Intended Audience :: Developers",
+        "Programming Language :: C",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: 3.15",
+        "Programming Language :: Python :: 3 :: Only",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Topic :: Software Development",
+        "Topic :: Scientific/Engineering",
+        "Typing :: Typed",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: POSIX",
+        "Operating System :: Unix",
+        "Operating System :: MacOS"
+      ],
+      "requires_dist": [],
+      "license_files": [
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/LICENSE.txt",
+          "path": "licenses/numpy/00-LICENSE.txt",
+          "sha256": "649a589ab31076e79e9ce62ba24eae9959598124176640dbc95f87bd10f34fcf"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/linalg/lapack_lite/LICENSE.txt",
+          "path": "licenses/numpy/01-LICENSE.txt",
+          "sha256": "a14cc25e10d40a3aa705b7de2fb764a6535d8ee9b2db4e1724900585457dfd55"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/ma/LICENSE",
+          "path": "licenses/numpy/02-LICENSE",
+          "sha256": "05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt",
+          "path": "licenses/numpy/03-LICENSE.txt",
+          "sha256": "fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+          "path": "licenses/numpy/04-LICENSE.md",
+          "sha256": "211e7d737d6179a08f791ebb0a99897ce7cd2457410c542876d125576edfe910"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/_core/src/highway/LICENSE",
+          "path": "licenses/numpy/05-LICENSE",
+          "sha256": "e340270d4f64384569a91d546acb5b094d69ce47f0c015db77abb74dc6f815af"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt",
+          "path": "licenses/numpy/06-dragon4_LICENSE.txt",
+          "sha256": "f7b14309e5f54e5022b26448eefd419988ada2aec01d3c1162d84a0ea8f21f2c"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING",
+          "path": "licenses/numpy/07-COPYING",
+          "sha256": "3f2c1ffa76383a55ae0aac01c9737cd70050dff63e1f026694fbe9d662573c98"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/_core/src/umath/svml/LICENSE",
+          "path": "licenses/numpy/08-LICENSE",
+          "sha256": "c17011467b4fe6e20fbfbeda4df09e58c2bca5480a063e55735a4000a379aad9"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
+          "path": "licenses/numpy/09-LICENSE.md",
+          "sha256": "a85ca13fdf90160b64a0698215868c13b74d835ad0a4e2ba44713b8c5058a056"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/random/LICENSE.md",
+          "path": "licenses/numpy/10-LICENSE.md",
+          "sha256": "103166b62b80443afb9eb3488e052ea06be0cff566b908f199e561fde49af19f"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
+          "path": "licenses/numpy/11-LICENSE.md",
+          "sha256": "0e111337b25494a773106695f0e799f642b8567aaacca4f116a74a8177179156"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+          "path": "licenses/numpy/12-LICENSE.md",
+          "sha256": "9d4098846018319cd68e228ee6220361787f73bccbf00237a85e4fc9621b998f"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
+          "path": "licenses/numpy/13-LICENSE.md",
+          "sha256": "e7d4f4fb20358f314210a892ae17351e04993813646f697ec387385ca2a36918"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
+          "path": "licenses/numpy/14-LICENSE.md",
+          "sha256": "6f5828a57223d4cc7f8ea505a2623e7b978b242752c1515e355f46ba2cec1800"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
+          "path": "licenses/numpy/15-LICENSE.md",
+          "sha256": "268b0ca06759d31ea3ca68dd35f20e877916e927b1c2a835e4592a3c4354b1f9"
+        },
+        {
+          "wheel_path": "numpy-2.5.4.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+          "path": "licenses/numpy/16-LICENSE.md",
+          "sha256": "469778be8f33d54e1bcaab28c281cc472916d2d273f835e55bc487d30503face"
+        },
+        {
+          "wheel_path": "numpy/ma/LICENSE",
+          "path": "licenses/numpy/17-LICENSE",
+          "sha256": "05f3b88351988ecfad10abe92c0c50e5875c6452d5009a0084cc291551ffcca6"
+        },
+        {
+          "wheel_path": "numpy/_core/include/numpy/random/LICENSE.txt",
+          "path": "licenses/numpy/18-LICENSE.txt",
+          "sha256": "fbc539f47d0cf83bc61378080fb873d5c14630126cacbfe754035c3926daa5ec"
+        },
+        {
+          "wheel_path": "numpy/random/LICENSE.md",
+          "path": "licenses/numpy/19-LICENSE.md",
+          "sha256": "103166b62b80443afb9eb3488e052ea06be0cff566b908f199e561fde49af19f"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "b11e8fda06a7d69f15ebf542660b74466c2e51094800c1fb794f47ad4faeef17"
+    },
+    {
+      "name": "RapidFuzz",
+      "version": "3.14.6",
+      "scope": "core",
+      "requires_python": ">=3.11",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "classifiers": [
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14"
+      ],
+      "requires_dist": [
+        "numpy; extra == \"all\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "rapidfuzz-3.14.6.dist-info/licenses/LICENSE",
+          "path": "licenses/rapidfuzz/00-LICENSE",
+          "sha256": "f34ccdffdff56fc417785915eedf18601d5479755df3c472b2c754c29802d683"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "1901414b135afb1a7f4b1ef940b95523b49cc5642aecf02af740f37567e98137"
+    },
+    {
+      "name": "PyYAML",
+      "version": "6.0.3",
+      "scope": "core",
+      "requires_python": ">=3.8",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Cython",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
+        "Programming Language :: Python :: Implementation :: CPython",
+        "Programming Language :: Python :: Implementation :: PyPy",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Text Processing :: Markup"
+      ],
+      "requires_dist": [],
+      "license_files": [
+        {
+          "wheel_path": "pyyaml-6.0.3.dist-info/licenses/LICENSE",
+          "path": "licenses/pyyaml/00-LICENSE",
+          "sha256": "8d3928f9dc4490fd635707cb88eb26bd764102a7282954307d3e5167a577e8a4"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "fc09d0aa354569bc501d4e787133afc08552722d3ab34836a80547331bb5d4a0"
+    },
+    {
+      "name": "tree-sitter",
+      "version": "0.25.2",
+      "scope": "core",
+      "requires_python": ">=3.10",
+      "license_expression": null,
+      "license_metadata": null,
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: C",
+        "Programming Language :: Python",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "sphinx~=8.1; extra == \"docs\"",
+        "sphinx-book-theme; extra == \"docs\"",
+        "tree-sitter-html>=0.23.2; extra == \"tests\"",
+        "tree-sitter-javascript>=0.23.1; extra == \"tests\"",
+        "tree-sitter-json>=0.24.8; extra == \"tests\"",
+        "tree-sitter-python>=0.23.6; extra == \"tests\"",
+        "tree-sitter-rust>=0.23.2; extra == \"tests\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter-0.25.2.dist-info/licenses/LICENSE",
+          "path": "licenses/tree-sitter/00-LICENSE",
+          "sha256": "1af0790543fffac99dd3bd290bf83ca963f4f8029065eb6f35638f4df863ae8e"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "c0c0ab5f94938a23fe81928a21cc0fac44143133ccc4eb7eeb1b92f84748331c"
+    },
+    {
+      "name": "tree-sitter-python",
+      "version": "0.25.0",
+      "scope": "core",
+      "requires_python": ">=3.10",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.24; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_python-0.25.0.dist-info/licenses/LICENSE",
+          "path": "licenses/tree-sitter-python/00-LICENSE",
+          "sha256": "d724405ce238a22c0d35769c5a36b386ad5958192efe8bbb304fb2896254575f"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "480c21dbd995b7fe44813e741d71fed10ba695e7caab627fb034e3828469d762"
+    },
+    {
+      "name": "tree-sitter-javascript",
+      "version": "0.25.0",
+      "scope": "core",
+      "requires_python": ">=3.10",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.24; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_javascript-0.25.0.dist-info/licenses/LICENSE",
+          "path": "licenses/tree-sitter-javascript/00-LICENSE",
+          "sha256": "2e0110e07abef7c2548b26ec9d6969775617ca539a0dc8dbeeb14d6452c711d1"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "8264a996b8845cfce06965152a013b5d9cbb7d199bc3503e12b5682e62bb1de1"
+    },
+    {
+      "name": "tree-sitter-typescript",
+      "version": "0.23.2",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.23; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_typescript-0.23.2.dist-info/LICENSE",
+          "path": "licenses/tree-sitter-typescript/00-LICENSE",
+          "sha256": "49bf33cf78ef5897e4e161ce1517df7de1ae5042a65b6bcfd44401e0fc606559"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "c7cc1b0ff5d91bac863b0e38b1578d5505e718156c9db577c8baea2557f66de8"
+    },
+    {
+      "name": "tree-sitter-go",
+      "version": "0.25.0",
+      "scope": "core",
+      "requires_python": ">=3.10",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.24; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_go-0.25.0.dist-info/licenses/LICENSE",
+          "path": "licenses/tree-sitter-go/00-LICENSE",
+          "sha256": "2e0110e07abef7c2548b26ec9d6969775617ca539a0dc8dbeeb14d6452c711d1"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "503b81a2b4c31e302869a1de3a352ad0912ccab3df9ac9950197b0a9ceeabd8f"
+    },
+    {
+      "name": "tree-sitter-rust",
+      "version": "0.24.2",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.22; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_rust-0.24.2.dist-info/licenses/LICENSE",
+          "path": "licenses/tree-sitter-rust/00-LICENSE",
+          "sha256": "31d5b6f4243d5c7c6e1c4ebbbb9f6407bd1457a08bcc4f706521710341acba36"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "01a46622735498493f29f3e628a90de95c96a07bfbeb88996243eb986b1cee36"
+    },
+    {
+      "name": "tree-sitter-java",
+      "version": "0.23.5",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.22; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_java-0.23.5.dist-info/LICENSE",
+          "path": "licenses/tree-sitter-java/00-LICENSE",
+          "sha256": "52ed137b039cd9c46409bc22e89938af911c95b157feae2d040b51e6084369a7"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "24acd59c4720dedad80d548fe4237e43ef2b7a4e94c8549b0ca6e4c4d7bf6e69"
+    },
+    {
+      "name": "tree-sitter-groovy",
+      "version": "0.1.2",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.22; extra == \"core\""
+      ],
+      "license_files": [],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "db35a5bdceb826382c7f52d33db0b2075217473f698daf77eb8d4e557a161d51",
+      "license_sdist_supplement": {
+        "url": "https://files.pythonhosted.org/packages/e8/1f/400d296618ea95932e6a3d299eababda0d138f4b0cfeaacdf50601c40ca9/tree_sitter_groovy-0.1.2.tar.gz",
+        "sha256": "49b004c4ae946d3f01a602f325cd8996423e034e5b3ad36fc34a1d1e42afa8da",
+        "files": []
+      }
+    },
+    {
+      "name": "tree-sitter-c",
+      "version": "0.24.2",
+      "scope": "core",
+      "requires_python": ">=3.10",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.24; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_c-0.24.2.dist-info/licenses/LICENSE",
+          "path": "licenses/tree-sitter-c/00-LICENSE",
+          "sha256": "2e0110e07abef7c2548b26ec9d6969775617ca539a0dc8dbeeb14d6452c711d1"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "97bc80a224d48215d4e6e6376bf30d114f4c317b8145ff1b02afe785d4ba7bdd"
+    },
+    {
+      "name": "tree-sitter-cpp",
+      "version": "0.23.4",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.22; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_cpp-0.23.4.dist-info/LICENSE",
+          "path": "licenses/tree-sitter-cpp/00-LICENSE",
+          "sha256": "2e0110e07abef7c2548b26ec9d6969775617ca539a0dc8dbeeb14d6452c711d1"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "bc3c404d9f0cbd87951213a85440afbf4c31e718f8d907fa9ee12bea4b8d276f"
+    },
+    {
+      "name": "tree-sitter-ruby",
+      "version": "0.23.1",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.22; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_ruby-0.23.1.dist-info/LICENSE",
+          "path": "licenses/tree-sitter-ruby/00-LICENSE",
+          "sha256": "ee006f02a3d856df282e409be2a86e24a65bb573a98b9c28343771141351bb6b"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "aa4ee7433bd42fac22e2dad4a3c0f332292ecf482e610316828c711a0bb7f794"
+    },
+    {
+      "name": "tree-sitter-c-sharp",
+      "version": "0.23.5",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.22; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_c_sharp-0.23.5.dist-info/licenses/LICENSE",
+          "path": "licenses/tree-sitter-c-sharp/00-LICENSE",
+          "sha256": "778fb7d63b8c1844da315648c02f325c4713a6f4a5d19644fd413421422776d3"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "a75994a11f6fed3f5b8c36ad6a00e5dc43205bd912c43af3a2a54fdf649664eb"
+    },
+    {
+      "name": "tree-sitter-kotlin",
+      "version": "1.1.0",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.22; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_kotlin-1.1.0.dist-info/LICENSE",
+          "path": "licenses/tree-sitter-kotlin/00-LICENSE",
+          "sha256": "0eea8dc45e89deeb03c7799bbbc7b4688f365fb274562f4540ecfebdea82e727"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "910b41a580dae00d319e555075f3886a41386d1067931b14c7de504eeae3ae2a"
+    },
+    {
+      "name": "tree-sitter-scala",
+      "version": "0.26.3",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.22; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_scala-0.26.3.dist-info/licenses/LICENSE",
+          "path": "licenses/tree-sitter-scala/00-LICENSE",
+          "sha256": "1f95ed26e1f4074074c9c7083e61c0a9e4c3b9f435745044995f3beb4ed28575"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "a7dde82ad5060201026ca788e844c430940bfa4a3ff9b28e283ed687349204f4"
+    },
+    {
+      "name": "tree-sitter-php",
+      "version": "0.24.1",
+      "scope": "core",
+      "requires_python": ">=3.10",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.24; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_php-0.24.1.dist-info/licenses/LICENSE",
+          "path": "licenses/tree-sitter-php/00-LICENSE",
+          "sha256": "664764fabf40c0b318e06324a5a12379092a2df25b8cbf2415f71bc0bb352346"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "29759c67d4c27a68c227ed82c0b7e4699617b1bd23757d50c081f81a12b4f80d"
+    },
+    {
+      "name": "tree-sitter-swift",
+      "version": "0.7.4",
+      "scope": "core",
+      "requires_python": ">=3.8",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.23; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_swift-0.7.4.dist-info/licenses/LICENSE",
+          "path": "licenses/tree-sitter-swift/00-LICENSE",
+          "sha256": "3533cec129bb4bba015c0d61d86dd7c3b7e82110e4d2ff7837a01eff5bad5ccc"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "62ce592607fa532687a2d4656a90db2f04cbc197e34077038bca2e47073b6db7"
+    },
+    {
+      "name": "tree-sitter-lua",
+      "version": "0.5.0",
+      "scope": "core",
+      "requires_python": ">=3.10",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.24; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_lua-0.5.0.dist-info/licenses/LICENSE.md",
+          "path": "licenses/tree-sitter-lua/00-LICENSE.md",
+          "sha256": "9a32b02e4c917b1ce6b5e79d8ea81e25cefd7f27d89c7235f2afb262c06cf32e"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "c14714ad395c4166566f3e4dd0cc0979411684cbcd23702e3c631c3e6eae84fd"
+    },
+    {
+      "name": "tree-sitter-zig",
+      "version": "1.1.2",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.22; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_zig-1.1.2.dist-info/LICENSE",
+          "path": "licenses/tree-sitter-zig/00-LICENSE",
+          "sha256": "0eea8dc45e89deeb03c7799bbbc7b4688f365fb274562f4540ecfebdea82e727"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "daa2cdd7c1a2d278f2a917c85993adb6e84d37778bfc350ee9e342872e7f8be2"
+    },
+    {
+      "name": "tree-sitter-powershell",
+      "version": "0.26.4",
+      "scope": "core",
+      "requires_python": ">=3.10",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.24; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_powershell-0.26.4.dist-info/licenses/LICENSE",
+          "path": "licenses/tree-sitter-powershell/00-LICENSE",
+          "sha256": "1fca8454c0d77a73f9922a52d39e1f7c339f5da5d03f2766eff66b859fa19477"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "b5dde429c9de55b75906e240d6db1cf85417e2fc0a56d7b321810c2cd4cf3f98"
+    },
+    {
+      "name": "tree-sitter-elixir",
+      "version": "0.3.5",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "Apache-2.0",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.23; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_elixir-0.3.5.dist-info/licenses/LICENSE",
+          "path": "licenses/tree-sitter-elixir/00-LICENSE",
+          "sha256": "a6cba85bc92e0cff7a450b1d873c0eaa2e9fc96bf472df0247a26bec77bf3ff9"
+        },
+        {
+          "wheel_path": "tree_sitter_elixir-0.3.5.dist-info/licenses/NOTICE",
+          "path": "licenses/tree-sitter-elixir/01-NOTICE",
+          "sha256": "119588423fbaa46a6955a044fee5a23338c7de190d8c4651a94c6d0b98ca2cda"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "015f537731af690cfa238b0fb76a8af4f0d1a2c54a38563f159926d2967ce650"
+    },
+    {
+      "name": "tree-sitter-objc",
+      "version": "3.0.2",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.22; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_objc-3.0.2.dist-info/LICENSE",
+          "path": "licenses/tree-sitter-objc/00-LICENSE",
+          "sha256": "099c44248f8cf353123211318680e93465587c005a4b3730ce8cb5334de043d6"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "9fa8b1221d2651a51cf42e1551c0804e9f48707da70f41f3195910c599b5522b"
+    },
+    {
+      "name": "tree-sitter-julia",
+      "version": "0.23.1",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.22; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_julia-0.23.1.dist-info/LICENSE",
+          "path": "licenses/tree-sitter-julia/00-LICENSE",
+          "sha256": "74f800107f200f4e28da33e9c3f86230d37d8f4c0a4916f7111e800c395ee3a2"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "8197c8d9b0cb51421aa2832f3fb539504d7b514cbb1fc79130bb1445c0b4a457"
+    },
+    {
+      "name": "tree-sitter-verilog",
+      "version": "1.0.3",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.22; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_verilog-1.0.3.dist-info/LICENSE",
+          "path": "licenses/tree-sitter-verilog/00-LICENSE",
+          "sha256": "8d2ff8d1e308828099436c43dc8bfbb8b6f368ad2a012ab9802a80ca22b03b53"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "5b9d70d86cf6913abc08766b6180e285d72848c7491a3f3f8e7bb8d8c440049d"
+    },
+    {
+      "name": "tree-sitter-fortran",
+      "version": "0.6.0",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.21; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_fortran-0.6.0.dist-info/licenses/LICENSE",
+          "path": "licenses/tree-sitter-fortran/00-LICENSE",
+          "sha256": "c0fc02a86ae2b179c4729694c523bbf42da674e5136ed8e12e3cb2f26556ea9f"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "a0fe5929fd91d245aba5a3b414399a296fb9924942a549190cee226e5b1ec96c"
+    },
+    {
+      "name": "tree-sitter-bash",
+      "version": "0.25.1",
+      "scope": "core",
+      "requires_python": ">=3.10",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.24; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_bash-0.25.1.dist-info/licenses/LICENSE",
+          "path": "licenses/tree-sitter-bash/00-LICENSE",
+          "sha256": "49bf33cf78ef5897e4e161ce1517df7de1ae5042a65b6bcfd44401e0fc606559"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "f4a34a6504c7c5b2a9b8c5c4065531dea19ca2c35026e706cf2eeeebe2c92512"
+    },
+    {
+      "name": "tree-sitter-json",
+      "version": "0.24.8",
+      "scope": "core",
+      "requires_python": ">=3.9",
+      "license_expression": null,
+      "license_metadata": "MIT",
+      "classifiers": [
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Compilers",
+        "Topic :: Text Processing :: Linguistic",
+        "Typing :: Typed"
+      ],
+      "requires_dist": [
+        "tree-sitter~=0.22; extra == \"core\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "tree_sitter_json-0.24.8.dist-info/LICENSE",
+          "path": "licenses/tree-sitter-json/00-LICENSE",
+          "sha256": "2e0110e07abef7c2548b26ec9d6969775617ca539a0dc8dbeeb14d6452c711d1"
+        }
+      ],
+      "pth_files": [],
+      "data_scripts": [],
+      "wheel_sha256": "62b4c45b561db31436a81a3f037f71ec29049f4fc9bf5269b6ec3ebaaa35a1cd"
+    },
+    {
+      "name": "setuptools",
+      "version": "84.2.1",
+      "scope": "build",
+      "requires_python": ">=3.10",
+      "license_expression": "MIT",
+      "license_metadata": null,
+      "classifiers": [
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 :: Only",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: System :: Archiving :: Packaging",
+        "Topic :: System :: Systems Administration",
+        "Topic :: Utilities"
+      ],
+      "requires_dist": [
+        "pytest!=8.1.*,>=6; extra == \"test\"",
+        "virtualenv>=13.0.0; extra == \"test\"",
+        "wheel>=0.44.0; extra == \"test\"",
+        "pip>=19.1; extra == \"test\"",
+        "packaging>=26.3; extra == \"test\"",
+        "jaraco.envs>=2.2; extra == \"test\"",
+        "pytest-xdist>=3; extra == \"test\"",
+        "jaraco.path>=3.7.2; extra == \"test\"",
+        "build[virtualenv]>=1.0.3; extra == \"test\"",
+        "filelock>=3.4.0; extra == \"test\"",
+        "ini2toml[lite]>=0.14; extra == \"test\"",
+        "tomli-w>=1.0.0; extra == \"test\"",
+        "pytest-timeout; extra == \"test\"",
+        "pytest-perf; sys_platform != \"cygwin\" and extra == \"test\"",
+        "jaraco.develop>=7.21; (python_version >= \"3.9\" and sys_platform != \"cygwin\") and extra == \"test\"",
+        "pytest-home>=0.5; extra == \"test\"",
+        "pytest-subprocess; extra == \"test\"",
+        "pyproject-hooks!=1.1; extra == \"test\"",
+        "jaraco.test>=5.5; extra == \"test\"",
+        "sphinx>=3.5; extra == \"doc\"",
+        "jaraco.packaging>=9.3; extra == \"doc\"",
+        "rst.linker>=1.9; extra == \"doc\"",
+        "furo; extra == \"doc\"",
+        "sphinx-lint; extra == \"doc\"",
+        "jaraco.tidelift>=1.4; extra == \"doc\"",
+        "pygments-github-lexers==0.0.5; extra == \"doc\"",
+        "sphinx-favicon; extra == \"doc\"",
+        "sphinx-inline-tabs; extra == \"doc\"",
+        "sphinx-reredirects; extra == \"doc\"",
+        "sphinxcontrib-towncrier; extra == \"doc\"",
+        "sphinx-notfound-page<2,>=1; extra == \"doc\"",
+        "pyproject-hooks!=1.1; extra == \"doc\"",
+        "towncrier<24.7; extra == \"doc\"",
+        "packaging>=26.3; extra == \"core\"",
+        "more_itertools>=8.8; extra == \"core\"",
+        "jaraco.text>=3.7; extra == \"core\"",
+        "importlib_metadata>=6; python_version < \"3.10\" and extra == \"core\"",
+        "tomli>=2.0.1; python_version < \"3.11\" and extra == \"core\"",
+        "wheel>=0.43.0; extra == \"core\"",
+        "jaraco.functools>=4; extra == \"core\"",
+        "more_itertools; extra == \"core\"",
+        "pytest-checkdocs>=2.14; extra == \"check\"",
+        "pytest-ruff>=0.2.1; sys_platform != \"cygwin\" and extra == \"check\"",
+        "ruff>=0.13.0; sys_platform != \"cygwin\" and extra == \"check\"",
+        "pytest-cov; extra == \"cover\"",
+        "pytest-enabler>=3.4; extra == \"enabler\"",
+        "pytest-mypy>=1.0.1; platform_python_implementation != \"PyPy\" and extra == \"type\"",
+        "mypy==1.18.*; extra == \"type\"",
+        "importlib_metadata>=7.0.2; python_version < \"3.10\" and extra == \"type\"",
+        "jaraco.develop>=7.21; sys_platform != \"cygwin\" and extra == \"type\""
+      ],
+      "license_files": [
+        {
+          "wheel_path": "setuptools/_vendor/importlib_metadata-8.7.1.dist-info/licenses/LICENSE",
+          "path": "licenses/setuptools/00-LICENSE",
+          "sha256": "458502e12d97bbf64438606a20044aa85eb05fb0a8a807bb35dbec253fd1fc04"
+        },
+        {
+          "wheel_path": "setuptools/_vendor/jaraco_context-6.1.0.dist-info/licenses/LICENSE",
+          "path": "licenses/setuptools/01-LICENSE",
+          "sha256": "9755a18519666e5f0f4cae3daad3d7012bcae48a600b31237d75e9fe134e6683"
+        },
+        {
+          "wheel_path": "setuptools/_vendor/jaraco_functools-4.4.0.dist-info/licenses/LICENSE",
+          "path": "licenses/setuptools/02-LICENSE",
+          "sha256": "5a57cb4db85e2a2dd88c290628908add57e3451449e0a9a71fdfb38776fd759d"
+        },
+        {
+          "wheel_path": "setuptools/_vendor/more_itertools-10.8.0.dist-info/licenses/LICENSE",
+          "path": "licenses/setuptools/03-LICENSE",
+          "sha256": "09f1c8c9e941af3e584d59641ea9b87d83c0cb0fd007eb5ef391a7e2643c1a46"
+        },
+        {
+          "wheel_path": "setuptools/_vendor/packaging-26.3.dist-info/licenses/LICENSE",
+          "path": "licenses/setuptools/04-LICENSE",
+          "sha256": "cad1ef5bd340d73e074ba614d26f7deaca5c7940c3d8c34852e65c4909686c48"
+        },
+        {
+          "wheel_path": "setuptools/_vendor/packaging-26.3.dist-info/licenses/LICENSE.APACHE",
+          "path": "licenses/setuptools/05-LICENSE.APACHE",
+          "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+        },
+        {
+          "wheel_path": "setuptools/_vendor/packaging-26.3.dist-info/licenses/LICENSE.BSD",
+          "path": "licenses/setuptools/06-LICENSE.BSD",
+          "sha256": "b70e7e9b742f1cc6f948b34c16aa39ffece94196364bc88ff0d2180f0028fac5"
+        },
+        {
+          "wheel_path": "setuptools/_vendor/platformdirs-4.4.0.dist-info/licenses/LICENSE",
+          "path": "licenses/setuptools/07-LICENSE",
+          "sha256": "29e0fd62e929850e86eb28c3fdccf0cefdf4fa94879011cffb3d0d4bed6d4db6"
+        },
+        {
+          "wheel_path": "setuptools/_vendor/tomli-2.4.0.dist-info/licenses/LICENSE",
+          "path": "licenses/setuptools/08-LICENSE",
+          "sha256": "b80816b0d530b8accb4c2211783790984a6e3b61922c2b5ee92f3372ab2742fe"
+        },
+        {
+          "wheel_path": "setuptools/_vendor/wheel-0.46.3.dist-info/licenses/LICENSE.txt",
+          "path": "licenses/setuptools/09-LICENSE.txt",
+          "sha256": "30c23618679108f3e8ea1d2a658c7ca417bdfc891c98ef1a89fa4ff0c9828654"
+        },
+        {
+          "wheel_path": "setuptools/_vendor/zipp-3.23.0.dist-info/licenses/LICENSE",
+          "path": "licenses/setuptools/10-LICENSE",
+          "sha256": "5a57cb4db85e2a2dd88c290628908add57e3451449e0a9a71fdfb38776fd759d"
+        },
+        {
+          "wheel_path": "setuptools-84.2.1.dist-info/licenses/LICENSE",
+          "path": "licenses/setuptools/11-LICENSE",
+          "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+        },
+        {
+          "wheel_path": "setuptools/_vendor/autocommand-2.2.2.dist-info/LICENSE",
+          "path": "licenses/setuptools/12-LICENSE",
+          "sha256": "ade78d04982d69972d444a8e14a94f87a2334dd3855cc80348ea8e240aa0df2d"
+        },
+        {
+          "wheel_path": "setuptools/_vendor/backports.tarfile-1.2.0.dist-info/LICENSE",
+          "path": "licenses/setuptools/13-LICENSE",
+          "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+        },
+        {
+          "wheel_path": "setuptools/_vendor/jaraco.text-4.0.0.dist-info/LICENSE",
+          "path": "licenses/setuptools/14-LICENSE",
+          "sha256": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+        }
+      ],
+      "pth_files": [
+        "distutils-precedence.pth"
+      ],
+      "data_scripts": [],
+      "wheel_sha256": "ca140b45d5325a9478f880e351484f62fef15f336462e449ca0c03c873d589c2"
+    }
+  ]
+}

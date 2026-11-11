@@ -8,19 +8,14 @@ def change(s,old,new):
 def patch(name,source,out):
  p=out/'SKILL.md';s=p.read_text();s=re.sub(r'(?m)^allowed-tools:.*\n','',s)
  if name=='differential-review':
-  s=change(s,'5. **Output-Driven**: Always generate comprehensive markdown report file','5. **Evidence-Driven**: Keep findings reviewable. A concise chat result is sufficient for a tiny review; save a report when its scope or requested handoff merits one.')
   s=change(s,'| "No tests = not my problem" | Missing tests = elevated risk rating | Flag in report, elevate severity |','| "No tests = not my problem" | Missing tests leave uncertainty | Record coverage and run a discriminating probe; severity follows supported impact |')
   s=change(s,'| "Just a refactor, no security impact" | Refactors break invariants | Analyze as HIGH until proven LOW |','| "Just a refactor, no security impact" | Refactors can change invariants | Check affected runtime paths and allowed/denied behavior; classify supported risk |')
-  s=change(s,'| "I\'ll explain verbally" | No artifact = findings lost | Always write report |','| "I\'ll explain verbally" | Evidence must be reviewable | Use concise source-linked findings, with a durable file when needed |')
   start=s.index('## Agents');end=s.index('\n---',start)
   s=s[:start]+'''## Independent adversarial review
 
 For consequential trust-boundary changes, use a fresh independent reviewer when it can catch material errors. Supply requirements, current diff/history and actual runtime evidence. Use supported host tools and existing model/effort choices. No namespaced Claude agent registration is required. Exercise allowed and denied tenant/account combinations and an attacker-controlled path that must remain denied; retain uncertainty for untested boundaries.
 '''+s[end:]
   s=s.replace('Or delegate to: differential-review:adversarial-modeler agent','Or request an independent host-supported adversarial review')
-  s=s.replace('- [ ] Report file generated','- [ ] Findings and evidence delivered in the proportionate requested form')
-  s=s.replace('- Always generate the output file','- Save an output file when the scope or requested handoff needs it')
-  s=s.replace('- Output report only to chat (file required)','- Omit material evidence or fail to save a file when one is required by the task')
  elif name=='dimensional-analysis':
   s=change(s,'The same workflow applies in Claude Code and Codex. Legacy `allowed-tools` frontmatter is Claude metadata, not a Codex permission grant.','Use this workflow in Codex. Upstream `allowed-tools` metadata does not grant Codex permissions.')
   s=change(s,'In Claude Code, use these registered namespaced plugin agent identifiers listed below as the dispatch type. In Codex, create workers','In Codex, create workers')

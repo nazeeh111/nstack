@@ -1,0 +1,117 @@
+{
+  "repository": "https://github.com/Graphify-Labs/graphify",
+  "revision": "35d1d2038b9e9d470f117bf8f2473d415b5f5358",
+  "version": "0.9.106",
+  "archive_sha256": "24da41e0f10c4ebef992745ddaa5b61d860bc2564cd51d219bdfd0f2f9f19d4c",
+  "license": "Apache-2.0; older MIT portions retained",
+  "reference_only": true,
+  "upstream_files": [
+    {
+      "source_path": "graphify/skill-codex.md",
+      "path": "upstream/codex/skill-codex.md",
+      "sha256": "4d630cad0691ed805f80becd4245c2c15a219c8458c87fdaa7cb6c32ffba615f"
+    },
+    {
+      "source_path": "graphify/skills/codex/references/add-watch.md",
+      "path": "upstream/codex/references/add-watch.md",
+      "sha256": "1e77351815547334c7e030f018dba513b303d397bf73d11fac47df03ace3b3f4"
+    },
+    {
+      "source_path": "graphify/skills/codex/references/exports.md",
+      "path": "upstream/codex/references/exports.md",
+      "sha256": "c39a2f8062be9a5ac319220d6e66ca586ed0b0798292b1321206834be74c1b33"
+    },
+    {
+      "source_path": "graphify/skills/codex/references/extraction-spec.md",
+      "path": "upstream/codex/references/extraction-spec.md",
+      "sha256": "9525ca4e865711dc73406aa978600acda81e3a0f4ad164d707b87b5cdef2ba7b"
+    },
+    {
+      "source_path": "graphify/skills/codex/references/github-and-merge.md",
+      "path": "upstream/codex/references/github-and-merge.md",
+      "sha256": "e5ebd90c7686f50363ff7a535556bc2f596d4c47ec1e6c8b95e11e36a0dfea2b"
+    },
+    {
+      "source_path": "graphify/skills/codex/references/hooks.md",
+      "path": "upstream/codex/references/hooks.md",
+      "sha256": "c3141e7124be8d1f0e96ff3895220a1b6318a644c4c6a60120e4aa6b1cd92d4a"
+    },
+    {
+      "source_path": "graphify/skills/codex/references/query.md",
+      "path": "upstream/codex/references/query.md",
+      "sha256": "314e98daa21478e697643ec5b7cef5a35d04c4eb410037b37e22ac457610a147"
+    },
+    {
+      "source_path": "graphify/skills/codex/references/transcribe.md",
+      "path": "upstream/codex/references/transcribe.md",
+      "sha256": "676a1e39aa6d43cdfcc416ec56616e36f7bad74066a82bd33a9485515b9a865c"
+    },
+    {
+      "source_path": "graphify/skills/codex/references/update.md",
+      "path": "upstream/codex/references/update.md",
+      "sha256": "66a13120e96344c0c5c39c54d899b94244c1f50dad6b093af3d633f0a44a3654"
+    },
+    {
+      "source_path": "graphify/skill-opencode.md",
+      "path": "upstream/opencode/skill-opencode.md",
+      "sha256": "fa18826744043bd2a01be169c512fdeed9d0d7558d8c4b85952f7369aca7224d"
+    },
+    {
+      "source_path": "graphify/skills/opencode/references/add-watch.md",
+      "path": "upstream/opencode/references/add-watch.md",
+      "sha256": "1e77351815547334c7e030f018dba513b303d397bf73d11fac47df03ace3b3f4"
+    },
+    {
+      "source_path": "graphify/skills/opencode/references/exports.md",
+      "path": "upstream/opencode/references/exports.md",
+      "sha256": "c39a2f8062be9a5ac319220d6e66ca586ed0b0798292b1321206834be74c1b33"
+    },
+    {
+      "source_path": "graphify/skills/opencode/references/extraction-spec.md",
+      "path": "upstream/opencode/references/extraction-spec.md",
+      "sha256": "8e7d65cab59d4c842b56c25ec0af70100cc2d2443e2b0a924f0b4c81080061e4"
+    },
+    {
+      "source_path": "graphify/skills/opencode/references/github-and-merge.md",
+      "path": "upstream/opencode/references/github-and-merge.md",
+      "sha256": "e5ebd90c7686f50363ff7a535556bc2f596d4c47ec1e6c8b95e11e36a0dfea2b"
+    },
+    {
+      "source_path": "graphify/skills/opencode/references/hooks.md",
+      "path": "upstream/opencode/references/hooks.md",
+      "sha256": "c3141e7124be8d1f0e96ff3895220a1b6318a644c4c6a60120e4aa6b1cd92d4a"
+    },
+    {
+      "source_path": "graphify/skills/opencode/references/query.md",
+      "path": "upstream/opencode/references/query.md",
+      "sha256": "314e98daa21478e697643ec5b7cef5a35d04c4eb410037b37e22ac457610a147"
+    },
+    {
+      "source_path": "graphify/skills/opencode/references/transcribe.md",
+      "path": "upstream/opencode/references/transcribe.md",
+      "sha256": "676a1e39aa6d43cdfcc416ec56616e36f7bad74066a82bd33a9485515b9a865c"
+    },
+    {
+      "source_path": "graphify/skills/opencode/references/update.md",
+      "path": "upstream/opencode/references/update.md",
+      "sha256": "66a13120e96344c0c5c39c54d899b94244c1f50dad6b093af3d633f0a44a3654"
+    },
+    {
+      "source_path": "LICENSE",
+      "path": "LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "source_path": "LICENSE-MIT",
+      "path": "LICENSE-MIT",
+      "sha256": "36ecff6bbb97aca1be64e95f42538cf796adde5864edac583e620643c096931a"
+    },
+    {
+      "source_path": "NOTICE",
+      "path": "NOTICE",
+      "sha256": "3448ea175bba09f6fed8a743000139fb4c7112de83f164355b5540b158576621"
+    }
+  ],
+  "runtime": "conditional local code-only CLI; no host skill or hook/plugin registration",
+  "upstream_modifications": []
+}

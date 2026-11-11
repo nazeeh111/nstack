@@ -64,7 +64,6 @@ def is_failing(check):
    text=text.replace('base["status"] = "ok"','base["status"] = "log_fetched"');helper.write_text(text)
   else:raise ValueError('Unmapped Codex leaf')
  elif id=='L014':
-  s=change(s,'For each major finding (aim for 5-8):','For each major finding supported by the supplied evidence (no fixed quota):')
   s+='\n## Evidence and arithmetic\n\nKeep traceable participant/source IDs, direct excerpts and disconfirming evidence. Do not invent a theme count or persona to fill a template. Record denominator, missingness and sampling limits. Recompute any reported mean/variance or weighting independently with the exact units and sample/population convention; a spreadsheet or model statement alone is not independent arithmetic validation. Separate observation, interpretation and recommendation.\n'
  elif id=='L020':
   if name=='gcloud':
@@ -86,11 +85,7 @@ Verify each unfamiliar leaf command against `gcloud help <leaf_command>` in the 
   s+='\nNo resource purchase, reservation commitment, paid API or new service follows from an optimization review. Record actual account/project/region and scope; use existing specific authority for mutations and independently check cost/usage arithmetic.\n'
  elif id=='L050':
   if name=='physical-ai-physics-selection':
-   s=s.replace('Evaluate Newton first for suitable new workflows, select ovnewton when supported shared-stage integration adds value, then verify setup.','Compare the strongest feasible engines against fixed task criteria, preserve an incumbent choice, then verify the selected target.')
-   start=s.index('Recommend a usable simulation stack');end=s.index('\n\n',start)
-   s=s[:start]+'Recommend a simulation stack from the actual required physical features, fidelity/validation, throughput, asset compatibility and integration/maintenance burden. No vendor-first preference applies. Preserve the user\'s explicitly selected engine.'+s[end:]
-   s=s.replace('## Evaluate Newton and the relevant alternatives','## Compare the relevant feasible engines')
-   s=s.replace('Prefer Newton among feasible candidates when its task benefits and adoption cost justify the choice.','Choose the engine whose demonstrated task fit and adoption cost justify it, without a vendor preference.')
+   pass  # Preserve the upstream Newton-first comparison method.
   else:s+='\nA clean Compute Sanitizer report covers the selected tool, kernels, inputs and observed run only; it does not prove the absence of all races or memory defects. NVIDIA/CUDA target hardware and supported toolchain are explicit prerequisites. Do not globally install a NVIDIA finder or use a universal catalog lookup for routine tasks.\n'
  else:raise ValueError('Host leaf is not mapped')
  p.write_text(s)

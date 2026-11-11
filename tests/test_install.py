@@ -24,6 +24,17 @@ class InstallTests(unittest.TestCase):
    config=codex/'config.toml';config.write_text(config.read_text().replace('keep=1','keep=2'));subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True,text=True);self.assertTrue((personal/'SKILL.md').is_file());self.assertEqual((codex/'AGENTS.md').read_text(),'User safeguards remain.\n');self.assertEqual(i.cm.tomllib.loads(config.read_text())['unrelated']['keep'],2);self.assertTrue((state/'rollback.sh').is_file())
    # Restore then reapply in the same recorded run; retained originals are never clobbered.
    config.write_text(config.read_text().replace('keep=2','keep=1'));i.install(args);self.assertFalse(personal.exists());subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True);self.assertTrue(personal.exists())
+
+class CompleteAddonPayload(unittest.TestCase):
+ def test_every_checked_in_addon_and_integration_payload_is_portable(self):
+  # Upstream methods rely on their complete scripts and legal notices, including
+  # extensionless files. A successful install must not silently omit them.
+  portable={str(rel) for file,rel in i.portable_files()}
+  root=i.ROOT
+  required={str(file.relative_to(root)) for folder in ['addons','integrations'] for file in (root/folder).rglob('*') if file.is_file() and '__pycache__' not in file.parts and not any(part.startswith('.') for part in file.relative_to(root).parts)}
+  self.assertTrue(required)
+  self.assertEqual(sorted(required-portable),[])
+
 if __name__=='__main__':unittest.main()
 
 class PolicyAndPreflightTests(unittest.TestCase):

@@ -1,0 +1,116 @@
+{
+  "repository": "triggerdotdev/trigger.dev",
+  "version": "4.8.3",
+  "revision": "645cc47dd2eeb99387f604cad2c90ba2ef568680",
+  "skill_source_revision": "41ad1995b30573a9b55cfaab80c3293b7c35c1f8",
+  "skill_sdk_version": "4.8.3",
+  "license": "Apache-2.0; individual container companions have their own licenses",
+  "mode": "source preparation only; no Trigger containers may start through this recipe",
+  "resource_gate": {
+    "webapp_cpu_min": 3,
+    "webapp_ram_gb_min": 6,
+    "worker_cpu_min": 4,
+    "worker_ram_gb_min": 8
+  },
+  "isolation_gate": "Dedicated engine required before socket proxy starts; Compose project labels cannot scope daemon-wide API authority",
+  "files": [
+    {
+      "path": "hosting/docker/.env.example",
+      "git_blob": "2eeec1780adfb8f424808a1332a49f4349cc8b5b",
+      "mode": "100644",
+      "bytes": 8192,
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/645cc47dd2eeb99387f604cad2c90ba2ef568680/hosting/docker/.env.example"
+    },
+    {
+      "path": "hosting/docker/clickhouse/data-paths.xml",
+      "git_blob": "bfa9c5ce22afbfcd8753b5c0c3e3d8ceabb57068",
+      "mode": "100644",
+      "bytes": 757,
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/645cc47dd2eeb99387f604cad2c90ba2ef568680/hosting/docker/clickhouse/data-paths.xml"
+    },
+    {
+      "path": "hosting/docker/clickhouse/override.xml",
+      "git_blob": "253669ab09dc1ee0e4ae93c1a967cc070b9d8dfc",
+      "mode": "100644",
+      "bytes": 1557,
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/645cc47dd2eeb99387f604cad2c90ba2ef568680/hosting/docker/clickhouse/override.xml"
+    },
+    {
+      "path": "hosting/docker/clickhouse/users-override.xml",
+      "git_blob": "46699505e34d8d26ff949b46b4bc5248911baed2",
+      "mode": "100644",
+      "bytes": 794,
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/645cc47dd2eeb99387f604cad2c90ba2ef568680/hosting/docker/clickhouse/users-override.xml"
+    },
+    {
+      "path": "hosting/docker/docker-compose.traefik.yml",
+      "git_blob": "297c55d74cc12c0de9196109137e102404deece8",
+      "mode": "100644",
+      "bytes": 2146,
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/645cc47dd2eeb99387f604cad2c90ba2ef568680/hosting/docker/docker-compose.traefik.yml"
+    },
+    {
+      "path": "hosting/docker/generate-secrets.sh",
+      "git_blob": "8a21a82e2e2ad42568d58f1316a30feb28a25390",
+      "mode": "100755",
+      "bytes": 4190,
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/645cc47dd2eeb99387f604cad2c90ba2ef568680/hosting/docker/generate-secrets.sh"
+    },
+    {
+      "path": "hosting/docker/registry/auth.htpasswd",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "mode": "100644",
+      "bytes": 0,
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/645cc47dd2eeb99387f604cad2c90ba2ef568680/hosting/docker/registry/auth.htpasswd"
+    },
+    {
+      "path": "hosting/docker/webapp/.env",
+      "git_blob": "4a82335f5efebc118962aa257f77e7a88490ec91",
+      "mode": "120000",
+      "bytes": 7,
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/645cc47dd2eeb99387f604cad2c90ba2ef568680/hosting/docker/webapp/.env"
+    },
+    {
+      "path": "hosting/docker/webapp/.gitignore",
+      "git_blob": "b0b1a8e81a9c0c48de69d8760e0fc5d3de174783",
+      "mode": "100644",
+      "bytes": 34,
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/645cc47dd2eeb99387f604cad2c90ba2ef568680/hosting/docker/webapp/.gitignore"
+    },
+    {
+      "path": "hosting/docker/webapp/docker-compose.yml",
+      "git_blob": "4fd6a3d44e1f54a4fcd52abbafbf3c7d5ea214a8",
+      "mode": "100644",
+      "bytes": 11461,
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/645cc47dd2eeb99387f604cad2c90ba2ef568680/hosting/docker/webapp/docker-compose.yml"
+    },
+    {
+      "path": "hosting/docker/worker/.env",
+      "git_blob": "4a82335f5efebc118962aa257f77e7a88490ec91",
+      "mode": "120000",
+      "bytes": 7,
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/645cc47dd2eeb99387f604cad2c90ba2ef568680/hosting/docker/worker/.env"
+    },
+    {
+      "path": "hosting/docker/worker/.gitignore",
+      "git_blob": "b0b1a8e81a9c0c48de69d8760e0fc5d3de174783",
+      "mode": "100644",
+      "bytes": 34,
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/645cc47dd2eeb99387f604cad2c90ba2ef568680/hosting/docker/worker/.gitignore"
+    },
+    {
+      "path": "hosting/docker/worker/docker-compose.yml",
+      "git_blob": "ba05720530b3bb1be803f68b588567d3b75ef85e",
+      "mode": "100644",
+      "bytes": 2743,
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/645cc47dd2eeb99387f604cad2c90ba2ef568680/hosting/docker/worker/docker-compose.yml"
+    },
+    {
+      "path": "LICENSE",
+      "git_blob": "5e468e5078530707eb8d28fe28cad2f72fb64bf0",
+      "mode": "100644",
+      "bytes": 10935,
+      "url": "https://raw.githubusercontent.com/triggerdotdev/trigger.dev/645cc47dd2eeb99387f604cad2c90ba2ef568680/LICENSE"
+    }
+  ]
+}

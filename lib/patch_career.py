@@ -1,5 +1,5 @@
 """Explicit career-preparation closure, without upstream installers or model runners."""
-import json,pathlib,re,shutil
+import difflib,hashlib,json,pathlib,re,shutil
 P=pathlib.Path
 MODULES=('tracker.mjs','verify-cv-facts.mjs','ats-payload.mjs','prepare-application.mjs','followup-cadence.mjs','followup-seed.mjs','path-resolver.mjs','tracker-parse.mjs','tracker-utils.mjs','funnel-velocity.mjs','funnel-stages.mjs','stats.mjs','lib/cli-flags.mjs','lib/dir-lock.mjs','lib/is-main-module.mjs','lib/local-today.mjs','lib/scan-history-columns.mjs','lib/tsv-formula-escape.mjs','lib/yaml-document.mjs')
 YAML_INTEGRITY='sha512-muutsYr+e2+d3rTgUGslq5rxbBlUy3cJ61IsHag2QNDQV+7zXWjkUpmALIajhrlLlrgRUiymj6U3zUr/TMK84Q=='
@@ -92,50 +92,41 @@ suppression state. No blanket sweep or sending is authorized by preparation.
 An explicitly authorized release uses a separate one-shot dispatcher binding
 account, business identity, payload hash, expiry and remote receipt reconciliation.
 ''')
- return '''---
-name: career-ops
-description: Project-only facts, tracker checks, payload lint and one-application follow-up preparation. Never sends or submits.
----
+ # Retain the actual upstream method instead of replacing its modes with the
+ # optional four-operation native preparation adapter.
+ original=(source/'.agents/skills/career-ops/SKILL.md').read_text()
+ method=original.replace('Claude Code','native host')
+ marker=method.index('\n---\n',4)+5
+ active=method[:marker]+'\n> Native execution bindings: read [NATIVE-BINDINGS.md](NATIVE-BINDINGS.md).\n\n'+method[marker:]
+ (out/'UPSTREAM_SKILL.md').write_text(original)
+ (out/'NATIVE-PORT.patch').write_text(''.join(difflib.unified_diff(original.splitlines(keepends=True),active.splitlines(keepends=True),fromfile='upstream/SKILL.md',tofile='SKILL.md')))
+ (out/'NATIVE-BINDINGS.md').write_text("""# Native execution bindings
 
-# Career preparation
+Keep the original career modes and review requirements below. Use the current
+host/model and the user's explicit campaign, never the source author's data or
+profile. Installation does not authorize applications, messages, account access,
+provider calls, hooks, schedulers or an upstream controller.
 
-Use the pinned `runtime/career-ops` directory in the build receipt. Read its
-AGENTS.md and DATA_CONTRACT.md. Keep an explicit separate campaign directory,
-verified source facts, generated stories, payload and ledger. Use native document
-output and the current user-selected model and effort.
-
-Prepare a private writable copy of this exact runtime, preserving hashes and
-notices. With Node >=24 and npm, use an empty private HOME and empty npm user and
-global config files. Run `npm ci --ignore-scripts --no-audit --no-fund` in that
-copy with the included two-package integrity lock. No upstream root package,
-postinstall, model provider or browser download is needed. Record Node version,
-source/build hashes and installed dependency hashes before use.
-
-With the same empty environment, invoke the original read-only adapter by
-absolute path: `node RUNTIME/nstack-prepare.mjs facts CAMPAIGN verified.txt draft.txt`,
-`payload CAMPAIGN payload.json`, `tracker-check CAMPAIGN applications.md`, or
-`followup CAMPAIGN APPLICATION_NUM one-application.md`.
-CAMPAIGN is absolute; input files are relative to it. The adapter clears all
-CAREER_OPS overrides before imports and rejects paths outside the campaign.
-The follow-up input must contain exactly the named application, including only
-its relevant evidence. The campaign must also contain explicit followups.md,
-application-status-log.md and config/profile.yml; missing state is refused.
-The profile disable flag and actual history are preserved. Linked campaign
-entries are refused before imports, including implicit profile reads.
-Contact, purpose and current suppression must still be
-reviewed independently. Unknown posting/delivery stays unknown.
-
-The retained prepare-application.mjs prints a reviewable prefill summary only;
-it never submits. Invoke it only in an empty environment with explicit absolute
-CAREER_OPS_DATA_DIR, named --url and campaign output/ PDF. Native output is default.
-Upstream followup-seed.mjs can preview a named application with dryRun:true and
-explicit tracker/followups/profile paths; persistence needs the task's authority.
-Do not invoke status hooks, pipelines, updates or source author defaults.
-
-Independently check all changed numbers, units, negation, ownership and skills
-against source fact IDs. Deduplicate employer + requisition + candidate across
-all channels and sender identities. A draft or filled form is not submitted.
-Preserve the source draft-only stop before Submit/Send/Apply. Any authorized
-one-shot release belongs to a separate receipt-reconciling dispatcher; this
-runtime never sends. Retain artifacts and unrelated campaign data on retirement.
-'''
+Required mode playbooks are retained at ../../../runtime/career-ops/modes/.
+The optional native preparation lane is separate: read ../../../runtime/career-ops/AGENTS.md
+and DATA_CONTRACT.md. Its nstack-prepare.mjs supports facts, payload, tracker-check
+and one-application followup only, using explicit campaign-relative files and an
+isolated copy with the included dependency lock. It does not implement every
+original CLI mode. Use the actual upstream project/runtime only after its own
+prerequisites are established; an unavailable runtime remains a reported gap.
+The source draft-only stop before Submit, Send or Apply is retained.
+""")
+ # Plain mode paths are part of this skill's method. Retain those actual source
+ # documents without globally installing their related skills or data profiles.
+ for file in (source/'modes').rglob('*'):
+  if file.is_file()and file.suffix=='.md':
+   target=runtime/'modes'/file.relative_to(source/'modes');target.parent.mkdir(parents=True,exist_ok=True)
+   text=file.read_text();base='https://github.com/career-ops-hq/career-ops/blob/9a72d7261255ccd46d732d1fe5a5c3c9376d3ceb/'
+   def locator(match):
+    rel=match[1];resolved=(file.parent/rel).resolve()
+    if resolved.is_relative_to(source.resolve()):return ']('+base+str(resolved.relative_to(source.resolve()))+')'
+    return match[0]
+   text=re.sub(r'\]\((?![a-zA-Z][a-zA-Z0-9+.-]*:|#|/)([^)]+)\)',locator,text)
+   target.write_text(text)
+ (out/'NATIVE-ADAPTATION.json').write_text(json.dumps({'repository':'career-ops-hq/career-ops','revision':'9a72d7261255ccd46d732d1fe5a5c3c9376d3ceb','source_path':'.agents/skills/career-ops/SKILL.md','source_sha256':hashlib.sha256(original.encode()).hexdigest(),'adapted_sha256':hashlib.sha256(active.encode()).hexdigest(),'adaptation':'Complete original modes retained with model-agnostic wording and a separate native execution binding; optional scoped preparation helper is not the complete upstream controller.'},indent=2)+'\n')
+ return active

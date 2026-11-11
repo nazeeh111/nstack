@@ -1,0 +1,12 @@
+{
+  "runtime": "n8n",
+  "version": "2.47.4",
+  "revision": "ec12419d8a533a176a915c294e8c3e5c91ac9f10",
+  "repository": "https://github.com/n8n-io/n8n",
+  "image": "docker.io/n8nio/n8n:2.47.4@sha256:56a3f0d56c2888b53ca7d89de4aa3de702888f33667c96a1f1d7118548f979e9",
+  "license": "Sustainable Use License; enterprise exclusions apply, see LICENSE.n8n.md",
+  "compose": "Authored minimal local configuration; not copied complete upstream Assistant stack",
+  "fixtures": "Authored synthetic builtin-node fixtures; no Code or external integrations",
+  "official_docs": "https://docs.n8n.io/deploy/host-n8n/install-options/install-with-docker.md",
+  "scope": "Local core workflow execution only. Owner setup and MCP/OAuth/API access remain pending."
+}

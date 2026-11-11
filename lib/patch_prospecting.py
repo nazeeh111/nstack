@@ -4,7 +4,7 @@ P = pathlib.Path
 FILES = ['skills/prospecting/SKILL.md','skills/cold-email/SKILL.md','skills/prospecting/references/demand-signals.md','skills/prospecting/references/account-research.md','skills/cold-email/references/personalization.md','skills/cold-email/references/reply-handling.md','skills/revops/references/lifecycle-definitions.md','skills/sales-enablement/references/win-loss-analysis.md']
 BOUNDARY = '''## Native scope
 
-Use existing project context and source-backed professional evidence. This selected port researches accounts and prepares only explicitly requested drafts or reply classifications. No provider setup, enrichment, sending, scheduling, booking or CRM write follows from this guide. A public signal or address grants no contact permission; any separate effect belongs to its authorized owner. Keep observations, inference, source/date, uncertainty and counterevidence separate. Neutral evidence rows are the default; scoring needs project-calibrated criteria. Reuse supplied context and ask only for material missing information.
+Use existing project context and source-backed professional evidence. This selected port researches accounts and prepares only explicitly requested drafts or reply classifications. No provider setup, enrichment, sending, scheduling, booking or CRM write follows from this guide. A public signal or address grants no contact permission; any separate effect belongs to its authorized owner. Keep observations, inference, source/date, uncertainty and counterevidence separate. Source scores, timings and benchmarks are heuristics, not independently validated predictions or guarantees. Reuse supplied context and ask only for material missing information.
 
 '''
 
@@ -31,9 +31,7 @@ def port(rel, text):
         text = line(text, '- **SaaS / B2B**: combine', '- **SaaS / B2B**: cross-check eligible professional company pages, job posts, filings and public announcements. Record source/date and uncertainties.')
         text = line(text, 'For LinkedIn audiences,', 'Use only already eligible sources within the task scope; no contact database, provider setup or enrichment step is required.')
         text = line(text, 'For email contacts (B2B / SaaS branches)', 'Contact information is optional in a research brief. Deliverability and recipient eligibility belong to a separately authorized delivery owner, not research qualification.')
-        text = line(text, 'Apply this rubric for', 'The original Hot/Warm/Cold rubric below is a qualitative example, not a calibrated prediction. Use it only if the task supplies supported project criteria; otherwise report neutral fit evidence and uncertainty. Demand signals are assessed separately.')
         text = text.replace(' + verified contact |', ' |').replace(' + contact verifiable |', ' |').replace(' OR contact unverified |', ' |')
-        text = line(text, 'Branch-specific signals refine', 'Keep the fit evidence and contrary evidence visible; no fixed Hot/Warm/Cold ratio is a target.')
         text = line(text, 'Then assign an **account tier**', 'Choose research depth using [account research](references/account-research.md): attributable account brief, segment plus account observation, or segment-only brief. Depth does not confer channel or cadence authority.')
         text = line(text, 'After the table, always add', 'After the table, identify the strongest evidence-backed accounts and the next research check; do not write openers unless requested.')
         text = line(text, '- score, business/company name', '- business/company identity, relevant observation, source/date, fit hypothesis, counterevidence, confidence and unknowns; contact fields only when supplied and eligible')
@@ -58,10 +56,9 @@ Use eligible dated professional sources. Do not bypass access controls or use br
     elif rel == FILES[1]:
         text = re.sub(r'(?m)^description:.*$', 'description: Prepare an explicitly requested reviewable email draft or reply classification from approved offer and proof. No sending or campaign actions.', text, count=1)
         text = cut(text, '**Check for product marketing context first:', '## Writing Principles', 'Use the existing project context, approved offer/proof and intended reader. Ask only for missing facts that materially affect the requested draft.\n\n')
-        text = line(text, 'Interest-based CTAs', 'Use one low-friction question suited to this reader; the examples are copy choices, not evidence of a universal conversion advantage.')
         text = line(text, 'For the full catalog of frameworks', 'Choose among the source shapes above, or write freeform when it flows naturally. State only source-supported problems and proof; an observation is not evidence of pain.')
         text = line(text, 'See [subject-lines.md]', 'Treat these subject-line suggestions as starting points subordinate to the actual voice and context.')
-        for heading in ['## Follow-Up Sequences','## Before You Send','## Beyond Email','## Data & Benchmarks','## Tool Integrations','## Related Skills']:
+        for heading in ['## Before You Send','## Beyond Email','## Tool Integrations','## Related Skills']:
             text = section(text, heading)
         text = section(text, '## When They Reply', '## When They Reply\n\nClassify the actual reply and prepare the proposed owner response using [reply handling](references/reply-handling.md). No reply, booking or reminder is sent by this leaf.')
         text = text.replace('  - For the full blacklist, use the **copywriting** skill\'s AI-tells reference\n', '')
@@ -70,16 +67,12 @@ Use eligible dated professional sources. Do not bypass access controls or use br
         text = line(text, 'Don\'t start broad collection', 'Use the existing approved project brief; clarify material gaps before collecting unrelated evidence.')
         text = line(text, 'Search several angles,', 'Search several angles rather than one query repeated; use the audience\'s own professional vocabulary from eligible source evidence.')
         text = cut(text, '**Use our live-recency edge.**', '## Step 3', 'Read original pages with existing native tools; snippets alone do not establish a match. Record the actual event and observation dates.\n\n')
-        a = text.index('## Step 4'); b = text.index('### Prospect stages', a)
-        dimensions = text[text.index('| **Pain strength**', a):text.index('\n\n```', a)]
-        dimensions = re.sub(r'\| \d+% \|', '|', dimensions)
-        text = text[:a] + '## Step 4 — Assess demand fit\n\nKeep these original evidence dimensions separate. Numeric scores or bands require project-calibrated criteria; neutral evidence is the default. Public reachability is an observed channel, not contact permission.\n\n| Dimension | What it measures |\n|---|---|\n' + dimensions + '\n\n' + text[b:]
-        text = text.replace('score breakdown', 'dimension evidence and uncertainty').replace('An evidence report + manual outreach plan', 'An evidence report; draft only if requested').replace('None — reach them where they already posted', 'No contact operation; retain the original source')
+        text = text.replace('None — reach them where they already posted', 'No contact operation; retain the original source')
         text = section(text, '## Step 5', '''## Step 5 — Requested draft handoff
 
 Research alone ends with evidence. Only when a draft is requested, retain the source opener shape: (1) mention the actual public professional context, (2) connect it to the evidenced problem, (3) explain the approved product in one sentence, (4) ask one low-friction question. Do not fabricate familiarity, pain or personal details. Return the draft for review; never send it.''')
-        text = text.replace('demand-fit score, stage, why-now, channel, opener', 'dimension evidence, stage, why-now, uncertainty; include an opener only if requested')
-        text = line(text, '6. **Seven-day manual outreach plan**', '6. **Next research check** — what observation would discriminate a real match from speculative fit?')
+        text = text.replace('demand-fit score, stage, why-now, channel, opener', 'demand-fit score, stage, why-now, channel; include an opener only if requested')
+        text = line(text, '6. **Seven-day manual outreach plan**', '6. **Seven-day manual outreach plan** — a low-volume validation sequence (e.g., contact the top 3 with one source-based question; share a mockup only after they confirm the pain; target three conversations and one design-partner commitment). Return this as a research proposal; contact and sharing remain separately authorized actions, and these targets are not promised outcomes.')
         text = line(text, 'For a shareable standalone HTML version', 'Use the requested output format through the normal artifact owner.')
     elif rel == FILES[3]:
         text = text.replace('Dossiers on companies you compete with belong to the competitor-profiling skill.', 'Competitor dossiers are outside this selected account-research leaf.')
@@ -87,14 +80,9 @@ Research alone ends with evidence. Only when a draft is requested, retain the so
         text = text.replace('See [compliance.md](compliance.md).', 'The route owner checks current permissions and primary source terms before a separately requested use.')
         text = text.replace('**Likely priority:** [the problem the signal implies, in their words where possible]', '**Fit hypothesis:** [possible relevance, distinct from observed need/budget; include contrary evidence]')
     elif rel == FILES[4]:
-        text = line(text, 'Personalization drives', 'The useful source principle: personalization must connect to the problem and approved offer; decorative personal facts are not relevance.')
-        text = text.replace(' ~5% lift.', '').replace(' (gold standard)', '')
-        text = text.replace('## The 3-Minute Personalization System', '## Reusable Personalization System')
-        text = line(text, 'The personalization must logically', 'The personalization must logically connect to the evidenced problem. Reusable triggers reduce repeated drafting; no fixed research-time promise is established.')
         text = section(text, '## The Four -Graphic Principles', '''## Professional dimensions
 
 Use relevant professional role, attributable firmographic facts and verified technology context. Exclude sensitive traits and psychographic/personal-life targeting. Do not infer team size, budget or pain from a sparse signal.''')
-        text = text.replace('## Observation-Based Openers (highest performing)', '## Observation-Based Openers')
         text += '\nFor source/date, facts-before-angle and no-hook rules, read [account research](../../prospecting/references/account-research.md). The example claims above are placeholders: replace with attributable facts, omit unsupported implications and use only approved proof.\n'
     elif rel == FILES[5]:
         text = line(text, 'The sequence\'s job ends', 'Classify supplied replies and prepare a proposed owner response. The actions below are handoff options, not execution authority.')
@@ -117,10 +105,21 @@ Use relevant professional role, attributable firmographic facts and verified tec
         text = text.replace('Qualified (same definition as inbound)', 'Qualified against the owning project’s explicit source-backed criteria; label alone is insufficient')
         text = text.replace('| **In sequence** | First touch sent |', '| **Contacted** | Authoritative receipt for a separately authorized first touch; delivery distinct |')
     elif rel == FILES[7]:
-        text = line(text, 'Ask within 2-4 weeks', 'For separately authorized interviews, the source suggests asking soon after the decision and using someone other than the deal rep. Existing interview evidence can be analyzed without initiating contact.')
-        text = line(text, '- **Under ~5 deals', '- **Small slices remain uncertain.** No fixed sample-size threshold validates a finding; preserve denominators and competing explanations.')
+        text = line(text, 'Ask within 2-4 weeks', "Ask within 2-4 weeks of the decision. Have someone other than the deal's rep do it if possible. This is interview-planning guidance; initiating contact requires its actual authority.")
         text += '\nAsset destinations above are proposed owner handoffs, not permission to change product, CRM or sales materials. Preserve buyer-stated reasons separately from team inference.\n'
     else: raise ValueError('Unselected P343 file')
+    # Unselected support is available at the exact source pin, not a guessed
+    # installed path or permission to acquire its providers/channel runtimes.
+    def source_link(match):
+        target = match[2]
+        if ':' in target or target.startswith(('/', '#')):
+            return match[0]
+        import posixpath
+        path = posixpath.normpath(posixpath.join(posixpath.dirname(rel), target))
+        if path in FILES:
+            return match[0]
+        return match[1] + 'https://github.com/coreyhaines31/marketingskills/blob/88c79f6528a9347420e57ceb1fff9a60de651768/' + path + ')'
+    text = re.sub(r'(\]\()([^\s)]+)\)', source_link, text)
     # Native scope applies even when a supporting reference is loaded directly.
     if text.startswith('---\n'):
         end = text.index('\n---\n', 4) + 5

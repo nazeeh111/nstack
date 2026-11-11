@@ -180,7 +180,7 @@ def inventory(state, skill_roots=None):
                     continue
             else:
                 record = {'kind': 'runtime', 'name': row['name']}
-                for key in ('version', 'source_revision', 'native_mcp', 'binary', 'python', 'node', 'entrypoint'):
+                for key in ('description', 'activation', 'version', 'source_revision', 'native_mcp', 'binary', 'python', 'node', 'entrypoint', 'recipe', 'instructions'):
                     if isinstance(row.get(key), str):
                         record[key] = row[key]
                 if isinstance(row.get('checks'), str):
@@ -257,7 +257,7 @@ def search(state, terms, limit=8, skill_roots=None):
     ranked = []
     for record in records:
         text = ' '.join(str(record.get(key, '')) for key in
-                        ('name', 'description', 'native_mcp', 'recorded_checks')).casefold()
+                        ('name', 'description', 'activation', 'native_mcp', 'recorded_checks')).casefold()
         score = sum(word in text for word in words)
         if score:
             ranked.append((score, record))

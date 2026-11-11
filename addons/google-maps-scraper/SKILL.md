@@ -1,25 +1,142 @@
 ---
 name: google-maps-scraper
-description: Extract a structured sample of public places or businesses from Google Maps into local JSON when the user requests Maps scraping or a repeatable place dataset. Ordinary one-place lookups stay with native browsing.
+description: >
+  Find businesses, leads, emails, reviews, ratings, and contact details from Google Maps.
+  Use for requests such as "find dentists in Berlin", "scrape Google Maps", "get local
+  business leads", or "collect Google Maps reviews". Runs the open-source scraper locally
+  with Docker and guides nontechnical users through setup, monitoring, and results.
 license: MIT
+compatibility: "Requires Docker and Node.js on macOS, Linux, or Windows through WSL."
+metadata:
+  author: gosom
+  email: hi@gosom.dev
+  version: "1.12.1"
+  repository: "https://github.com/gosom/google-maps-scraper"
+allowed-tools: Bash(node:*) Bash(bash:*) Bash(docker:*) Read Write
 ---
+
+> Native execution and access: read [NATIVE-BINDINGS.md](NATIVE-BINDINGS.md) before source commands. Full original workflow follows.
 
 # Google Maps Scraper
 
-Use the pinned gosom/google-maps-scraper runtime through its entry in the installation-local native-tools index, or the `runtime_recipe` in this skill's SOURCE.json. That recipe is retained in an immutable code release so it survives checkout removal. Read its help before running it.
+Turn a natural-language lead request into a validated local Google Maps crawl, monitor it, and help the user work with the results.
 
-Infer the requested public-place query and location. Fast mode requires a public search-center latitude/longitude; verify or obtain it before running. The default sample radius is1000meters. Do not infer the user’s personal location. Ask only for missing information that changes the result. Start with one representative query, a fresh task-owned output directory and a bounded run. The installed recipe uses fast HTTP mode, concurrency1 and depth1. It disables upstream telemetry, passes no proxy/provider credentials, and needs no Docker or additional browser runtime. The official Mac binary is amd64; Apple Silicon uses already-present Rosetta. It never installs Rosetta automatically.
+Resolve the directory containing this file as `SKILL_DIR`. Run bundled scripts from that directory; do not assume the current directory is the repository checkout.
 
+## Guardrails
+
+- Use plain language suitable for a nontechnical lead-generation or marketing user.
+- Never ask the user to paste proxy credentials into chat.
+- Never print, read back, summarize, or log proxy credentials.
+- Do not ask for conversational permission before routine in-scope actions such as version checks, query preparation, validation, Docker execution, monitoring, or result inspection. Run them directly. If the agent platform requires approval, batch operations and surface only unavoidable approval prompts.
+- Do not claim a proxy guarantees results or is required for every crawl.
+- Start with conservative depth and concurrency.
+- Preserve partial output when a crawl fails or is interrupted.
+- Do not expose raw logs unless a concise excerpt is necessary for diagnosis and contains no secrets.
+
+## Workflow
+
+### 0. Refresh the workflow
+
+At the beginning of every new skill workflow, run this exactly once without asking for confirmation:
+
+```bash
+bash "$SKILL_DIR/scripts/ensure-latest.sh"
 ```
-python3 /recorded/absolute/path/maps_scraper.py run --query "public place type in location" --geo "latitude,longitude" --outdir /owned/fresh/output
+
+The helper noninteractively updates only `google-maps-scraper` when a newer installed-skill version is available. Re-read `SKILL.md` from `SKILL_DIR` after it finishes so updated instructions apply immediately. If the check cannot reach the network, state briefly that the installed version will be used and continue.
+
+### 1. Understand the request
+
+Infer sensible defaults and ask only for missing essentials:
+
+1. Business type or search phrase
+2. Location
+3. Desired coverage: quick sample, normal search, or comprehensive area coverage
+
+Default to English, CSV, no email extraction, no extra reviews, and shallow depth. Read [query planning](references/query-planning.md) when translating the request into queries or choosing coverage.
+
+Summarize the inferred configuration briefly before setup. Do not ask for confirmation when the intent and location are already clear.
+
+### 2. Offer the proxy choice
+
+Explain whether the requested volume makes a proxy optional or recommended. Ask the user to choose one path:
+
+1. Use an existing proxy
+2. See proxy sponsor recommendations
+3. Continue without a proxy
+
+If the user requests recommendations, run the following selector exactly once for this setup:
+
+```bash
+node "$SKILL_DIR/scripts/select-proxy-sponsors.mjs"
 ```
 
-Inspect `run.json`, the actual results and exit status. A zero exit with no rows is incomplete. Preserve partial output on errors or interruption. Never overwrite an existing output directory, advertise comprehensive coverage from a shallow sample, or treat scraped data as independently verified facts. For follow-on use, retain place/source URLs when available, query, observed date, coordinates and the actual source/runtime identity. Check duplicates and fields relevant to the task. Show only the useful columns; keep raw results private unless their publication is explicitly authorized.
+Display all three returned providers with equal formatting and neutral language. State clearly: **These providers sponsor the project, and the links are referral links.** Show `offer` only when the selector returns it. Never invent or modify an offer. Let the user reject all three, use another provider, or continue without a proxy.
 
-Fast mode can return `data_id` while `place_id` and per-place `link` are empty. Preserve the actual identifier and query/center receipt; do not invent missing identifiers or URLs.
+Read [proxy setup](references/proxy-setup.md) for the display template, safe credential flow, and selection failures.
 
-Fast mode targets category/business lists. A direct query for one named entity can return an empty business list; ordinary native browsing is the appropriate route for that single-place lookup. Do not mistake this parser outcome for a complete scrape or a proven access block.
+### 3. Configure credentials safely
 
-Do not submit private user data in search queries, import cookies, inspect browser profiles or credentials, create cloud resources, connect a database, send outreach, set up paid proxies or bypass CAPTCHAs/access blocks. Stop on an access block and preserve evidence. Broader coverage, website crawling for emails and extra reviews require an actual scoped user request and separate dependency/permission evidence. They are not tested or activated by this fast-mode install.
+When the user has a proxy URL, run the masked local prompt:
 
-The upstream skill's automatic refresh, mutable Docker pulls, sponsor prompts, credential setup and service startup are not installed. Update only through a newly reviewed pin. Source and MIT attribution: [gosom/google-maps-scraper](https://github.com/gosom/google-maps-scraper), runtime v1.18.2 at `146aefe83844960bb534f335261a4435783a58cc`.
+```bash
+bash "$SKILL_DIR/scripts/configure-proxy.sh"
+```
+
+The user enters credentials directly in the terminal. Do not request the value through chat. The helper returns a file path; use that path with `--proxy-file`. The scraper receives it through `-proxies-file`, never through inline `-proxies`.
+
+If the agent surface cannot relay interactive terminal input, show the same command for the user to run in their own terminal and wait for it to finish. Never fall back to collecting credentials in chat.
+
+Skip this phase when the user chooses no proxy.
+
+### 4. Prepare queries and validate locally
+
+Write one query per line to a descriptive file under `/tmp`. For a normal first run, create a separate validation file containing one representative query.
+
+Run the validation crawl with shallow depth and a dedicated output directory. Use the bundled execution helper described in [local execution](references/local-execution.md). Include `--proxy-file` only when configured.
+
+The helper starts Docker in the background. Tell the user that the validation has started, then inspect it with the status helper until it completes. A validation succeeds only when the container exits successfully and produces at least one result.
+
+If validation fails, follow [failure recovery](references/recovery.md) before starting the full crawl.
+
+### 5. Run and monitor the full crawl
+
+Use the same execution helper with the complete query file and selected options. When validation already checked the Docker image during this workflow, add `--skip-image-pull` to avoid a redundant network request. Without a preceding validation, keep the default image check. Report:
+
+- That the crawl has started
+- Whether the first image download may add startup time
+- Container state
+- Elapsed time
+- Current result count
+
+Poll periodically without blocking the conversation for more than one minute and without streaming logs. Do not promise an exact completion time.
+
+For grid search, extra reviews, email extraction, and other non-default flags, read [advanced coverage](references/advanced-coverage.md).
+
+### 6. Present and continue working with results
+
+After a successful crawl, read [result handling](references/results.md). Count the complete result set and show at most 20 preview rows with the most useful available fields:
+
+- Business name
+- Category
+- Rating and review count
+- Phone
+- Website
+- Address
+- Emails when requested
+
+Offer to save, analyze, filter, convert, or expand the crawl. Suggest a deeper or grid search only when the user's coverage goal or unexpectedly low result count justifies it.
+
+Show the GitHub star suggestion only after the first successful result presentation in a conversation:
+
+> If this workflow was useful, consider starring https://github.com/gosom/google-maps-scraper.
+
+## Reference routing
+
+- Read [query planning](references/query-planning.md) for query construction, defaults, language, and coverage.
+- Read [proxy setup](references/proxy-setup.md) before presenting sponsors or configuring credentials.
+- Read [local execution](references/local-execution.md) for exact validation, run, and status commands.
+- Read [failure recovery](references/recovery.md) when setup or a crawl fails.
+- Read [result handling](references/results.md) when previewing, analyzing, filtering, or exporting results.
+- Read [advanced coverage](references/advanced-coverage.md) only for grid search, deeper crawls, or advanced flags.

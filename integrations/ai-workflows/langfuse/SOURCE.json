@@ -1,0 +1,52 @@
+{
+  "upstream_repository": "langfuse/langfuse",
+  "release": "v4.78.0",
+  "revision": "138beceb728b998003059981892ad09e04f154b1",
+  "upstream_compose_sha256": "317f01c52486c5219fb194d8e15c76d1ed2d78a4a83fd17547949432228b2918",
+  "source": "https://github.com/langfuse/langfuse/blob/138beceb728b998003059981892ad09e04f154b1/docker-compose.yml",
+  "derived_compose_sha256": "0613925f2608f3b8a65173bd24d0dab1fdbdefbfe3e413623e7bec9c908cfc6a",
+  "images": {
+    "langfuse/langfuse": "docker.io/langfuse/langfuse@sha256:037188385ac6612d3494319fa060052da407b235502874c7ea79ade583c29002",
+    "langfuse/langfuse-worker": "docker.io/langfuse/langfuse-worker@sha256:175a32200b9908b283104e67b84d080381e841daa8ee6692f5bb26538df1a59e",
+    "library/postgres": "docker.io/postgres@sha256:ff87138949ad9a46f32ff23bd6852b52ce024a13dffe9b4087be98292cdd3b4f",
+    "library/redis": "docker.io/redis@sha256:2e3eb11462c4e3759e6972678dd051d150ff54b1e60714b3c33b701260172a90",
+    "clickhouse/clickhouse-server": "docker.io/clickhouse/clickhouse-server@sha256:de3e47c64078aa196dae2349e048fc98ba81947f651f5c20e06e46baea8ae40a",
+    "minio": "cgr.dev/chainguard/minio@sha256:db3f583fa49121942168bd6383a773b2cde3384c9a99bf7193560b9a0f3a28fd"
+  },
+  "adaptations": [
+    "Exactly six observability services; AI Gateway omitted",
+    "Immutable image manifests, direct official Docker Hub app images",
+    "Loopback UI/object ports3100/9190 only; no database/worker/admin port publication",
+    "Internal network; no external integrations or provider connections",
+    "No default secrets; required private-development environment values",
+    "Telemetry/Halo/onboarding/gateway disabled",
+    "Restart no; bounded rotated logs; explicitly prepared private bind data under NSTACK_STATE, unique Compose project, no auto-created host directories"
+  ],
+  "state": "prepared only; no full-stack startup/health/auth/trace/restore/resource acceptance; current8GiB Docker VM below official sizing guidance",
+  "license": "MIT core with separately licensed EE directories; third-party component licenses remain independent",
+  "observed_component_versions": {
+    "postgres": "17.11",
+    "redis": "7.4.12",
+    "clickhouse": "26.3.62.3",
+    "minio": "RELEASE.2026-11-10T21-18-11Z"
+  },
+  "component_license_references": {
+    "redis": {
+      "license": "RSALv2 OR SSPLv1",
+      "source": "https://github.com/redis/redis/blob/f9bc2f89232fa3fc6147ee732309d2616117b85e/LICENSE.txt"
+    },
+    "postgres": {
+      "license": "PostgreSQL",
+      "source": "https://github.com/postgres/postgres/blob/083ac033419f690758508e08c1736089384bbee8/COPYRIGHT"
+    },
+    "minio": {
+      "license": "AGPL-3.0",
+      "source": "https://github.com/minio/minio/blob/91b5d1aa83f50ae3f0d98529d1561608bc59a9d5/LICENSE"
+    },
+    "clickhouse": {
+      "license": "Apache-2.0 per upstream project; exact image-to-source Git commit not established in this scoped review",
+      "source": "https://github.com/ClickHouse/ClickHouse/blob/master/LICENSE"
+    }
+  },
+  "anonymous_image_route": "All six exact image manifests pulled on2026-11-11; MinIO initial401 resolved through standard cgr.dev anonymous Bearer flow. No remote account or persisted token."
+}

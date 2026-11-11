@@ -14,8 +14,8 @@ The optional Unslop adaptation in `addons/unslop` is derived from
 [Unslop by Damir Sokolovsky (@heydamir)](https://github.com/heydamir/unslop),
 commit `97daa3eb365670ea3f87ed85356cbfcee18105a5`, under
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-Changes narrow discovery to existing-screen polish, preserve user identity and
-authorization, treat style recipes as examples, and use native Codex tools.
+The complete upstream method and UI metadata are retained. A short, model-agnostic
+execution binding identifies native tool equivalents and helper prerequisites.
 The installer fetches the complete pinned upstream source, license and attribution;
 original helpers remain reference material. These terms are separate from nstack's MIT code.
 
@@ -24,3 +24,39 @@ The optional Google Maps Scraper integration invokes the MIT-licensed
 at `146aefe83844960bb534f335261a4435783a58cc`. Its original MIT notice is retained
 in `addons/google-maps-scraper/LICENSE`; the binary is fetched from its official
 release with a fixed SHA256, rather than redistributed in this repository.
+
+The RAEA skill and its83 source support files in `addons/raea` come from
+[shinyobjectz/raea-skills](https://github.com/shinyobjectz/raea-skills/tree/c507860150995eb7c22ef9db23dee636c832428a),
+under Apache2.0. The exact license and required NOTICE files are included;
+`INTEGRATION-LICENSE` covers nstack's separate binding. The FSL engine binary
+is not redistributed here. Its own terms and separate runtime recipe apply.
+
+The Google Maps Scraper addon retains the complete pinned upstream skill,
+references and scripts under that project's MIT notice. Native execution
+bindings and the previously tested fast sampler are separate from the source
+method; examples do not commission a crawler, proxy account or provider.
+
+
+The workflow recipes retain upstream provenance and applicable notices under
+`integrations/workflows`, `integrations/ai-workflows` and `integrations/graphify`.
+[n8n](https://github.com/n8n-io/n8n) is source-available under its Sustainable Use
+License; its image is acquired separately and is not relicensed by nstack.
+[n8n-mcp](https://github.com/czlonkowski/n8n-mcp) and
+[Trigger.dev](https://github.com/triggerdotdev/trigger.dev) retain their MIT terms.
+Trigger source is prepared privately rather than redistributed as a server here.
+
+[LangChain](https://github.com/langchain-ai/langchain) and
+[LangGraph](https://github.com/langchain-ai/langgraph) use MIT terms. Their exact
+wheels and dependencies are acquired into a private runtime with recorded hashes;
+the lock is not a redistribution of the wheels. [Langfuse](https://github.com/langfuse/langfuse)
+core is MIT, while designated enterprise directories have separate terms. Its
+optional image stack also includes Redis (RSALv2 or SSPLv1), MinIO (AGPLv3),
+ClickHouse (Apache2.0) and PostgreSQL (PostgreSQL License). The profile and source
+record do not grant enterprise rights or activate those services.
+
+[Graphify](https://github.com/Graphify-Labs/graphify) is Apache2.0 with the
+upstream MIT portions and notices retained. Exact reference skills are labelled
+reference-only; native host hooks and graph-first startup are not installed.
+The compiled runtime and dependency wheels stay private. A dependency's declared
+license whose full text could not be located is recorded explicitly in the
+integration's provenance instead of being silently redistributed.

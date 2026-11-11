@@ -95,11 +95,22 @@ def patch(text,file):
   return native_review_policy(text)
  key=next((key for key in RANGES if file.as_posix().endswith('/'+key)),None)
  if not key:return text
+ # Search/reuse is domain guidance embedded between controller sections.
+ # Keep its exact source prose; the normal port below binds its ETHOS locator.
+ method=''
+ if key in ('office-hours/SKILL.md','plan-eng-review/SKILL.md'):
+  a=text.index('## Search Before Building\n')
+  b=text.index('**Eureka:**',a)
+  method=text[a:b]
  lines=text.splitlines(keepends=True);result=[];pos=0
  for start,end,replacement in RANGES[key]:
   if len(lines)<end:raise ValueError('Pinned gstack range changed: '+key)
   result.extend(lines[pos:start-1]);result.append(replacement+'\n');pos=end
- result.extend(lines[pos:]);return ''.join(result)
+ result.extend(lines[pos:])
+ adapted=''.join(result)
+ if method:
+  adapted=adapted.replace(NATIVE_CONTEXT+'\n',NATIVE_CONTEXT+'\n'+method,1)
+ return adapted
 
 
 def native_review_policy(original):

@@ -9,12 +9,9 @@ def change(s,old,new):
 def patch(id,name,source,out):
  p=out/'SKILL.md';s=p.read_text()
  if id=='P028':
-  s=re.sub(r'(?m)^disable-model-invocation:.*\n','',s)
   s=change(s,'Companion to `how` and `why`. `how` tells you what the code does. `why` tells you why it\'s shaped that way. Blast radius tells you what it breaks somewhere else.','Use ordinary local source, diff and history to explain behavior, design rationale and what a change could break elsewhere. No companion command or harness is required.')
   s=change(s,'Use `why` step 2 to pull the PR and commits.','Read the actual local diff and relevant Git history; fetch a PR only when needed and authorized.')
   s=change(s,'Same rules as `why`.','Use the actual source and observed runtime evidence.')
-  s=change(s,'6. For a big or wide change, run it as an `arena`. Ask more than one model the same question and merge the answers. Different models catch different real bugs.','6. For consequential changes, use a fresh independent reviewer when that can catch material errors. Supply the actual requirements, diff and runtime evidence without the builder\'s persuasive narrative. Preserve existing model/effort choices; no arena runtime is required.')
-  s=change(s,'Write it through `unslop`, cite real code, and strip anything private before it goes anywhere public.','Use plain language, cite real code and strip private material before any authorized publication.')
  elif id=='P062':
   s=re.sub(r'(?m)^description:.*$', 'description: Structured extraction from authorized web sources when a parser or crawler is needed beyond native browsing. Validate record identity, type, units, labels, cardinality and provenance; adaptive matches are hypotheses.',s)
   s=change(s,'`pip install "scrapling[all]>=0.5.1"`','Use a private environment built from the reviewed source commit. Resolve compatible platform dependencies to a hash lock at commissioning; do not run an unbounded `>=` installation or overwrite a shared Python environment.')
@@ -42,7 +39,6 @@ An adaptive selector is not semantic identity. Validate record ID, expected type
   (refs/'docs').mkdir();shutil.copy2(source/'docs/PREVIEW_PROTOCOL.md',refs/'docs/PREVIEW_PROTOCOL.md')
   for f in refs.rglob('*.md'):
    t=f.read_text();t=t.replace('../../docs/PREVIEW_PROTOCOL.md','../docs/PREVIEW_PROTOCOL.md')
-   t='''> nstack scope: Follow the target project's established package layout. Install generated harnesses in an isolated project environment for tests. Existing build authority covers implementation, local tests and editable artifacts. Publishing, uploading or global installation requires that specific authority. Packaging examples below do not grant it. Keep this scope in effect throughout Build, Refine, Test and Validate.\n\n'''+t
    f.write_text(t)
   s=change(s,'5. If neither local source is available, clone or download\n   `https://github.com/HKUDS/CLI-Anything` and use `cli-anything-plugin/HARNESS.md`.','5. If neither local source is available, fetch only the registry-pinned CLI-Anything commit and its methodology closure; do not silently use the default branch.')
   s=change(s,'test documentation, CLI-specific `SKILL.md` generation, and local installation.','test documentation, CLI-specific `SKILL.md` generation, and installation into an isolated project environment. Fit package layout to project conventions; publish or install globally only when specifically authorized.')

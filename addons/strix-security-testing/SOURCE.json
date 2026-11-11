@@ -2,100 +2,110 @@
   "consumer_methods": [
     {
       "adapted_reference_path": "references/api-security-testing.md",
-      "adapted_reference_sha256": "9ddd1fbf22a037e2fa7aef7e86e875986bbdb6ca5c745a5d38786225024eedb9",
-      "modification_notice": "Each adapted reference identifies nstack modifications and links SOURCE.md.",
+      "adapted_reference_sha256": "bd04c90d87be2353ebefee33363af0818746345e25c80ed36f63fcdd2b25509c",
+      "modification_notice": "Exact original technical content/frontmatter; native host/access binding is separate in NATIVE-BINDINGS.md.",
       "source_path": "skills/api-security-testing/SKILL.md",
       "source_sha256": "bd04c90d87be2353ebefee33363af0818746345e25c80ed36f63fcdd2b25509c",
-      "stored_original_path": "originals/api-security-testing.md"
+      "stored_original_path": "originals/api-security-testing.md",
+      "state": "exact-upstream-reference"
     },
     {
       "adapted_reference_path": "references/application-security-testing.md",
-      "adapted_reference_sha256": "cf5fd295e59ebd514aff609cd4ca4bfb386f8234d31a6334a82a9ceb46d44c83",
-      "modification_notice": "Each adapted reference identifies nstack modifications and links SOURCE.md.",
+      "adapted_reference_sha256": "b3041c800a9a1d34e04164c5f700b6d12bbc237f098d760c09ec076c92d2a654",
+      "modification_notice": "Exact original technical content/frontmatter; native host/access binding is separate in NATIVE-BINDINGS.md.",
       "source_path": "skills/application-security-testing/SKILL.md",
       "source_sha256": "b3041c800a9a1d34e04164c5f700b6d12bbc237f098d760c09ec076c92d2a654",
-      "stored_original_path": "originals/application-security-testing.md"
+      "stored_original_path": "originals/application-security-testing.md",
+      "state": "exact-upstream-reference"
     },
     {
       "adapted_reference_path": "references/ci-security-scanning-with-strix.md",
-      "adapted_reference_sha256": "1431fd4f5a5f4c22ed4abe8157e05406a3adc804e8f1ab1103ea77092e057e2f",
-      "modification_notice": "Each adapted reference identifies nstack modifications and links SOURCE.md.",
+      "adapted_reference_sha256": "57801a50398cde76a50452ea6943afd2bf0dddb9ed470dc5aedadcf698b4700d",
+      "modification_notice": "Exact original technical content/frontmatter; native host/access binding is separate in NATIVE-BINDINGS.md.",
       "source_path": "skills/ci-security-scanning-with-strix/SKILL.md",
       "source_sha256": "57801a50398cde76a50452ea6943afd2bf0dddb9ed470dc5aedadcf698b4700d",
-      "stored_original_path": "originals/ci-security-scanning-with-strix.md"
+      "stored_original_path": "originals/ci-security-scanning-with-strix.md",
+      "state": "exact-upstream-reference"
     },
     {
       "adapted_reference_path": "references/find-security-vulnerabilities-in-code.md",
-      "adapted_reference_sha256": "48a99d619ea58e906d47ae8b26c48908c7a4d188cde0d80e59f01cbb1105c274",
-      "modification_notice": "Each adapted reference identifies nstack modifications and links SOURCE.md.",
+      "adapted_reference_sha256": "e7c25f1a0aea437d011d96dd306736b644597b07aa5a6dbc5588eefaab248e0a",
+      "modification_notice": "Exact original technical content/frontmatter; native host/access binding is separate in NATIVE-BINDINGS.md.",
       "source_path": "skills/find-security-vulnerabilities-in-code/SKILL.md",
       "source_sha256": "e7c25f1a0aea437d011d96dd306736b644597b07aa5a6dbc5588eefaab248e0a",
-      "stored_original_path": "originals/find-security-vulnerabilities-in-code.md"
+      "stored_original_path": "originals/find-security-vulnerabilities-in-code.md",
+      "state": "exact-upstream-reference"
     },
     {
       "adapted_reference_path": "references/fix-security-vulnerabilities-with-strix.md",
-      "adapted_reference_sha256": "ceeccf10b6cfe322bbcf2955adbf95bc2cb03b5252ef793018e501d28b1c549a",
-      "modification_notice": "Each adapted reference identifies nstack modifications and links SOURCE.md.",
+      "adapted_reference_sha256": "bb1b351fd60c91e4875207f3fe4f35774ff5194261a00aea9f4752e459f24a9f",
+      "modification_notice": "Exact original technical content/frontmatter; native host/access binding is separate in NATIVE-BINDINGS.md.",
       "source_path": "skills/fix-security-vulnerabilities-with-strix/SKILL.md",
       "source_sha256": "bb1b351fd60c91e4875207f3fe4f35774ff5194261a00aea9f4752e459f24a9f",
-      "stored_original_path": "originals/fix-security-vulnerabilities-with-strix.md"
+      "stored_original_path": "originals/fix-security-vulnerabilities-with-strix.md",
+      "state": "exact-upstream-reference"
     },
     {
       "adapted_reference_path": "references/managed-pentesting-with-strix.md",
-      "adapted_reference_sha256": "0e0cc30a52af7d66390fababcb71bd3ceed31cee081605b622105f67e7bfc891",
-      "modification_notice": "Each adapted reference identifies nstack modifications and links SOURCE.md.",
+      "adapted_reference_sha256": "45e1432ea897e59e67a5102513a4b9aac7372a5666d68d620ee867bbfa8b290b",
+      "modification_notice": "Exact original technical content/frontmatter; native host/access binding is separate in NATIVE-BINDINGS.md.",
       "source_path": "skills/managed-pentesting-with-strix/SKILL.md",
       "source_sha256": "45e1432ea897e59e67a5102513a4b9aac7372a5666d68d620ee867bbfa8b290b",
-      "stored_original_path": "originals/managed-pentesting-with-strix.md"
+      "stored_original_path": "originals/managed-pentesting-with-strix.md",
+      "state": "exact-upstream-reference"
     },
     {
       "adapted_reference_path": "references/owasp-top-10-testing.md",
-      "adapted_reference_sha256": "1baf3b6092603d2d19ffd47a68a94e3f8f5ae966ac227825e8f8255a8fcac3e9",
-      "modification_notice": "Each adapted reference identifies nstack modifications and links SOURCE.md.",
+      "adapted_reference_sha256": "02b1cbe60d40c44493309418c7824f1f681d9f32bf0299ca246892c46cb130af",
+      "modification_notice": "Exact original technical content/frontmatter; native host/access binding is separate in NATIVE-BINDINGS.md.",
       "source_path": "skills/owasp-top-10-testing/SKILL.md",
       "source_sha256": "02b1cbe60d40c44493309418c7824f1f681d9f32bf0299ca246892c46cb130af",
-      "stored_original_path": "originals/owasp-top-10-testing.md"
+      "stored_original_path": "originals/owasp-top-10-testing.md",
+      "state": "exact-upstream-reference"
     },
     {
       "adapted_reference_path": "references/penetration-testing-with-strix.md",
-      "adapted_reference_sha256": "21321cc84b3cf7957237b981d63d4a4e9fef2c7a5192534eb850206571edcca4",
-      "modification_notice": "Each adapted reference identifies nstack modifications and links SOURCE.md.",
+      "adapted_reference_sha256": "d70bc1c9fc5c4557ae072467731eed0ff755a25d3e3aff958dc7d4a1ab615915",
+      "modification_notice": "Exact original technical content/frontmatter; native host/access binding is separate in NATIVE-BINDINGS.md.",
       "source_path": "skills/penetration-testing-with-strix/SKILL.md",
       "source_sha256": "d70bc1c9fc5c4557ae072467731eed0ff755a25d3e3aff958dc7d4a1ab615915",
-      "stored_original_path": "originals/penetration-testing-with-strix.md"
+      "stored_original_path": "originals/penetration-testing-with-strix.md",
+      "state": "exact-upstream-reference"
     },
     {
       "adapted_reference_path": "references/web-app-penetration-testing.md",
-      "adapted_reference_sha256": "dca7cb99393beff001663bcefdc526d472992d22471cbef5049e3d656bfed5aa",
-      "modification_notice": "Each adapted reference identifies nstack modifications and links SOURCE.md.",
+      "adapted_reference_sha256": "2e8df0b9233971c496d0c0c7660808fc717c08d4165455a0423229045389608a",
+      "modification_notice": "Exact original technical content/frontmatter; native host/access binding is separate in NATIVE-BINDINGS.md.",
       "source_path": "skills/web-app-penetration-testing/SKILL.md",
       "source_sha256": "2e8df0b9233971c496d0c0c7660808fc717c08d4165455a0423229045389608a",
-      "stored_original_path": "originals/web-app-penetration-testing.md"
+      "stored_original_path": "originals/web-app-penetration-testing.md",
+      "state": "exact-upstream-reference"
     }
   ],
   "copyright": "Copyright 2025 OmniSecure Inc.",
   "files": {
     "LICENSE": "7db9697134251e314bd8d39257fe170c98b3e2ad9b2ed67e97acaf9613e7b9e3",
-    "SKILL.md": "1816a707e97d5b1685254c72d444718435216519440b77b5de43336640cf8d27",
-    "SOURCE.md": "087976ec321661b48be6d56e81a7f3a7b748426f28ee94d586aad3f8838af648",
+    "SOURCE.md": "a173620d454fd0127f10cd05ed0fe2d87afb7ad9d70b71997f6566e4d8ebe2a5",
+    "NATIVE-BINDINGS.md": "fe6429235139e08fe1f27e6253880a5050d60b0a6c1abeb40af5d4264e019a37",
+    "SKILL.md": "7cd7584e9eefdb50321b00fcdfcaef60480751fca9e98cb886f474e828608b45",
+    "references/api-security-testing.md": "bd04c90d87be2353ebefee33363af0818746345e25c80ed36f63fcdd2b25509c",
+    "references/penetration-testing-with-strix.md": "d70bc1c9fc5c4557ae072467731eed0ff755a25d3e3aff958dc7d4a1ab615915",
+    "references/web-app-penetration-testing.md": "2e8df0b9233971c496d0c0c7660808fc717c08d4165455a0423229045389608a",
+    "references/ci-security-scanning-with-strix.md": "57801a50398cde76a50452ea6943afd2bf0dddb9ed470dc5aedadcf698b4700d",
+    "references/managed-pentesting-with-strix.md": "45e1432ea897e59e67a5102513a4b9aac7372a5666d68d620ee867bbfa8b290b",
+    "references/fix-security-vulnerabilities-with-strix.md": "bb1b351fd60c91e4875207f3fe4f35774ff5194261a00aea9f4752e459f24a9f",
+    "references/application-security-testing.md": "b3041c800a9a1d34e04164c5f700b6d12bbc237f098d760c09ec076c92d2a654",
+    "references/owasp-top-10-testing.md": "02b1cbe60d40c44493309418c7824f1f681d9f32bf0299ca246892c46cb130af",
+    "references/find-security-vulnerabilities-in-code.md": "e7c25f1a0aea437d011d96dd306736b644597b07aa5a6dbc5588eefaab248e0a",
     "originals/api-security-testing.md": "bd04c90d87be2353ebefee33363af0818746345e25c80ed36f63fcdd2b25509c",
-    "originals/application-security-testing.md": "b3041c800a9a1d34e04164c5f700b6d12bbc237f098d760c09ec076c92d2a654",
-    "originals/ci-security-scanning-with-strix.md": "57801a50398cde76a50452ea6943afd2bf0dddb9ed470dc5aedadcf698b4700d",
-    "originals/find-security-vulnerabilities-in-code.md": "e7c25f1a0aea437d011d96dd306736b644597b07aa5a6dbc5588eefaab248e0a",
-    "originals/fix-security-vulnerabilities-with-strix.md": "bb1b351fd60c91e4875207f3fe4f35774ff5194261a00aea9f4752e459f24a9f",
-    "originals/managed-pentesting-with-strix.md": "45e1432ea897e59e67a5102513a4b9aac7372a5666d68d620ee867bbfa8b290b",
-    "originals/owasp-top-10-testing.md": "02b1cbe60d40c44493309418c7824f1f681d9f32bf0299ca246892c46cb130af",
     "originals/penetration-testing-with-strix.md": "d70bc1c9fc5c4557ae072467731eed0ff755a25d3e3aff958dc7d4a1ab615915",
     "originals/web-app-penetration-testing.md": "2e8df0b9233971c496d0c0c7660808fc717c08d4165455a0423229045389608a",
-    "references/api-security-testing.md": "9ddd1fbf22a037e2fa7aef7e86e875986bbdb6ca5c745a5d38786225024eedb9",
-    "references/application-security-testing.md": "cf5fd295e59ebd514aff609cd4ca4bfb386f8234d31a6334a82a9ceb46d44c83",
-    "references/ci-security-scanning-with-strix.md": "1431fd4f5a5f4c22ed4abe8157e05406a3adc804e8f1ab1103ea77092e057e2f",
-    "references/find-security-vulnerabilities-in-code.md": "48a99d619ea58e906d47ae8b26c48908c7a4d188cde0d80e59f01cbb1105c274",
-    "references/fix-security-vulnerabilities-with-strix.md": "ceeccf10b6cfe322bbcf2955adbf95bc2cb03b5252ef793018e501d28b1c549a",
-    "references/managed-pentesting-with-strix.md": "0e0cc30a52af7d66390fababcb71bd3ceed31cee081605b622105f67e7bfc891",
-    "references/owasp-top-10-testing.md": "1baf3b6092603d2d19ffd47a68a94e3f8f5ae966ac227825e8f8255a8fcac3e9",
-    "references/penetration-testing-with-strix.md": "21321cc84b3cf7957237b981d63d4a4e9fef2c7a5192534eb850206571edcca4",
-    "references/web-app-penetration-testing.md": "dca7cb99393beff001663bcefdc526d472992d22471cbef5049e3d656bfed5aa"
+    "originals/ci-security-scanning-with-strix.md": "57801a50398cde76a50452ea6943afd2bf0dddb9ed470dc5aedadcf698b4700d",
+    "originals/managed-pentesting-with-strix.md": "45e1432ea897e59e67a5102513a4b9aac7372a5666d68d620ee867bbfa8b290b",
+    "originals/fix-security-vulnerabilities-with-strix.md": "bb1b351fd60c91e4875207f3fe4f35774ff5194261a00aea9f4752e459f24a9f",
+    "originals/application-security-testing.md": "b3041c800a9a1d34e04164c5f700b6d12bbc237f098d760c09ec076c92d2a654",
+    "originals/owasp-top-10-testing.md": "02b1cbe60d40c44493309418c7824f1f681d9f32bf0299ca246892c46cb130af",
+    "originals/find-security-vulnerabilities-in-code.md": "e7c25f1a0aea437d011d96dd306736b644597b07aa5a6dbc5588eefaab248e0a"
   },
   "license": "Apache-2.0",
   "license_sha256": "7db9697134251e314bd8d39257fe170c98b3e2ad9b2ed67e97acaf9613e7b9e3",
@@ -149,5 +159,6 @@
       "url": "https://github.com/usestrix/strix/blob/685bbc8138d35fc9fe378ac37ec0d9198b9c46a3/pyproject.toml"
     }
   ],
-  "upstream_notice_files": []
+  "upstream_notice_files": [],
+  "native_bindings": "NATIVE-BINDINGS.md"
 }

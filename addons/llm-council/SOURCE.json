@@ -6,13 +6,20 @@
   "private_source_manifest": "private-source.json",
   "private_source_recipe": "scripts/fetch_source.py",
   "source_pack_directory": "~/Library/Application Support/nstack/source-packs/remy-council/55ee36e89e0f3f780099ac50332fbb3ec8d14738",
-  "installation_adaptation": "Complete actual original SKILL.md and README.md fetched privately; native adapter keeps five original lenses, five fresh shared-order reviews and separate Chairman. Optional existing blinded-comparison helper retains contracts. No unlicensed upstream prose/code redistributed. Separate Roast Room and High Intelligence source-derived skills are not merged modes.",
+  "installation_adaptation": "Complete original SKILL.md and README.md remain private at the pinned verified source pack. Active wrapper requires their unchanged original prompts, word limits, five drafts/five fresh shared-order reviews, Chairman recommendation, output and optional transcript method. Only native execution/path/privacy bindings apply; optional authored comparison helper remains distinct.",
   "changes": [
-    "Native active host/model/effort and fresh task contexts; host-sized waves",
-    "Task-scoped source reading, no global memory/context scans",
-    "Missing actual calls stay missing; no simulated replacement votes",
-    "Evidence-based uncertainty and decisive checks replace unsupported certainty/agreement claims",
-    "Chat default and requested artifacts resolve upstream HTML contradiction; transcript only on request",
-    "Balanced/paired helper progressive and explicit, not forced into original shared-order review"
-  ]
+    "Keep full unlicensed upstream method private and mandatory to read, not republish or replace with an authored summary",
+    "Native host/tool names, supported lifecycle and host-capacity waves; preserve user model/effort",
+    "Authorized project context only; unrelated host memory/credential discovery not admitted",
+    "Original lenses/prompts/wordlimits, direct recommendation, anonymous reviews and significant-decision optional transcript restored",
+    "Truthful actual-call/same-model/heuristic confidence labels; source explicit chat step resolves contradictory finalHTML note",
+    "Balanced/paired comparison utility remains explicit and separate; helper contracts unchanged"
+  ],
+  "authored_files": {
+    "SKILL.md": "ca473a07b6af615b67f725bbcbefe3aec8ec629f6882abc96e67e83c3f9d08f3",
+    "references/five-lens.md": "5735e8b3da6d04c1ecdf6f68f960ac1718433cb2b9d929e3fe590ffd87861329",
+    "references/native-execution.md": "3f68a0d7c9946855fc7b9e580101ec4fa44950c7094a10fa3259b833c29dd26f",
+    "scripts/blind_review.py": "03625c5b3b4cdad6219d8572abb90020725ba1d0278627b5673f2fcc66f9581d",
+    "scripts/fetch_source.py": "e8449f77cf99fa2b61a65f29dcc77e7b7e6ac35822a7cb89832415ec72c46121"
+  }
 }

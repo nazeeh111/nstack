@@ -5,8 +5,8 @@ use. It adds one naturally named specialist shared by Codex and OpenCode.
 It does not install upstream hooks, MCPs, background services or audio models.
 
 The separate runtime uses official RAEA 0.1.0 for Apple Silicon macOS, pinned to
-source d6f41c605ab71275162050cd08632cb56bd00e8a and the matching Apache-2.0
-skill support c507860150995eb7c22ef9db23dee636c832428a. The installer verifies
+source d6f41c605ab71275162050cd08632cb56bd00e8a and the Apache-2.0
+skill source c507860150995eb7c22ef9db23dee636c832428a. The installer verifies
 the archive digest, GitHub build attestation and complete extracted payload.
 The engine remains outside this MIT repository under its own FSL license.
 
@@ -18,7 +18,9 @@ From a checkout:
 Outside the checkout, use the absolute recipe recorded in the installed skill's
 SOURCE.json or native-tools index. It needs existing GitHub CLI, FFmpeg and
 FFprobe; it does not acquire credentials. Installation downloads about316 MB
-and occupies about1.2 GB. Matching support files are retained with the runtime.
+and occupies about1.2 GB. The full upstream skill and83 support files are retained. Its original
+0.1.0-rc1 metadata is preserved; the installed binary reports0.1.0. The
+acceptance below covers that binary and the stated lane, not every source example.
 
 Rendering uses an isolated HOME, strips provider/proxy credentials, disables
 audio auto-setup and enables the engine's offline mode. These are application

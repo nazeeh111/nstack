@@ -90,6 +90,10 @@ RAEA local GPU rendering is available with the optional native flag `--raea`.
 Its pinned runtime stays separate from this MIT toolkit and runs offline without
 upstream hooks, model downloads or provider connections. See [RAEA](docs/RAEA.md).
 
+For visual automation, durable background jobs, AI application graphs, optional
+tracing and codebase graphs, see [On-demand workflows](docs/WORKFLOWS.md).
+These recipes do not start services or create accounts during skill installation.
+
 Heavy dependencies are separate and remain on demand. Search the full installed
 `native-skill-index.json` when the native summary list is truncated.
 

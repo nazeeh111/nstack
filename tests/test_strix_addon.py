@@ -61,13 +61,15 @@ def audit(package):
             raise ValueError('Original source changed')
         if digest(package / row['adapted_reference_path']) != row['adapted_reference_sha256']:
             raise ValueError('Adapted reference changed')
+        if digest(package / row['adapted_reference_path']) != SOURCES[name]:
+            raise ValueError('Original active method changed')
     if seen != set(SOURCES):
         raise ValueError('Incomplete methods')
     active = [package / 'SKILL.md', *sorted((package / 'references').glob('*.md'))]
     if len(active) != 10:
         raise ValueError('Missing/extra active reference')
     reached = set()
-    for path in active + [package / 'SOURCE.md']:
+    for path in active + [package / 'SOURCE.md', package / 'NATIVE-BINDINGS.md']:
         for raw in re.findall(r'\[[^\]]+\]\(([^)]+)\)', path.read_text()):
             target = urlsplit(raw)
             if target.scheme:
@@ -80,17 +82,19 @@ def audit(package):
             reached.add(dest)
     if not {p.resolve() for p in active[1:]}.issubset(reached):
         raise ValueError('Unreachable method reference')
-    # Dormant archives intentionally retain source examples. Active references
-    # must not turn cloud/account/payment/floating-install actions into examples.
-    unsafe = re.compile(r'(?im)^\s*(?:curl\b[^\n]*\|\s*(?:ba)?sh|npx\s+skills\b|'
-                        r'pipx?\s+install\b|uv\s+tool\s+install\b|'
-                        r'strix\s+cloud\s+(?:login|logout|billing|tokens|integrations|schedules|webhooks)\b|'
-                        r'strix\s+cloud\s+scans\s+start\b)')
-    for path in active:
-        if path != package / 'SKILL.md' and path.read_text().startswith('---\n'):
-            raise ValueError('Reference remains a discovery entry')
-        if unsafe.search(path.read_text()):
-            raise ValueError('Operative setup/payment/upload example')
+    # Preserve every original technical example byte-for-byte. Their presence
+    # is not account/runtime authority; a separate binding is required first.
+    if info.get('native_bindings') != 'NATIVE-BINDINGS.md':
+        raise ValueError('Missing native execution binding')
+    if '[native host/runtime bindings](NATIVE-BINDINGS.md)' not in (package / 'SKILL.md').read_text():
+        raise ValueError('Native binding is not routed before source methods')
+    binding = (package / 'NATIVE-BINDINGS.md').read_text()
+    if 'No credential-store/config discovery' not in binding or 'never incidental setup' not in binding:
+        raise ValueError('Missing source-example authority boundary')
+    # The authored router must not add its own account/payment instructions.
+    if re.search(r'(?im)^\s*strix\s+cloud\s+(?:login|billing|tokens|integrations|schedules)\b',
+                 (package / 'SKILL.md').read_text()):
+        raise ValueError('Operative account/payment example added to router')
     if any(p.suffix in {'.py', '.sh', '.js', '.cjs', '.mjs'} for p in package.rglob('*')):
         raise ValueError('Unexpected executable/runtime in instruction package')
     raw = (package / 'SOURCE.json').read_text()
@@ -133,6 +137,20 @@ class StrixAddonTests(unittest.TestCase):
                 path.unlink() if mutation == 'remove' else path.write_text('Changed reference')
                 with self.assertRaisesRegex(ValueError, 'Package bytes or support closure changed'):
                     audit(copy)
+
+    def test_active_original_cannot_be_condensed_even_after_rehashing_package(self):
+        with tempfile.TemporaryDirectory() as directory:
+            copy = self.copy(directory)
+            path = copy / 'references/api-security-testing.md'
+            path.write_text('# Generic API checklist instead of the original method\n')
+            info = json.loads((copy / 'SOURCE.json').read_text())
+            info['files']['references/api-security-testing.md'] = digest(path)
+            for row in info['consumer_methods']:
+                if row['source_path'] == 'skills/api-security-testing/SKILL.md':
+                    row['adapted_reference_sha256'] = digest(path)
+            (copy / 'SOURCE.json').write_text(json.dumps(info))
+            with self.assertRaisesRegex(ValueError, 'Original active method changed'):
+                audit(copy)
 
     def test_new_nested_entry_is_rejected_even_with_updated_file_inventory(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -1,0 +1,7 @@
+# Example only. No host config is changed. Enable only in the selected project.
+[mcp_servers.n8n_docs]
+command = "python3"
+args = ["/absolute/path/to/nstack/recipes/n8n_mcp.py", "serve"]
+enabled = false
+startup_timeout_sec = 45
+tool_timeout_sec = 60

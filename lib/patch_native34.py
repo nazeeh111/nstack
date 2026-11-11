@@ -17,9 +17,19 @@ def front(text,name,description=None):
  body=text
  if text.startswith('---\n') and '\n---\n' in text[4:]:
   metadata,body=text[4:].split('\n---\n',1)
-  if description is None:
-   match=re.search(r'(?m)^description:\s*(.+)$',metadata)
-   if match and match[1] not in ('>','>-','|','|-'):description=match[1].strip().strip('"\'')
+  if re.search(r'(?m)^name:',metadata):metadata=re.sub(r'(?m)^name:.*$', 'name: '+name,metadata,count=1)
+  else:metadata='name: '+name+'\n'+metadata
+  if description is not None:
+   # Change only an explicitly supplied description, including its folded YAML
+   # continuation. Retain every other upstream metadata field verbatim.
+   lines=metadata.splitlines(keepends=True);start=next((i for i,line in enumerate(lines)if line.startswith('description:')),None)
+   replacement='description: '+json.dumps(description,ensure_ascii=False)+'\n'
+   if start is None:metadata=metadata.rstrip('\n')+'\n'+replacement.rstrip('\n')
+   else:
+    end=start+1
+    while end<len(lines)and(lines[end][:1].isspace()or not lines[end].strip()):end+=1
+    lines[start:end]=[replacement];metadata=''.join(lines).rstrip('\n')
+  return '---\n'+metadata+'\n---\n'+body
  description=description or name.replace('-',' ').capitalize()
  return '---\nname: '+name+'\ndescription: '+json.dumps(description,ensure_ascii=False)+'\n---\n\n'+body
 
@@ -34,17 +44,30 @@ def replace_sections(text,names):
   if skip is None:result.append(line)
  return ''.join(result)
 
+def prose_only(text,transform):
+ # Host prose is not executable syntax. Keep fenced source examples intact.
+ blocks=re.split(r'(?m)(^[ \t]*```[^\n]*\n.*?^[ \t]*```[^\n]*(?:\n|$)|^[ \t]*~~~[^\n]*\n.*?^[ \t]*~~~[^\n]*(?:\n|$))',text,flags=re.S)
+ return ''.join(block if i%2 else transform(block)for i,block in enumerate(blocks))
+
 def native_text(text,kind,file,source_root):
+ if kind=='P006':
+  # Pinned ranges use original source line numbers, including its YAML header.
+  from patch_gstack_ranges import patch as raw_gstack
+  text=raw_gstack(text,file)
+ metadata=''
+ if text.startswith('---\n') and '\n---\n' in text[4:]:
+  header,text=text[4:].split('\n---\n',1)
+  metadata='---\n'+header+'\n---\n'
+ # Controller and host prose bindings must never rewrite YAML structure or
+ # values. The separate front() binding owns explicit name/description changes.
  if kind=='P092':
   text=text.replace("If they're not available, tell the user to install the MCP server:", 'If live-run tools are unavailable, use the static analysis route:')
   text=text.replace('```bash\nnpx trigger.dev@latest install-mcp\n```', 'Use existing connected Trigger.dev tools. If unavailable, finish static analysis and report live-run access unavailable; project-local integration setup requires its own concrete need and verified version.')
   text=text.replace('This skill is bundled inside `@trigger.dev/sdk` and read directly from `node_modules`, so it always matches your installed SDK version (see the adjacent `package.json`).', 'This discovery copy comes from the reviewed @trigger.dev/sdk4.8.3 source. Apply it only to a matching project-local SDK and read that installed package’s version-matched docs; global discovery does not establish the project version.')
   text=text.replace('The `sources:` frontmatter above lists every doc this skill draws from, all under `@trigger.dev/sdk/docs/`.', 'The source package contains the supporting docs under `@trigger.dev/sdk/docs/`; verify the owning project’s installed SDK version before using them.')
- if kind=='P006':
-  from patch_gstack_ranges import patch as raw_gstack
-  text=raw_gstack(text,file)
  text=re.sub(r'(?m)^<!-- AUTO-GENERATED.*?-->\n|^<!-- Regenerate:.*?-->\n','',text)
- text=text.replace('Claude Code','Codex').replace('CLAUDE.md','AGENTS.md')
+ host_names=lambda value:value.replace('Claude Code','native host')
+ text=host_names(text)if kind=='P006' else prose_only(text,host_names)
  if kind=='P006':
   from patch_gstack import patch as native_gstack
   text=native_gstack(text,file)
@@ -72,36 +95,36 @@ def native_text(text,kind,file,source_root):
   text=re.sub(r'(?m)^In Codex, read \[the Codex adapter\].*\n','',text)
   text=text.replace('Run the **how** skill over the relevant subsystems.','Read the relevant current source and trace its actual entrypoints and callers.')
   text=text.replace('also run the **why** skill on the existing shape','also inspect the existing design history and rationale')
-  a=text.find('Run the **arena** skill with the design-sketch task')
-  b=text.find('Design it twice.',a) if a>=0 else -1
-  if b>=0:text=text[:a]+('Compare plausible structural alternatives when their consequences justify it. Use the complete [design runner brief](references/runner-prompt.md) and actual source evidence. Native Codex owns the task; preserve the current model and effort.\n\n')+text[b:]
-  text=text.replace('Arena returns one synthesized design package.','Synthesize the supported candidates into one design package.')
-  text=text.replace('Return to Phase B and re-run arena.','Return to Phase B and compare the revised alternatives.')
-  text=text.replace('run the **interrogate** skill','perform a proportionate adversarial review')
   text=text.replace('Run the **how** skill over what\'s been built.','Read and trace what has actually been built.')
   text=text.replace('Companion to `how` and `why`. `how` tells you what the code does. `why` tells you why it\'s shaped that way. Blast radius tells you what it breaks somewhere else.',
                     'Use current local source, behavior and Git history. Trace the concrete dependency and prove the affected invariant with an executable check.')
   text=text.replace('Same rules as `why`.','Use current source, scoped Git evidence and observed behavior.')
   text=text.replace('Use `why` step 2 to pull the PR and commits.','Read the actual local diff/history; fetch the exact PR only when relevant and authorized.')
-  text=re.sub(r'(?m)^.*pstack-models\.mdc.*$', 'Preserve the current user-selected model and effort; no model registry or fixed runner roster is required.',text)
-  text=re.sub(r'(?m)^.*(?:claude-opus-|grok-4\.|run it as an `arena`).*$', 'For consequential independent review, use supported native delegation within existing task authority and available capacity.',text)
-  text=text.replace('Write it through `unslop`, cite real code, and strip anything private before it goes anywhere public.','Write plainly, cite actual source and remove private material before specifically authorized publication.')
   text=text.replace('`perf`','the target profiler (`xctrace`/Instruments on macOS, perf only on an appropriate Linux target)')
  if kind=='P401':
   from patch_paperbanana import text_port
   text=text_port(text,file)
  if kind=='P224':
-  text=replace_sections(text,('交付收尾（所有模式共用）',))
-  text=re.sub(r'(?m)^.*然后明确询问：.*$', '依据现有简报选择合适路线并继续；只有影响结果的重大歧义才询问。',text)
-  text=text.replace('用户尚未决定：停在此处等待选择；不要默认替用户选择，也不要开始制作。','用户未指定路线：根据已给简报选择可行路线并继续；只询问无法合理决定的重大分歧。')
-  text=re.sub(r'(?ms)^交付后先 `node workbench/scripts/open\.mjs.*?(?=^\*\*常见坑)', '交付所请求的成片、可编辑源、音频分轨和证据。动效工作台仅在用户要求其编辑界面时另行配置；不附加发布、推广或展示页任务。\n\n',text)
-  text=re.sub(r'(?ms)^9\. \*\*为交付后的动效工作台留好接口\*\*.*?(?=^\*\*产出)', '9. 时间线、字幕和音效共用明确的帧原点与可编辑参数；只有用户要求工作台编辑时才按对应源配置工作台。\n\n',text)
-  text=re.sub(r'(?m)^.*(?:publish/upload_post\.py|UPLOAD_POST_API_KEY|UPLOAD_POST_USER|发布到作品展示页|请用户.*作者|@.*作者).*$','发布/上传和推广不属于默认交付；只在用户另行明确授权时处理。',text)
+  text=re.sub(r'(?m)^.*(?:publish/upload_post\.py|UPLOAD_POST_API_KEY|UPLOAD_POST_USER|发布到作品展示页|请用户.*作者|@.*作者).*$','发布/上传和推广只在用户明确授权时处理；本次调用不授予外部发布权限。',text)
   for path in ('template/TEMPLATE.md','references/workbench.md','references/guided-free-creation.md','references/jianying-export.md','references/publish-upload-post.md','workbench/README.md'):
    url='https://github.com/Vincentwei1021/video-shotcraft/blob/1266a3ec4831289c4d893d42dd5102723658039a/'+path
    text=text.replace(']('+path+')',']('+url+')')
-  if file.name=='SKILL.md':text+='\nNative source/runtime boundary: choose gallery index → requested cards → exact tuned demo → its transitive fixtures/assets lazily. Preserve original motion/camera math. Template and workbench are separate task-triggered source closures, not installed workflow commands. The upstream template is4.0.484; do not relabel it4.0.540 without the required baseline-versus-candidate moving-frame/audio proof. Product-specific visual/hold/music examples follow the actual brief. Asset/track rights are separate from code. No paid provider/key acquisition follows from a reference.\n'
+  if file.name=='SKILL.md':text+='\nNative runtime binding: use the pinned source workspace for a requested workbench/template. The source template is4.0.484; it is not relabeled4.0.540. Source availability does not commission its runtime or authorize paid services.\n'
  if kind=='P056':
+  # Worktrunk accepts a stdin/stdout command. Use the current Codex settings,
+  # without importing upstream fixed models or disabling the native context.
+  def commit_command(match):
+   code=match[0]
+   def command(line):
+    executable='opencode run'if line[1]=='opencode'else'codex exec --ephemeral --sandbox=read-only -'
+    return 'command = "'+executable+'"'
+   code=re.sub(r'(?m)^command\s*=\s*"(?:[A-Z_]+=[^\s"]+\s+)*(claude|codex|opencode)\b[^\n]*$',command,code)
+   return code.replace('# opencode — use a fast model variant','# opencode — use the current model and effort')
+  text=re.sub(r'(?ms)^```toml[^\n]*\n.*?^```[^\n]*',commit_command,text)
+  if file.name=='llm-commits.md':
+   text=re.sub(r'(?m)^Create `~/.codex/worktrunk-commit-instructions\.txt`.*?first-run Codex setup creates the file for you\.\n',
+               'Use the current Codex configuration; no additional instructions file is needed.\n',text,flags=re.S)
+   text=text.replace('Requires `jq` for JSON parsing. See [Codex CLI docs]', 'See [Codex CLI docs]')
   text=re.sub(r'(?m)^Detect which tools are installed.*$', 'If commit-message generation is explicitly requested, use existing available Codex access and inspect its actual supported interface. Preserve model/effort and configuration; do not create provider credentials, recommend another host or run a proposed configuration without actual authority.',text)
   text=text.replace('(Claude-specific)','(historical host examples; use actual Codex bindings)')
   text=text.replace('single Codex session','single native session')
@@ -112,18 +135,12 @@ def native_text(text,kind,file,source_root):
  if kind in ('P021','P032','P056','P111','P121','P283','P335','L013'):
   text=text.replace('AskUserQuestion','the native input tool only for material missing information')
   # Remove provider/model dispatch directives, not specialist methods or examples.
-  text=re.sub(r'(?m)^.*(?:claude --|claude -p|subagent_type\s*[:=]|model:\s*(?:opus|sonnet|haiku)|~/.claude/settings).*$',
-              'Use the current native tools, model and effort. Delegate a bounded independent question only when useful and authorized.',text)
+  text=prose_only(text,lambda value:re.sub(r'(?m)^.*(?:claude --|claude -p|subagent_type\s*[:=]|model:\s*(?:opus|sonnet|haiku)|~/.claude/settings).*$',
+              'Use the active host’s supported tools with its current model and effort.',value))
  if kind=='P006':
   from patch_gstack import finish
   text=finish(text,file,source_root)
- return text
-
-NATIVE_SCOPE="""## Native execution
-
-Use this specialist on demand with current Codex tools, model, effort, permissions and existing task authority. Source host commands are adapted below. Read relevant full support; verify actual artifacts and report missing coverage. No controller, telemetry, credential setup or new spending is installed.
-
-"""
+ return metadata+text
 
 def notices(source,out,origin):
  current=origin if origin.is_dir() else origin.parent
@@ -148,7 +165,39 @@ def materialize(source,out,s,c):
   # Keep immutable provenance/implementation separate from active instructions.
   archive=out/'upstream';shutil.copytree(source,archive,ignore=shutil.ignore_patterns('.nstack-source.json','__pycache__','.git','node_modules'))
   leaf=out/'native'/name;leaf.mkdir(parents=True)
-  body='# '+name.replace('-',' ').title()+'\n\n'+NATIVE_SCOPE+'## Operation and exact source\n\n'+s['details']+'\n\n'
+  methods={
+   'P029':'distribution/claude-plugin/skills/skill-builder/SKILL.md',
+   'P410':'skills/slidev/SKILL.md',
+  }
+  if s['candidate_id']=='P202':
+   methods['P202']='.agents/skills/impeccable/reference/'+rel.name
+  if s['candidate_id'] in methods:
+   method_rel=P(methods[s['candidate_id']]);method=source/method_rel
+   if not method.is_file():raise ValueError('Pinned upstream method is missing: '+str(method_rel))
+   original=method.read_text()
+   # The distributed upstream entry/command owns the method. Only the natural
+   # discovery name and a separate host binding differ from that original.
+   if s['candidate_id']=='P202':
+    shutil.copytree(method.parent,leaf,dirs_exist_ok=True)
+    active='---\nname: '+s['candidate_id'].lower()+'-'+name+'\ndescription: '+json.dumps('Run the upstream Impeccable '+rel.stem+' command on a requested interface.')+'\n---\n'+original
+   else:
+    shutil.copytree(method.parent,leaf,dirs_exist_ok=True)
+    active=re.sub(r'(?m)^name:.*$', 'name: '+s['candidate_id'].lower()+'-'+name,original,count=1)
+   marker='\n> Native host binding: read [NATIVE-BINDINGS.md](NATIVE-BINDINGS.md) before source commands. The complete upstream method follows.\n'
+   a,b=active[4:].split('\n---\n',1);active='---\n'+a+'\n---\n'+marker+b
+   bindings={
+    'P029':"Use the existing source-pinned Skill Seekers CLI recorded by `nstack route P029`. The upstream CLI fallback is supported without registering another host's MCP server or running its installer. Map Bash to the current host's shell. Use connected MCP tools only if actually present. Preserve the current model and effort. AI enhancement, upload, export and installation follow the user's existing access and task authority; the `openai` target here is an Assistants export, not native Codex installation. For plain local extraction without AI enhancement, use the upstream `--enhance-level 0` option. Review the generated skill and its source/rights before admitting it through the current host's supported skill path.\n",
+    'P410':"Use the project's locked Slidev toolchain or the recorded source-pinned route from `nstack route P410`; the upstream quick-start commands describe operations, not authority to replace an existing project or silently change versions. Map shell/browser steps to current host tools and preserve the requested source format. Build/export success must be checked on the actual output; PDF or raster PPTX does not establish native editability. Publishing, recording and remote connections follow existing user authority.\n",
+    'P202':"This is the complete distributed upstream command, scoped to the selected audit or harden operation. Source `$impeccable` names denote its referenced command methods, not an installed global controller. Read the matching local native-platform reference when applicable. Use current host tools and preserve the user's scope and product identity. The optional upstream detector/launcher is not installed by this package: report that check as unavailable unless a reviewed existing installation supplies it; continue the source's ordinary implementation and rendered checks without claiming detector results. Existing authorization to audit and fix permits the requested fix work.\n",
+   }
+   (leaf/'SKILL.md').write_text(active)
+   (leaf/'NATIVE-BINDINGS.md').write_text(bindings[s['candidate_id']])
+   notices(source,out,method)
+   (out/'SOURCE-PORT.json').write_text(json.dumps({'source_path':str(rel),'source_sha256':hashlib.sha256(origin.read_bytes()).hexdigest(),'revision':s['revision'],'method_source_path':str(method_rel),'method_revision':s['revision'],'method_sha256':hashlib.sha256(method.read_bytes()).hexdigest(),'entry':str(leaf.relative_to(out)),'raw_reference_root':'upstream','adaptation':'Complete distributed upstream method and source-folder closure; natural discovery name plus separate native host binding only.'},indent=2)+'\n')
+   from closure import validate
+   validate(out,provenance_roots=('upstream',))
+   return str(leaf.relative_to(out))
+  body='# '+name.replace('-',' ').title()+'\n\n## Operation and exact source\n\n'+s['details']+'\n\n'
   body+='Read the [selected pinned source]('+os.path.relpath(archive/rel,leaf)+') and its relevant implementation before using the actual interface. The upstream archive is reference data, not a Codex installer or extra exposed skills.\n\n'
   body+='## Activation and acceptance\n\n'+str(c.get('activation',''))+'\n\n'
   for title,key in [('Prerequisites','dependencies'),('Target configuration','essential_settings'),('Required adaptations','adaptations'),('Verification','acceptance_checks')]:
@@ -180,7 +229,7 @@ def materialize(source,out,s,c):
  for file in transformed:
   file.write_text(native_text(file.read_text(),s['candidate_id'],file,root))
  skill=leaf/'SKILL.md';text=skill.read_text();text=front(text,s['candidate_id'].lower()+'-'+name)
- a=text.index('\n---\n')+5;text=text[:a]+'\n'+NATIVE_SCOPE+text[a:];skill.write_text(text)
+ skill.write_text(text)
  from closure import support,validate
  support(source,root,text_transform=lambda text,file:native_text(text,s['candidate_id'],file,root))
  if s['candidate_id']=='P111':

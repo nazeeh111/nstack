@@ -2,7 +2,9 @@
 
 Paste these into each seat's Agent call. Replace the bracketed parts. Seats read the brief and earlier rounds from the session folder, so the cards stay verbatim without being pasted into every prompt.
 
-Dispatch using the actual native agent interface and the user's model/effort. Provide the original complete persona file at `<this-skill>/personas/council-<seat>.md`, explicit `brain_root`, and the absolute task evidence root. Treat original `.claude/...` paths as source identifiers resolved through those roots. Use fresh initial contexts in host-sized waves. Read only the selected brain and supplied task files; no unrelated notes or credential/configuration reads. A missing output remains missing, never a simulated replacement. Paths below are resolved against the stated task root; brain paths resolve against `brain_root`.
+Agent type: `council-<seat>`. If that type is not registered in this session (agent files load at session start), spawn `general-purpose` and put these lines first: `Read .claude/agents/council-<seat>.md and follow it as your instructions for this whole task. Only read files; do not write anything.`
+
+Paths in prompts are relative to the repo root; give the absolute repo root once at the top of each prompt.
 
 **Options.** When the brief lists options (A, B, C, including "don't do it"), every card scores every option. When it is a single yes or no decision, the options are "do it as proposed" and "don't".
 

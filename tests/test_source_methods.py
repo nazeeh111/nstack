@@ -44,7 +44,8 @@ class SourceMethods(unittest.TestCase):
     if file.is_symlink() or SHA(file.read_bytes())!=receipt['files'][rel]:raise AssertionError('Pinned method changed: '+rel)
    out=cls.base/name;out.mkdir()
    component=next(x for x in cls.registry['components'] if x['id']==spec['candidate_id'])
-   materialize(source,out,spec,component,cls.registry)
+   entry=materialize(source,out,spec,component,cls.registry)
+   out=out/(entry or '.')
    # Match the installed natural entry-name adaptation before checking seals.
    skill=out/'SKILL.md';skill.write_text(re.sub(r'(?m)^name:.*$','name: '+name,skill.read_text(),count=1))
    cls.out[name]=out;cls.source[name]=source/spec['source_path']
@@ -101,36 +102,33 @@ class SourceMethods(unittest.TestCase):
   text=(self.out['result-to-claim']/'SKILL.md').read_text()
   for step in ['Step 3: Parse and Normalize','Step 3.5: Check Experiment Integrity','Step 4: Route Based on Verdict']:
    self.assertIn(step,text)
-  self.assertIn('downgrade confidence to "low" regardless of the claim-support judgment',text)
+  self.assertIn('downgrade confidence to "low" regardless of Codex judgment',text)
   self.assertIn('if integrity_status == "warn"',text)
   self.assertIn('provisional — no integrity audit run',text)
   self.assertIn('If `confidence` is low, treat the judgment as inconclusive',text)
   for branch,content in [('#### `no`',['What was tested, what failed, hypotheses for why','Constraints for future attempts','pivot to next idea']),('#### `partial`',['reflect what IS supported','supplementary experiments','Re-run result-to-claim','Multiple rounds of `partial`','narrow the claim scope or switch ideas']),('#### `yes`',['Record confirmed claim','ablation studies are incomplete','ready for paper writing'])]:
    section=text[text.index(branch):].split('\n#### ',1)[0].split('\n### Step 5:',1)[0]
    for item in content:self.assertIn(item,section)
-  self.assertIn('formal-proof status',text)
   self.assertIn('REVIEW_UNAVAILABLE',text)
-  self.assertIn('no duplicate findings.md is required',text)
 
  def test_audit_and_claim_handoff_agree_and_checker_works_outside_its_folder(self):
   audit=(self.out['experiment-audit']/'SKILL.md').read_text()
-  self.assertIn('preserve raw_claim_supported',audit)
-  self.assertIn('confidence = "low"',audit)
-  self.assertIn('effective_claim_status = "inconclusive"',audit)
-  self.assertIn('A footnote alone does not resolve the concern',audit)
-  self.assertNotIn('warn loudly, never halt the pipeline',audit)
+  source=self.source['experiment-audit'].read_text()
+  section=lambda value:value[value.index('## Integration'):value.index('## Key Rules')]
+  self.assertEqual(section(audit),section(source))
   claim=(self.out['result-to-claim']/'SKILL.md').read_text()
-  self.assertIn('"<skill-dir>/tools/evidence_check.py"',claim)
-  self.assertNotIn('python3 tools/evidence_check.py',claim)
+  self.assertIn('A deterministic evidence check never upgrades',claim)
+  self.assertIn('absolute installed path', (self.out['result-to-claim']/'NATIVE-BINDINGS.md').read_text())
   unrelated=self.base/'unrelated-working-directory';unrelated.mkdir()
   checker=(self.out['result-to-claim']/'tools/evidence_check.py').resolve()
   result=subprocess.run([sys.executable,'-B',str(checker),'--help'],cwd=unrelated,capture_output=True,text=True,timeout=10)
   self.assertEqual(result.returncode,0,result.stderr)
-  self.assertIn('--root',result.stdout)
+  self.assertIn('--batch',result.stdout)
+  self.assertEqual(checker.read_bytes(), (self.source['result-to-claim'].parents[3]/'tools/evidence_check.py').read_bytes())
 
  def test_archives_are_exact_and_provenance_binds_actual_operating_files(self):
   for name,out in self.out.items():
-   validate(out)
+   validate(self.base/name)
    record=json.loads((out/'NATIVE-ADAPTATION.json').read_text())
    module='patch_lightweight.py' if name=='supabase-postgres-best-practices' else 'patch_research.py'
    self.assertEqual(record['port_sha256'],SHA((ROOT/'lib'/module).read_bytes()))
@@ -144,7 +142,7 @@ class SourceMethods(unittest.TestCase):
     self.assertEqual((out/record['archival_original']).read_bytes(),self.source[name].read_bytes())
     self.assertEqual(record['source_sha256'],SHA(self.source[name].read_bytes()))
     self.assertEqual(record['adapted_sha256'],SHA((out/'SKILL.md').read_bytes()))
-   self.assertEqual(len(list(out.rglob('SKILL.md'))),1)
+   self.assertTrue((out/'SKILL.md').is_file())
 
 
 if __name__=='__main__':unittest.main()

@@ -11,7 +11,7 @@ def portable_files():
   if any(x.startswith('.') or x in ['__pycache__','node_modules','private'] for x in rel.parts):continue
   if p.is_symlink():raise ValueError('Portable source must not contain linked files')
   if p.name=='INSTALL-MANIFEST.json':continue
-  if p.is_file() and (p.suffix in ['.py','.cjs','.json','.md','.txt','.in','.lock','.sh','.yml','.yaml','.base','.canvas','.patch'] or p.name in ('LICENSE','METADATA','RECORD','WHEEL','py.typed')):yield p,rel
+  if p.is_file() and (rel.parts[0] in ('addons','integrations') or p.suffix in ['.py','.cjs','.mjs','.json','.md','.txt','.in','.lock','.sh','.yml','.yaml','.base','.canvas','.patch'] or p.name in ('LICENSE','NOTICE','COPYING','INTEGRATION-LICENSE','METADATA','RECORD','WHEEL','py.typed')):yield p,rel
 
 def stage(state):
  files=list(portable_files());hashes={str(rel):hashlib.sha256(p.read_bytes()).hexdigest() for p,rel in files};addon_exec={str(rel):bool(p.stat().st_mode & 0o111) for p,rel in files if rel.parts[0]=='addons'};digest=hashlib.sha256(json.dumps({'files':hashes,'addon_executable':addon_exec},sort_keys=True).encode()).hexdigest();dest=state/'releases'/digest

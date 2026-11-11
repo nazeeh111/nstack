@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Small OpenCode V2 adapter. Reuse nstack files without copying host secrets."""
-import argparse, hashlib, json, os, pathlib, shlex, subprocess, sys
+import argparse, hashlib, json, os, pathlib, re, shlex, subprocess, sys
 P = pathlib.Path
 ROOT = P(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / 'lib'))
@@ -8,7 +8,58 @@ from transaction import Transaction, atomic_json, copy, fingerprint, same
 import install as profile_install
 
 
-def plan(home, state, cli, codex=None):
+
+def knowledge_permissions(config, home, vault):
+    """Share the explicit vault without weakening native read-only roles."""
+    home, vault = P(home).resolve(), P(vault).absolute()
+    forbidden = {'.ssh', '.aws', '.codex', '.config', '.local', '.kube', '.gnupg',
+                 '.azure', '.docker', 'keychains', 'credentials', 'secrets', 'passwords'}
+    if (vault.resolve() != vault or not vault.is_dir() or vault in (P('/'), home)
+            or forbidden.intersection(part.casefold() for part in vault.parts)):
+        raise ValueError('Select a real, unlinked knowledge vault outside credential/configuration stores')
+    pattern, example = str(vault) + '/*', str(vault / 'Home.md')
+    def expanded(value):
+        for prefix in ('~/', '$HOME/', '${HOME}/'):
+            if value.startswith(prefix):
+                return str(home) + '/' + value[len(prefix):]
+        return value
+    def matches(value, pattern):
+        # Match native whole values: only * and ? are wildcards, not [] classes.
+        return re.fullmatch(re.escape(pattern).replace(r'\*','.*').replace(r'\?','.'), value) is not None
+    def denied(rows):
+        return any(rule.get('effect') == 'deny'
+                   and any(matches(action, rule.get('action','')) for action in ('external_directory','read','edit'))
+                   and matches(example, expanded(rule.get('resource', ''))) for rule in rows)
+    rows = list(config.get('permissions', []))
+    if denied(rows):
+        raise ValueError('Existing knowledge denial preserved; resolve vault access explicitly')
+    grant = {'action': 'external_directory', 'resource': pattern, 'effect': 'allow'}
+    rows = [rule for rule in rows if not (rule.get('action') == 'external_directory' and expanded(rule.get('resource','')) == pattern)]
+    index = next((i for i, rule in enumerate(rows) if matches('external_directory',rule.get('action',''))
+                  and expanded(rule.get('resource','')).startswith(str(vault) + '/')), len(rows))
+    if any(matches('external_directory',rule.get('action','')) and rule.get('resource') == '*' for rule in rows[index:]):
+        raise ValueError('Ambiguous existing permission order preserved')
+    rows[index:index] = [grant]
+    agents = {key: dict(value) for key,value in config.get('agents',{}).items()}
+    # Agent rules run after global rules. Keep global edit denials behind the
+    # new ask, while retaining all existing agent rules as the final authority.
+    global_edit_denials = []
+    for rule in rows:
+        if (rule.get('effect') == 'deny' and matches('edit', rule.get('action', ''))
+                and rule not in global_edit_denials):
+            global_edit_denials.append(rule)
+    for name in ('build', 'general'):
+        current = dict(agents.get(name, {})); rules = list(current.get('permissions', []))
+        if denied(rules):
+            raise ValueError('Existing agent knowledge denial preserved')
+        rules = [rule for rule in rules if not (rule.get('action') == 'edit' and expanded(rule.get('resource','')) == pattern)]
+        preserved = [rule for rule in global_edit_denials if rule not in rules]
+        rules = [{'action':'edit','resource':pattern,'effect':'ask'}, *preserved, *rules]
+        current['permissions'] = rules; agents[name] = current
+    return {**config, 'permissions': rows, 'agents': agents}
+
+
+def plan(home, state, cli, codex=None, vault=None):
     home, state, cli = P(home).resolve(), P(state).resolve(), P(cli).absolute()
     agents = home / '.codex/AGENTS.md'
     skills = home / '.agents/skills'
@@ -64,12 +115,14 @@ def plan(home, state, cli, codex=None):
             current = json.loads(raw)
         except (ValueError, UnicodeError):
             raise ValueError('Existing configuration is preserved; review before replacing: ' + str(config_path)) from None
-        allowed = set(config) | {'permissions', 'policies'}
+        allowed = set(config) | {'permissions', 'policies', 'agents'}
         if not isinstance(current, dict) or set(current) - allowed:
             raise ValueError('Existing configuration is preserved; review before replacing: ' + str(config_path))
-        extra = {k: current[k] for k in ('permissions', 'policies') if k in current}
+        extra = {k: current[k] for k in ('permissions', 'policies', 'agents') if k in current}
         owned = {k: v for k, v in current.items() if k not in extra}
-        if any(not isinstance(v, list) for v in extra.values()):
+        if (any(not isinstance(v, list) for k,v in extra.items() if k != 'agents')
+                or ('agents' in extra and (not isinstance(extra['agents'],dict)
+                    or any(not isinstance(v,dict) or set(v)-{'permissions'} or not isinstance(v.get('permissions',[]),list) for v in extra['agents'].values())))):
             raise ValueError('Existing configuration is preserved; review before replacing: ' + str(config_path))
         if owned == config:
             configured = raw
@@ -77,6 +130,11 @@ def plan(home, state, cli, codex=None):
             configured = (json.dumps({**config, **extra}, indent=2) + '\n').encode()
         else:
             raise ValueError('Existing configuration is preserved; review before replacing: ' + str(config_path))
+    if vault is not None:
+        value = json.loads(configured)
+        updated = knowledge_permissions(value, home, vault)
+        if updated != value:
+            configured = (json.dumps(updated, indent=2) + '\n').encode()
     files[config_path] = configured
     links = {directory / 'AGENTS.md': agents, home / '.local/bin/opencode': cli}
     # Do not parse provider configuration, credential stores or alternate JSONC.
@@ -98,9 +156,9 @@ def plan(home, state, cli, codex=None):
     return files, links, version
 
 
-def apply(home, state, cli, codex=None):
+def apply(home, state, cli, codex=None, vault=None):
     home, state = P(home).resolve(), P(state).resolve()
-    files, links, version = plan(home, state, cli, codex)
+    files, links, version = plan(home, state, cli, codex, vault)
     if all(p.is_file() and p.read_bytes() == d for p, d in files.items()) and all(
             p.is_symlink() and os.readlink(p) == str(t) for p, t in links.items()):
         return {'changed': False, 'version': version, 'shared_skills': str(home / '.agents/skills')}
@@ -111,7 +169,7 @@ def apply(home, state, cli, codex=None):
     tx = Transaction(run)
     with tx.lock():
         # Revalidate after acquiring the shared profile writer lock.
-        checked_files, checked_links, checked_version = plan(home, state, cli, codex)
+        checked_files, checked_links, checked_version = plan(home, state, cli, codex, vault)
         if checked_files != files or checked_links != links or checked_version != version:
             raise ValueError('OpenCode configuration changed during preparation; preserved for review')
         before = {p: fingerprint(p) for p in [*files, *links]}
@@ -165,9 +223,10 @@ def main():
     install.add_argument('--state', default=str(P.home() / 'Library/Application Support/nstack'))
     install.add_argument('--cli', default='/Applications/OpenCode.app/Contents/Resources/opencode-cli')
     install.add_argument('--codex-harness', metavar='EXECUTABLE', help='Add an explicit native Codex terminal command in OpenCode Desktop 2.2.6')
+    install.add_argument('--vault', metavar='DIRECTORY', help='Allow the explicit shared vault directory; retain edit prompts and other policies')
     undo = sub.add_parser('rollback'); undo.add_argument('run'); undo.add_argument('--chain', action='store_true')
     args = parser.parse_args()
-    result = apply(args.home, args.state, args.cli, args.codex_harness) if args.command == 'install' else rollback(args.run, args.chain)
+    result = apply(args.home, args.state, args.cli, args.codex_harness, args.vault) if args.command == 'install' else rollback(args.run, args.chain)
     print(json.dumps(result, indent=2))
 
 if __name__ == '__main__': main()

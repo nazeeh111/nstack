@@ -1,0 +1,51 @@
+"""Controller prose ports preserve source metadata as a complete YAML unit."""
+import json
+import pathlib
+import re
+import sys
+import tempfile
+import unittest
+
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+sys.path[:0] = [str(ROOT), str(ROOT / 'lib')]
+from patch_native34 import front, materialize, native_text
+
+
+class NativeFrontmatter(unittest.TestCase):
+    def test_prose_bindings_do_not_rewrite_metadata_values(self):
+        header = ('---\nname: source-name\ndescription: Source description\n'
+                  'model: opus\nmetadata:\n  invocation: claude -p task\n'
+                  'allowed-tools: [AskUserQuestion, Read]\n---\n')
+        body = '\nClaude Code uses AskUserQuestion.\n'
+        with tempfile.TemporaryDirectory() as tmp:
+            root = pathlib.Path(tmp)
+            active = native_text(header + body, 'P021', root / 'SKILL.md', root)
+        self.assertTrue(active.startswith(header))
+        self.assertNotIn('Claude Code', active[len(header):])
+        self.assertNotIn('AskUserQuestion', active[len(header):])
+        self.assertEqual(front(active, 'native-name').split('\n---\n', 1)[0],
+                         header.rstrip('\n').rsplit('\n---', 1)[0].replace('name: source-name', 'name: native-name'))
+
+    def test_pinned_office_hours_retains_complete_gbrain_mapping(self):
+        registry = json.loads((ROOT / 'registry/manifest.json').read_text())
+        spec = next(s for s in registry['skills']
+                    if s['candidate_id'] == 'P006' and s['source_path'] == 'office-hours/SKILL.md')
+        source = (pathlib.Path.home() / 'Library/Application Support/nstack/sources'
+                  / spec['source_repository'].replace('/', '--') / spec['revision'])
+        if not (source / '.nstack-source.json').is_file():
+            self.skipTest('Pinned offline source absent; no acquisition')
+        original = (source / spec['source_path']).read_text()
+        header = original.split('\n---\n', 1)[0]
+        self.assertIn('\ngbrain:\n  schema: 1\n', header)
+        component = next(c for c in registry['components'] if c['id'] == 'P006')
+        with tempfile.TemporaryDirectory() as tmp:
+            out = pathlib.Path(tmp)
+            entry = materialize(source, out, spec, component)
+            active = (out / entry / 'SKILL.md').read_text()
+        native_name = spec.get('native_name') or pathlib.Path(spec['source_path']).parent.name
+        expected = re.sub(r'(?m)^name:.*$', 'name: p006-' + native_name, header, count=1)
+        self.assertEqual(active.split('\n---\n', 1)[0], expected)
+
+
+if __name__ == '__main__':
+    unittest.main()

@@ -1,0 +1,23 @@
+{
+  "repository": "czlonkowski/n8n-mcp",
+  "selected_revision": "1c755c5c8d99eb71faade17753a7f24138f4212c",
+  "version": "2.101.0",
+  "image": "ghcr.io/czlonkowski/n8n-mcp:2.101.0@sha256:0803ecd2a9df1863f805d4ceca84ca69e1337eb775b55eb30aef518a110c8928",
+  "image_revision": "86b993e70008c4987902a235271e11bc03ef3f84",
+  "image_source_difference": {
+    "ahead_by": 2,
+    "runtime_files_changed": false,
+    "only_changed_files": [
+      ".github/aw/actions-lock.json",
+      ".github/workflows/issue-triage.lock.yml",
+      ".github/workflows/issue-triage.md"
+    ],
+    "compare_url": "https://github.com/czlonkowski/n8n-mcp/compare/86b993e70008c4987902a235271e11bc03ef3f84...1c755c5c8d99eb71faade17753a7f24138f4212c"
+  },
+  "license": "MIT",
+  "license_sha256": "8292ff05257b8f1ceae44382f0585abb0df9dc007d2ee2254c5a835c01920b35",
+  "catalog_n8n_version": "2.46.4",
+  "scope": "Offline documentation/schema/validation tools only. No n8n URL/key, owner setup, or workflow API connection. Actual workflow execution remains the separate2.47.4 CLI route.",
+  "source_docs": "https://github.com/czlonkowski/n8n-mcp/blob/1c755c5c8d99eb71faade17753a7f24138f4212c/docs/SELF_HOSTING.md",
+  "telemetry_disable": "N8N_MCP_TELEMETRY_DISABLED=true"
+}

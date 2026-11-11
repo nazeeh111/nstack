@@ -2,7 +2,7 @@
 import pathlib,re,shutil,os
 P=pathlib.Path
 MIRRORED={'P215','P226','P094','P321','L014','L020','P354','P357','X-CREATIVE-BLENDER-SKILLS','X-CREATIVE-UNREAL'}
-def needs(s):return s['candidate_id'] in MIRRORED or (s['candidate_id']=='P119' and P(s['source_path']).parent.name=='formula-derivation')
+def needs(s):return s['candidate_id'] in MIRRORED or s['candidate_id']=='P119'
 def links(file):
  text=re.sub(r'(?ms)^```.*?^```[^\n]*','',file.read_text(errors='replace'));text=re.sub(r'`[^`\n]*`','',text)
  for target in re.findall(r'\]\(([^\s)]+)',text):

@@ -1,8 +1,137 @@
 {
   "repository": "gosom/google-maps-scraper",
   "revision": "146aefe83844960bb534f335261a4435783a58cc",
-  "source_path": "authored native fast-mode integration; upstream MIT runtime",
+  "source_path": "skills/google-maps-scraper/SKILL.md",
   "license": "MIT",
   "runtime_release": "1.18.2",
-  "adaptation": "Native bounded local JSON extraction; no upstream self-update, Docker, sponsor recommendations, credentials or paid service; DISABLE_TELEMETRY=1."
+  "source_files": {
+    "LICENSE": {
+      "path": "LICENSE",
+      "sha256": "3b74f7e7dc75d6ec836c6dc3f072ce510e2a1cbf34aff1f3e7fbc46105ffcd2b",
+      "git_blob": "3370b0256da0e20f19fbdc2e5ed1721d36880a55",
+      "git_mode": "100644"
+    },
+    "skills/google-maps-scraper/SKILL.md": {
+      "path": "SKILL.md",
+      "sha256": "0b733b979b083683c2af36e52a7bd113ae2a4b1845fee66479d40f7aa20c5eec",
+      "git_blob": "f0b4aa82375df0e5019977812704a3f16b1942ec",
+      "git_mode": "100644"
+    },
+    "skills/google-maps-scraper/references/advanced-coverage.md": {
+      "path": "references/advanced-coverage.md",
+      "sha256": "035e5171e720aee8da07cdf10189be274425179158ce9dc93f3ee4978b5283e3",
+      "git_blob": "092c9b1d652a50ce5208bf1301fc78fa1adf585d",
+      "git_mode": "100644"
+    },
+    "skills/google-maps-scraper/references/local-execution.md": {
+      "path": "references/local-execution.md",
+      "sha256": "f022925ac93e7599860373dede628a25166a4cba489d5371dc5d88f4a2265e6c",
+      "git_blob": "6ddd3d51cf4956c4f44293756e7fbd2b21ce3547",
+      "git_mode": "100644"
+    },
+    "skills/google-maps-scraper/references/proxy-setup.md": {
+      "path": "references/proxy-setup.md",
+      "sha256": "77851068d347c1e2d5410211f913b99346d24ee29694378cc794ec1c7bd08e81",
+      "git_blob": "90a6782cfd7df0a11e79aa613be01bb7036783de",
+      "git_mode": "100644"
+    },
+    "skills/google-maps-scraper/references/proxy-sponsors.json": {
+      "path": "references/proxy-sponsors.json",
+      "sha256": "f31e6c8889cab70a04377cd10f4c1d002c51538b7e08023cba30724827594f94",
+      "git_blob": "7f2b9520573df18821b694b82040c3da72b42d71",
+      "git_mode": "100644"
+    },
+    "skills/google-maps-scraper/references/query-planning.md": {
+      "path": "references/query-planning.md",
+      "sha256": "e87f98137de1072781f136020018d2b387447329c825b492d66a9b4d4574c25d",
+      "git_blob": "d6fe07cf7eb556090bb03787082f4c9519386f2f",
+      "git_mode": "100644"
+    },
+    "skills/google-maps-scraper/references/recovery.md": {
+      "path": "references/recovery.md",
+      "sha256": "184e500900822a6747e00e8f716fd1a21747b240509422f72c3860f4c5d04e03",
+      "git_blob": "62a13651bcea015743398fd7dc968f29f220420c",
+      "git_mode": "100644"
+    },
+    "skills/google-maps-scraper/references/results.md": {
+      "path": "references/results.md",
+      "sha256": "63568765dca7d5e4f4861a9b872e78092c25a330666e271f5d6fb0f1c37703c5",
+      "git_blob": "36660635f0c9365fe435217fd5643dfcece5fb49",
+      "git_mode": "100644"
+    },
+    "skills/google-maps-scraper/scripts/configure-proxy.sh": {
+      "path": "scripts/configure-proxy.sh",
+      "sha256": "a8c23f6191af5817b090899e88ed48a3bf1f0d09489915584320c7cfc7c27ce6",
+      "git_blob": "677926db28e8c2e314641ad6853601ec42bcd0ac",
+      "git_mode": "100755"
+    },
+    "skills/google-maps-scraper/scripts/ensure-latest.sh": {
+      "path": "scripts/ensure-latest.sh",
+      "sha256": "403cc736d41020ddf6a2fd0229c23d6d0e31853295fe6721614532b48c388294",
+      "git_blob": "a0891a4969784013f54b7c7278e06b11b187482b",
+      "git_mode": "100755"
+    },
+    "skills/google-maps-scraper/scripts/helpers_test.sh": {
+      "path": "scripts/helpers_test.sh",
+      "sha256": "c2773019e718c0f942124cdee43bd2d1556ab6240337304973bdba2c6c96608a",
+      "git_blob": "7ca5bc364e9220ba6c21299e19b2be8845569da0",
+      "git_mode": "100755"
+    },
+    "skills/google-maps-scraper/scripts/run-local.sh": {
+      "path": "scripts/run-local.sh",
+      "sha256": "872c55d836ac86b73a2f08b0a63206979a1ae47f4437f236a6de19829bed3b71",
+      "git_blob": "f612202c9fe99ca7fc7f6d10b741d2d87ca887d5",
+      "git_mode": "100755"
+    },
+    "skills/google-maps-scraper/scripts/select-proxy-sponsors.mjs": {
+      "path": "scripts/select-proxy-sponsors.mjs",
+      "sha256": "42f8097343e2c7701d879e9a13c8ef9e0a683b1454b92f041c226f4bfe0ec7fd",
+      "git_blob": "b7bed8e9dc60d35b98699092dcf678a909f9e152",
+      "git_mode": "100755"
+    },
+    "skills/google-maps-scraper/scripts/select-proxy-sponsors.test.mjs": {
+      "path": "scripts/select-proxy-sponsors.test.mjs",
+      "sha256": "b142152eaf11fa30100a227dd11bdfe00bd610548af8d1f52f61e5b666cb6a08",
+      "git_blob": "b79854874f0009479b3c096761d64267f3a142ac",
+      "git_mode": "100644"
+    },
+    "skills/google-maps-scraper/scripts/status-local.mjs": {
+      "path": "scripts/status-local.mjs",
+      "sha256": "56312eb6671eed1ac50e507b0827438623816db5421c13c9fd47df89984ad472",
+      "git_blob": "ab7eda466b4a14b37557eb644f0da3c5d465bb84",
+      "git_mode": "100755"
+    },
+    "skills/google-maps-scraper/scripts/status-local.test.mjs": {
+      "path": "scripts/status-local.test.mjs",
+      "sha256": "04d22c2365d505eb36e75bdcc8ee5318ff214563f9824b614c7a56212439c995",
+      "git_blob": "63a12a24de83a4385884c394f856dc9de40d6b8a",
+      "git_mode": "100644"
+    }
+  },
+  "selected_source_map_sha256": "beaffc24bf9ca1d239e3b36e1709bd253c1dd1a4c988817cb7c3e88534be333c",
+  "native_bindings": "NATIVE-BINDINGS.md",
+  "original": "UPSTREAM_SKILL.md",
+  "adaptation": "Full original skill/frontmatter plus6Markdownrefs,proxy-sponsorsJSONand8scripts retained. Only one active binding link added. Actual self-update/proxycredentials/Docker/bootstrap unadmitted without stated authority/prerequisites; existing native fast sample is an explicit alternative, never replacement.",
+  "files": {
+    "UPSTREAM_SKILL.md": "0b733b979b083683c2af36e52a7bd113ae2a4b1845fee66479d40f7aa20c5eec",
+    "LICENSE": "3b74f7e7dc75d6ec836c6dc3f072ce510e2a1cbf34aff1f3e7fbc46105ffcd2b",
+    "NATIVE-BINDINGS.md": "1f49d3bc92892b3711802857fa82d8a20ded77b4d1eb199ada221baacc976325",
+    "SKILL.md": "540b958789874e86537c9f12548455f4fa543ed34a882c3a048cbce5c9004231",
+    "references/proxy-setup.md": "77851068d347c1e2d5410211f913b99346d24ee29694378cc794ec1c7bd08e81",
+    "references/advanced-coverage.md": "035e5171e720aee8da07cdf10189be274425179158ce9dc93f3ee4978b5283e3",
+    "references/recovery.md": "184e500900822a6747e00e8f716fd1a21747b240509422f72c3860f4c5d04e03",
+    "references/local-execution.md": "f022925ac93e7599860373dede628a25166a4cba489d5371dc5d88f4a2265e6c",
+    "references/results.md": "63568765dca7d5e4f4861a9b872e78092c25a330666e271f5d6fb0f1c37703c5",
+    "references/query-planning.md": "e87f98137de1072781f136020018d2b387447329c825b492d66a9b4d4574c25d",
+    "references/native-fast-mode.md": "66b8d56eb5405400d150febe5a6970dcebdececb8de7f46e7900e7c1c4bd8066",
+    "references/proxy-sponsors.json": "f31e6c8889cab70a04377cd10f4c1d002c51538b7e08023cba30724827594f94",
+    "scripts/helpers_test.sh": "c2773019e718c0f942124cdee43bd2d1556ab6240337304973bdba2c6c96608a",
+    "scripts/ensure-latest.sh": "403cc736d41020ddf6a2fd0229c23d6d0e31853295fe6721614532b48c388294",
+    "scripts/select-proxy-sponsors.test.mjs": "b142152eaf11fa30100a227dd11bdfe00bd610548af8d1f52f61e5b666cb6a08",
+    "scripts/select-proxy-sponsors.mjs": "42f8097343e2c7701d879e9a13c8ef9e0a683b1454b92f041c226f4bfe0ec7fd",
+    "scripts/status-local.mjs": "56312eb6671eed1ac50e507b0827438623816db5421c13c9fd47df89984ad472",
+    "scripts/configure-proxy.sh": "a8c23f6191af5817b090899e88ed48a3bf1f0d09489915584320c7cfc7c27ce6",
+    "scripts/run-local.sh": "872c55d836ac86b73a2f08b0a63206979a1ae47f4437f236a6de19829bed3b71",
+    "scripts/status-local.test.mjs": "04d22c2365d505eb36e75bdcc8ee5318ff214563f9824b614c7a56212439c995"
+  }
 }

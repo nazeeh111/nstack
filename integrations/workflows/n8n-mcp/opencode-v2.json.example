@@ -1,0 +1,16 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "servers": {
+      "n8n_docs": {
+        "type": "local",
+        "command": [
+          "python3",
+          "/absolute/path/to/nstack/recipes/n8n_mcp.py",
+          "serve"
+        ],
+        "disabled": true
+      }
+    }
+  }
+}

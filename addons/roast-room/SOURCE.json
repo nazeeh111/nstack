@@ -57,8 +57,8 @@
       "upstream_path": ".claude/skills/roast-room/references/round-prompts.md",
       "path": "references/round-prompts.md",
       "upstream_sha256": "e79a070291e735ec96c900054994ff16dad53528d8a6b8bb9d489b996d4ecfc6",
-      "sha256": "d4c78a35069158a1084a04c5426deb17fc3acacd4053954ee9887c959e72a489",
-      "state": "native-adapted"
+      "sha256": "e79a070291e735ec96c900054994ff16dad53528d8a6b8bb9d489b996d4ecfc6",
+      "state": "exact"
     },
     {
       "upstream_path": ".claude/skills/roast-room/references/seats.md",
@@ -70,8 +70,8 @@
       "upstream_path": ".claude/skills/roast-room/references/seats.md",
       "path": "references/seats.md",
       "upstream_sha256": "5b54089aa614da7790ad98fc5a08ef494bc3265404a419e2810df24b43b8552f",
-      "sha256": "a08e02b2f860e191c55e0665e01dfc65fb55ad0386edda568b9fd4dfc953ca0b",
-      "state": "native-adapted"
+      "sha256": "5b54089aa614da7790ad98fc5a08ef494bc3265404a419e2810df24b43b8552f",
+      "state": "exact"
     },
     {
       "upstream_path": ".claude/skills/roast-room/references/scoring.md",
@@ -83,8 +83,8 @@
       "upstream_path": ".claude/skills/roast-room/references/scoring.md",
       "path": "references/scoring.md",
       "upstream_sha256": "b0e28279f2f516d970bb5626d0c2e4443d8b53878b433cbf3cf599bd24e5126d",
-      "sha256": "7e5a169cce6539d6d489fb53a8b54b44165a989c9088fc129f2dfb00c735adb8",
-      "state": "native-adapted"
+      "sha256": "b0e28279f2f516d970bb5626d0c2e4443d8b53878b433cbf3cf599bd24e5126d",
+      "state": "exact"
     },
     {
       "upstream_path": ".claude/agents/council-wickman.md",
@@ -168,7 +168,7 @@
       "upstream_path": ".claude/skills/roast-room/SKILL.md",
       "path": "SKILL.md",
       "upstream_sha256": "50b331f1b7d0ce3c75884cbb8ca99b52080ae5042488a016b735ce77b55d7a17",
-      "sha256": "8101398f7d673c52b610130d43e08c3361a3ee56ab99c6b531fe6fea7d69eba5",
+      "sha256": "6710bef16815391e7ac50fd4aeb23204a51aed0b40361018423dbbe4c3bf627d",
       "state": "native-adapted"
     },
     {
@@ -179,22 +179,22 @@
       "state": "native-adapted"
     }
   ],
-  "adaptation": "Native host execution only; see patches/native.patch. Upstream coordinator files are archival data, never executable instructions. Persona frontmatter models/tools do not configure the host.",
+  "adaptation": "Original core method restored; native tool/path/model bindings and credential/provider restrictions only. Label source sequential/degraded simulations honestly; no independent-call claim for local cards. Exact personas/original coordinators and changed-file diff retained.",
   "private_source_manifest": "private-source.json",
   "private_source_recipe": "scripts/fetch_source.py",
   "source_pack_directory": "~/Library/Application Support/nstack/source-packs/roast-room/e40f40652d5690c4d9f928c4794c673a99f2cd0e",
   "excluded": "Brain quote corpus, portraits, brand/assets, viewer/API runtime, provider transport, newroaster/paid image pipeline excluded from public bundle. Full 117-file source-only closure fetched privately.",
-  "source_path": "SKILL.md",
+  "source_path": ".claude/skills/roast-room/SKILL.md",
   "changes": [
-    "Preserve native host/model/effort; no detector, provider, key, headless app or automatic high-tier switch",
-    "Read full original personas as method data; no automatic subagent registration/model frontmatter execution",
-    "Fresh first contexts, bounded native waves and actual returned-call accounting",
-    "No simulated recovery, missing/unparseable votes never assent; incomplete coverage explicit",
-    "Original numeric summaries retained as descriptive simulation only, decisive facts independently checked",
-    "Source support and licenses retained; source-only names prevent archival coordinators becoming discoverable skills",
-    "Report original twelve-seat roster versus nine-seat --all cap conflict instead of claiming an unrun full board"
+    "Natural-name discovery metadata and actual skill/persona/private-brain paths",
+    "Active host/model/effort retained; tool lifecycle mapped to supported native APIs and available capacity",
+    "Provider/credential discovery, external HTTP/headless-host dispatch and automatic model-tier changes remain unadmitted",
+    "Original board/round/prompt/scoring/consensus/ratification defaults restored, including labelled source simulation fallback",
+    "Simulation/recovery cards never count as additional actual independent calls; missing calls never assent",
+    "Immutable installed source remains unchanged; board edits use a task-owned roster; optional viewer requires observed separate runtime",
+    "Original ask/auto/default board flow and exact seats/scoring/round prompts restored; original12seat-vs9cap conflict reported"
   ],
-  "patch_sha256": "8b74842dc6aeb6187b2adfc2dbdb9dfcd1295915d4e82b14c24e4b1dc4e287d4",
+  "patch_sha256": "37463d7b1566bbfae80d18d010f24b21b1eb85c3567e58343a44c18b8a62871e",
   "authored_files": {
     "agents/openai.yaml": "6e02133c6cc969dd5d267c05ac57038194bdf9d6a6e388a99f3d8b8c80402c3b",
     "scripts/fetch_source.py": "e8449f77cf99fa2b61a65f29dcc77e7b7e6ac35822a7cb89832415ec72c46121"

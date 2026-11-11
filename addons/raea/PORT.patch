@@ -1,0 +1,11 @@
+--- upstream/skills/raea/SKILL.md
++++ native/raea/SKILL.md
+@@ -5,6 +5,8 @@
+   raea-tested-against: 0.1.0-rc1
+   raea-verbs: render play run check init cut song guide skill skills app controller workspace project spec doctor next library setup gen context brand scene splat blender
+ ---
++
++> Native offline execution: read [NATIVE-BINDINGS.md](NATIVE-BINDINGS.md) before source commands. The complete upstream method follows.
+ 
+ # raea
+ 

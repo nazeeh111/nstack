@@ -1,0 +1,14 @@
+# Trigger.dev source preparation, runtime gated
+
+The manifest pins official Trigger.dev4.8.3 at645cc47dd2eeb99387f604cad2c90ba2ef568680, separately recording installed skill source41ad1995b30573a9b55cfaab80c3293b7c35c1f8 and SDK4.8.3. `python3 recipes/workflows.py trigger-prepare` fetches all13 files in hosting/docker plus the Apache2.0 license, verifies Git blob hashes, and retains exact source/modes under NSTACK_STATE. It does not run generate-secrets.sh, create accounts, install SDK/CLI, start containers or deploy a task.
+
+The official combined stack has11 services, including one init service; workloads add more containers. Official guidance is3vCPU/6GB webapp plus4vCPU/8GB worker. The observed shared Docker VM has about7.75GiB RAM, so full startup is not accepted here. Do not raise Docker VM memory implicitly or run this alongside other heavy stacks without a resource decision.
+
+A full worker uses Docker Socket Proxy with container/image/network POST authority. A read-only socket filesystem mount does not make that API read-only. Compose project names do not scope daemon authority. A separate task-owned engine is required before using that control plane where unrelated user containers could be affected. No native home, vault or Docker socket goes into workload containers. No privileged Docker-in-Docker substitute is installed by this route.
+
+Before a later full startup, pin all companion image digests; review their licenses/architecture; set localhost webapp/registry binding and remove unnecessary datastore publications; replace hardcoded webapp/supervisor/docker-proxy network names and DOCKER_RUNNER_NETWORKS with task-scoped names; set restart=no, concurrency1, bounded retries/duration; set TRIGGER_TELEMETRY_DISABLED=1 explicitly on webapp and keep OTEL/S2 local. Generate fresh service-only secrets privately through the reviewed upstream script, never from existing user credential stores. Owner/login remains a user step, and magic links/bootstrap tokens must not appear in transcripts.
+
+Self-hosted Trigger lacks Cloud warm starts, automatic scaling and checkpoint-based nonblocking waits. Core self-hosted tasks do not need a paid model/provider. Later acceptance must actually deploy/trigger a synthetic task, test retry/idempotency, short wait/resume, cancellation, failed-child Result, concurrency/resource limits, and isolated backup/restore, then stop all owned resources. None of those full Trigger runtime checks has run. Research found4.8.4 as a newer release; adopting it would be a separate explicit matching SDK/CLI/server revision, not a claim about this4.8.3 preparation.
+
+Official source: https://github.com/triggerdotdev/trigger.dev/tree/645cc47dd2eeb99387f604cad2c90ba2ef568680/hosting/docker
+Official resource/features guide: https://trigger.dev/docs/self-hosting/docker

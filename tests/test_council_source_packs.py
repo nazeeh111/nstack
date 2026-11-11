@@ -85,10 +85,51 @@ class PrivateSourceTests(unittest.TestCase):
 
 
 class SourceClosureTests(unittest.TestCase):
+    def test_greek_original_decision_and_reliability_contracts_are_retained(self):
+        folder = ADDONS / 'council-of-high-intelligence'
+        original = (folder / 'upstream/council-codex.upstream.md').read_text()
+        active = (folder / 'SKILL.md').read_text()
+        def block(text, start, end):
+            return text.split(start, 1)[1].split(end, 1)[0]
+        # Compare the complete method blocks, not just a few named keywords.
+        for start, end in [
+            ('### Step 2.5: Runtime Reliability Defaults', '### Step 3: Run Restatement Gate'),
+            ('**Round 2 anonymization', 'Round execution reliability policy:'),
+            ('Round execution reliability policy:', '### Step 5: Synthesis Output')]:
+            self.assertEqual(block(active, start, end), block(original, start, end))
+        self.assertIn('`no_auto_route` still disables automatic panel routing', active)
+        self.assertIn('[Simulated — coordinator context]', active)
+        self.assertIn('zero additional native agent calls', active)
+        self.assertIn('External Seats (unadmitted transport)', active)
+
+    def test_roast_original_board_and_full_scoring_prompts_are_retained(self):
+        folder = ADDONS / 'roast-room'
+        original = (folder / 'upstream/roast-room.upstream.md').read_text()
+        active = (folder / 'SKILL.md').read_text()
+        def board(text):
+            return text.split('## Pick the board', 1)[1].split('### Ask', 1)[0]
+        self.assertEqual(board(active), board(original).replace('.claude/agents/', 'personas/'))
+        self.assertIn('Then ask once through the available native question interface', active)
+        self.assertIn('If the user said "just run it", seat the recommended board without asking.', active)
+        for name in ('seats.md', 'scoring.md', 'round-prompts.md'):
+            self.assertEqual((folder / 'references' / name).read_bytes(),
+                             (folder / 'upstream/references' / name).read_bytes())
+        self.assertIn('Run the same protocol sequentially yourself', active)
+        self.assertIn('single-context simulation, not independent subagent execution', active)
+
+    def test_remy_source_method_is_not_replaced_by_authored_map_or_comparison(self):
+        active = (ADDONS / 'llm-council/SKILL.md').read_text()
+        self.assertIn('Read and follow the complete original `SKILL.md`', active)
+        self.assertIn('do not rewrite its lenses, tone, decision procedure or core method', active)
+        self.assertIn('including significant decisions worth referencing later', active)
+        self.assertIn('not Remy\'s default review protocol', active)
+
     def test_bundled_originals_and_native_derivatives_match_recorded_hashes(self):
         for name, count in [('roast-room', 12), ('council-of-high-intelligence', 18)]:
             folder = ADDONS / name
             meta = json.loads((folder / 'SOURCE.json').read_text())
+            self.assertEqual(meta['source_path'], 'SKILL.codex.md' if name == 'council-of-high-intelligence'
+                             else '.claude/skills/roast-room/SKILL.md')
             self.assertEqual(len(list((folder / 'personas').glob('council-*.md'))), count)
             for row in meta['files']:
                 self.assertEqual(hashlib.sha256((folder / row['path']).read_bytes()).hexdigest(), row['sha256'], row['path'])

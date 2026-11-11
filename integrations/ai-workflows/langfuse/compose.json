@@ -1,0 +1,315 @@
+{
+  "name": "nstack-langfuse-local",
+  "services": {
+    "langfuse-web": {
+      "networks": [
+        "private"
+      ],
+      "restart": "no",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "10m",
+          "max-file": "2"
+        }
+      },
+      "image": "docker.io/langfuse/langfuse@sha256:037188385ac6612d3494319fa060052da407b235502874c7ea79ade583c29002",
+      "ports": [
+        "127.0.0.1:3100:3000"
+      ],
+      "depends_on": {
+        "postgres": {
+          "condition": "service_healthy"
+        },
+        "redis": {
+          "condition": "service_healthy"
+        },
+        "clickhouse": {
+          "condition": "service_healthy"
+        },
+        "minio": {
+          "condition": "service_healthy"
+        }
+      },
+      "environment": {
+        "NEXTAUTH_URL": "http://127.0.0.1:3100",
+        "DATABASE_URL": "postgresql://postgres:${POSTGRES_PASSWORD:?private development secret required}@postgres:5432/postgres",
+        "SALT": "${SALT:?private development secret required}",
+        "ENCRYPTION_KEY": "${ENCRYPTION_KEY:?private development secret required}",
+        "TELEMETRY_ENABLED": "false",
+        "LANGFUSE_IN_APP_AGENT_ENABLED": "false",
+        "LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES": "false",
+        "LANGFUSE_AI_GATEWAY_ENABLED": "false",
+        "CLICKHOUSE_URL": "http://clickhouse:8123",
+        "CLICKHOUSE_MIGRATION_URL": "clickhouse://clickhouse:9000",
+        "CLICKHOUSE_USER": "clickhouse",
+        "CLICKHOUSE_PASSWORD": "${CLICKHOUSE_PASSWORD:?private development secret required}",
+        "CLICKHOUSE_CLUSTER_ENABLED": "false",
+        "REDIS_HOST": "redis",
+        "REDIS_PORT": "6379",
+        "REDIS_AUTH": "${REDIS_AUTH:?private development secret required}",
+        "LANGFUSE_S3_EVENT_UPLOAD_BUCKET": "langfuse",
+        "LANGFUSE_S3_EVENT_UPLOAD_REGION": "auto",
+        "LANGFUSE_S3_EVENT_UPLOAD_ACCESS_KEY_ID": "minio",
+        "LANGFUSE_S3_EVENT_UPLOAD_SECRET_ACCESS_KEY": "${MINIO_ROOT_PASSWORD:?private development secret required}",
+        "LANGFUSE_S3_EVENT_UPLOAD_ENDPOINT": "http://minio:9000",
+        "LANGFUSE_S3_EVENT_UPLOAD_FORCE_PATH_STYLE": "true",
+        "LANGFUSE_S3_EVENT_UPLOAD_PREFIX": "events/",
+        "LANGFUSE_S3_MEDIA_UPLOAD_BUCKET": "langfuse",
+        "LANGFUSE_S3_MEDIA_UPLOAD_REGION": "auto",
+        "LANGFUSE_S3_MEDIA_UPLOAD_ACCESS_KEY_ID": "minio",
+        "LANGFUSE_S3_MEDIA_UPLOAD_SECRET_ACCESS_KEY": "${MINIO_ROOT_PASSWORD:?private development secret required}",
+        "LANGFUSE_S3_MEDIA_UPLOAD_ENDPOINT": "http://127.0.0.1:9190",
+        "LANGFUSE_S3_MEDIA_UPLOAD_FORCE_PATH_STYLE": "true",
+        "LANGFUSE_S3_MEDIA_UPLOAD_PREFIX": "media/",
+        "LANGFUSE_S3_BATCH_EXPORT_ENABLED": "false",
+        "NEXTAUTH_SECRET": "${NEXTAUTH_SECRET:?private development secret required}",
+        "LANGFUSE_DISABLE_SIGNUP_ONBOARDING": "true",
+        "LANGFUSE_S3_MEDIA_UPLOAD_INTERNAL_ENDPOINT": "http://minio:9000"
+      }
+    },
+    "langfuse-worker": {
+      "networks": [
+        "private"
+      ],
+      "restart": "no",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "10m",
+          "max-file": "2"
+        }
+      },
+      "image": "docker.io/langfuse/langfuse-worker@sha256:175a32200b9908b283104e67b84d080381e841daa8ee6692f5bb26538df1a59e",
+      "depends_on": {
+        "postgres": {
+          "condition": "service_healthy"
+        },
+        "redis": {
+          "condition": "service_healthy"
+        },
+        "clickhouse": {
+          "condition": "service_healthy"
+        },
+        "minio": {
+          "condition": "service_healthy"
+        }
+      },
+      "environment": {
+        "NEXTAUTH_URL": "http://127.0.0.1:3100",
+        "DATABASE_URL": "postgresql://postgres:${POSTGRES_PASSWORD:?private development secret required}@postgres:5432/postgres",
+        "SALT": "${SALT:?private development secret required}",
+        "ENCRYPTION_KEY": "${ENCRYPTION_KEY:?private development secret required}",
+        "TELEMETRY_ENABLED": "false",
+        "LANGFUSE_IN_APP_AGENT_ENABLED": "false",
+        "LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES": "false",
+        "LANGFUSE_AI_GATEWAY_ENABLED": "false",
+        "CLICKHOUSE_URL": "http://clickhouse:8123",
+        "CLICKHOUSE_MIGRATION_URL": "clickhouse://clickhouse:9000",
+        "CLICKHOUSE_USER": "clickhouse",
+        "CLICKHOUSE_PASSWORD": "${CLICKHOUSE_PASSWORD:?private development secret required}",
+        "CLICKHOUSE_CLUSTER_ENABLED": "false",
+        "REDIS_HOST": "redis",
+        "REDIS_PORT": "6379",
+        "REDIS_AUTH": "${REDIS_AUTH:?private development secret required}",
+        "LANGFUSE_S3_EVENT_UPLOAD_BUCKET": "langfuse",
+        "LANGFUSE_S3_EVENT_UPLOAD_REGION": "auto",
+        "LANGFUSE_S3_EVENT_UPLOAD_ACCESS_KEY_ID": "minio",
+        "LANGFUSE_S3_EVENT_UPLOAD_SECRET_ACCESS_KEY": "${MINIO_ROOT_PASSWORD:?private development secret required}",
+        "LANGFUSE_S3_EVENT_UPLOAD_ENDPOINT": "http://minio:9000",
+        "LANGFUSE_S3_EVENT_UPLOAD_FORCE_PATH_STYLE": "true",
+        "LANGFUSE_S3_EVENT_UPLOAD_PREFIX": "events/",
+        "LANGFUSE_S3_MEDIA_UPLOAD_BUCKET": "langfuse",
+        "LANGFUSE_S3_MEDIA_UPLOAD_REGION": "auto",
+        "LANGFUSE_S3_MEDIA_UPLOAD_ACCESS_KEY_ID": "minio",
+        "LANGFUSE_S3_MEDIA_UPLOAD_SECRET_ACCESS_KEY": "${MINIO_ROOT_PASSWORD:?private development secret required}",
+        "LANGFUSE_S3_MEDIA_UPLOAD_ENDPOINT": "http://minio:9000",
+        "LANGFUSE_S3_MEDIA_UPLOAD_FORCE_PATH_STYLE": "true",
+        "LANGFUSE_S3_MEDIA_UPLOAD_PREFIX": "media/",
+        "LANGFUSE_S3_BATCH_EXPORT_ENABLED": "false"
+      }
+    },
+    "postgres": {
+      "networks": [
+        "private"
+      ],
+      "restart": "no",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "10m",
+          "max-file": "2"
+        }
+      },
+      "image": "docker.io/postgres@sha256:ff87138949ad9a46f32ff23bd6852b52ce024a13dffe9b4087be98292cdd3b4f",
+      "environment": {
+        "POSTGRES_USER": "postgres",
+        "POSTGRES_PASSWORD": "${POSTGRES_PASSWORD:?private development secret required}",
+        "POSTGRES_DB": "postgres",
+        "TZ": "UTC",
+        "PGTZ": "UTC"
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "${NSTACK_STATE:?set private nstack state root}/native-tools/ai-workflows/langfuse-data/${COMPOSE_PROJECT_NAME:?set unique project name}/postgres_data",
+          "target": "/var/lib/postgresql/data",
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "pg_isready -U postgres"
+        ],
+        "interval": "3s",
+        "timeout": "3s",
+        "retries": 10
+      }
+    },
+    "redis": {
+      "networks": [
+        "private"
+      ],
+      "restart": "no",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "10m",
+          "max-file": "2"
+        }
+      },
+      "image": "docker.io/redis@sha256:2e3eb11462c4e3759e6972678dd051d150ff54b1e60714b3c33b701260172a90",
+      "environment": {
+        "REDIS_AUTH": "${REDIS_AUTH:?private development secret required}"
+      },
+      "command": [
+        "sh",
+        "-c",
+        "exec redis-server --requirepass \"$$REDIS_AUTH\" --maxmemory-policy noeviction"
+      ],
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "${NSTACK_STATE:?set private nstack state root}/native-tools/ai-workflows/langfuse-data/${COMPOSE_PROJECT_NAME:?set unique project name}/redis_data",
+          "target": "/data",
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "REDISCLI_AUTH=\"$$REDIS_AUTH\" redis-cli ping | grep -q PONG"
+        ],
+        "interval": "3s",
+        "timeout": "10s",
+        "retries": 10
+      }
+    },
+    "clickhouse": {
+      "networks": [
+        "private"
+      ],
+      "restart": "no",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "10m",
+          "max-file": "2"
+        }
+      },
+      "image": "docker.io/clickhouse/clickhouse-server@sha256:de3e47c64078aa196dae2349e048fc98ba81947f651f5c20e06e46baea8ae40a",
+      "user": "101:101",
+      "environment": {
+        "CLICKHOUSE_DB": "default",
+        "CLICKHOUSE_USER": "clickhouse",
+        "CLICKHOUSE_PASSWORD": "${CLICKHOUSE_PASSWORD:?private development secret required}"
+      },
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "${NSTACK_STATE:?set private nstack state root}/native-tools/ai-workflows/langfuse-data/${COMPOSE_PROJECT_NAME:?set unique project name}/clickhouse_data",
+          "target": "/var/lib/clickhouse",
+          "bind": {
+            "create_host_path": false
+          }
+        },
+        {
+          "type": "bind",
+          "source": "${NSTACK_STATE:?set private nstack state root}/native-tools/ai-workflows/langfuse-data/${COMPOSE_PROJECT_NAME:?set unique project name}/clickhouse_logs",
+          "target": "/var/log/clickhouse-server",
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD-SHELL",
+          "wget --no-verbose --tries=1 --spider http://localhost:8123/ping || exit 1"
+        ],
+        "interval": "5s",
+        "timeout": "5s",
+        "retries": 10
+      }
+    },
+    "minio": {
+      "networks": [
+        "private"
+      ],
+      "restart": "no",
+      "logging": {
+        "driver": "json-file",
+        "options": {
+          "max-size": "10m",
+          "max-file": "2"
+        }
+      },
+      "image": "cgr.dev/chainguard/minio@sha256:db3f583fa49121942168bd6383a773b2cde3384c9a99bf7193560b9a0f3a28fd",
+      "entrypoint": [
+        "sh"
+      ],
+      "command": [
+        "-c",
+        "mkdir -p /data/langfuse && minio server --address \":9000\" --console-address \":9001\" /data"
+      ],
+      "environment": {
+        "MINIO_ROOT_USER": "minio",
+        "MINIO_ROOT_PASSWORD": "${MINIO_ROOT_PASSWORD:?private development secret required}"
+      },
+      "ports": [
+        "127.0.0.1:9190:9000"
+      ],
+      "volumes": [
+        {
+          "type": "bind",
+          "source": "${NSTACK_STATE:?set private nstack state root}/native-tools/ai-workflows/langfuse-data/${COMPOSE_PROJECT_NAME:?set unique project name}/minio_data",
+          "target": "/data",
+          "bind": {
+            "create_host_path": false
+          }
+        }
+      ],
+      "healthcheck": {
+        "test": [
+          "CMD",
+          "mc",
+          "ready",
+          "local"
+        ],
+        "interval": "1s",
+        "timeout": "5s",
+        "retries": 5
+      }
+    }
+  },
+  "networks": {
+    "private": {
+      "internal": true
+    }
+  }
+}

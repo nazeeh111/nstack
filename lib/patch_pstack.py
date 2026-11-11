@@ -8,7 +8,6 @@ def text_port(text,file):
  if file.name=='render.md':
   text=re.sub(r'(?s)Render each.*?(?=## Colors)', 'Keep the actual Mermaid source and use the existing native Mermaid viewer or selected diagram exporter when an SVG/image is needed. Verify labels, bug paths and marks in the exported artifact. A renderer failure does not negate the model result; return source and error. No global Pele install or browser bootstrap is required.\n\n',text,count=1)
   text=text.replace('Pele ignores Mermaid `theme` and `themeVariables`.', 'Historical Pele-specific styles below are reference examples, not a required renderer. Native Mermaid uses its own theme support.')
- text=text.replace('Filled in by [arena](../../arena/SKILL.md).','Filled in by the native task owner from the compared alternatives and evidence.')
  text=text.replace('If you cannot stop it, interleave the sides so both see the same noise, and say so in the report.', 'Do not stop unrelated processes; interleave the comparisons under similar load or defer them, and record the confound.')
  text=text.replace('`nproc`','`sysctl -n hw.logicalcpu` on macOS (`nproc` on Linux)')
  text=re.sub(r'(?m)^.*if you cannot stop.*$', 'Do not stop unrelated processes. Record contention and rerun at a suitable time or report the confound.',text)

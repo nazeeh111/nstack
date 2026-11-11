@@ -109,28 +109,20 @@ def patch(id,name,spec,out):
    file.write_text(text)
   s=p.read_text()
   if name=='hyperframes':
-   s=change(s,'Use it unless another framework or a plain browser recording is asked for.','Use it when standalone HTML motion is the requested or existing source. Preserve a different incumbent renderer and its editable source.')
    s=re.sub(r'; at the start of a new video,.*?remaining plan usage.*?\)\.', '.',s)
-   s=change(s,'three storylines that are three different films, in words only; the person picks unless they asked for the file or no stops.','compare distinct story directions when useful, then choose from the supplied brief without a compulsory story-choice gate. Ask only for material missing direction.')
-   s=change(s,'- Render when the person approves the Studio preview, asks for the file or asks for no stops, after your check and review pass; otherwise stop at the preview and wait.','- After checks and actual frame review, render the requested final video. A sufficient create/build request carries authority through its finished artifact. Stop at a preview only when that is the requested deliverable.')
   if name=='hyperframes-cli':
    s=re.sub(r'A `--json` result may carry.*?(?=\n\n)', 'Record actual runtime version and task diagnostics. Do not promote updates or change the locked release during a run.',s,flags=re.S)
-   s=change(s,'give the person the project URL and wait, unless they asked for the file or for no stops. Passing checks alone is not a reason to render.','inspect the current preview and continue to the requested final render after checks. A preview-only request ends at the preview.')
    s=s.replace('; paid plan: `cloud render --fps <data-fps> --quality high -o out.mp4`','; local free execution only unless a separate route is specifically authorized')
    s=re.sub(r'(?m)^\| Desktop app \|.*$', '| Desktop app | Only for an explicit requested operation; no automatic launch or promotion |',s)
-  s+='\n## Locked local invocation\n\nSet HYPERFRAMES_NO_TELEMETRY=1 and DO_NOT_TRACK=1 in the actual process environment. Set NSTACK_HYPERFRAMES to the absolute project/private executable from the commissioned immutable source/package lock. Check its actual help and browser/FFmpeg lock. Never use unbounded npx/latest, install optional sibling skills, send feedback, launch a desktop app or buy cloud/voice/image services by default. Only these four selected leaves may activate; others are references to inspect for a separate explicit need.\n\n'+ROUTING
+  s+='\n## Native runtime binding\n\nUse the recorded locked local executable and HYPERFRAMES_NO_TELEMETRY=1, DO_NOT_TRACK=1. Optional services require their actual access and spending authority.\n'
  elif id=='P226':
   # Fix only the actual monorepo router's malformed sibling coordinate.
   s=s.replace('(./remotion-', '(../remotion-')
   s=s.replace('npx create-video@latest','npx --yes create-video@4.0.540')
   s=s.replace('npx remotion','./node_modules/.bin/remotion')
-  if name=='remotion-best-practices':
-   s=change(s,"Don't render the video by default unless they are very explicit. They want to instead see an interactive preview.",'Produce the requested deliverable. A make/create/build video request normally includes its final rendered artifact; a preview-only request ends at the interactive preview.')
-   s=change(s,'Only render if the user is very explicit in asking for it.','Render the finished video when that is the requested artifact, after actual checks. No extra confirmation is needed for an already authorized output.')
   if name=='remotion-create':
-   s=change(s,'The video creation process has finished.','Continue until the requested final video or preview is finished. Preserve editable sources and use the bundled version-matched render browser.')
    s=s.replace('npm i\n', 'npm install --package-lock-only\n# Verify all Remotion package versions are exactly4.0.540, then npm ci from the reviewed lock.\nnpm ci\n')
-  s+='\n## Version and artifact acceptance\n\nThis source leaf is4.0.540. Resolve create-video and all Remotion packages to exactly4.0.540 with artifact integrity and a saved dependency lock before execution; do not mix package versions or use @latest. Preserve existing project edits and its incumbent stack. Check installed help and use the version-matched bundled rendering browser. Produce the requested final artifact after frame/layout/audio checks, keep editable JSX/assets and reopen the final export.\n\n'+ROUTING
+  s+='\n## Native runtime binding\n\nUse the version-matched Remotion4.0.540 dependencies and rendering browser from the existing project lock.\n'
  elif id=='P224':
   # The manifest selects expertise references, explicitly not whole orchestration.
   pipeline=out/'references/pipeline.md';pipeline.write_text(scope_pipeline(pipeline.read_text(),spec))
@@ -159,6 +151,6 @@ Decode the actual master or capture the actual gameplay with audio, measure even
  elif id=='P238':
   s=re.sub(r'(?m)^description:.*$', 'description: First-pass speech-heavy video/audio cuts or an editable timeline with auto-editor. Recording or microphone capture activates only when explicitly requested; editing an existing file does not authorize capture.',s)
   s=change(s,'## Record and edit a microphone','## Record only when explicitly requested\n\nSkip this section for existing media. Do not start any microphone capture unless recording is part of the user\'s request. Use only the authorized input device and duration.')
-  s+='\n## Non-destructive cut acceptance\n\nPreserve originals. Start an isolated trial with --margin 0.2s, preview the removed segments with the installed version\'s inverted-edit option, and check clipped words/meaning before accepting cuts. Export an editable timeline when requested and reopen it with target timing. Record exact CLI/runtime version, input hash, keep/remove intervals and output hash. An analysis completion is not an accepted edit.\n'
+
  else:raise ValueError('Media leaf is not mapped')
  p.write_text(s)

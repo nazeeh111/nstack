@@ -29,6 +29,75 @@ class OpenCodeSetupTests(unittest.TestCase):
             self.assertEqual((home / 'artifact.md').read_text(), 'Keep me\n')
             self.assertEqual((home / '.codex/AGENTS.md').read_text(), 'User policy\n')
 
+
+    def test_explicit_knowledge_scope_preserves_other_policy_and_undo(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home,state,cli=self.fixture(P(tmp).resolve()); m.apply(home,state,cli)
+            vault=home/'Knowledge';vault.mkdir();(vault/'Home.md').write_text('canonical')
+            config=home/'.config/opencode/opencode.json';data=json.loads(config.read_text())
+            data['permissions']=[{'action':'shell','resource':'*','effect':'ask'},{'action':'external_directory','resource':'*','effect':'ask'}]
+            data['policies']=[{'action':'tool.use','resource':'read:'+str(home/'.ssh/*'),'effect':'deny'}]
+            before=json.dumps(data,indent=2)+'\n';config.write_text(before)
+            result=m.apply(home,state,cli,vault=vault);actual=json.loads(config.read_text())
+            self.assertEqual(actual['policies'],data['policies']);self.assertEqual(actual['permissions'][:2],data['permissions'])
+            self.assertEqual(actual['permissions'][2:], [{'action':'external_directory','resource':str(vault)+'/*','effect':'allow'}])
+            for role in ['build','general']:self.assertEqual(actual['agents'][role]['permissions'],[{'action':'edit','resource':str(vault)+'/*','effect':'ask'}])
+            self.assertNotIn('explore',actual['agents']);self.assertNotIn('plan',actual['agents'])
+            self.assertNotIn('model',actual);self.assertNotIn('providers',actual)
+            journal=(P(result['run'])/'journal.json').read_bytes();raw=config.read_bytes()
+            self.assertFalse(m.apply(home,state,cli,vault=vault)['changed']);self.assertEqual(raw,config.read_bytes());self.assertEqual(journal,(P(result['run'])/'journal.json').read_bytes())
+            m.rollback(result['run']);self.assertEqual(config.read_text(),before);self.assertEqual((vault/'Home.md').read_text(),'canonical')
+            denied={**data,'permissions':[{'action':'external_directory','resource':str(vault)+'/*','effect':'deny'}]}
+            with self.assertRaisesRegex(ValueError,'denial'):m.knowledge_permissions(denied,home,vault)
+            with self.assertRaises(ValueError):m.knowledge_permissions(data,home,home)
+            private={'action':'external_directory','resource':str(vault/'private')+'/*','effect':'deny'}
+            narrowed=m.knowledge_permissions({**data,'permissions':data['permissions']+[private]},home,vault)
+            self.assertEqual(narrowed['permissions'][-1],private)
+            for action,resource in [('edit','*'),('*','*'),('external_directory','~/Knowledge/*'),('external_directory','$HOME/Knowledge/*'),('e*',str(vault)+'/*')]:
+                with self.assertRaisesRegex(ValueError,'denial'):m.knowledge_permissions({**data,'permissions':[{'action':action,'resource':resource,'effect':'deny'}]},home,vault)
+            for private_name in ['.kube','.gnupg','.azure','.docker']:
+                folder=home/private_name;folder.mkdir()
+                with self.assertRaises(ValueError):m.knowledge_permissions(data,home,folder)
+
+    def test_vault_edit_prompts_preserve_global_narrow_denials_and_agent_precedence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home, state, cli = self.fixture(P(tmp).resolve())
+            vault = home / 'Knowledge'; vault.mkdir()
+            # Neither narrow denial covers Home.md. The second uses native
+            # action/resource wildcards and home expansion.
+            denials = [
+                {'action': 'edit', 'resource': str(vault / 'private') + '/*', 'effect': 'deny'},
+                {'action': 'e*', 'resource': '$HOME/Knowledge/*/sealed/*', 'effect': 'deny'},
+            ]
+            config = {'permissions': [
+                {'action': 'external_directory', 'resource': '*', 'effect': 'ask'}, *denials,
+            ]}
+            actual = m.knowledge_permissions(config, home, vault)
+            ask = {'action': 'edit', 'resource': str(vault) + '/*', 'effect': 'ask'}
+            for role in ('build', 'general'):
+                self.assertEqual(actual['agents'][role]['permissions'], [ask, *denials])
+            grant = {'action': 'external_directory', 'resource': str(vault) + '/*', 'effect': 'allow'}
+            self.assertEqual([rule for rule in actual['permissions'] if rule != grant], config['permissions'])
+            self.assertEqual(m.knowledge_permissions(actual, home, vault), actual)
+            # Existing agent rules keep their original ordering and precedence.
+            existing = {'action': 'edit', 'resource': str(vault / 'private/reviewed') + '/*', 'effect': 'allow'}
+            custom = {**config, 'agents': {'build': {'permissions': [denials[0], existing]}}}
+            merged = m.knowledge_permissions(custom, home, vault)
+            rules = merged['agents']['build']['permissions']
+            self.assertEqual(rules[-2:], [denials[0], existing])
+            self.assertEqual(rules.count(denials[0]), 1)
+            self.assertEqual(m.knowledge_permissions(merged, home, vault), merged)
+            m.apply(home, state, cli)
+            path = home / '.config/opencode/opencode.json'
+            data = json.loads(path.read_text()); data.update(config)
+            path.write_text(json.dumps(data))
+            installed = m.apply(home, state, cli, vault=vault)
+            raw = path.read_bytes(); journal = P(installed['run']) / 'journal.json'
+            receipt = journal.read_bytes()
+            self.assertFalse(m.apply(home, state, cli, vault=vault)['changed'])
+            self.assertEqual(path.read_bytes(), raw)
+            self.assertEqual(journal.read_bytes(), receipt)
+
     def test_existing_config_refused_before_any_profile_changes(self):
         with tempfile.TemporaryDirectory() as tmp:
             home, state, cli = self.fixture(P(tmp).resolve())

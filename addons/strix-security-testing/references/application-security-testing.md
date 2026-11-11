@@ -1,20 +1,66 @@
-# Whole-product Strix assessment
+---
+name: application-security-testing
+description: Application security testing (AppSec) across a whole product with Strix — decide which asset needs which test (source code, running web app, API, CI pipeline), run it, and turn the results into a ranked remediation plan. Autonomous agents exploit and prove each issue instead of emitting static-analysis alerts, so the plan is ordered by what is actually reachable. Use when the user asks for an application security review or audit, an appsec assessment, vulnerability scanning across their stack, a security review before a launch or a customer security questionnaire, or does not yet know which kind of security test they need.
+license: Apache-2.0
+metadata:
+  author: usestrix
+  homepage: https://docs.strix.ai
+---
 
-Modified by nstack from the pinned usestrix method recorded in [SOURCE.md](../SOURCE.md).
+# Application security testing
 
-Map the actual product before selecting a run: repositories/services, running environments, APIs, authentication/tenancy model, test accounts, exclusions, allowed side effects and budget. Read available project evidence first and ask only for material missing scope. Prefer an authorized staging environment; exploit payloads can change data. When production is excluded or no live environment exists, state that code review cannot prove live exploitability.
+Entry point for "make my application secure" requests, where the target is not yet a single URL or repo. The job here is to pick the right test per asset, run it, and produce one ranked plan — not to run everything at maximum depth.
 
-Choose the smallest useful assessment per asset:
+Install, LLM setup, all CLI flags, and the managed-cloud path live in the **penetration-testing-with-strix** skill. Read it first if `strix --version` fails. For a run with no Docker and no LLM key, the same binary drives the managed platform: `strix cloud login`, then `strix cloud scans start ...` (details in **managed-pentesting-with-strix**).
 
-| Asset or request | Method |
+Only test assets the user owns or is authorized to test. Confirm authorization before the first run, and prefer staging over production, because the agents send real exploit payloads and can change data.
+
+## 1. Map the assets
+
+Ask (or read from the repo) and write the answers down before scanning:
+
+- **Source** — one repo, a monorepo, several services? Which languages/frameworks?
+- **Running environments** — is there a staging deployment? A public production site? A local dev server only?
+- **APIs** — REST, GraphQL, gRPC? Is there an OpenAPI/GraphQL schema?
+- **Authentication** — can you get two test accounts in different tenants? Most high-impact bugs need them.
+- **Constraints** — out-of-scope paths, whether production may be touched, budget and wall-clock limits.
+
+If there is no staging environment and production is off limits, say so early. A code-only review is still valuable, but it cannot prove exploitability against a live app.
+
+## 2. Pick the right test per asset
+
+| Asset | Skill to use |
 | --- | --- |
-| Repository/working tree | [Code assessment](find-security-vulnerabilities-in-code.md) |
-| Running app | [Web assessment](web-app-penetration-testing.md) |
-| API | [API assessment](api-security-testing.md) |
-| OWASP category mapping | [OWASP assessment](owasp-top-10-testing.md) |
-| Requested pipeline checks | [CI drafting](ci-security-scanning-with-strix.md) |
-| Explicitly selected hosted route | [Managed method](managed-pentesting-with-strix.md) |
+| Repository or working tree | **find-security-vulnerabilities-in-code** |
+| Live web app or staging site | **web-app-penetration-testing** |
+| REST/GraphQL/gRPC API | **api-security-testing** |
+| Assessment mapped to OWASP categories | **owasp-top-10-testing** |
+| Every pull request, continuously | **ci-security-scanning-with-strix** |
+| No Docker, no LLM key, or a report an auditor will accept | **managed-pentesting-with-strix** |
 
-Read [runtime and results](penetration-testing-with-strix.md) before any execution. A whole-product review does not automatically authorize cloud setup or continuous scanning. Review source first when it clarifies the authorization model; add an authorized running instance when needed to establish exploitability. Read each result before deciding whether another asset or deeper run earns its cost.
+Those skills carry the flags, credential handling, and result-reading details. Do not duplicate their instructions here.
 
-Consolidate results by shared root cause and demonstrated impact. Separate unauthenticated exploits, cross-tenant/privilege escalation and authenticated issues from unproven configuration, dependency or hardening observations. Do not duplicate one root cause across the code and live runs. Explain assets and categories not reached, incomplete runs and cost/coverage limits. Continue to [remediation](fix-security-vulnerabilities-with-strix.md) only for an authorized fix.
+Sequence for a first assessment:
+
+1. Review the code. It is the cheapest run and it maps the authorization model.
+2. Pentest staging with credentials, and pass the repo as a second target so the agents keep source context.
+3. Add CI scanning, so later regressions are caught without another manual pass.
+
+Run one asset at a time and read each report before starting the next. Findings from the code review make the live run sharper.
+
+## 3. Consolidate into one plan
+
+Findings arrive per run in `strix_runs/<run>/`. Merge them into a single list and rank by **proven impact**, not by scanner severity:
+
+1. Validated exploits reachable without authentication.
+2. Validated cross-tenant or privilege-escalation issues.
+3. Validated issues needing an authenticated account.
+4. Unproven observations (configuration, dependency, and hardening notes) — flag as such, and never present them as confirmed vulnerabilities.
+
+Deduplicate: the same root cause often surfaces in both the code review and the live pentest.
+
+## 4. Be honest about coverage
+
+State plainly what was *not* tested — assets with no staging environment, categories a black-box run cannot reach (logging and alerting, supply-chain integrity, insecure design), and any run that hit its budget or turn cap before finishing. Check `run.json` status and cost against `--max-budget` for each run. An empty result set from a truncated scan is not a clean bill of health.
+
+Then remediate with **fix-security-vulnerabilities-with-strix**, which re-runs Strix against each fix to prove the exploit no longer works.

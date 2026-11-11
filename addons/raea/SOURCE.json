@@ -6,8 +6,520 @@
   "engine_license": "FSL-1.1-ALv2; downloaded separately, not vendored",
   "skills_repository": "shinyobjectz/raea-skills",
   "skills_revision": "c507860150995eb7c22ef9db23dee636c832428a",
-  "skills_license": "Apache-2.0; complete matching support acquired privately by the recipe",
+  "skills_license": "Apache-2.0; complete matching upstream active skill and 82 supporting files retained with upstream license",
   "integration_license": "MIT",
   "activation": "On demand; pinned offline bounded local render only; no upstream skill installer, hooks, MCP, models or provider setup",
-  "known_limit": "Pinned binary predates upstream GPU-error-reporting fix; artifact validation and current visual inspection required."
+  "known_limit": "Pinned binary predates upstream GPU-error-reporting fix; artifact validation and current visual inspection required.",
+  "method_source_path": "skills/raea/SKILL.md",
+  "method_repository": "shinyobjectz/raea-skills",
+  "method_revision": "c507860150995eb7c22ef9db23dee636c832428a",
+  "method_sha256": "e215226af5cbf44ad5bbe57a41908700eeffe2748a29a56a7aceba743ce0da2d",
+  "method_metadata_tested_against": "0.1.0-rc1",
+  "adaptation": "Complete upstream main and all 83 skill-folder files; one link to a separate native offline recipe binding. No replacement rendering method. Exact entry delta retained as PORT.patch.",
+  "source_files": {
+    "skills/raea/collaborate.md": {
+      "path": "collaborate.md",
+      "sha256": "648885faf30ebc03e148bc156447f05cb429d16714bad37258418affe2f6e779",
+      "git_blob": "bf656a47a6011b59387b5d942ab8ce033cd7e8b9",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion.md": {
+      "path": "motion.md",
+      "sha256": "6cfdf84aad5dec03c47a453f3c8b4b5d4ccc7a5c9ab77337e6a748aaa51c8919",
+      "git_blob": "a485bbe02d469b69590c8d711f1880a5988014fa",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d.md": {
+      "path": "3d.md",
+      "sha256": "aaf04e0df52d3288e30c3156ab4e083f5dd41a83f248cbe164123f111a352480",
+      "git_blob": "57e5b94b3045dc91cfab22f1b93b8a63e58ddcab",
+      "git_mode": "100644"
+    },
+    "skills/raea/footage.md": {
+      "path": "footage.md",
+      "sha256": "9b57a3d7b1154a05ab1f38013ad374bc228c0fe82c2b05bf36a75d4ead88a23c",
+      "git_blob": "5e1be651b516010e208e37eec32ee0f0f8c97587",
+      "git_mode": "100644"
+    },
+    "skills/raea/gen.md": {
+      "path": "gen.md",
+      "sha256": "3463273c579542a85f65ed0f78d8953ecf225e1c77e91541a4c4d8f51479dc48",
+      "git_blob": "cc2ea8bfda5928fc46ca0d0b3d39675d53aa4f0c",
+      "git_mode": "100644"
+    },
+    "skills/raea/sound.md": {
+      "path": "sound.md",
+      "sha256": "485633fc258cc2dfb98ac8c06f34f20af290206e82cfb3d41215d511784d3479",
+      "git_blob": "968b4d4a8f4ffb628451bcc44dec7f4faf7f2eda",
+      "git_mode": "100644"
+    },
+    "skills/raea/graphics.md": {
+      "path": "graphics.md",
+      "sha256": "a3995936f3895ce255e2d0202a48c6bbe9b2133661c273977f4052b75ae49138",
+      "git_blob": "d76750f6a25543c65a0ca68d20ccaa68a4f80547",
+      "git_mode": "100644"
+    },
+    "skills/raea/delivery.md": {
+      "path": "delivery.md",
+      "sha256": "52417b19ef986450fb931970775acc0a22834d23936035c7a337e2be921c0027",
+      "git_blob": "666897c96a483733421dcf5b0cf527c3bfa98115",
+      "git_mode": "100644"
+    },
+    "skills/raea/SKILL.md": {
+      "path": "SKILL.md",
+      "sha256": "e215226af5cbf44ad5bbe57a41908700eeffe2748a29a56a7aceba743ce0da2d",
+      "git_blob": "838475c1c9859dda278fbef4d034cc6a3b1ba2a4",
+      "git_mode": "100644"
+    },
+    "skills/raea/apps.md": {
+      "path": "apps.md",
+      "sha256": "b8c3d91aedc42ecddee26b132d8d547a5234ffb93d8248470b71b851ce6ed8fb",
+      "git_blob": "d943f8032cd2e71bf147361b822748d3231d0042",
+      "git_mode": "100644"
+    },
+    "skills/raea/games.md": {
+      "path": "games.md",
+      "sha256": "3651457d963383dbf13ec85ce204efc4fd9e29665c64a2b8fc0bc1f1ede1fd13",
+      "git_blob": "a872f77f963e2cdc4253d07f87ba9048ee5fc679",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/scenes.md": {
+      "path": "3d/scenes.md",
+      "sha256": "4ab2fb0a90a10581d01bc1cc66749ce0b0b3b4122fed6158aaeab4a90f993750",
+      "git_blob": "483d6152dcf0b5611397de8bc386a163646a7772",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/assets.md": {
+      "path": "3d/assets.md",
+      "sha256": "51077447d6fcafac6fd69f132c755d0d6fb0f781a984cc76075c8b4ff3ec0d9f",
+      "git_blob": "ff65a2bf78d25d3b527c85a3bfccfc790c0a8456",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/animation.md": {
+      "path": "3d/animation.md",
+      "sha256": "c5c943bab0e4944643cfcd2b375c7dd402943d779dfd5ca8d713fd09bf644d8e",
+      "git_blob": "214a978fc24b0d91d4d556ba37cd94d4d769d013",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/characters.md": {
+      "path": "3d/characters.md",
+      "sha256": "3201370220549eafb095ccc457845de2400751947864d63b2bcc017f72aa3300",
+      "git_blob": "4c59a7f13fbd98e294458d523b585f383a1ef897",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/rows.md": {
+      "path": "3d/rows.md",
+      "sha256": "3bf0e30c7a0077b49863c46f979b83c27c8c788c96f6609b936776268f507e2a",
+      "git_blob": "3dc2319794b8aff2924a05f4a1240ebab4d91a0a",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/lights.md": {
+      "path": "3d/lights.md",
+      "sha256": "5a06b81e11971cf04f55137ca151ed17c259b9dba7be9df579da05dacd5b6bd1",
+      "git_blob": "829fb6c6f37da95d60578cc6c5b081d7b2461a4a",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/NOTICE": {
+      "path": "3d/NOTICE",
+      "sha256": "93c9fe611cd2bcc5db32341955e9269404584d96ccceed904baecf757244f012",
+      "git_blob": "4146eada4c6358ee6db4d465d0f218ed0874be54",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/limits.md": {
+      "path": "3d/limits.md",
+      "sha256": "05e03ee799ab5653f0b752f4e37df32fff694ef9a164a221ca8d8098fc38ee7f",
+      "git_blob": "49c4627eaa6c339be16a59c8c4bd7818fe1e3e62",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/splats.md": {
+      "path": "3d/splats.md",
+      "sha256": "f4d72b5e8d640c74099286c352deea8fd411ff82b4b0a23d218a7f293af93e0c",
+      "git_blob": "4a0984c96eb561af3adb5030cfa2fa765d6dc446",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/post.md": {
+      "path": "3d/post.md",
+      "sha256": "9e825253ced71905cff8641b3d26b6e1c68b793c6845b278241076ca7c1fe905",
+      "git_blob": "bc31385de538f38191963d19d1b6ce7540b2ca7e",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/plugins.md": {
+      "path": "3d/plugins.md",
+      "sha256": "192092f8c34b86faa3b01c0a6aa35d8f074093223df72f61afa859cffcebc1dc",
+      "git_blob": "b167785d58868e6d38df775f27ba9d631bc803c2",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/rooms.md": {
+      "path": "3d/rooms.md",
+      "sha256": "66c3abae3f24a43656dd810d5a1a48ab468c97e4648482e6408f1bd2ece7d873",
+      "git_blob": "a2bbed267c382024cd4eb78bfbca7f565c57be44",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/scene.md": {
+      "path": "3d/scene.md",
+      "sha256": "5ed077b9055c030bc7d7020ee3440bb46739f0cce76ad83f547b31fa7c13c4a2",
+      "git_blob": "f1d58c9b70de38ea179253191cb32411ca6dc311",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/meshes.md": {
+      "path": "3d/meshes.md",
+      "sha256": "f6ff9f860b72b0c0b5868450d914f1d76008b5e71979b235d8256cf649ebfe74",
+      "git_blob": "bd43028682f891237386cd87ef049cc459e39843",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/prompts.md": {
+      "path": "3d/prompts.md",
+      "sha256": "20b0bf436fbd963381ce77c0b1e4d30d41a7969a9864a2e6e12f463fa97ed465",
+      "git_blob": "4cb0c230590fbb18cb4852d94798d288cf1a416e",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/games.md": {
+      "path": "3d/games.md",
+      "sha256": "3808c8bec89c6bd901fcd8affc959795c4049bf000950062ece9ff4c722bced1",
+      "git_blob": "f0ceb91c5153c9eb4b4cbf3cbc275987f9d6ae11",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/blender.md": {
+      "path": "3d/blender.md",
+      "sha256": "ee187d3f43aed232bc884e1f5c273e489d2f8a8383f15125da7d45cb8124cb8b",
+      "git_blob": "415f23ef6c7e9a6b99ec7308b075b6df8861e945",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/materials.md": {
+      "path": "3d/materials.md",
+      "sha256": "0ba8f761fa689016b2e1c1a8e8c339cc6e26d747b42e25d32c2c694594933399",
+      "git_blob": "59b09540dc72a822faaacf820008ff009d566e35",
+      "git_mode": "100644"
+    },
+    "skills/raea/3d/liquids.md": {
+      "path": "3d/liquids.md",
+      "sha256": "9859ec628a3959bb01216b8931df01b5952a25a68468e6d65e68e48bf9ba19fc",
+      "git_blob": "67024c0786ecff1e83ff8244cd6741fffa68a006",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/ROUTER.md": {
+      "path": "craft/ROUTER.md",
+      "sha256": "a10bbbbfc9dfe90df5b9acb27238ac54aaa9fafd7915dbcb2fae0e89c043f214",
+      "git_blob": "69fd1e5e874a6bb7704670a6f33af2e2ce6626d4",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/NOTICE": {
+      "path": "craft/NOTICE",
+      "sha256": "524802a7af35dd055de99f1e784c1ec23630869ddebe3c2da9ee4654d2c655db",
+      "git_blob": "7b5bb51895f428b955022dc01db7b94a011998c2",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/rubric.md": {
+      "path": "craft/rubric.md",
+      "sha256": "23bb4ab30b1fb3f118a4c659033572b1a7c7c35b727630c1ac8575be695fc984",
+      "git_blob": "eef3827a527db6ab915a4bc5d7c57e5ce263d3da",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/floor.md": {
+      "path": "craft/floor.md",
+      "sha256": "3a22999eb73ff7981891fffbcff2ec1befb9448e88ec0297c98b2e5ec4c779d8",
+      "git_blob": "c23ebb92869c6bce7c5fece864ac46f2405ca41c",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/assets.md": {
+      "path": "motion/assets.md",
+      "sha256": "3477212d7634b5bb43705ff33dcdbe4f555eea985efd9f3333d3c71bb7c59478",
+      "git_blob": "8a063fa0c9d77126aa55d61fb504ac15afef5c3a",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/parts.md": {
+      "path": "motion/parts.md",
+      "sha256": "309060d1028c60a9462885de3a28cd33021483f9c531622dd043d8e54a3b498e",
+      "git_blob": "e5d9e1763405249457d708dffc01653e660e924d",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/words.md": {
+      "path": "motion/words.md",
+      "sha256": "2cfe540ce061b58aeea681e61baa31c307fdfbca2bccf0a298297840bfc8984f",
+      "git_blob": "9ff7c7b1e49773961b107b365977779c2c5e5d66",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/music.md": {
+      "path": "motion/music.md",
+      "sha256": "639fe67dcafb2c2d9ffeef4fb1823c5cbe65fdf2470c68b7c08bcffcfac46e94",
+      "git_blob": "7cf6ff9bb0badf8b8ce75f1d2622ef5b7ad3355d",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/timing.md": {
+      "path": "motion/timing.md",
+      "sha256": "eecffcc5b2ea11a8a8524933218aebbfea75b6949a7cc5bccf37a0416a98de1b",
+      "git_blob": "b4a6d444688e49150d7caf47e2747db8fd9c67aa",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/brand.md": {
+      "path": "motion/brand.md",
+      "sha256": "094484db3d808c950f914af6dfc467d74dd4ece76ed578e3425eb07442fbefc7",
+      "git_blob": "c7cb320edb269d3ff0b17b452ee89cac2490b297",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/compositions.md": {
+      "path": "motion/compositions.md",
+      "sha256": "aa620eb4ea15d7c31358ccca020646be65b8bfbb73241fac69e8b8519440657c",
+      "git_blob": "3ce2824e092853dc9de2bbd091a894f09c4b839c",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/placement.md": {
+      "path": "motion/placement.md",
+      "sha256": "320b26161fe43fe1ff4b35a686fab026f32972e33e1694bbabf2dd8f516e0b04",
+      "git_blob": "28298088f80db27785d8f55512f92b215332a7ac",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/3d.md": {
+      "path": "motion/3d.md",
+      "sha256": "77c2934b691b18875c502264a10675d81ae1519dcc9280f7e8222fe517d2226e",
+      "git_blob": "d2ee11908f3f2a5b8e252348917d025021b4964d",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/animating.md": {
+      "path": "motion/animating.md",
+      "sha256": "5db99679fd4a1fb1a2356e873e668615ad1d65473bc62519989dde3a4075e445",
+      "git_blob": "3b8dbcd1bcedf728848cd9a34684ed4de4346328",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/footage.md": {
+      "path": "motion/footage.md",
+      "sha256": "ed519a06095a90ad6a331892dcaaf57ae42adb7b20813e078f07df8924cf0b55",
+      "git_blob": "ff949c9f8e0aa584d10d649846a677952141fd23",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/rendering.md": {
+      "path": "motion/rendering.md",
+      "sha256": "2db3c0545c3931ef72df870262e851ba54222d21536684cc66475355d9192e3c",
+      "git_blob": "5a0300b888d68242664c631e1808d69b5aba9dc3",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/gen.md": {
+      "path": "motion/gen.md",
+      "sha256": "33e5e5e06cb8f3beaae09b1f95341de14a16f4404f383a7923820c49e8136f10",
+      "git_blob": "8c7ef164669b7328b1639db7d3ffe597166d6e53",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/sound.md": {
+      "path": "motion/sound.md",
+      "sha256": "199d90335b96d697f282232f32947c3479ae7d460d0fc77b1aa61f5421ebc50c",
+      "git_blob": "479c9a3f5ebbd94eec51866ad7abd4b83ed40ede",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/delivery.md": {
+      "path": "motion/delivery.md",
+      "sha256": "d37a7098828c48cc47ff0aed0c15cbdea2274e57fded70d627914770b0b6a2c4",
+      "git_blob": "78ac17c67d35de41f730563892e0c764222e99c7",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/apps.md": {
+      "path": "motion/apps.md",
+      "sha256": "839b0b5e042bd847fec7b62eadda544c5576ca70b31e264530624ecf2f8d2d0e",
+      "git_blob": "ed3ee1ae581c7b4a212a76d3bb69ad87f33969ea",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/games.md": {
+      "path": "motion/games.md",
+      "sha256": "b7e4db1563e449947ff595894adcb260e4ea5e6283d366c56bde1955a2697c17",
+      "git_blob": "4d32b55bf392ef702a43f7fa4ee3bf52d7f497a5",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/layout.md": {
+      "path": "motion/layout.md",
+      "sha256": "50fc319b6318e757bbdf38c6a2aa9ed951ec11f7999347cbcdee8674af604f4a",
+      "git_blob": "64deaf3214199e614ca73c7af72cbae6c1779f95",
+      "git_mode": "100644"
+    },
+    "skills/raea/motion/interface.md": {
+      "path": "motion/interface.md",
+      "sha256": "57faf37af8bafb6041139b8b62038bfdfd6a87dba4d24a0ecf8f45f78e738464",
+      "git_blob": "1da657456df03072ce2ca16226179ce21802fd94",
+      "git_mode": "100644"
+    },
+    "skills/raea/reference/app.md": {
+      "path": "reference/app.md",
+      "sha256": "34fe03c476f30b8b79d016e8e7963881d5e40e3f434bad920fa87a8bb74fcd6c",
+      "git_blob": "3b8b5d3b09f7e3d2da4477112c0c7656536660f0",
+      "git_mode": "100644"
+    },
+    "skills/raea/reference/cli.md": {
+      "path": "reference/cli.md",
+      "sha256": "f807d02e4fc7fc3cf2be0a068395ea37ba046c57c264ec647d7857b9e4f4f265",
+      "git_blob": "185904db5a79872db1813832140feb64df8053f3",
+      "git_mode": "100644"
+    },
+    "skills/raea/reference/sdk.md": {
+      "path": "reference/sdk.md",
+      "sha256": "62bba183591fad3414a242d4334144b07cf634e5d90f39fba72f5a101961c76d",
+      "git_blob": "30113fd95272a3fc39a2247f58fc43590116bea0",
+      "git_mode": "100644"
+    },
+    "skills/raea/reference/platforms.md": {
+      "path": "reference/platforms.md",
+      "sha256": "651442fed57f94cf4a0475252dceb23656999717d4fe7de319b7031fc9ff81f5",
+      "git_blob": "8fef3c933aba1dc8a6b0c34dca0f7821c1d0f19c",
+      "git_mode": "100644"
+    },
+    "skills/raea/reference/files.md": {
+      "path": "reference/files.md",
+      "sha256": "2ee17220fe5d0c6faac9d59027090af98ab352707701943e086660b02605da1c",
+      "git_blob": "d31eefd67cf16a59b98060c7bbaf880b8f7e29d3",
+      "git_mode": "100644"
+    },
+    "skills/raea/reference/feed.md": {
+      "path": "reference/feed.md",
+      "sha256": "2d409bbcbfee9c64a912afa534259f68ba5ee8341d18f127435abc82478f1b5f",
+      "git_blob": "8305eb14cab44bd58aabe5044a7f1d5e92bbc9c4",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/modes/explain.md": {
+      "path": "craft/modes/explain.md",
+      "sha256": "35404bd95199953bc52da714920f47984c5ef784072ad2a2ab9b7b596318a658",
+      "git_blob": "497f07f10b6670dcc362c66d2edc163825940de6",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/modes/tool.md": {
+      "path": "craft/modes/tool.md",
+      "sha256": "bc3ab390efcaadf5fe9822101c20d58a640372cedd7ac884a8791808c6da9b99",
+      "git_blob": "2f0d557121210618d862482d2c23f5d25aab84e4",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/modes/pitch.md": {
+      "path": "craft/modes/pitch.md",
+      "sha256": "ea51fb6b534a2febbc6bfb2a341477933fbfa8e694da3e7cfceae4f3929389f4",
+      "git_blob": "e555c621f81bee35730873ae1e83088b0fa4c31c",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/modes/story.md": {
+      "path": "craft/modes/story.md",
+      "sha256": "989d1daca03f8a2de3ab3596523eb041fd356c9d3b7164af9a42e59d66e8659d",
+      "git_blob": "1f4bb5edfed5f09122f89a45d4d3518d06ced015",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/modes/play.md": {
+      "path": "craft/modes/play.md",
+      "sha256": "5d30815c34d067a02784b738d98f72f5375d93904dba8834ca914c3699ddf582",
+      "git_blob": "5cdb6a2176fb944a998afe57f1a9bd9a896e7c1a",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/distill.md": {
+      "path": "craft/verbs/distill.md",
+      "sha256": "74594191807831f0f856e1fe7cd6fa32a7f01405c22d9a8ff5d1091ebc79b94d",
+      "git_blob": "7c5c71f73eb24eb6ac8c10d1a8913d4e4fb72d81",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/adapt.md": {
+      "path": "craft/verbs/adapt.md",
+      "sha256": "e55ea2e1e12285978870e453eeb410f0b025277b53fd52ad984ff40c19276005",
+      "git_blob": "0b1664fe68af5ce5974eb8bbcbc441f179cd3f0d",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/bolder.md": {
+      "path": "craft/verbs/bolder.md",
+      "sha256": "b3db81639ff7c9b2572844f51b6652a1002796dd8962f5eebb2f5f178dd6ed19",
+      "git_blob": "21f02e3d0780cbc3f9664c8f0fc94f518a962f57",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/harden.md": {
+      "path": "craft/verbs/harden.md",
+      "sha256": "e0a43e8ad2510c749eda7ef81a979272059c60208cde2b6cd1640dc5f0c01c93",
+      "git_blob": "800da03edaffe724afd70dad997df9a0cfdcba9b",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/extract.md": {
+      "path": "craft/verbs/extract.md",
+      "sha256": "f6dd0881c0b7cbd9a225b5d4934129ac3ee2912f3535fdc31eed944aef2ca21a",
+      "git_blob": "f6aecc42bd9a20c07ccfb932be58b39391af64c4",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/polish.md": {
+      "path": "craft/verbs/polish.md",
+      "sha256": "ef5f6d62c37267938a85dbf5e0c0bbe532b3b8d6a8fd73767b12abc5fc5043cc",
+      "git_blob": "3757be7514f749a13a7eabc4890d3d06ead17e0d",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/retime.md": {
+      "path": "craft/verbs/retime.md",
+      "sha256": "545f6b97ace3dd79732251e6c8d165e8c52788365fd8535fa7299a85ae9db436",
+      "git_blob": "23ddc05411aed01babd363df0dd268f66924b2a2",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/typeset.md": {
+      "path": "craft/verbs/typeset.md",
+      "sha256": "95d34fc209afcc4fb399c736b6ddbe7c54acbbc08653a4dba349dc710392f14b",
+      "git_blob": "6594f3d5795a539a067a449dddb2e778d50026e2",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/quieter.md": {
+      "path": "craft/verbs/quieter.md",
+      "sha256": "57609ebab0c1b5e433f32eba7d9e47bfd25b1169f0c94077706e431c7c39f72a",
+      "git_blob": "c46f1c453a1295f8ecb87466311af90d9c1c493b",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/critique.md": {
+      "path": "craft/verbs/critique.md",
+      "sha256": "5447ac27b240efe0f9b687c6b8daab3148f2b53eacb8185a236027a35ead774a",
+      "git_blob": "41c235ab90793b9fe1f2c118a89b8d31a1d33622",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/recut.md": {
+      "path": "craft/verbs/recut.md",
+      "sha256": "6e2c89225714e26440b538609d9a1dd8854217e035039b6b9716d27cdd9581df",
+      "git_blob": "599040b0a88c43aa5df560e14521a3406205323e",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/clarify.md": {
+      "path": "craft/verbs/clarify.md",
+      "sha256": "dbb2672cbdebd6ec1d21626b244e860b54e2abd2bad101c05bf3208750a54fbc",
+      "git_blob": "150c25158cff3202e6bc5e1384e2400b5d661c1b",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/generate.md": {
+      "path": "craft/verbs/generate.md",
+      "sha256": "7c9b73205851793ddd0b669a002ef810d44aff718c9087dfe337255d4563e220",
+      "git_blob": "2caf3571cb57cdeb5ae8e86dbeb05d5a32649a29",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/optimize.md": {
+      "path": "craft/verbs/optimize.md",
+      "sha256": "9ea6890c85552e4d134c82e9f348e485bf1b167f14c0900062318cd70c9eace4",
+      "git_blob": "5b646cc6d90eaccc4d786ea4e2c1e5ab34265754",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/animate.md": {
+      "path": "craft/verbs/animate.md",
+      "sha256": "143492f38e3b5d63a4227d9ba7c6077cfb8b7a146ea62c97323fc845f4394e93",
+      "git_blob": "419f661223c5801a7c51c154cc917b4ad43277f9",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/regrade.md": {
+      "path": "craft/verbs/regrade.md",
+      "sha256": "c5e7d88bdbad70145008701a2b7e8dbe53ea8beac038150ed8f82b952897827a",
+      "git_blob": "5abca504efcef2e2b80002eebf0d011f5dec1476",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/delight.md": {
+      "path": "craft/verbs/delight.md",
+      "sha256": "710ae5ecf78274601e6f10d886ebf7d017d51b08a6bb94ebed7acc91b939d67a",
+      "git_blob": "bdd5367d792247613c7a3d0283182e415bc8c988",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/layout.md": {
+      "path": "craft/verbs/layout.md",
+      "sha256": "136ccf4a24864dd4ba18bd3ad83ae4012814a5f25fe3ea0a3605e65e4b2d8d8d",
+      "git_blob": "d7fa4d95063269e6b5970db3a5f10ec903dad398",
+      "git_mode": "100644"
+    },
+    "skills/raea/craft/verbs/remix.md": {
+      "path": "craft/verbs/remix.md",
+      "sha256": "4819c2591be74312a240d31c2ba7391095d0e79ea074139e69373e0137c1f9e5",
+      "git_blob": "4a65ab3c0a6e29d284e36952acc3ae9a6c262a25",
+      "git_mode": "100644"
+    },
+    "LICENSE": {
+      "path": "LICENSE",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "git_blob": "261eeb9e9f8b2b4b0d119366dda99c6fd7d35c64",
+      "git_mode": "100644"
+    }
+  }
 }

@@ -9,22 +9,13 @@ def replace(text,old,new):
 def patch_p001(out,name):
  p=out/'SKILL.md';text=p.read_text()
  if name=='diagnosing-bugs':
-  start=text.index('Stop and say so explicitly.');end=text.index('\n### Completion criterion',start)
-  text=text[:start]+('Document attempted reproductions and the unavailable observation. Continue with source-backed hypotheses, redacted traces, or runnable subfixtures. Distinguish local evidence from an unobserved production symptom. Ask for missing access only when necessary for dependent work.\n')+text[end:]
-  text=replace(text,'If you catch yourself reading code to build a theory before this command exists, **stop: jumping straight to a hypothesis is the exact failure this skill prevents.** No red-capable command, no Phase 2.','Prefer a red-capable symptom check. If the actual environment is unavailable, proceed using explicitly bounded source evidence or a runnable subfixture; do not claim the production symptom was reproduced.')
-  text=replace(text,'Do not proceed until you have reproduced **and** minimised.','Minimise the observed failure where possible. If only a subfixture or source trace is available, record that limitation and continue the corresponding bounded investigation.')
+  pass  # The reproduction/minimization gates are the upstream diagnostic method.
  elif name=='tdd':
-  start=text.index('**Test only at pre-agreed seams.**');end=text.index('\nWhen the shape',start)
-  text=text[:start]+('Infer the existing public contracts and choose tests at the boundaries that cover the requested behavior. Record what each proposed test catches and misses. Ask the user only when unresolved product semantics materially change the deliverable.\n')+text[end:]
-  text=replace(text,'call the Skill tool with "codebase-design"','consult the reviewed codebase-design reference if this task merits it')
+  text=replace(text,'call the Skill tool with "codebase-design"','read the selected "codebase-design" skill')
  elif name=='codebase-design':
-  text=replace(text,'Use these terms exactly: don\'t substitute "component," "service," "API," or "boundary." Consistent language is the whole point.','Map these terms to the project\'s existing vocabulary. Use component, service, API or boundary where that is clearer for the current codebase.')
-  text=replace(text,'spin up parallel sub-agents to design the interface several radically different ways, then compare on depth, locality, and seam placement.','compare competing interface designs when the tradeoffs justify the work. Use delegation only within the user\'s authorized scope.')
   deep=out/'DEEPENING.md'
   if deep.exists():
    old=deep.read_text();old=re.sub(r'(?m)^.*Old unit tests.*$', 'Retire existing internal tests only after demonstrating behavior parity and a discriminating replacement. Retain public, safety and compatibility probes where they cover behavior the replacement does not.', old);deep.write_text(old)
-  text=re.sub(r'_Avoid_:[^\n]+','Use the project vocabulary where clearer.',text)
-  text=re.sub(r'(?m)^- \*\*\"Boundary\"\*\*:.*$', '- Use boundary consistently with the project vocabulary, including domain boundaries where relevant.',text)
  else:raise ValueError('Unreviewed P001 leaf')
  p.write_text(text)
 

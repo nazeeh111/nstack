@@ -44,10 +44,8 @@
       "dependencies": "No runtime deps for Markdown; optional project test/profiler commands.",
       "license": "MIT",
       "adaptations": [
-        "diagnosing-bugs: patch both the no-loop halt and phase transitions that reimpose it. Permit source-backed hypotheses, redacted traces and runnable subfixtures, and mark the unobserved production symptom. Preserve red-capable symptom checks when feasible.",
-        "tdd: remove compulsory user confirmation of seams. Infer existing public contracts and ask only where unresolved product semantics actually change the deliverable. Retain tests.md and mocking.md.",
-        "codebase-design: soften exclusive glossary and map terms to the project. Keep DEEPENING.md and DESIGN-IT-TWICE.md available; activate competing designs only where tradeoffs merit it.",
-        "Add a named upstream co-change inventory only when justified; amend the DEEPENING test-retirement advice to require behavior parity and a demonstrably discriminating replacement. Public/safety or compatibility probes can remain even if obsolete internal units disappear."
+        "Preserve upstream reproduction/minimization, TDD boundary design and module-vocabulary/interface-comparison methods. Bind only the unavailable Skill dispatch to native skill reading.",
+        "Keep complete required support, including DEEPENING.md and DESIGN-IT-TWICE.md. Retain the narrowly scoped test-retirement correctness fix and the selected Caldo diagnostic reference."
       ],
       "acceptance_checks": [
         "Known bug: regression red before fix, green after; compare against simplest correct baseline.",
@@ -176,8 +174,7 @@
       "dependencies": "Node CLI from pinned package/source; repository openspec config.",
       "license": "MIT",
       "adaptations": [
-        "Patch skills/openspec-propose/SKILL.md and src/core/templates/workflows/propose.ts so explicit build authorization hands off to apply; a plan-only request still stops after planning.",
-        "Keep apply and verify directories intact. Verification reports skipped checks; map spec scenarios to actual execution receipts before treating keyword-based traceability as a passed behavioral test."
+        "Preserve the original proposal-only workflow and exact upstream CLI proposal template; the task owner selects apply/verify separately when implementation is authorized."
       ],
       "acceptance_checks": [
         "Proposal->apply->verify->archive on disposable repo; requirement change survives restart; incomplete scenarios remain visible."
@@ -1151,10 +1148,9 @@
       "dependencies": "No ARIS MCP/monitor needed after adaptation; native subagent and local artifact reads.",
       "license": "MIT",
       "adaptations": [
-        "Use skills/skills-codex/ variants and same-revision local references/templates; replace paths to shared ARIS routing, model tiers, forced trace graph, unconditional output files and queue lifecycle with the host/project equivalents.",
-        "Read-only evidence checker must restrict resolved file paths (including symlinks/globs) to declared roots, parse JSON Pointer/CSV header and row key, reconcile units, split, metric, run hash and producing command. A lexical hit is presence only. Raise unknown for absent provenance and never infer fabrication.",
-        "Keep paper proof review, experimental forensics and Lean statement validation independent. Use a narrow input/output handoff between specialist leaves.",
-        "For claims about unseen patients/specimens/devices/sites, bind the sampling unit and leakage-equivalence grouping to the split artifact; cluster known sibling rows before split and fit preprocessing on training only. Freeze reviewed split assignment before augmentation, mining or checkpoint selection. Record query/corpus roles and define whether existing-corpus or unseen-corpus generalization is the actual objective. P013 remains a reference, P129 the baseline and P119 the independent reviewer; require split-manifest identity in the P150 integration. A within-batch no-duplicates sampler does not enforce held-out identities."
+        "Preserve complete upstream review/proof methods, structured schemas, confidence/independence rules and tracing. Use model-agnostic native execution bindings rather than changing the method.",
+        "Retain same-revision shared protocol documentation and tools, including the original value-existence evidence checker. Preflight all cited input paths against authorized non-secret project files before any checker run. Presence does not prove claim support.",
+        "Unavailable required reviewer routes remain pending; no provider/controller installation, credential inspection or new spending is granted by a skill."
       ],
       "acceptance_checks": [
         "A reviewer must reject orphan metrics, test-set tuning, post-hoc normalization and source files that never generated claimed numbers.",
@@ -2251,10 +2247,8 @@
         "note": "Root license text retrieved and inspected; retain notices and check assets, model weights, optional dependencies and redistributable builds separately."
       },
       "adaptations": [
-        "Make audit and harden independent discoverable entries, with craft-floor and native audit variants as supporting references.",
-        "Preserve detailed checks; convert stylistic prohibitions into project/brand-sensitive guidance rather than universal bans.",
-        "Use existing native execution and browser evidence. Remove engine setup, global routing, mandatory questions and unrelated detector/live-server requirements.",
-        "Audit reports evidence and scope; an explicitly authorized audit-and-fix objective can continue into hardening without another permission gate."
+        "Expose the actual generated native audit and harden command methods with their complete reference support. Preserve source style rules, scope, confirmation and output methods.",
+        "Use small native execution bindings; do not install the broader Impeccable controller merely to expose these selected commands."
       ],
       "acceptance_checks": [
         "Keyboard, accessible names/contrast and responsive layout tested on actual rendered UI.",
@@ -2351,12 +2345,9 @@
       "dependencies": "Selected CLI0.9.13 pin, Node22+, Chromium, chosen FFmpeg and local assets/fonts; optional core audio helper dependency locked.",
       "license": "Apache-2.0 code; provider/asset/GSAP/font/binary rights separate.",
       "adaptations": [
-        "Whole selected leaves retain complete motion/story/spec/review/storyboard/sound/type/explainer/character guidance plus media references and helpers. No global activation of other sibling skills.",
-        "Remove default framework exclusivity, forced provider account/sign-in/wait and local-tools-only-when-asked rules. Prefer requested target/source and available authorized media.",
-        "Remove cost-concealment instruction Never tell the person prices, estimates or usage. Declare provider/dependency/cost choices when consequential; no paid calls from this blueprint.",
-        "Keep local-only fixed assets, pinned executable, disabled telemetry, paused deterministic seek timelines registered after readiness.",
-        "Scope launch-film bans/read-speed/shot quotas as defaults; preserve expressive and science-specific intent. Preserve character-specific acting differences from title/UI motion.",
-        "Use actual audio inspection capability when available; measurement alone cannot be called listening. Project-local @hyperframes/core is required by carve helper."
+        "Preserve complete upstream story choices, preview/render workflow and selected motion, asset and audio methods. Use pinned local runtime paths rather than mutable bootstrap commands.",
+        "Keep the demonstrated credential/chat-history client admission boundary and cost-transparency fix. Authenticated/cloud/provider clients remain unadmitted; source examples do not authorize spending or account access.",
+        "Preserve exact version/asset rights and task-specific runtime prerequisites. Other sibling skills are references, not additional global installs."
       ],
       "acceptance_checks": [
         "check --json must complete real runtime/layout/contrast samples; zero samples is unverified.",
@@ -2567,12 +2558,8 @@
       "dependencies": "Official monorepo skills4.0.540 matched with runtime; bundled browser and project lockfile; optional media/caption/blur packages matched exactly.",
       "license": "Applicable custom Remotion Free/Company terms; no independently refreshed tariff.",
       "adaptations": [
-        "Preserve each complete selected directory and its support files as an independently available native expert. Do not use unlicensed standalone mirror redistribution.",
-        "Fix sibling links from ./remotion-*/SKILL.md to ../remotion-*/SKILL.md where actual installed layout requires it; validate all support links including markup to timeline-structure.",
-        "Use existing authorization/requested artifact to select final render versus preview; remove forced preview-only stops and unbounded create-video@latest.",
-        "Preserve real source-editable editing units, named tracks, inline schema/controls and connected composition checks; do not simplify these to generic JSX advice.",
-        "Preserve captions with original-source timestamps through trims. Model download/WebGPU and paid/remote voice calls require their actual provisioned capability; do not force ElevenLabs or new credentials.",
-        "No global coactivation of SaaS/cloud or upgrade siblings; expose maps only when adopted as its own task lane. API-specific blur/browser requirements follow actual runtime version."
+        "Preserve complete selected upstream methods, preview-default/explicit-render behavior, editable tracks, captions and support.",
+        "Fix actual sibling-link coordinates and pin compatible4.0.540 dependencies; no mutable @latest bootstrap. Provider/model/browser prerequisites remain explicit."
       ],
       "acceptance_checks": [
         "Render fixed-seed multiphase scene with local font/media/narration/captions; verify Player/Studio versus export parity and no missing fonts or late frames.",
@@ -4089,13 +4076,8 @@
       "dependencies": "Eight reviewed incremental prospecting/reply files plus shared license, with six preserved local links. Native project evidence store; an actual mailbox or CRM is needed only for separately authorized effects.",
       "license": "MIT",
       "adaptations": [
-        "Use separate upstream directories on explicit task triggers. Add launch/pricing/emails; retain customer-research as recruiting/protocol reference, with P346 and L014 owning interviews and synthesis.",
-        "Preserve separate directories and local references. Treat pricing bands as elicitation prompts; preserve launch plan, consented email sequence, actual measured experiment rules.",
-        "Use one existing product brief. Suppress redundant context-gathering/diagnosis, partner installs and automatic sends.",
-        "Add account research, cold draft/reply and evidence-coded win/loss using named existing MIT leaves; keep lifecycle distinct.",
-        "A place, hiring signal or verified address authorizes no send. Use a separate recipient permission, provider-use check and suppression state. Keep uncertain provider outcomes read-only until reconciled.",
-        "Keep directory acquisition and source evidence read-only to the outreach layer. Prospect export alone creates no workflow effects. Unknown recipient purpose/provider permission blocks dispatch.",
-        "Reference only. Where the purpose and actual mailbox, recipient, account and jurisdiction permit a requested campaign, test a dedicated delivery owner. One authority must pause or revoke in the remote queue and read it back. Validate suppression after enqueue, opt-out channel lifetime and unknown send reconciliation. A local pause or preview is insufficient. No selected active campaign or actual provider credential."
+        "Preserve upstream product-brief startup, diagnosis, launch, pricing, email and experiment methods with complete local references.",
+        "Qualify unsupported numeric retention/churn claims without replacing the pricing method. Preserve the actual outreach privacy/recipient/dispatch boundaries; installation grants no send authority."
       ],
       "acceptance_checks": [
         "A/B sample calculation reproduced; guardrail and primary metrics defined; no optional-stopping claim.",
@@ -4192,9 +4174,8 @@
       ],
       "license": "MIT",
       "adaptations": [
-        "Select skills/seo-technical first; use skills/seo-audit only full-site tasks.",
-        "Replace CLAUDE_PLUGIN_ROOT references with installed package absolute root.",
-        "Preserve measured-only scores and missing-data status; no forced PDF offer or agent fanout for one page."
+        "Preserve the original full-site audit workflow,17 domain lenses and source inline fallback; retain exact domain prompts as support outside standalone discovery.",
+        "Bind package paths to the pinned source and preserve the actual credential/account-access boundary. A one-page task should select the applicable source method."
       ],
       "acceptance_checks": [
         "Fixture distinguishes raw vs rendered content, robots vs index status, lab vs field performance; unsupported score stays unknown.",
@@ -4241,9 +4222,8 @@
       ],
       "license": "MIT",
       "adaptations": [
-        "Install ads-math and audit entry, keeping schemas/scoring helpers with package.",
-        "Use native bounded workers and map exports to canonical schema; not one worker per platform if no data.",
-        "Keep account changes as explicit task-scoped actions, separate from audit; preserve pre-existing user authorization."
+        "Preserve original platform/cross-platform independent-worker workflow and exact prompt/schema/scoring support.",
+        "An audit grants no account mutation or provider spending authority. Preserve source data/missingness and task-specific access."
       ],
       "acceptance_checks": [
         "Missing-platform fixture becomes partial and excludes denominator; 0 revenue/clicks handled explicitly.",
@@ -6638,7 +6618,7 @@
       "source_url": "https://github.com/mattpocock/skills/blob/4ae2317ddb22b046e26455e4f9c9b3aaaf62212d/skills/engineering/diagnosing-bugs/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "diagnosing-bugs: patch both the no-loop halt and phase transitions that reimpose it. Permit source-backed hypotheses, redacted traces and runnable subfixtures, and mark the unobserved production symptom. Preserve red-capable symptom checks when feasible.",
+      "details": "Preserve the complete upstream reproduction/minimization method.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -6650,7 +6630,7 @@
       "source_url": "https://github.com/mattpocock/skills/blob/4ae2317ddb22b046e26455e4f9c9b3aaaf62212d/skills/engineering/tdd/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "tdd: remove compulsory user confirmation of seams. Infer existing public contracts and ask only where unresolved product semantics actually change the deliverable. Retain tests.md and mocking.md.",
+      "details": "Preserve upstream TDD boundary-design method; bind unavailable Skill dispatch to native skill reading.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -6662,7 +6642,7 @@
       "source_url": "https://github.com/mattpocock/skills/blob/4ae2317ddb22b046e26455e4f9c9b3aaaf62212d/skills/engineering/codebase-design/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "codebase-design: soften exclusive glossary and map terms to the project. Keep DEEPENING.md and DESIGN-IT-TWICE.md available; activate competing designs only where tradeoffs merit it. Consult the named Caldo ownership survey for cross-module co-change. Patch DEEPENING.md so a legacy public, wire or security test is retired only after the replacement is shown to reject the corresponding defect.",
+      "details": "Preserve exact module vocabulary, interface comparison and complete support. Retain the narrowly scoped test-retirement correctness fix and selected Caldo diagnostic reference.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -6819,7 +6799,7 @@
       "source_url": "https://github.com/Fission-AI/OpenSpec/blob/3e4d5f0769e2857c8eb54f149cbf5e4f703fa04c/skills/openspec-propose/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Patch skills/openspec-propose/SKILL.md and src/core/templates/workflows/propose.ts so explicit build authorization hands off to apply; a plan-only request still stops after planning.",
+      "details": "Preserve the original proposal-only workflow and exact upstream CLI proposal template; the task owner selects apply/verify separately when implementation is authorized.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -6831,7 +6811,7 @@
       "source_url": "https://github.com/Fission-AI/OpenSpec/blob/3e4d5f0769e2857c8eb54f149cbf5e4f703fa04c/skills/openspec-apply-change/SKILL.md",
       "delivery": "intact upstream leaf",
       "decision": "adopt",
-      "details": "Honors project/store discovery and tracks one task list; use for an already selected change.",
+      "details": "Preserve the original proposal-only workflow and exact upstream CLI proposal template; the task owner selects apply/verify separately when implementation is authorized.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -6843,7 +6823,7 @@
       "source_url": "https://github.com/Fission-AI/OpenSpec/blob/3e4d5f0769e2857c8eb54f149cbf5e4f703fa04c/skills/openspec-verify-change/SKILL.md",
       "delivery": "intact upstream leaf",
       "decision": "adopt",
-      "details": "Separate completeness/correctness/coherence with skipped checks visible. Supply native run evidence for behavior.",
+      "details": "Preserve the original proposal-only workflow and exact upstream CLI proposal template; the task owner selects apply/verify separately when implementation is authorized.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -7671,7 +7651,7 @@
       "source_url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/blob/f76ec8d6b77792e2242cca049e08d0cbb7d54e19/skills/skills-codex/experiment-audit/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Keep four integrity probes, original data/splits/entrypoint, different result producer, raw logs and the failure consequences for each claim. Remove automatic orchestration and universal tracing. For claims about unseen patients/specimens/devices/sites, bind the sampling unit and leakage-equivalence grouping to the split artifact; cluster known sibling rows before split and fit preprocessing on training only. Freeze reviewed split assignment before augmentation, mining or checkpoint selection. Record query/corpus roles and define whether existing-corpus or unseen-corpus generalization is the actual objective. P013 remains a reference, P129 the baseline and P119 the independent reviewer; require split-manifest identity in the P150 integration. A within-batch no-duplicates sampler does not enforce held-out identities.",
+      "details": "Preserve complete upstream review/proof methods, structured schemas, confidence/independence rules and tracing. Use model-agnostic native execution bindings rather than changing the method. Retain same-revision shared protocol documentation and tools, including the original value-existence evidence checker. Preflight all cited input paths against authorized non-secret project files before any checker run. Presence does not prove claim support. Unavailable required reviewer routes remain pending; no provider/controller installation, credential inspection or new spending is granted by a skill.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -7683,7 +7663,7 @@
       "source_url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/blob/f76ec8d6b77792e2242cca049e08d0cbb7d54e19/skills/skills-codex/result-to-claim/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Keep observed result, fair baseline, strongest supportable claim and contrary evidence. Harden tools/evidence_check.py or bypass it and inspect structured evidence.",
+      "details": "Preserve complete upstream review/proof methods, structured schemas, confidence/independence rules and tracing. Use model-agnostic native execution bindings rather than changing the method. Retain same-revision shared protocol documentation and tools, including the original value-existence evidence checker. Preflight all cited input paths against authorized non-secret project files before any checker run. Presence does not prove claim support. Unavailable required reviewer routes remain pending; no provider/controller installation, credential inspection or new spending is granted by a skill.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -7695,7 +7675,7 @@
       "source_url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/blob/f76ec8d6b77792e2242cca049e08d0cbb7d54e19/skills/skills-codex/lean-formalize/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Keep natural-language target ↔ statement map, lemma obligations, no-sorry build, transitive axioms and reproducibility handoff. Remove mandatory reviewer-family plumbing and ARIS knowledge writes.",
+      "details": "Preserve complete upstream review/proof methods, structured schemas, confidence/independence rules and tracing. Use model-agnostic native execution bindings rather than changing the method. Retain same-revision shared protocol documentation and tools, including the original value-existence evidence checker. Preflight all cited input paths against authorized non-secret project files before any checker run. Presence does not prove claim support. Unavailable required reviewer routes remain pending; no provider/controller installation, credential inspection or new spending is granted by a skill.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -7707,7 +7687,7 @@
       "source_url": "https://github.com/wanshuiyin/Auto-claude-code-research-in-sleep/blob/f76ec8d6b77792e2242cca049e08d0cbb7d54e19/skills/skills-codex/formula-derivation/SKILL.md",
       "delivery": "intact upstream leaf",
       "decision": "adopt",
-      "details": "Keep exact identity versus approximation, units, assumptions, limiting cases and counterexample steps. The leaf has no external-runtime requirement; invoke explicitly where its DERIVATION_PACKAGE.md deliverable fits.",
+      "details": "Preserve complete upstream review/proof methods, structured schemas, confidence/independence rules and tracing. Use model-agnostic native execution bindings rather than changing the method. Retain same-revision shared protocol documentation and tools, including the original value-existence evidence checker. Preflight all cited input paths against authorized non-secret project files before any checker run. Presence does not prove claim support. Unavailable required reviewer routes remain pending; no provider/controller installation, credential inspection or new spending is granted by a skill.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -7998,7 +7978,7 @@
       "source_url": "https://github.com/pbakaus/impeccable/blob/5af4319c4e7a7ee3e5e2b9fe899bcfb21c6190cb/skill/reference/audit.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Make audit and harden independent discoverable entries, with craft-floor and native audit variants as supporting references. Preserve detailed checks; convert stylistic prohibitions into project/brand-sensitive guidance rather than universal bans. Use existing native execution and browser evidence. Remove engine setup, global routing, mandatory questions and unrelated detector/live-server requirements. Audit reports evidence and scope; an explicitly authorized audit-and-fix objective can continue into hardening without another permission gate.",
+      "details": "Expose the actual generated native audit and harden command methods with their complete reference support. Preserve source style rules, scope, confirmation and output methods. Use small native execution bindings; do not install the broader Impeccable controller merely to expose these selected commands.",
       "closure": "Preserve the complete selected directory and its referenced parent-level support at the same pin; do not install siblings.",
       "rights": {
         "spdx_metadata": "Apache-2.0",
@@ -8009,7 +7989,8 @@
       "support_paths": [
         "skill/reference/craft-floor.md",
         "skill/reference/audit.native.md"
-      ]
+      ],
+      "upstream_method_source_path": ".agents/skills/impeccable/reference/audit.md"
     },
     {
       "candidate_id": "P202",
@@ -8019,7 +8000,7 @@
       "source_url": "https://github.com/pbakaus/impeccable/blob/5af4319c4e7a7ee3e5e2b9fe899bcfb21c6190cb/skill/reference/harden.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Make audit and harden independent discoverable entries, with craft-floor and native audit variants as supporting references. Preserve detailed checks; convert stylistic prohibitions into project/brand-sensitive guidance rather than universal bans. Use existing native execution and browser evidence. Remove engine setup, global routing, mandatory questions and unrelated detector/live-server requirements. Audit reports evidence and scope; an explicitly authorized audit-and-fix objective can continue into hardening without another permission gate.",
+      "details": "Expose the actual generated native audit and harden command methods with their complete reference support. Preserve source style rules, scope, confirmation and output methods. Use small native execution bindings; do not install the broader Impeccable controller merely to expose these selected commands.",
       "closure": "Preserve the complete selected directory and its referenced parent-level support at the same pin; do not install siblings.",
       "rights": {
         "spdx_metadata": "Apache-2.0",
@@ -8030,7 +8011,8 @@
       "support_paths": [
         "skill/reference/craft-floor.md",
         "skill/reference/audit.native.md"
-      ]
+      ],
+      "upstream_method_source_path": ".agents/skills/impeccable/reference/harden.md"
     },
     {
       "candidate_id": "P202",
@@ -8055,7 +8037,7 @@
       "source_url": "https://github.com/heygen-com/hyperframes/blob/3d78ac0fa6671c31ba69186d084951aeb8dc8e18/skills/hyperframes/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Whole selected leaves retain complete motion/story/spec/review/storyboard/sound/type/explainer/character guidance plus media references and helpers. No global activation of other sibling skills. Remove default framework exclusivity, forced provider account/sign-in/wait and local-tools-only-when-asked rules. Prefer requested target/source and available authorized media. Remove cost-concealment instruction Never tell the person prices, estimates or usage. Declare provider/dependency/cost choices when consequential; no paid calls from this blueprint. Keep local-only fixed assets, pinned executable, disabled telemetry, paused deterministic seek timelines registered after readiness. Scope launch-film bans/read-speed/shot quotas as defaults; preserve expressive and science-specific intent. Preserve character-specific acting differences from title/UI motion. Use actual audio inspection capability when available; measurement alone cannot be called listening. Project-local @hyperframes/core is required by carve helper.",
+      "details": "Preserve complete upstream story choices, preview/render workflow and selected motion, asset and audio methods. Use pinned local runtime paths rather than mutable bootstrap commands. Keep the demonstrated credential/chat-history client admission boundary and cost-transparency fix. Authenticated/cloud/provider clients remain unadmitted; source examples do not authorize spending or account access. Preserve exact version/asset rights and task-specific runtime prerequisites. Other sibling skills are references, not additional global installs.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": {
         "spdx_metadata": "Apache-2.0",
@@ -8070,7 +8052,7 @@
       "source_url": "https://github.com/heygen-com/hyperframes/blob/3d78ac0fa6671c31ba69186d084951aeb8dc8e18/skills/hyperframes-cli/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Whole selected leaves retain complete motion/story/spec/review/storyboard/sound/type/explainer/character guidance plus media references and helpers. No global activation of other sibling skills. Remove default framework exclusivity, forced provider account/sign-in/wait and local-tools-only-when-asked rules. Prefer requested target/source and available authorized media. Remove cost-concealment instruction Never tell the person prices, estimates or usage. Declare provider/dependency/cost choices when consequential; no paid calls from this blueprint. Keep local-only fixed assets, pinned executable, disabled telemetry, paused deterministic seek timelines registered after readiness. Scope launch-film bans/read-speed/shot quotas as defaults; preserve expressive and science-specific intent. Preserve character-specific acting differences from title/UI motion. Use actual audio inspection capability when available; measurement alone cannot be called listening. Project-local @hyperframes/core is required by carve helper.",
+      "details": "Preserve complete upstream story choices, preview/render workflow and selected motion, asset and audio methods. Use pinned local runtime paths rather than mutable bootstrap commands. Keep the demonstrated credential/chat-history client admission boundary and cost-transparency fix. Authenticated/cloud/provider clients remain unadmitted; source examples do not authorize spending or account access. Preserve exact version/asset rights and task-specific runtime prerequisites. Other sibling skills are references, not additional global installs.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": {
         "spdx_metadata": "Apache-2.0",
@@ -8085,7 +8067,7 @@
       "source_url": "https://github.com/heygen-com/hyperframes/blob/3d78ac0fa6671c31ba69186d084951aeb8dc8e18/skills/hyperframes-registry/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Whole selected leaves retain complete motion/story/spec/review/storyboard/sound/type/explainer/character guidance plus media references and helpers. No global activation of other sibling skills. Remove default framework exclusivity, forced provider account/sign-in/wait and local-tools-only-when-asked rules. Prefer requested target/source and available authorized media. Remove cost-concealment instruction Never tell the person prices, estimates or usage. Declare provider/dependency/cost choices when consequential; no paid calls from this blueprint. Keep local-only fixed assets, pinned executable, disabled telemetry, paused deterministic seek timelines registered after readiness. Scope launch-film bans/read-speed/shot quotas as defaults; preserve expressive and science-specific intent. Preserve character-specific acting differences from title/UI motion. Use actual audio inspection capability when available; measurement alone cannot be called listening. Project-local @hyperframes/core is required by carve helper.",
+      "details": "Preserve complete upstream story choices, preview/render workflow and selected motion, asset and audio methods. Use pinned local runtime paths rather than mutable bootstrap commands. Keep the demonstrated credential/chat-history client admission boundary and cost-transparency fix. Authenticated/cloud/provider clients remain unadmitted; source examples do not authorize spending or account access. Preserve exact version/asset rights and task-specific runtime prerequisites. Other sibling skills are references, not additional global installs.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": {
         "spdx_metadata": "Apache-2.0",
@@ -8100,7 +8082,7 @@
       "source_url": "https://github.com/heygen-com/hyperframes/blob/3d78ac0fa6671c31ba69186d084951aeb8dc8e18/skills/media-use/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Whole selected leaves retain complete motion/story/spec/review/storyboard/sound/type/explainer/character guidance plus media references and helpers. No global activation of other sibling skills. Remove default framework exclusivity, forced provider account/sign-in/wait and local-tools-only-when-asked rules. Prefer requested target/source and available authorized media. Remove cost-concealment instruction Never tell the person prices, estimates or usage. Declare provider/dependency/cost choices when consequential; no paid calls from this blueprint. Keep local-only fixed assets, pinned executable, disabled telemetry, paused deterministic seek timelines registered after readiness. Scope launch-film bans/read-speed/shot quotas as defaults; preserve expressive and science-specific intent. Preserve character-specific acting differences from title/UI motion. Use actual audio inspection capability when available; measurement alone cannot be called listening. Project-local @hyperframes/core is required by carve helper.",
+      "details": "Preserve complete upstream story choices, preview/render workflow and selected motion, asset and audio methods. Use pinned local runtime paths rather than mutable bootstrap commands. Keep the demonstrated credential/chat-history client admission boundary and cost-transparency fix. Authenticated/cloud/provider clients remain unadmitted; source examples do not authorize spending or account access. Preserve exact version/asset rights and task-specific runtime prerequisites. Other sibling skills are references, not additional global installs.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": {
         "spdx_metadata": "Apache-2.0",
@@ -8189,7 +8171,7 @@
       "source_url": "https://github.com/remotion-dev/remotion/blob/682cad29c569d7c36c2445e27ec07cb433f06b32/packages/skills/skills/remotion-best-practices/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Preserve each complete selected directory and its support files as an independently available native expert. Do not use unlicensed standalone mirror redistribution. Fix sibling links from ./remotion-*/SKILL.md to ../remotion-*/SKILL.md where actual installed layout requires it; validate all support links including markup to timeline-structure. Use existing authorization/requested artifact to select final render versus preview; remove forced preview-only stops and unbounded create-video@latest. Preserve real source-editable editing units, named tracks, inline schema/controls and connected composition checks; do not simplify these to generic JSX advice. Preserve captions with original-source timestamps through trims. Model download/WebGPU and paid/remote voice calls require their actual provisioned capability; do not force ElevenLabs or new credentials. No global coactivation of SaaS/cloud or upgrade siblings; expose maps only when adopted as its own task lane. API-specific blur/browser requirements follow actual runtime version.",
+      "details": "Preserve complete selected upstream methods, preview-default/explicit-render behavior, editable tracks, captions and support. Fix actual sibling-link coordinates and pin compatible4.0.540 dependencies; no mutable @latest bootstrap. Provider/model/browser prerequisites remain explicit.",
       "closure": "Complete selected directory and every matching same-pin support/reference. Maps remains conditional geographic leaf; cloud/SaaS/upgrade siblings not automatically exposed.",
       "rights": "Applicable custom Remotion Free/Company terms; no independently refreshed tariff.",
       "native_name": "remotion-best-practices",
@@ -8203,7 +8185,7 @@
       "source_url": "https://github.com/remotion-dev/remotion/blob/682cad29c569d7c36c2445e27ec07cb433f06b32/packages/skills/skills/remotion-create/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Preserve each complete selected directory and its support files as an independently available native expert. Do not use unlicensed standalone mirror redistribution. Fix sibling links from ./remotion-*/SKILL.md to ../remotion-*/SKILL.md where actual installed layout requires it; validate all support links including markup to timeline-structure. Use existing authorization/requested artifact to select final render versus preview; remove forced preview-only stops and unbounded create-video@latest. Preserve real source-editable editing units, named tracks, inline schema/controls and connected composition checks; do not simplify these to generic JSX advice. Preserve captions with original-source timestamps through trims. Model download/WebGPU and paid/remote voice calls require their actual provisioned capability; do not force ElevenLabs or new credentials. No global coactivation of SaaS/cloud or upgrade siblings; expose maps only when adopted as its own task lane. API-specific blur/browser requirements follow actual runtime version.",
+      "details": "Preserve complete selected upstream methods, preview-default/explicit-render behavior, editable tracks, captions and support. Fix actual sibling-link coordinates and pin compatible4.0.540 dependencies; no mutable @latest bootstrap. Provider/model/browser prerequisites remain explicit.",
       "closure": "Complete selected directory and every matching same-pin support/reference. Maps remains conditional geographic leaf; cloud/SaaS/upgrade siblings not automatically exposed.",
       "rights": "Applicable custom Remotion Free/Company terms; no independently refreshed tariff.",
       "native_name": "remotion-create",
@@ -8217,7 +8199,7 @@
       "source_url": "https://github.com/remotion-dev/remotion/blob/682cad29c569d7c36c2445e27ec07cb433f06b32/packages/skills/skills/remotion-markup/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Preserve each complete selected directory and its support files as an independently available native expert. Do not use unlicensed standalone mirror redistribution. Fix sibling links from ./remotion-*/SKILL.md to ../remotion-*/SKILL.md where actual installed layout requires it; validate all support links including markup to timeline-structure. Use existing authorization/requested artifact to select final render versus preview; remove forced preview-only stops and unbounded create-video@latest. Preserve real source-editable editing units, named tracks, inline schema/controls and connected composition checks; do not simplify these to generic JSX advice. Preserve captions with original-source timestamps through trims. Model download/WebGPU and paid/remote voice calls require their actual provisioned capability; do not force ElevenLabs or new credentials. No global coactivation of SaaS/cloud or upgrade siblings; expose maps only when adopted as its own task lane. API-specific blur/browser requirements follow actual runtime version.",
+      "details": "Preserve complete selected upstream methods, preview-default/explicit-render behavior, editable tracks, captions and support. Fix actual sibling-link coordinates and pin compatible4.0.540 dependencies; no mutable @latest bootstrap. Provider/model/browser prerequisites remain explicit.",
       "closure": "Complete selected directory and every matching same-pin support/reference. Maps remains conditional geographic leaf; cloud/SaaS/upgrade siblings not automatically exposed.",
       "rights": "Applicable custom Remotion Free/Company terms; no independently refreshed tariff.",
       "native_name": "remotion-markup",
@@ -8231,7 +8213,7 @@
       "source_url": "https://github.com/remotion-dev/remotion/blob/682cad29c569d7c36c2445e27ec07cb433f06b32/packages/skills/skills/remotion-render/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Preserve each complete selected directory and its support files as an independently available native expert. Do not use unlicensed standalone mirror redistribution. Fix sibling links from ./remotion-*/SKILL.md to ../remotion-*/SKILL.md where actual installed layout requires it; validate all support links including markup to timeline-structure. Use existing authorization/requested artifact to select final render versus preview; remove forced preview-only stops and unbounded create-video@latest. Preserve real source-editable editing units, named tracks, inline schema/controls and connected composition checks; do not simplify these to generic JSX advice. Preserve captions with original-source timestamps through trims. Model download/WebGPU and paid/remote voice calls require their actual provisioned capability; do not force ElevenLabs or new credentials. No global coactivation of SaaS/cloud or upgrade siblings; expose maps only when adopted as its own task lane. API-specific blur/browser requirements follow actual runtime version.",
+      "details": "Preserve complete selected upstream methods, preview-default/explicit-render behavior, editable tracks, captions and support. Fix actual sibling-link coordinates and pin compatible4.0.540 dependencies; no mutable @latest bootstrap. Provider/model/browser prerequisites remain explicit.",
       "closure": "Complete selected directory and every matching same-pin support/reference. Maps remains conditional geographic leaf; cloud/SaaS/upgrade siblings not automatically exposed.",
       "rights": "Applicable custom Remotion Free/Company terms; no independently refreshed tariff.",
       "native_name": "remotion-render",
@@ -8476,7 +8458,7 @@
       "source_url": "https://github.com/coreyhaines31/marketingskills/blob/88c79f6528a9347420e57ceb1fff9a60de651768/skills/product-marketing/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "One sourced product context and evidence-marked learning.",
+      "details": "Preserve upstream product-brief startup, diagnosis, launch, pricing, email and experiment methods with complete local references. Qualify unsupported numeric retention/churn claims without replacing the pricing method. Preserve the actual outreach privacy/recipient/dispatch boundaries; installation grants no send authority.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -8488,7 +8470,7 @@
       "source_url": "https://github.com/coreyhaines31/marketingskills/blob/88c79f6528a9347420e57ceb1fff9a60de651768/skills/ab-testing/SKILL.md",
       "delivery": "intact upstream leaf",
       "decision": "adopt",
-      "details": "Precommit sample/stopping; correct interval and p-value meaning.",
+      "details": "Preserve upstream product-brief startup, diagnosis, launch, pricing, email and experiment methods with complete local references. Qualify unsupported numeric retention/churn claims without replacing the pricing method. Preserve the actual outreach privacy/recipient/dispatch boundaries; installation grants no send authority.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -8500,7 +8482,7 @@
       "source_url": "https://github.com/coreyhaines31/marketingskills/blob/88c79f6528a9347420e57ceb1fff9a60de651768/skills/copywriting/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Claims support/voice-preserving edits; drop mandatory diagnosis narration.",
+      "details": "Preserve upstream product-brief startup, diagnosis, launch, pricing, email and experiment methods with complete local references. Qualify unsupported numeric retention/churn claims without replacing the pricing method. Preserve the actual outreach privacy/recipient/dispatch boundaries; installation grants no send authority.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -8512,7 +8494,7 @@
       "source_url": "https://github.com/coreyhaines31/marketingskills/blob/88c79f6528a9347420e57ceb1fff9a60de651768/skills/launch/SKILL.md",
       "delivery": "intact upstream leaf",
       "decision": "adopt",
-      "details": "Launch calendar, owned-channel handoffs and post-launch checks; user selects audience and actual channels.",
+      "details": "Preserve upstream product-brief startup, diagnosis, launch, pricing, email and experiment methods with complete local references. Qualify unsupported numeric retention/churn claims without replacing the pricing method. Preserve the actual outreach privacy/recipient/dispatch boundaries; installation grants no send authority.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -8524,7 +8506,7 @@
       "source_url": "https://github.com/coreyhaines31/marketingskills/blob/88c79f6528a9347420e57ceb1fff9a60de651768/skills/emails/SKILL.md",
       "delivery": "intact upstream leaf",
       "decision": "adopt",
-      "details": "Lifecycle sequence design only for an actual subscribed audience and named trigger. Delivery has separate access and authorization.",
+      "details": "Preserve upstream product-brief startup, diagnosis, launch, pricing, email and experiment methods with complete local references. Qualify unsupported numeric retention/churn claims without replacing the pricing method. Preserve the actual outreach privacy/recipient/dispatch boundaries; installation grants no send authority.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -8536,7 +8518,7 @@
       "source_url": "https://github.com/coreyhaines31/marketingskills/blob/88c79f6528a9347420e57ceb1fff9a60de651768/skills/pricing/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Use value metric, packaging and willingness-to-pay research; mark suggested price bands and generalized retention claims as hypotheses and replace with market evidence before setting a real price.",
+      "details": "Preserve upstream product-brief startup, diagnosis, launch, pricing, email and experiment methods with complete local references. Qualify unsupported numeric retention/churn claims without replacing the pricing method. Preserve the actual outreach privacy/recipient/dispatch boundaries; installation grants no send authority.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -8584,7 +8566,7 @@
       "source_url": "https://github.com/AgriciDaniel/claude-seo/blob/6be93f45064ffbadced572b5d5c95f55fd263af0/skills/seo-technical/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Concrete checks; bind root and preserve measured-only scoring.",
+      "details": "Preserve the original full-site audit workflow,17 domain lenses and source inline fallback; retain exact domain prompts as support outside standalone discovery. Bind package paths to the pinned source and preserve the actual credential/account-access boundary. A one-page task should select the applicable source method.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -8596,7 +8578,7 @@
       "source_url": "https://github.com/AgriciDaniel/claude-seo/blob/6be93f45064ffbadced572b5d5c95f55fd263af0/skills/seo-audit/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Full audit only; proportional fanout and artifacts.",
+      "details": "Preserve the original full-site audit workflow,17 domain lenses and source inline fallback; retain exact domain prompts as support outside standalone discovery. Bind package paths to the pinned source and preserve the actual credential/account-access boundary. A one-page task should select the applicable source method.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -8608,7 +8590,7 @@
       "source_url": "https://github.com/AgriciDaniel/claude-ads/blob/fc3908e786c318776df89a3a098333da377364be/skills/ads-audit/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Preserve evidence schema and deterministic scoring.",
+      "details": "Preserve original platform/cross-platform independent-worker workflow and exact prompt/schema/scoring support. An audit grants no account mutation or provider spending authority. Preserve source data/missingness and task-specific access.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -8620,7 +8602,7 @@
       "source_url": "https://github.com/AgriciDaniel/claude-ads/blob/fc3908e786c318776df89a3a098333da377364be/skills/ads-math/SKILL.md",
       "delivery": "intact upstream leaf",
       "decision": "adopt",
-      "details": "Unit/denominator/source and sensitivity discipline; light standalone route.",
+      "details": "Preserve original platform/cross-platform independent-worker workflow and exact prompt/schema/scoring support. An audit grants no account mutation or provider spending authority. Preserve source data/missingness and task-specific access.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "MIT"
     },
@@ -9154,7 +9136,7 @@
       "source_url": "https://github.com/coreyhaines31/marketingskills/blob/88c79f6528a9347420e57ceb1fff9a60de651768/skills/prospecting/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Read-only shortlist of named accounts or first-customer/demand evidence. Retain ICP/exclusion, admissible observation, uncertainty, freshness and source ledger. Use the two bundled research references. Remove vendor setup, enrichment, per-channel quotas, schedule/sending, and mandatory address verification for research-only records. An address is optional and cannot establish permission.",
+      "details": "Preserve upstream product-brief startup, diagnosis, launch, pricing, email and experiment methods with complete local references. Qualify unsupported numeric retention/churn claims without replacing the pricing method. Preserve the actual outreach privacy/recipient/dispatch boundaries; installation grants no send authority.",
       "closure": "Keep only references/demand-signals.md and references/account-research.md. Remove links to saas-prospecting.md, b2b-prospecting.md, local-prospecting.md, sourcing-and-enrichment.md, signal-plays.md, compliance.md, enrichment-playbook.md and data-sources.md. Remove the Tools registry/provider table and related skill installation/invocation. Inline the scoped source eligibility and observations policy. Inputs referring to product briefs map to existing project context.",
       "rights": "MIT; retain copyright (c) 2025 Corey Haines and permission notice for copies/substantial portions.",
       "blob_sha": "1ad10f1531f212ff6587c008a120b72161e5fd0d"
@@ -9180,7 +9162,7 @@
       "source_url": "https://github.com/coreyhaines31/marketingskills/blob/88c79f6528a9347420e57ceb1fff9a60de651768/skills/cold-email/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "For explicitly requested draft/reply, keep intent, authorized offer, verifiable business relevance, one question, voice and a reviewable draft. Use the two specified relative support files. Cut mandatory sequencing, second domains/warm-up, platform/channel actions, automated follow-ups/sends/booking, benchmarks and operational account setup. Channel-state changes go to existing owner with its authorization and eligibility.",
+      "details": "Preserve upstream product-brief startup, diagnosis, launch, pricing, email and experiment methods with complete local references. Qualify unsupported numeric retention/churn claims without replacing the pricing method. Preserve the actual outreach privacy/recipient/dispatch boundaries; installation grants no send authority.",
       "closure": "Keep references/personalization.md and references/reply-handling.md. Remove references/frameworks.md, subject-lines.md, follow-up-sequences.md, deliverability.md, linkedin-outreach.md, multichannel-cadence.md, outbound-plays.md and benchmarks.md, including duplicate catalog links. Remove provider/registry and related-skills routing paragraphs; keep only copy review and handoff to actual sender owner.",
       "rights": "MIT; retain copyright (c) 2025 Corey Haines and permission notice for copies/substantial portions.",
       "blob_sha": "ac9ff9ce2529b0c5c0f332294872dc2daf7de045"
@@ -9269,7 +9251,8 @@
         "src/skill_seekers/cli/quality_checker.py",
         "src/skill_seekers/cli/install_agent.py",
         "src/skill_seekers/cli/adaptors/openai.py"
-      ]
+      ],
+      "upstream_method_source_path": "distribution/claude-plugin/skills/skill-builder/SKILL.md"
     },
     {
       "candidate_id": "P032",
@@ -9456,7 +9439,8 @@
       "rights": "MIT",
       "native_name": "slidev-production",
       "entry_kind": "adapter-to-runtime",
-      "support_paths": []
+      "support_paths": [],
+      "upstream_method_source_path": "skills/slidev/SKILL.md"
     },
     {
       "candidate_id": "L013",
@@ -9841,7 +9825,7 @@
       "source_url": "https://github.com/remotion-dev/remotion/blob/682cad29c569d7c36c2445e27ec07cb433f06b32/packages/skills/skills/remotion-interactivity/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Preserve each complete selected directory and its support files as an independently available native expert. Do not use unlicensed standalone mirror redistribution. Fix sibling links from ./remotion-*/SKILL.md to ../remotion-*/SKILL.md where actual installed layout requires it; validate all support links including markup to timeline-structure. Use existing authorization/requested artifact to select final render versus preview; remove forced preview-only stops and unbounded create-video@latest. Preserve real source-editable editing units, named tracks, inline schema/controls and connected composition checks; do not simplify these to generic JSX advice. Preserve captions with original-source timestamps through trims. Model download/WebGPU and paid/remote voice calls require their actual provisioned capability; do not force ElevenLabs or new credentials. No global coactivation of SaaS/cloud or upgrade siblings; expose maps only when adopted as its own task lane. API-specific blur/browser requirements follow actual runtime version.",
+      "details": "Preserve complete selected upstream methods, preview-default/explicit-render behavior, editable tracks, captions and support. Fix actual sibling-link coordinates and pin compatible4.0.540 dependencies; no mutable @latest bootstrap. Provider/model/browser prerequisites remain explicit.",
       "closure": "Complete selected directory and every matching same-pin support/reference. Maps remains conditional geographic leaf; cloud/SaaS/upgrade siblings not automatically exposed.",
       "rights": "Applicable custom Remotion Free/Company terms; no independently refreshed tariff.",
       "native_name": "remotion-interactivity",
@@ -9855,7 +9839,7 @@
       "source_url": "https://github.com/remotion-dev/remotion/blob/682cad29c569d7c36c2445e27ec07cb433f06b32/packages/skills/skills/remotion-captions/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Preserve each complete selected directory and its support files as an independently available native expert. Do not use unlicensed standalone mirror redistribution. Fix sibling links from ./remotion-*/SKILL.md to ../remotion-*/SKILL.md where actual installed layout requires it; validate all support links including markup to timeline-structure. Use existing authorization/requested artifact to select final render versus preview; remove forced preview-only stops and unbounded create-video@latest. Preserve real source-editable editing units, named tracks, inline schema/controls and connected composition checks; do not simplify these to generic JSX advice. Preserve captions with original-source timestamps through trims. Model download/WebGPU and paid/remote voice calls require their actual provisioned capability; do not force ElevenLabs or new credentials. No global coactivation of SaaS/cloud or upgrade siblings; expose maps only when adopted as its own task lane. API-specific blur/browser requirements follow actual runtime version.",
+      "details": "Preserve complete selected upstream methods, preview-default/explicit-render behavior, editable tracks, captions and support. Fix actual sibling-link coordinates and pin compatible4.0.540 dependencies; no mutable @latest bootstrap. Provider/model/browser prerequisites remain explicit.",
       "closure": "Complete selected directory and every matching same-pin support/reference. Maps remains conditional geographic leaf; cloud/SaaS/upgrade siblings not automatically exposed.",
       "rights": "Applicable custom Remotion Free/Company terms; no independently refreshed tariff.",
       "native_name": "remotion-captions",
@@ -9869,7 +9853,7 @@
       "source_url": "https://github.com/remotion-dev/remotion/blob/682cad29c569d7c36c2445e27ec07cb433f06b32/packages/skills/skills/remotion-studio/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Preserve each complete selected directory and its support files as an independently available native expert. Do not use unlicensed standalone mirror redistribution. Fix sibling links from ./remotion-*/SKILL.md to ../remotion-*/SKILL.md where actual installed layout requires it; validate all support links including markup to timeline-structure. Use existing authorization/requested artifact to select final render versus preview; remove forced preview-only stops and unbounded create-video@latest. Preserve real source-editable editing units, named tracks, inline schema/controls and connected composition checks; do not simplify these to generic JSX advice. Preserve captions with original-source timestamps through trims. Model download/WebGPU and paid/remote voice calls require their actual provisioned capability; do not force ElevenLabs or new credentials. No global coactivation of SaaS/cloud or upgrade siblings; expose maps only when adopted as its own task lane. API-specific blur/browser requirements follow actual runtime version.",
+      "details": "Preserve complete selected upstream methods, preview-default/explicit-render behavior, editable tracks, captions and support. Fix actual sibling-link coordinates and pin compatible4.0.540 dependencies; no mutable @latest bootstrap. Provider/model/browser prerequisites remain explicit.",
       "closure": "Complete selected directory and every matching same-pin support/reference. Maps remains conditional geographic leaf; cloud/SaaS/upgrade siblings not automatically exposed.",
       "rights": "Applicable custom Remotion Free/Company terms; no independently refreshed tariff.",
       "native_name": "remotion-studio",
@@ -9883,7 +9867,7 @@
       "source_url": "https://github.com/remotion-dev/remotion/blob/682cad29c569d7c36c2445e27ec07cb433f06b32/packages/skills/skills/remotion-multimedia/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Preserve each complete selected directory and its support files as an independently available native expert. Do not use unlicensed standalone mirror redistribution. Fix sibling links from ./remotion-*/SKILL.md to ../remotion-*/SKILL.md where actual installed layout requires it; validate all support links including markup to timeline-structure. Use existing authorization/requested artifact to select final render versus preview; remove forced preview-only stops and unbounded create-video@latest. Preserve real source-editable editing units, named tracks, inline schema/controls and connected composition checks; do not simplify these to generic JSX advice. Preserve captions with original-source timestamps through trims. Model download/WebGPU and paid/remote voice calls require their actual provisioned capability; do not force ElevenLabs or new credentials. No global coactivation of SaaS/cloud or upgrade siblings; expose maps only when adopted as its own task lane. API-specific blur/browser requirements follow actual runtime version.",
+      "details": "Preserve complete selected upstream methods, preview-default/explicit-render behavior, editable tracks, captions and support. Fix actual sibling-link coordinates and pin compatible4.0.540 dependencies; no mutable @latest bootstrap. Provider/model/browser prerequisites remain explicit.",
       "closure": "Complete selected directory and every matching same-pin support/reference. Maps remains conditional geographic leaf; cloud/SaaS/upgrade siblings not automatically exposed.",
       "rights": "Applicable custom Remotion Free/Company terms; no independently refreshed tariff.",
       "native_name": "remotion-multimedia",
@@ -9897,7 +9881,7 @@
       "source_url": "https://github.com/remotion-dev/remotion/blob/682cad29c569d7c36c2445e27ec07cb433f06b32/packages/skills/skills/remotion-docs/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Preserve each complete selected directory and its support files as an independently available native expert. Do not use unlicensed standalone mirror redistribution. Fix sibling links from ./remotion-*/SKILL.md to ../remotion-*/SKILL.md where actual installed layout requires it; validate all support links including markup to timeline-structure. Use existing authorization/requested artifact to select final render versus preview; remove forced preview-only stops and unbounded create-video@latest. Preserve real source-editable editing units, named tracks, inline schema/controls and connected composition checks; do not simplify these to generic JSX advice. Preserve captions with original-source timestamps through trims. Model download/WebGPU and paid/remote voice calls require their actual provisioned capability; do not force ElevenLabs or new credentials. No global coactivation of SaaS/cloud or upgrade siblings; expose maps only when adopted as its own task lane. API-specific blur/browser requirements follow actual runtime version.",
+      "details": "Preserve complete selected upstream methods, preview-default/explicit-render behavior, editable tracks, captions and support. Fix actual sibling-link coordinates and pin compatible4.0.540 dependencies; no mutable @latest bootstrap. Provider/model/browser prerequisites remain explicit.",
       "closure": "Complete selected directory and every matching same-pin support/reference. Maps remains conditional geographic leaf; cloud/SaaS/upgrade siblings not automatically exposed.",
       "rights": "Applicable custom Remotion Free/Company terms; no independently refreshed tariff.",
       "native_name": "remotion-docs",
@@ -9911,7 +9895,7 @@
       "source_url": "https://github.com/remotion-dev/remotion/blob/682cad29c569d7c36c2445e27ec07cb433f06b32/packages/skills/skills/remotion-license/SKILL.md",
       "delivery": "narrow-patched leaf",
       "decision": "adapt",
-      "details": "Preserve each complete selected directory and its support files as an independently available native expert. Do not use unlicensed standalone mirror redistribution. Fix sibling links from ./remotion-*/SKILL.md to ../remotion-*/SKILL.md where actual installed layout requires it; validate all support links including markup to timeline-structure. Use existing authorization/requested artifact to select final render versus preview; remove forced preview-only stops and unbounded create-video@latest. Preserve real source-editable editing units, named tracks, inline schema/controls and connected composition checks; do not simplify these to generic JSX advice. Preserve captions with original-source timestamps through trims. Model download/WebGPU and paid/remote voice calls require their actual provisioned capability; do not force ElevenLabs or new credentials. No global coactivation of SaaS/cloud or upgrade siblings; expose maps only when adopted as its own task lane. API-specific blur/browser requirements follow actual runtime version.",
+      "details": "Preserve complete selected upstream methods, preview-default/explicit-render behavior, editable tracks, captions and support. Fix actual sibling-link coordinates and pin compatible4.0.540 dependencies; no mutable @latest bootstrap. Provider/model/browser prerequisites remain explicit.",
       "closure": "Complete selected directory and every matching same-pin support/reference. Maps remains conditional geographic leaf; cloud/SaaS/upgrade siblings not automatically exposed.",
       "rights": "Applicable custom Remotion Free/Company terms; no independently refreshed tariff.",
       "native_name": "remotion-license",

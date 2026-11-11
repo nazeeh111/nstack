@@ -1,0 +1,15 @@
+--- upstream/skills/unslop/SKILL.md
++++ active/skills/unslop/SKILL.md
+@@ -11,6 +11,12 @@
+ # Unslop
+ 
+ unslop was created by Damir Sokolovsky ([@heydamir](https://x.com/heydamir)), who started the Unslopping series on X. It is licensed under CC BY 4.0, so keep this credit in any copy or adaptation.
++
++## Host tool binding
++
++Keep the selected host, model, effort and user authority. The method below is the pinned upstream text. Its tool references mean the host's available equivalent capabilities; they do not authorize new providers, spending, credentials, publishing or installation.
++
++The retained `snapshot.mjs` and `story.mjs` are reference-only, not admitted runtime entrypoints: both launch a separate Playwright browser, and the story helper serves its input directory and recursively replaces `.story-frames`. Use supported native capture and video tools for those steps, preserving the snapshot comparison and story specification below. If an equivalent capture or render is unavailable, report that capability gap. Do not import account cookies, inspect browser profiles or bypass a native permission denial.
+ 
+ Vibecoded UI fails in the same predictable ways. Every surface glows, every label has an emoji, spacing is whatever the model typed that day, and the copy shouts. Unslopping fixes the craft and keeps the product. The features, content and order of sections stay. What changes is that every size, color, word and image becomes deliberate.
+ 
