@@ -334,6 +334,12 @@ def apply(args):
         addons.append("01")
     if getattr(args, "raea", False):
         addons.append("raea")
+    if getattr(args, "llm_council", False):
+        addons.append("llm-council")
+    if getattr(args, "cloudflare_security_audit", False):
+        addons.append("cloudflare-security-audit")
+    if getattr(args, "strix", False):
+        addons.append("strix-security-testing")
     if set(addons) & {name for name, _ in chosen}:
         raise ValueError("Addon name collides with selected skill")
     release, index = prepare(state, chosen, addons)
@@ -466,6 +472,9 @@ def main():
     a.add_argument("--untangle-codebase", action="store_true", help="Add the pinned, explicitly invoked codebase refactoring skill")
     a.add_argument("--adaptive-routing", action="store_true", help="Add explicit 01 for adaptive skill/tool selection throughout a session")
     a.add_argument("--raea", action="store_true", help="Add RAEA guidance for offline local GPU rendering; pinned runtime installed separately")
+    a.add_argument("--llm-council", action="store_true", help="Add native council and offline blinded evaluation; no provider or server activation")
+    a.add_argument("--cloudflare-security-audit", action="store_true", help="Add the pinned repository audit method and offline validators; no account or scan activation")
+    a.add_argument("--strix", action="store_true", help="Add Strix coding-agent methods; runtime and external scans remain on demand")
     a.add_argument("--vault", help="Existing user-authorized vault path; does not create a vault")
     sub.add_parser("list")
     a = sub.add_parser("rollback")

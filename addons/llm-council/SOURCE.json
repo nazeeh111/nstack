@@ -1,0 +1,12 @@
+{
+  "repository": "nazeeh111/nstack",
+  "revision": null,
+  "source_path": "addons/llm-council",
+  "license": "MIT",
+  "installation_adaptation": "Authored native council method and offline blind-review utility. No upstream application code, provider transport, credential access or service.",
+  "method_sources": [
+    {"repository": "karpathy/llm-council", "revision": "92e1fccb1bdcf1bab7221aa9ed90f9dc72529131", "scope": "Independent proposals, peer review, synthesis; upstream license undeclared, code not redistributed"},
+    {"url": "https://arxiv.org/abs/2305.17926v2", "scope": "Evidence-first and balanced-position evaluation"},
+    {"url": "https://arxiv.org/abs/2406.07791v9", "scope": "Position-consistency limitations"}
+  ]
+}

@@ -83,6 +83,33 @@ class NativeSetup(unittest.TestCase):
     self.assertTrue((entry/'scripts/capabilities.py').is_file());self.assertEqual((shared/'obsidian-markdown/../../support.md').resolve().read_text(),'Required retained support.\n')
     journal=pathlib.Path(result['run'])/'journal.json';before=journal.read_bytes();self.assertFalse(native.apply(args)['changed']);self.assertEqual(journal.read_bytes(),before)
    subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True);self.assertEqual(fingerprint(legacy.parent),original)
+ def test_council_addition_keeps_complete_offline_support_repeat_and_rollback(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';home.mkdir();state=base/'state';source,leaf,r=self.fixture(base)
+   legacy=home/'.agents/skills/own';legacy.mkdir(parents=True);(legacy/'SKILL.md').write_text('Original dirty bytes\n');original=fingerprint(legacy.parent)
+   args=self.args(home,state);args.llm_council=True
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
+    result=native.apply(args);shared=home/'.agents/skills';self.assertEqual({p.name for p in shared.iterdir()},{'obsidian-markdown','llm-council'})
+    entry=shared/'llm-council';self.assertTrue((entry/'references/contracts.md').is_file());self.assertTrue((entry/'references/scenarios.md').is_file())
+    self.assertEqual(json.loads((entry/'SOURCE.json').read_text())['method_sources'][0]['revision'],'92e1fccb1bdcf1bab7221aa9ed90f9dc72529131')
+    subprocess.run([sys.executable,str(entry/'scripts/blind_review.py'),'--help'],check=True,capture_output=True)
+    journal=pathlib.Path(result['run'])/'journal.json';before=journal.read_bytes();self.assertFalse(native.apply(args)['changed']);self.assertEqual(journal.read_bytes(),before)
+   subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True);self.assertEqual(fingerprint(legacy.parent),original)
+ def test_security_additions_preserve_complete_bundles_repeat_and_dirty_rollback(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';home.mkdir();state=base/'state';source,leaf,r=self.fixture(base)
+   legacy=home/'.agents/skills/custom';legacy.mkdir(parents=True);(legacy/'SKILL.md').write_text('uncommitted original bytes\n');original=fingerprint(legacy.parent)
+   args=self.args(home,state);args.cloudflare_security_audit=True;args.strix=True
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
+    result=native.apply(args);shared=home/'.agents/skills';self.assertEqual({p.name for p in shared.iterdir()},{'obsidian-markdown','cloudflare-security-audit','strix-security-testing'})
+    for name in ['cloudflare-security-audit','strix-security-testing']:
+     entry=shared/name;expected=native.addon_definition(name)['frozen_files']
+     for rel,(data,mode) in expected.items():self.assertEqual((entry/rel).read_bytes(),data)
+     self.assertEqual(len(list(entry.rglob('SKILL.md'))),1)
+    journals={p:fingerprint(p)for p in (state/'runs').glob('*/journal.json')};self.assertFalse(native.apply(args)['changed'])
+    for p,old in journals.items():self.assertEqual(fingerprint(p),old)
+    self.assertFalse((state/'native-tools/strix').exists())
+   subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True);self.assertEqual(fingerprint(legacy.parent),original)
  def test_raea_and_01_keep_support_and_use_durable_recipe_without_installing_engine(self):
   with tempfile.TemporaryDirectory() as temp:
    base=pathlib.Path(temp).resolve();home=base/'home';home.mkdir();state=base/'state';source,leaf,r=self.fixture(base)

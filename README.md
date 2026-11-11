@@ -37,7 +37,8 @@ python3 native_setup.py install --replace --agent-reach --repository-docs
 
 Choose optional additions in that single `native_setup.py` command rather than
 running successive replacements: `--academic-research`, `--ecc`, `--unslop`,
-`--maps-scraper`, `--untangle-codebase`, `--raea` and `--adaptive-routing`.
+`--maps-scraper`, `--untangle-codebase`, `--raea`, `--adaptive-routing`,
+`--llm-council`, `--cloudflare-security-audit` and `--strix`.
 Academic sources are fetched privately under their noncommercial license.
 When replacing a collection, include all additions you intend to retain.
 
@@ -94,6 +95,16 @@ For one explicit entry to adaptive selection across the session, add
 `--adaptive-routing` to the native install command and invoke `$01` once.
 It keeps ordinary work direct and applies relevant specialists as the task
 changes. [Behavior, testing and limits](docs/ADAPTIVE_ROUTING.md).
+
+Optional [LLM Council](docs/COUNCIL.md) adds independent alternatives, blinded
+critique and reversed-order checks. It uses available native workflows; its
+offline helper makes no model requests. Multi-provider use needs its own
+connection, data scope and budget. No simulator or extra service is started.
+
+The optional [security methods](docs/SECURITY-METHODS.md) add one Cloudflare
+repository-audit skill and one Strix skill shared by both hosts. They preserve
+the complete licensed method references without activating scanners, cloud
+accounts or paid providers. Routine security review keeps its existing route.
 
 ```sh
 nstack search room clap decay

@@ -1,0 +1,13 @@
+# Draft Strix CI scanning
+
+Modified by nstack from the pinned usestrix method recorded in [SOURCE.md](../SOURCE.md).
+
+Use for a requested pipeline change. Inspect the repository's existing CI and target trust boundary before drafting a concrete workflow. Preparing files is distinct from enabling a hosted integration, uploading SARIF, posting PR comments, adding secrets, scheduling paid jobs, committing or pushing. Reuse existing authorization; do not automatically recommend the managed platform when a runner lacks Docker.
+
+For a local runner, read [runtime and results](penetration-testing-with-strix.md). Require an independently reviewed runtime package/image and appropriate Docker availability. Use immutable acquisition/action references verified for the actual project; do not copy the upstream floating shell installer or assume upstream example action tags remain current. Keep credentials out of workflow text. Establish provider, source-data and recurring budget authority before enabling execution.
+
+Review PR changes against the actual PR base. Fetch enough history to resolve it and fail on missing or empty unintended scope; do not silently fall back to a last-commit comparison. In GitHub Actions the PR base is available through `github.base_ref`; other CI systems have their own base variables. Avoid exposing paid secrets to untrusted fork code or executing that code in a privileged context. Use an isolated job/workspace and preserve relevant artifacts without secret-bearing traces.
+
+Use headless mode, explicit scan depth, per-agent turns and approved budget. Exit 1 is a runtime/setup failure; exit 2 means a finding at the selected threshold. Lower findings remain if `--fail-on` narrows the gate. Never accept exit 0 alone: bind the exact run's metadata to the intended input revision, scope and report. `stopped`, failure, absent artifacts or unresolved scope are incomplete checks. A `completed` run can still have warning-triggered partial coverage. Also inspect cost and reported coverage; increasing the budget needs authority and may not fix the underlying failure. Estimated post-response budget checks can overshoot, so a provider-side limit is necessary for a hard spending ceiling.
+
+Draft artifact retention and a policy for incomplete runs explicitly. Publishing SARIF or comments is a separately authorized external action. A local successful check does not prove an enabled remote CI workflow. For an explicitly selected hosted integration, use the [managed method](managed-pentesting-with-strix.md); account setup, source upload, SCM integration and recurring scans remain separate decisions.

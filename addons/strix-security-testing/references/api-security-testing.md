@@ -1,0 +1,11 @@
+# Strix API assessment
+
+Modified by nstack from the pinned usestrix method recorded in [SOURCE.md](../SOURCE.md).
+
+Use a real endpoint/schema and an explicit authorization model. Collect relevant OpenAPI/Swagger, Postman, GraphQL or gRPC definitions; seeded object IDs; test identities/tenants; privilege levels; rate limits and out-of-scope routes. Read [runtime and results](penetration-testing-with-strix.md) and establish approved handling for any test credentials. Do not fabricate identities or expose tokens in commands/evidence.
+
+Review all base URLs and environment-variable substitutions in a specification before passing it as a target: Strix can authorize declared hosts as part of its scan scope. OpenAPI/Swagger JSON/YAML and Postman collection exports are recognized targets. A gRPC `.proto` is supporting material supplied with `--workspace-file`, not a recognized spec target. A live Postman collection fetch adds a separate external data/authentication route; prefer a supplied reviewed export when sufficient.
+
+For REST, test object ownership across tenants, object-property authorization (including over-exposure/mass assignment), function-level authorization, resource consumption, injection and SSRF where authorized. For GraphQL, clarify introspection, per-field permissions, alias/batch behavior and depth/complexity limits. Use controlled test data for rate/consumption checks. The [OWASP method](owasp-top-10-testing.md) distinguishes the API Security Top 10:2023 from the web Top 10:2025; verify the edition relevant to the current task.
+
+Source-assisted review helps distinguish actual ownership checks from response guesses. An HTTP 200 is not proof of cross-tenant data access: inspect the response and confirm the other test tenant's object/data or a demonstrated state change. Replay only within the authorized effect/rate bounds. Read report, individual PoCs and run coverage together. Use [remediation](fix-security-vulnerabilities-with-strix.md) for requested fixes and [CI drafting](ci-security-scanning-with-strix.md) for requested ongoing checks. A network connector or source upload through the [managed method](managed-pentesting-with-strix.md) requires separate authorization.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "LLM Council"
+  short_description: "Blind alternative review with evidence checks"
+  default_prompt: "Compare the relevant alternatives using independent evidence and preserve unresolved dissent."
