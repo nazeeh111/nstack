@@ -6,11 +6,13 @@ source:
 source_revision:
 source_sha256:
 event_date:
-observation_date:
+observed_date:
 state: draft
 generation: 1
-supersedes_generation:
+supersedes: none
+correction_reason:
 correction_path:
+tags: [knowledge]
 ---
 # Title
 

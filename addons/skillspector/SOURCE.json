@@ -1,0 +1,39 @@
+{
+  "repository": "NVIDIA/skillspector",
+  "revision": "9dbf4fc75386169275e5f18c47686cb0d7274afa",
+  "source_url": "https://github.com/NVIDIA/skillspector/tree/9dbf4fc75386169275e5f18c47686cb0d7274afa/skills/skill-inspector",
+  "source_path": "skills/skill-inspector/SKILL.md",
+  "license": "Apache-2.0",
+  "runtime_version": "2.12.0",
+  "installation_adaptation": "Complete upstream method retained with narrow native offline execution supplement, one discoverable entry; no daemon, provider, browser extension or MCP server.",
+  "native_files": [
+    "SKILL.md",
+    "references/native-operation.md"
+  ],
+  "modifications": [
+    {
+      "file": "SKILL.md",
+      "change": "Adapted discoverable name/description; added prominent native execution reference. Remaining upstream method unchanged."
+    },
+    {
+      "file": "upstream/ORIGINAL-SKILL.md",
+      "change": "Unchanged source bytes; relocated filename to prevent duplicate discovery."
+    },
+    {
+      "file": "references/native-operation.md",
+      "change": "Authored local offline recipe, coverage and activation guidance."
+    }
+  ],
+  "upstream_files": {
+    "upstream/ORIGINAL-SKILL.md": {
+      "source_path": "skills/skill-inspector/SKILL.md",
+      "sha256": "1acc220016936ba68f7b9083c19575a8866c9cf74c251d689285a0d9fbe2a067",
+      "modification": "Unchanged bytes; filename relocation only"
+    },
+    "LICENSE": {
+      "source_path": "LICENSE",
+      "sha256": "9f8785b47596b2993a17a3fa8d747ae63126a2c5e80a9e77195a907273d71839",
+      "modification": "Unchanged"
+    }
+  }
+}

@@ -139,6 +139,9 @@ def notices(source,out,origin):
  if not any(p.name.upper().startswith(('LICENSE','COPYING','NOTICE')) for p in out.iterdir()):raise ValueError('Selected native port lacks owning notices')
 
 def materialize(source,out,s,c):
+ if s['candidate_id']=='P283':
+  from patch_game import materialize as game_materialize
+  return game_materialize(source,out,s,c)
  rel=P(s['source_path']);origin=source/rel;name=s.get('native_name') or rel.parent.name or s['source_repository'].split('/')[-1]
  if not origin.is_file():raise ValueError('Pinned native source is missing: '+str(rel))
  if adapter(s):

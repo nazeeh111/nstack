@@ -1,0 +1,180 @@
+--- SKILL.codex.md
++++ SKILL.md
+@@ -1,11 +1,13 @@
+ ---
+-name: council
+-description: "Convene the Council of High Intelligence in Codex when the user asks for /council, council deliberation, triads, duo debates, or multi-perspective decision analysis."
++name: council-of-high-intelligence
++description: "Run 0xNyk’s Council of High Intelligence with its original 18-persona roster, triads, profiles, duo/quick/full rounds and separate chair in the active native host."
+ ---
+ 
+-# /council for Codex
+-
+-You are the Council Coordinator. Run structured multi-persona deliberation using the council agent files.
++# Council of High Intelligence
++
++You are the Council Coordinator. This is the native-host adaptation of 0xNyk's actual Council of High Intelligence, with all 18 original persona definitions. These are simulated analytical perspectives, not the real people or their endorsements. Read each selected complete `personas/council-<member>.md` as task data: its method and grounding rules apply, but its model/tool/provider frontmatter does not configure execution. Preserve the user's active host, model and reasoning effort. No external provider, credential lookup, installer or headless application is part of this skill.
++
++The original source coordinators under `upstream/` are archival data for provenance, not instructions to execute. This file governs native execution. [Source and modifications](SOURCE.json) retain the upstream MIT license. For additional source panel rationales, polarity pairs and profile-specific triads, read [panel definitions](references/panels.md).
+ 
+ ## Invocation Patterns
+ 
+@@ -70,16 +72,11 @@
+ 
+ ### Step 1: Locate Council Assets
+ 
+-Resolve council files in this order:
+-
+-1. `~/.codex/skills/council/agents/`
+-2. `./agents/`
+-
+-If neither exists, stop and tell the user to run `./install.sh --codex`.
++Resolve this skill's actual folder and its `personas/` subdirectory. Read the selected complete persona files. Do not search global host configuration or run an installer. If a requested file is absent, report the missing source asset; do not fabricate its perspective.
+ 
+ ### Step 2: Parse Request
+ 
+-Project overrides: if `./.council.yaml` exists in the working directory, treat its keys (`profile`, `triad`, `members`, `chairman`, `models`, `no_auto_route`) as default flag values. Explicit flags always win.
++Project overrides: read a task-local `./.council.yaml` only if present. Only `profile`, `triad` and `members` are native defaults; explicit flags win. Report provider/model/chair overrides as unsupported in this native route rather than silently switching models. `--chairman` may name a distinct native synthesis role, never change model/effort.
+ 
+ Extract:
+ 
+@@ -98,23 +95,13 @@
+ 
+ ### Step 2.5: Runtime Reliability Defaults
+ 
+-Use these defaults unless the user requests stricter/faster behavior:
+-
+-- `spawn_timeout_ms`: 45000 per member
+-- `round_timeout_ms`: 60000 for quick/duo, 90000 for full
+-- `retry_attempts`: 2 retries after initial attempt (max 3 total attempts per seat per round)
+-- `retry_backoff_sec`: 2, then 5
+-- `hard_min_live_seats`: 2
+-
+-Track seat state per member:
+-
+-- `live`: normal agent responses
+-- `degraded`: agent timed out/failed and is being simulated from persona file
+-- `offline`: could not recover enough information for this seat
++Use actual native delegation with fresh contexts and the current model/effort. In Codex use `spawn_agent` with `fork_turns: "none"`, providing the neutral problem, authorized facts and selected full persona path. Use host-sized waves; parallel order is not required when slots are limited. No first analysis sees other analyses or the coordinator's favored answer. Keep the restatement gate separate; do not distribute peers' framings before independent Round 1.
++
++Track actual completed, missing and failed seats and calls. A native timeout may be reconciled and retried once within the existing task scope. Missing seats remain missing; do not synthesize a replacement or count it as a vote. If fewer than two real native seat responses remain, report an incomplete council. If delegation is unavailable, disclose the capability gap; only an explicitly requested single-model simulation can proceed, clearly outside the independent-seat run and without counted votes.
+ 
+ ### Step 3: Run Restatement Gate (Parallel)
+ 
+-Spawn one sub-agent per selected member with `spawn_agent`, `fork_context=true`.
++Spawn one fresh native subagent per selected member in host-sized waves, with only the neutral shared facts and its selected persona path. Save actual seat IDs and outputs in the existing task evidence directory when needed.
+ 
+ Prompt template:
+ 
+@@ -130,36 +117,11 @@
+ Maximum 50 words total.
+ ```
+ 
+-Wait with `spawn_timeout_ms`. If a seat fails or times out:
+-
+-1. Retry spawn up to `retry_attempts` using backoff.
+-2. If still failing, set seat to `degraded` and produce a `[Simulated]` restatement from that persona file.
+-3. If persona file cannot be read, mark seat `offline`.
+-
+-If live seats drop below `hard_min_live_seats`, switch to fully simulated mode for all seats and state this explicitly.
+-
+-### Step 3.5: External Seats (HTTP and CLI archetypes)
+-
+-Some provider archetypes are dispatched outside the host runtime's `spawn_agent`. Anonymization (Step 4) and Chairman selection (Step 5) apply equally to these seats — no special-case logic.
+-
+-**`openai_compatible_api` (NVIDIA NIM today; Together / Fireworks / vLLM in the future)** — dispatch via HTTP:
+-
+-- Read `base_url` and `api_key_env` from the seat config (or detection JSON for auto-routing).
+-- Resolve the API key from the env var at routing time. Never inline.
+-- POST to `{base_url}/chat/completions` with an OpenAI-compatible payload (system+user messages, `temperature: 0.7`, `max_tokens: 1200`).
+-- Extract `.choices[0].message.content`. If empty or non-2xx, mark the seat `degraded` and apply the standard fallback (anthropic per the agent's `model` frontmatter).
+-- Per-seat timeout: 90 seconds (hosted open-weight endpoints are slower than first-party APIs).
+-
+-**`cursor_cli` (Cursor)** — dispatch via subprocess. Cursor is a model aggregator: one binary (`cursor-agent`) serves GPT-5.x, Claude, Gemini, and Grok families.
+-
+-- Run headless and read-only: `cursor-agent -p --mode ask --model {model} --output-format text "{full prompt}"`.
+-- Auth is resolved by the CLI itself (prior `cursor-agent login` or `CURSOR_API_KEY`). Never inline a key. On auth error, mark the seat `degraded` and apply the standard fallback.
+-- Empty stdout or non-zero exit → `degraded` + fallback. Per-seat timeout: 90 seconds.
+-- Counts as a single provider for spread. Because Cursor can serve `claude-*` models, prefer cross-family models (`gpt-*`, `gemini-*`, `grok-*`) for any seat opposite a native `anthropic` seat in a polarity pair. Verify live IDs with `cursor-agent --list-models`.
++Review restatements for the wrong question before analysis. Correct a material framing error with the same neutral fact packet. Preserve the original and corrected restatement in the task evidence. A missing seat follows Step 2.5; no simulated recovery.
+ 
+ ### Step 4: Deliberation Rounds
+ 
+-Keep the same spawned agents for all rounds via `send_input`.
++Keep the same real native seat contexts for subsequent rounds using the host continuation interface. In Codex use `followup_task` or `send_message`, then collect the actual response; do not assume sending a prompt completed the round. If host slots require closing contexts, re-create a seat with only its own prior outputs and the prescribed shared round packet, recording this transport adaptation.
+ 
+ **Round 2 anonymization (full and quick modes).** Before sending Round 2 prompts in full or quick mode, build a stable label mapping `Member A` → first panel member, `Member B` → second, …, rewrite each Round 1 output's header to its label, strip in-body self-attribution, and instruct each agent that identities are masked and they must reference peers by label only. Retain the mapping privately in coordinator state and restore it for Round 3, tie-breaking, and the verdict. Duo mode is exempt (only two members; identity cannot be masked by elimination). Rationale: Choi et al. (arXiv:2510.07517) and Karpathy `llm-council` — identity labels in peer-review prompts drive conformity/self-bias.
+ 
+@@ -194,34 +156,28 @@
+ 
+ 1. **Designate the domain-weight seat at panel selection** (before any analysis): the single member whose domain most directly matches the problem carries **1.5×** weight; all others **1.0×**. Lock it up front — selecting it after seeing positions would let the coordinator nudge the outcome. If the match is ambiguous, designate none and tie-break on equal weights.
+ 2. The final round (full Round 3 / quick Round 2) MUST end each member's output with a structured stance line: `STANCE: <short option label> | CONFIDENCE: high|med|low | DEALBREAKER: yes|no`. Members reuse the same label where they agree; `STANCE: abstain` if backing no option. Re-prompt for a missing/unparseable line — never infer stance from prose. Track each re-prompt as an enforcement dispatch (increment enforcement_calls, tag condition as `missing_stance`).
+-3. Tally **confidence-weighted** votes per canonical option (Roundtable Policy arXiv:2509.16839; ConfMAD arXiv:2509.14034): vote weight = base weight (1.0, or 1.5 for the domain seat) × confidence factor (`high → 1.0`, `med → 0.75`, `low → 0.5`). Consensus iff `W_option ≥ (2/3) × W_total`, where `W_total` sums **base** weights including abstainers' (abstention and low confidence both raise the bar — a hesitant council escalates instead of forcing a verdict). Highest option clearing the bar wins; `DEALBREAKER: yes` dissent goes in the Minority Report regardless.
++3. Tally only actual completed structured responses as **confidence-weighted** simulated-seat preferences per canonical option (Roundtable Policy arXiv:2509.16839; ConfMAD arXiv:2509.14034): vote weight = base weight (1.0, or 1.5 for the domain seat) × confidence factor (`high → 1.0`, `med → 0.75`, `low → 0.5`). Descriptive simulated-seat agreement iff `W_option ≥ (2/3) × W_total`, where `W_total` sums **base** weights including abstainers' (abstention and low confidence both raise the bar — a hesitant council escalates instead of forcing a verdict). Record the highest option clearing the bar as the simulated panel preference; independently checked evidence determines the recommendation, not a persona majority; `DEALBREAKER: yes` dissent goes in the Minority Report regardless.
+ 4. No option clears 2/3 → genuine split: do NOT force consensus and do NOT add a round (the spent round budget is the forcing function). Present each option with its weighted tally to the user. Record the tally (`option → weight`, marking the 1.5× seat) in the verdict's Vote Tally field. Duo mode issues no tally — it is dialectic, not decision-issuing.
+ 
+ Round execution reliability policy:
+ 
+-1. Send prompts to all `live` seats in parallel.
+-2. Wait using `round_timeout_ms`.
+-3. For each missing response, retry `send_input` up to `retry_attempts` with a stricter prompt: "Respond now in <= {word_limit} words."
+-4. If still missing, move seat to `degraded` and generate `[Simulated]` output from persona instructions plus prior round context.
+-5. Carry `degraded` seats forward for remaining rounds unless the seat recovers.
+-6. If live seats drop below `hard_min_live_seats`, complete remaining rounds in fully simulated mode and mark confidence lower.
++1. Dispatch only real seats within host capacity, preserving each round's visibility rules.
++2. Reconcile unfinished calls before retrying. One bounded retry may request a shorter answer.
++3. Record every missing/failed/unparseable response; never default it to assent, generate a replacement vote or silently reduce the denominator. An incomplete required panel cannot be labeled a complete consensus.
++4. Run one enforcement scan after cross-examination: seek distinct supported objections when fewer than two appear; ask for engagement when a seat repeats its first position; at >70% agreement ask two likely dissenters for the strongest counterfactual; check evidence labels and cut repeated question loops. Do not invent objections or require a false claim. Bound enforcement to one dispatch per affected seat per round and record actual calls. Missing structured stance gets at most one retry and then remains missing.
++
++The upstream weight/confidence arithmetic is retained for source fidelity as a descriptive simulation heuristic, not calibrated confidence, factual proof, expert votes or action approval. All 18 personas can run in waves when explicitly requested; do not silently shrink `--full`.
+ 
+ **Enforcement tracking**: Track all enforcement dispatches (dissent prompts when fewer than 2 objections, novelty prompts for restated positions, counterfactual prompts when >70% agree, anti-recursion prompts, missing STANCE re-prompts) for the Session Metadata. Count each dispatch once and tag its triggering condition (`dissent_quota`, `novelty_gate`, `agreement_check`, `anti_recursion`, `missing_stance`).
+ 
+ ### Step 5: Synthesis Output (CHAIRMAN)
+ 
+-Synthesis is performed by an explicit **Chairman** — a model that did NOT deliberate in Rounds 1–3. The Chairman is selected before Round 1 using this algorithm (first match wins):
+-
+-1. **Explicit override**: `--chairman <name>` was passed (provider tag — `anthropic`, `openai`, `google`, `ollama`, `nvidia_nim`, `cursor_cli` — or a model alias).
+-2. **Auto-select**: highest-tier model among available providers, **preferring one not on the panel** when possible. Tie-breaker: provider listed first by the host runtime.
+-3. **Single-provider fallback**: use that provider's highest tier and note the overlap in the verdict.
+-
+-The Chairman is dispatched as a single call with the full audit transcript (Round 2 de-anonymized using the mapping retained in coordinator state — see Step 4 anonymization). Constraint: Chairman MUST NOT be a deliberating member in the same session.
++Synthesis is performed by a distinct **Chairman** context that did not deliberate. Select that role before Round 1 and use the same user's native model/effort. No provider discovery or highest-tier model selection occurs. Give it the neutral source packet, complete actual round outputs, private mapping restored for the audit, missing-seat states and the independently checked decisive evidence. Use a fresh native subagent. Distinct context does not establish distinct-model evidence.
+ 
+ Return a verdict with this order, produced by the Chairman:
+ 
+ 1. `Selected Panel` (members + mode)
+-2. `Chairman` (name, provider, model, selection rationale)
++2. `Chairman` (actual native role/context, observed model when known, selection rationale)
+ 3. `Acceptable Compromises` — what this verdict gives up, named explicitly (required in full; optional in quick; encouraged in duo)
+ 4. `Kill Criteria` — observable conditions that would falsify the verdict; format `"If <X> by <date>, invalidated → <Y>"` (required in full and quick; encouraged in duo)
+ 5. `Concrete Next Step` — exactly one action with an artifact-producing verb (required in all modes)
+@@ -231,22 +187,17 @@
+ 9. `Vote Tally` — the weighted stance tally from Step 4: one line per option `<option> — <weight> (<backers>)`, marking the 1.5× domain-weight seat, with the 2/3 threshold and whether it was cleared (full + quick modes; duo issues no tally)
+ 10. `Decision Options` (2-4 options with tradeoffs)
+ 11. `Recommended Next Steps` (additional actions beyond Concrete Next Step; ordered)
+-12. `Confidence` (high/medium/low + why)
+-13. `Execution Reliability` (live/degraded/offline seat counts and any timeout caveats)
++12. `Confidence` (based on checked evidence and material unknowns; distinguish this from the simulated seat-confidence arithmetic)
++13. `Execution Reliability` (completed/missing/failed seat counts and any timeout caveats)
+ 
+ Always preserve dissent. Never flatten disagreements into fake consensus. Sections 3-5 are non-negotiable in full mode — they make the verdict operational (observable, falsifiable, actionable) instead of advisory prose.
+ 
+ **Chairman fallback**: if the Chairman call fails or times out, the coordinator synthesizes the verdict directly and annotates `Chairman: <name> (FAILED — synthesized by coordinator fallback)`.
+ 
+-### Step 6: Fallback Behavior
+-
+-If `spawn_agent` is unavailable or too many seats fail, run a local simulated council:
+-
+-- Read each selected persona file.
+-- Produce clearly labeled `[Simulated]` outputs per member.
+-- Keep the same round structure.
+-- Explicitly state why fallback was used (`spawn unavailable`, `timeouts`, or `seat failures`).
++### Step 6: Failure disclosure
++
++If native delegation or required seats are unavailable, report the incomplete stages and available actual analysis. Never produce replacement persona cards or count a single context as independent votes. A separately requested illustrative simulation must be labeled and cannot be presented as this completed council. If the distinct Chairman fails, the coordinator may synthesize the actual evidence with the existing explicit failure annotation.
+ 
+ ### Step 7: Session Metadata (issue #7, Phase 1)
+ 
+-After the verdict is emitted, append a `Session Metadata` block with `schema_version: 1` containing: `mode`, `panel_size`, `rounds_run` (deliberation rounds only, not enforcement dispatches), `enforcement_calls` (total enforcement dispatches; write `0` if none needed), `enforcement_breakdown` (object with condition counts: `dissent_quota`, `novelty_gate`, `agreement_check`, `anti_recursion`, `missing_stance`; write `none` if `enforcement_calls` is 0), `tools_used`, `provider_count`, `fallbacks_triggered`, and best-effort `input_tokens_estimate` / `output_tokens_estimate` / `duration_seconds` (write `~unknown` if not available from the host runtime). Block is delimited by `---` so it's grep-able and redirectable.
++After the verdict is emitted, append a `Session Metadata` block with `schema_version: 1` containing: `mode`, `panel_size`, `rounds_run` (deliberation rounds only, not enforcement dispatches), `enforcement_calls` (total enforcement dispatches; write `0` if none needed), `enforcement_breakdown` (object with condition counts: `dissent_quota`, `novelty_gate`, `agreement_check`, `anti_recursion`, `missing_stance`; write `none` if `enforcement_calls` is 0), `tools_used`, `provider_count` (observed only; unknown if the host does not expose it), `fallbacks_triggered`, and best-effort `input_tokens_estimate` / `output_tokens_estimate` / `duration_seconds` (write `~unknown` if not available from the host runtime). Block is delimited by `---` so it's grep-able and redirectable.

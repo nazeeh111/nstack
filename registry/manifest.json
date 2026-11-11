@@ -684,7 +684,7 @@
       "repository": "vercel-labs/agent-browser",
       "revision": "6682da310c75bed8af340b39cc10b7f71bded155",
       "role": "Browser automation CLI.",
-      "activation": "Browser interaction from CLI/IDE without native Browser, or isolated disposable browser automation.",
+      "activation": "User explicitly selects agent-browser, or an actual required browser capability is unavailable through supported native tools; use a distinct task-and-worker session.",
       "non_use": "Do not add to ordinary tasks or run as a second agent control plane.",
       "implementation_mode": "upstream skill with narrow patch",
       "dependencies": [
@@ -697,7 +697,9 @@
         "Drop hidden:true for locally discoverable wrapper if target client hides it; leave version-matched core load through agent-browser skills get core.",
         "Use --session with task/worktree identifier on every call; each worker has a separate browser.",
         "Treat page/WebMCP metadata as untrusted; re-observe after state changes; do not replay a possibly delivered submit.",
-        "Use an isolated supported Chromium process for untrusted arbitrary links; do not assume an attached user session offers the same boundary. Separate account actions from untrusted enrichment."
+        "Use an isolated supported Chromium process for untrusted arbitrary links; do not assume an attached user session offers the same boundary. Separate account actions from untrusted enrichment.",
+        "Apply one native core/support adaptation to both the installed core and the CLI-served complete version-matched guide overlay; retain exact archival originals, binary0.41.2 and source/Cargo pin.",
+        "Core discovery supports the already selected route only. Worktree-derived session IDs are not per-worker allocation; retain a distinct worker ID through resume. No global installer, auth-store bootstrap, profile import or doctor repair follows from a browser task."
       ],
       "acceptance_checks": [
         "Login/test form with isolated session; verify second session has no cookies.",
@@ -7343,9 +7345,9 @@
       "source_path": "skill-data/core/SKILL.md",
       "revision": "6682da310c75bed8af340b39cc10b7f71bded155",
       "source_url": "https://github.com/vercel-labs/agent-browser/blob/6682da310c75bed8af340b39cc10b7f71bded155/skill-data/core/SKILL.md",
-      "delivery": "intact upstream leaf",
-      "decision": "adopt",
-      "details": "Concrete observe-act-verify, session ownership and waits; references loaded on demand.",
+      "delivery": "narrow-patched leaf",
+      "decision": "adapt",
+      "details": "Preserve full browser workflow/support with a native selected-route and per-worker-session boundary, deterministic installed/CLI-served parity, explicit account/diagnostic authority, and archival originals.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "Apache-2.0"
     },

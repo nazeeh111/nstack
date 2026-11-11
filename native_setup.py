@@ -63,10 +63,10 @@ def addon_definition(name):
             frozen[str(file.relative_to(source))] = (file.read_bytes(), 0o555 if file.stat().st_mode & 0o111 else 0o444)
     provenance = json.loads(frozen["SOURCE.json"][0])
     overrides = {}
-    if name in ("google-maps-scraper", "raea"):
+    if name in ("google-maps-scraper", "raea", "skillspector"):
         # The recipe stays usable after the checkout is moved or removed.
         code = profile_install.stage(nstack.STATE)
-        provenance["runtime_recipe"] = str(code / "recipes" / ("maps_scraper.py" if name == "google-maps-scraper" else "raea.py"))
+        provenance["runtime_recipe"] = str(code / "recipes" / {"google-maps-scraper": "maps_scraper.py", "raea": "raea.py", "skillspector": "skillspector.py"}[name])
         overrides["SOURCE.json"] = (json.dumps(provenance, sort_keys=True, indent=2) + "\n").encode()
     return {"source": source, "entry": P("."), "provenance": provenance, "overrides": overrides, "frozen_files": frozen}
 
@@ -340,6 +340,12 @@ def apply(args):
         addons.append("cloudflare-security-audit")
     if getattr(args, "strix", False):
         addons.append("strix-security-testing")
+    if getattr(args, "skillspector", False):
+        addons.append("skillspector")
+    if getattr(args, "roast_room", False):
+        addons.append("roast-room")
+    if getattr(args, "council_of_high_intelligence", False):
+        addons.append("council-of-high-intelligence")
     if set(addons) & {name for name, _ in chosen}:
         raise ValueError("Addon name collides with selected skill")
     release, index = prepare(state, chosen, addons)
@@ -475,6 +481,9 @@ def main():
     a.add_argument("--llm-council", action="store_true", help="Add native council and offline blinded evaluation; no provider or server activation")
     a.add_argument("--cloudflare-security-audit", action="store_true", help="Add the pinned repository audit method and offline validators; no account or scan activation")
     a.add_argument("--strix", action="store_true", help="Add Strix coding-agent methods; runtime and external scans remain on demand")
+    a.add_argument("--skillspector", action="store_true", help="Add NVIDIA SkillSpector source-audit method; pinned static runtime commissioned explicitly")
+    a.add_argument("--roast-room", action="store_true", help="Add the upstream Roast Room critique method and support; private source pack commissioned explicitly")
+    a.add_argument("--council-of-high-intelligence", action="store_true", help="Add the upstream historical-persona Council method and complete support")
     a.add_argument("--vault", help="Existing user-authorized vault path; does not create a vault")
     sub.add_parser("list")
     a = sub.add_parser("rollback")

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Council of High Intelligence"
+  short_description: "Original 18-persona council in the native host"
+  default_prompt: "Use $council-of-high-intelligence to deliberate this decision with the source panel and checked evidence."

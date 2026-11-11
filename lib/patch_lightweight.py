@@ -1,5 +1,5 @@
 """Source-anchored bounded Codex ports for selected lightweight procedures."""
-import pathlib,re,shutil
+import hashlib,json,pathlib,re,shutil
 P=pathlib.Path
 
 def replace(text,old,new):
@@ -37,41 +37,66 @@ If no eligible route exists, report the actual evidence gap and continue useful 
  elif id=='P037':
   text=re.sub(r'(?m)^description:.*$', 'description: "Postgres-specific query, migration, row-security and performance guidance for a concrete database requirement or failure. Start routine changes with the project\'s existing checks; load only the rules relevant to this task."',text)
   folder=out/'references'
-  q=folder/'query-missing-indexes.md';q.write_text('''---
-title: Evaluate indexes against the actual query and workload
-impact: Workload-dependent
-impactDescription: Requires actual plans, selectivity, write cost and matched timings
----
-# Index decisions from evidence
+  changes={}
+  for name in ('query-missing-indexes.md','security-rls-basics.md','monitor-explain-analyze.md'):
+   q=folder/name;raw=q.read_bytes();t=raw.decode()
+   if name=='query-missing-indexes.md':
+    t=replace(t,'impactDescription: 100-1000x faster queries on large tables','impactDescription: Workload-dependent; compare actual plans and matched timings')
+    t=replace(t,'Queries filtering or joining on unindexed columns cause full table scans, which become exponentially slower as tables grow.','An unindexed filter or join can require a sequential scan. Its cost depends on table size, selectivity and the actual plan; a sequential scan can be appropriate for small tables or queries returning much of a table.')
+    t=replace(t,'**Incorrect (sequential scan on large table):**','**Before indexing (inspect the actual plan):**')
+    t=replace(t,'**Correct (index scan):**','**Candidate index for a selective lookup:**')
+    t=replace(t,'For JOIN columns, always index the foreign key side:','For JOIN columns, test an index on the referencing side when the actual join/delete/update workload benefits:')
+    t=replace(t,'-- EXPLAIN shows:','-- Illustrative EXPLAIN output; verify on the target:')
+    t+='\nCompare matched inputs, application role, cache state, row counts and latency before/after. Include index storage, write amplification and maintenance cost; the example plan costs are not measured speedups.\n'
+   elif name=='security-rls-basics.md':
+    t=replace(t,'Row Level Security (RLS) enforces data access at the database level, ensuring users only see their own data.','Row Level Security (RLS) enforces row policies at the database level. Correct identity, grants, policy combinations and role behavior determine whether users can see or change only their own rows.')
+    start=t.index('**Correct (database-enforced RLS):**');end=t.index('Reference:',start)
+    t=t[:start]+'''**Supabase example with a trusted authenticated identity:**
 
-A sequential scan can be appropriate for a small table or a low-selectivity filter. Missing indexes do not imply exponential growth or a universal speed multiplier. Inspect a plain EXPLAIN plan, predicates, joins, cardinality estimates, selectivity, stable ordering, table size, cache state and existing indexes before changing the schema.
+The gateway must validate the JWT issuer, audience, signature and expiry, and control the database role and claim settings. `auth.uid()` below is not authentication for arbitrary raw SQL callers. A client allowed to choose `app.current_user_id` or JWT claim settings can impersonate another identity; do not use a caller-issued `SET` as the authentication step.
 
-For a demonstrated selective lookup, test an index in a disposable or authorized environment, compare actual plans and matched latency, and include write amplification, storage and maintenance cost. Foreign-key-side indexes can help particular joins, deletes or updates; they are not universally mandatory. Keep an index only where the workload evidence and correctness justify it. Use bound parameters and the actual application role when verifying results.
-''')
-  q=folder/'security-rls-basics.md';q.write_text('''---
-title: Row security depends on authenticated identity and trusted connection roles
-impact: CRITICAL
-impactDescription: Verify actual application-role read/write isolation
----
-# Authenticated identity before row policy
+```sql
+-- Enable RLS on the table
+alter table orders enable row level security;
 
-RLS complements permissions; it does not authenticate an arbitrary caller. A raw SQL client with SET privileges can choose its custom `app.current_user_id` or claim settings. Never treat a client-chosen tenant value as authenticated identity. Identify who validates issuer, audience, signature and expiry, who owns the connection role, and whether clients can run arbitrary SQL or alter settings.
+-- The trusted gateway supplies auth.uid(); user_id is a UUID in this example.
+create policy orders_user_policy on orders
+  for all
+  to authenticated
+  using (user_id = auth.uid())
+  with check (user_id = auth.uid());
 
-Behind a trusted gateway that validates JWTs and controls SQL/settings, the provider's authenticated user identity can supply a policy. Direct SQL requires a trusted role/identity mapping or another mechanism clients cannot forge. A service role, table owner, superuser or BYPASSRLS identity is not a representative application user. Enabling or forcing RLS is not proof of isolation.
+-- Subject table owners to policies too; superusers/BYPASSRLS still bypass them.
+alter table orders force row level security;
 
-On the actual target, apply both `USING` and `WITH CHECK` where the command and policy require them. Verify own-row SELECT/INSERT/UPDATE/DELETE, foreign-tenant denial, attempted tenant/owner changes, unauthenticated access and bypass-role behavior. Exercise the real public entry point with issuer-validated identities. Check grants, policy combinations and SECURITY DEFINER/search_path behavior. Keep the untrusted-SET counterexample as a failing control; never reproduce it as a secure authentication recipe.
-''')
-  q=folder/'monitor-explain-analyze.md';q.write_text('''---
-title: Inspect plain EXPLAIN before execution measurements
-impact: Workload-dependent
-impactDescription: ANALYZE executes the statement, including mutations
----
-# Plans and actual execution
+-- Run through the authenticated application entry point, not as a bypass role.
+select * from orders;
+```
 
-Start with plain `EXPLAIN` to inspect the proposed plan. `EXPLAIN ANALYZE` executes the statement and its functions. Measure mutating statements only in a disposable database or an explicitly authorized target with suitable recovery. A transaction rollback does not undo every external effect, trigger action or sequence increment.
+For direct Postgres SQL access, use a trusted role/identity mapping that the caller cannot forge. Test the real application role and grants: own-row SELECT/INSERT/UPDATE/DELETE, another tenant's rows, attempted user_id changes, unauthenticated requests and bypass-role behavior. `USING` controls visible/existing rows; `WITH CHECK` controls new row values where applicable. Keep a caller-chosen-identity attempt as a negative test. Enabling or forcing RLS alone is not evidence that isolation passed.
 
-For an eligible read-only measurement, compare matched baseline/candidate inputs, role, cache state, data distribution, concurrency and correctness. Record actual rows versus estimates, loops, buffers, elapsed time and variance. A sequential scan is not automatically a missing index; high buffer reads are not automatically a need for more memory. Preserve the plan and actual application-role results, and validate any proposed change against the relevant workload.
-''')
+'''+t[end:]
+   else:
+    t=replace(t,'EXPLAIN ANALYZE executes the query and shows actual timings, revealing the true performance bottlenecks.','Start with plain EXPLAIN to inspect the proposed plan. EXPLAIN ANALYZE executes the query and its functions and reports actual timings. Run mutating statements only in a disposable database or explicitly authorized target with suitable recovery; rollback does not undo every external effect or sequence increment.')
+    t=replace(t,'**Correct (use EXPLAIN ANALYZE):**','''**Inspect the plan before executing the measurement:**
+
+```sql
+explain (format text)
+select * from orders where customer_id = 123 and status = 'pending';
+```
+
+**For an eligible measurement, use EXPLAIN ANALYZE:**''')
+    t=replace(t,'-- Output reveals the issue:','-- Illustrative output; inspect the actual target plan and timings:')
+    t=replace(t,'-- Seq Scan on large tables = missing index','-- Seq Scan: inspect size, selectivity and alternatives; not proof of a missing index')
+    t=replace(t,'-- Rows Removed by Filter = poor selectivity or missing index','-- Rows Removed by Filter: compare examined/returned rows and predicates with the workload')
+    t=replace(t,'-- Buffers: read >> hit = data not cached, needs more memory','-- Buffers read >> hit: inspect I/O and cache/working-set conditions; not an automatic memory prescription')
+    t=replace(t,'-- Nested Loop with high loops = consider different join strategy','-- Nested Loop with high loops: inspect actual/estimated cardinality and inner access path')
+    t=replace(t,'-- Sort Method: external merge = work_mem too low','-- Sort Method: external merge indicates a spill; evaluate work_mem with concurrency and total memory')
+    t+='\nCompare matched baseline/candidate inputs, application role, cache state, correctness and data distribution. Retain actual versus estimated rows, loops, buffers, elapsed time and repeated-run variance.\n'
+   q.write_text(t)
+   archive=out/'upstream/references'/(name+'.reference.txt');archive.parent.mkdir(parents=True,exist_ok=True);archive.write_bytes(raw)
+   changes['references/'+name]={'source_sha256':hashlib.sha256(raw).hexdigest(),'adapted_sha256':hashlib.sha256(q.read_bytes()).hexdigest(),'archival_original':str(archive.relative_to(out))}
+  (out/'NATIVE-ADAPTATION.json').write_text(json.dumps({'repository':'supabase/agent-skills','revision':'c9be0e931b7930f7d02126d04774d904c381e7d7','adaptation':'source-preserving-sql-method-v1','port_sha256':hashlib.sha256(P(__file__).read_bytes()).hexdigest(),'modifications':changes},sort_keys=True,indent=2)+'\n')
  elif id=='L010' and name=='frontend-design':
   start=text.index('Approach this as the design lead');end=text.index('\n## Ground',start)
   text=text[:start]+"Follow the actual brief, references, product identity and existing design system first. Choose intentional subject-specific art direction, typography and layout where the brief leaves a choice. No previous rejection, client history or commercial relationship is assumed.\n"+text[end:]

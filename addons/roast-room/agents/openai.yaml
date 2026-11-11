@@ -1,0 +1,4 @@
+interface:
+  display_name: "Roast Room"
+  short_description: "Actual source-grounded operator board and consults"
+  default_prompt: "Use $roast-room with the original source brains to deliberate this business decision."

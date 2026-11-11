@@ -1,13 +1,25 @@
+filters:
+  and:
+    - file.ext == "md"
+    - file.hasTag("knowledge")
+    - '!file.inFolder("Templates")'
+    - '!file.inFolder("Archive")'
 views:
   - type: table
     name: Current knowledge
-    filters:
-      and:
-        - 'state == "current"'
-        - '!file.inFolder("Archive")'
-        - '!file.inFolder("Templates")'
+    filters: state == "current"
     order:
       - file.name
       - scope
       - source_revision
-      - observation_date
+      - observed_date
+      - correction_path
+  - type: table
+    name: Historical notes
+    filters: state == "historical-source-report"
+    order:
+      - file.name
+      - scope
+      - state
+      - observed_date
+      - source_sha256

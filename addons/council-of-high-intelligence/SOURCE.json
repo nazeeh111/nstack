@@ -1,0 +1,154 @@
+{
+  "repository": "0xNyk/council-of-high-intelligence",
+  "revision": "79a36a8561c34df4f2df172bd5b0fd5f3e174834",
+  "license": "MIT",
+  "files": [
+    {
+      "upstream_path": "LICENSE",
+      "path": "LICENSE",
+      "sha256": "678df73993b4b6709cd80aed556263ef5cdcffd5e7d6a7d796c828bf36baa4c7",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "SKILL.md",
+      "path": "upstream/council-claude.upstream.md",
+      "sha256": "c6b7fc23b75474fde90bd6b327626427ddff1d3227ddc6a9c420b974e0cb23a8",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "SKILL.codex.md",
+      "path": "upstream/council-codex.upstream.md",
+      "sha256": "e55c21f434313c0ce169b02a48852b2967021af1224401e6f76ae0de5bb67fd1",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-watts.md",
+      "path": "personas/council-watts.md",
+      "sha256": "57e28fe6d2b607c12029c0667c509d654bb0c25e7a115b5f961105c689b06e8a",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-taleb.md",
+      "path": "personas/council-taleb.md",
+      "sha256": "470b6c3370880ef644b2278e8f91af223716503ef48e22affa9ff1d9a32df5ac",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-musashi.md",
+      "path": "personas/council-musashi.md",
+      "sha256": "bd8f2c23ab08761f2ee920fab9ea3dfd2bd7867523f2cac826b2ca4a4203c574",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-aristotle.md",
+      "path": "personas/council-aristotle.md",
+      "sha256": "307a57602e3a3a9a3f55b1a56453386037780f1dcfa41ede250844f588cec1d9",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-sutskever.md",
+      "path": "personas/council-sutskever.md",
+      "sha256": "31908dcecdeae685402889ef71054c2d398d486bde77f86acc8750b8f31f07f4",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-karpathy.md",
+      "path": "personas/council-karpathy.md",
+      "sha256": "5b8d161c93cf6d789ed921d3d007eae99702f5c28bf837f03cb4987c854a8e16",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-torvalds.md",
+      "path": "personas/council-torvalds.md",
+      "sha256": "645c4eeffcf92691f8ba1f56316787381dea2dc6b841310d3fe239bf162cebfc",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-aurelius.md",
+      "path": "personas/council-aurelius.md",
+      "sha256": "ac8a1556746740441e08125f8ecad73b22a2999208fb8475bb144446f7762c16",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-kahneman.md",
+      "path": "personas/council-kahneman.md",
+      "sha256": "b8f193494a75db7058e7b68f5bf13193bf5374b8df2cde246e17fc9ebbc76564",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-feynman.md",
+      "path": "personas/council-feynman.md",
+      "sha256": "4e4c4d21725f697d1ea8f5c7a9cfcac3fd98eed15c292a1b339c7e5aeb649b2b",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-sun-tzu.md",
+      "path": "personas/council-sun-tzu.md",
+      "sha256": "eb6b3fd7bcac307827fd5209de27ab1b72362c2d944e3d416a4208af81c75216",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-meadows.md",
+      "path": "personas/council-meadows.md",
+      "sha256": "924c75c0d32e23b84d6ca84ad507cf74b873c9cd7c7baa30984c0c85c1ea75c6",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-ada.md",
+      "path": "personas/council-ada.md",
+      "sha256": "f28d3c4af5b60b0fb14a484c28672ff513ced562dc17c55ce6348884819e5df2",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-socrates.md",
+      "path": "personas/council-socrates.md",
+      "sha256": "4e23edd94d56ab4cbd68fc371ffe571f1294592dad40db0ca44d3d6fcb2654d5",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-lao-tzu.md",
+      "path": "personas/council-lao-tzu.md",
+      "sha256": "fc49cf4e67489d9416c101114fa3ec6ef48f610a578ef3d7ef11477dca84430e",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-munger.md",
+      "path": "personas/council-munger.md",
+      "sha256": "3f8cbcfab107a9a43c13e3a90b0f3bd62645f687e4a8a0c503bd02010a6a4311",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-machiavelli.md",
+      "path": "personas/council-machiavelli.md",
+      "sha256": "0f3083ba0faa52ea5d793a094a256013a56a20fabe5afd8ffb6b1613e2a55635",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "agents/council-rams.md",
+      "path": "personas/council-rams.md",
+      "sha256": "9bebe79ca873f4913554f0607b2d09a4626c01d623709b310f4da44f5e3dd7b6",
+      "state": "exact"
+    },
+    {
+      "upstream_path": "SKILL.codex.md",
+      "path": "SKILL.md",
+      "upstream_sha256": "e55c21f434313c0ce169b02a48852b2967021af1224401e6f76ae0de5bb67fd1",
+      "sha256": "d061918e7f56e8f6956aedff09e40b242a74f60eb7d1948612adb7c977aaa615",
+      "state": "native-adapted"
+    }
+  ],
+  "adaptation": "Native host execution only; see patches/native.patch. Upstream coordinator files are archival data, never executable instructions. Persona frontmatter models/tools do not configure the host.",
+  "source_path": "SKILL.md",
+  "changes": [
+    "Preserve native host/model/effort; no detector, provider, key, headless app or automatic high-tier switch",
+    "Read full original personas as method data; no automatic subagent registration/model frontmatter execution",
+    "Fresh first contexts, bounded native waves and actual returned-call accounting",
+    "No simulated recovery, missing/unparseable votes never assent; incomplete coverage explicit",
+    "Original numeric summaries retained as descriptive simulation only, decisive facts independently checked",
+    "Source support and licenses retained; source-only names prevent archival coordinators becoming discoverable skills"
+  ],
+  "patch_sha256": "12feeaf7d9ccd81f48a7b77e19a2d4dae0f077222ab97106a679c01be01863a5",
+  "authored_files": {
+    "agents/openai.yaml": "0724fb253946251b2bb17b8a172c67307fe3374b249f73544252cddcbae2ab4b"
+  }
+}

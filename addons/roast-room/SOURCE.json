@@ -1,0 +1,202 @@
+{
+  "repository": "nateherkai/roast-room",
+  "revision": "e40f40652d5690c4d9f928c4794c673a99f2cd0e",
+  "license": "MIT code; brain quotations excluded",
+  "files": [
+    {
+      "upstream_path": "LICENSE",
+      "path": "LICENSE",
+      "sha256": "791302e8df6af87916911ae57b3f974ec98006953ac237c9aad2c167e516d151",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/skills/roast-room/SKILL.md",
+      "path": "upstream/roast-room.upstream.md",
+      "sha256": "50b331f1b7d0ce3c75884cbb8ca99b52080ae5042488a016b735ce77b55d7a17",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/skills/roast-room/roster.json",
+      "path": "roster.json",
+      "sha256": "e1931e7332d960bf1b7f6075c22d6165e98978e1575b6dfe8346ffcb7f9fe4c0",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/skills/roast-room/references/report-template.md",
+      "path": "upstream/references/report-template.md",
+      "sha256": "a820e57f9e2ce16d1a9ca2402c82cc86c4df454fc339a89d1e80e4c74cea3257",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/skills/roast-room/references/report-template.md",
+      "path": "references/report-template.md",
+      "upstream_sha256": "a820e57f9e2ce16d1a9ca2402c82cc86c4df454fc339a89d1e80e4c74cea3257",
+      "sha256": "b5463bf1f1b2d5e992eb35c9546391ab6fdd75f5d6e5820429e04d348cbe3e90",
+      "state": "native-adapted"
+    },
+    {
+      "upstream_path": ".claude/skills/roast-room/references/live-room.md",
+      "path": "upstream/references/live-room.md",
+      "sha256": "69d44b10beee91cac655372df04fe7590fcc8f8d7fbd6fa09c408da06403c36f",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/skills/roast-room/references/live-room.md",
+      "path": "references/live-room.md",
+      "upstream_sha256": "69d44b10beee91cac655372df04fe7590fcc8f8d7fbd6fa09c408da06403c36f",
+      "sha256": "36d61ddfa201d70eb4deccc29680876b8ca7d36ac702ceb4de08657d14c49ec1",
+      "state": "native-adapted"
+    },
+    {
+      "upstream_path": ".claude/skills/roast-room/references/round-prompts.md",
+      "path": "upstream/references/round-prompts.md",
+      "sha256": "e79a070291e735ec96c900054994ff16dad53528d8a6b8bb9d489b996d4ecfc6",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/skills/roast-room/references/round-prompts.md",
+      "path": "references/round-prompts.md",
+      "upstream_sha256": "e79a070291e735ec96c900054994ff16dad53528d8a6b8bb9d489b996d4ecfc6",
+      "sha256": "d4c78a35069158a1084a04c5426deb17fc3acacd4053954ee9887c959e72a489",
+      "state": "native-adapted"
+    },
+    {
+      "upstream_path": ".claude/skills/roast-room/references/seats.md",
+      "path": "upstream/references/seats.md",
+      "sha256": "5b54089aa614da7790ad98fc5a08ef494bc3265404a419e2810df24b43b8552f",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/skills/roast-room/references/seats.md",
+      "path": "references/seats.md",
+      "upstream_sha256": "5b54089aa614da7790ad98fc5a08ef494bc3265404a419e2810df24b43b8552f",
+      "sha256": "a08e02b2f860e191c55e0665e01dfc65fb55ad0386edda568b9fd4dfc953ca0b",
+      "state": "native-adapted"
+    },
+    {
+      "upstream_path": ".claude/skills/roast-room/references/scoring.md",
+      "path": "upstream/references/scoring.md",
+      "sha256": "b0e28279f2f516d970bb5626d0c2e4443d8b53878b433cbf3cf599bd24e5126d",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/skills/roast-room/references/scoring.md",
+      "path": "references/scoring.md",
+      "upstream_sha256": "b0e28279f2f516d970bb5626d0c2e4443d8b53878b433cbf3cf599bd24e5126d",
+      "sha256": "7e5a169cce6539d6d489fb53a8b54b44165a989c9088fc129f2dfb00c735adb8",
+      "state": "native-adapted"
+    },
+    {
+      "upstream_path": ".claude/agents/council-wickman.md",
+      "path": "personas/council-wickman.md",
+      "sha256": "ffba7533ed6b605c99a4bc0e147faf2a7b4f5424f961fb45006d6b9898191b88",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/agents/council-musk.md",
+      "path": "personas/council-musk.md",
+      "sha256": "77c1a37b0b0918ed88fee42544d4039f536287a0e9c74c95909e9f1e27ad4009",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/agents/council-garyvee.md",
+      "path": "personas/council-garyvee.md",
+      "sha256": "9df28123215dfea39718f495acacf4e50fb3f633bb23e56a4a9a089ac610a37e",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/agents/council-buffett.md",
+      "path": "personas/council-buffett.md",
+      "sha256": "153dd28e1ff546856e7696b86318c85523a0c95f1797d0ceb15f9a9984b52b56",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/agents/council-bezos.md",
+      "path": "personas/council-bezos.md",
+      "sha256": "b7ef60f7f7e27f6371e5e131177ac1ee152588c00eff960eb61443a40b11702c",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/agents/council-hormozi.md",
+      "path": "personas/council-hormozi.md",
+      "sha256": "22103c3d5579b362b0d9b8c8f662a2b3d84bb13e205e0a87ffb35235251cf6a7",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/agents/council-sanchez.md",
+      "path": "personas/council-sanchez.md",
+      "sha256": "58f723458da6ea86d1cdea9b9123667d8db24872e6ea3063ddc4c3c2b4990abf",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/agents/council-naval.md",
+      "path": "personas/council-naval.md",
+      "sha256": "7e54faa6fc83bad8a21b2caedeaf80961c723a567ac9731f2b0f22a447b7ef34",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/agents/council-martell.md",
+      "path": "personas/council-martell.md",
+      "sha256": "98d6a366e1ace6e597a230578094f00db9b8cb273c12918c0648c1611c06afb9",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/agents/council-leila.md",
+      "path": "personas/council-leila.md",
+      "sha256": "dcfee98e1de877c38f6732048befab4169cc2d3150b773a0bf39a1a04720bd6c",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/agents/council-graham.md",
+      "path": "personas/council-graham.md",
+      "sha256": "1a5dcb5588017dc08e85963048f8451c9baeea635c460f56cd39379625cecc97",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/agents/council-blakely.md",
+      "path": "personas/council-blakely.md",
+      "sha256": "4a58b32cda4b6c873920e12ad1e6a226733d7886ee36708e4e738bd2ca6d229c",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/skills/roast-room/scripts/check_quotes.py",
+      "path": "upstream/check_quotes.py",
+      "sha256": "e8615aeb1ac5aa4b606b8f96bba9cd308033b98bd514baec90dc038d5e50e4f0",
+      "state": "exact"
+    },
+    {
+      "upstream_path": ".claude/skills/roast-room/SKILL.md",
+      "path": "SKILL.md",
+      "upstream_sha256": "50b331f1b7d0ce3c75884cbb8ca99b52080ae5042488a016b735ce77b55d7a17",
+      "sha256": "8101398f7d673c52b610130d43e08c3361a3ee56ab99c6b531fe6fea7d69eba5",
+      "state": "native-adapted"
+    },
+    {
+      "upstream_path": ".claude/skills/roast-room/scripts/check_quotes.py",
+      "path": "scripts/check_quotes.py",
+      "upstream_sha256": "e8615aeb1ac5aa4b606b8f96bba9cd308033b98bd514baec90dc038d5e50e4f0",
+      "sha256": "fd3e7413073bec828f2e5646fc2457670bbb6be3b07df296ec91853b3a666d39",
+      "state": "native-adapted"
+    }
+  ],
+  "adaptation": "Native host execution only; see patches/native.patch. Upstream coordinator files are archival data, never executable instructions. Persona frontmatter models/tools do not configure the host.",
+  "private_source_manifest": "private-source.json",
+  "private_source_recipe": "scripts/fetch_source.py",
+  "source_pack_directory": "~/Library/Application Support/nstack/source-packs/roast-room/e40f40652d5690c4d9f928c4794c673a99f2cd0e",
+  "excluded": "Brain quote corpus, portraits, brand/assets, viewer/API runtime, provider transport, newroaster/paid image pipeline excluded from public bundle. Full 117-file source-only closure fetched privately.",
+  "source_path": "SKILL.md",
+  "changes": [
+    "Preserve native host/model/effort; no detector, provider, key, headless app or automatic high-tier switch",
+    "Read full original personas as method data; no automatic subagent registration/model frontmatter execution",
+    "Fresh first contexts, bounded native waves and actual returned-call accounting",
+    "No simulated recovery, missing/unparseable votes never assent; incomplete coverage explicit",
+    "Original numeric summaries retained as descriptive simulation only, decisive facts independently checked",
+    "Source support and licenses retained; source-only names prevent archival coordinators becoming discoverable skills",
+    "Report original twelve-seat roster versus nine-seat --all cap conflict instead of claiming an unrun full board"
+  ],
+  "patch_sha256": "8b74842dc6aeb6187b2adfc2dbdb9dfcd1295915d4e82b14c24e4b1dc4e287d4",
+  "authored_files": {
+    "agents/openai.yaml": "6e02133c6cc969dd5d267c05ac57038194bdf9d6a6e388a99f3d8b8c80402c3b",
+    "scripts/fetch_source.py": "e8449f77cf99fa2b61a65f29dcc77e7b7e6ac35822a7cb89832415ec72c46121"
+  }
+}

@@ -1,4 +1,4 @@
 interface:
-  display_name: "LLM Council"
-  short_description: "Blind alternative review with evidence checks"
-  default_prompt: "Compare the relevant alternatives using independent evidence and preserve unresolved dissent."
+  display_name: "Remy's LLM Council"
+  short_description: "Actual five-lens council with fresh peer review"
+  default_prompt: "Use $llm-council to run Remy's five-lens method on this decision with the private pinned source."

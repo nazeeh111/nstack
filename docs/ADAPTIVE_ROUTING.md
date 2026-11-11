@@ -20,6 +20,8 @@ messages. The active host executes work with the user's existing model,
 reasoning effort, account and permissions; 01 does not switch harnesses. No daemon, hook or compulsory plan,
 team, report, global memory store or automatic self-edit is installed.
 
+For a weak match or concrete capability gap, 01 applies the installed find-skills method. A justified addition stays project-scoped and proceeds through source review, verification and actual task use within existing authority. No second skill invocation is required.
+
 ## Install
 
 Add `--adaptive-routing` to your existing complete native selection. For the

@@ -38,8 +38,10 @@ python3 native_setup.py install --replace --agent-reach --repository-docs
 Choose optional additions in that single `native_setup.py` command rather than
 running successive replacements: `--academic-research`, `--ecc`, `--unslop`,
 `--maps-scraper`, `--untangle-codebase`, `--raea`, `--adaptive-routing`,
-`--llm-council`, `--cloudflare-security-audit` and `--strix`.
+`--llm-council`, `--roast-room`, `--council-of-high-intelligence`,
+`--cloudflare-security-audit`, `--strix` and `--skillspector`.
 Academic sources are fetched privately under their noncommercial license.
+[Source fidelity](docs/SOURCE_FIDELITY.md) explains upstream methods, native ports and private source packs.
 When replacing a collection, include all additions you intend to retain.
 
 The base install command retires the complete old user-managed skill collection into
@@ -105,6 +107,10 @@ The optional [security methods](docs/SECURITY-METHODS.md) add one Cloudflare
 repository-audit skill and one Strix skill shared by both hosts. They preserve
 the complete licensed method references without activating scanners, cloud
 accounts or paid providers. Routine security review keeps its existing route.
+
+Optional [SkillSpector](docs/SKILLSPECTOR.md) audits agent instructions and their
+bundled source with the pinned NVIDIA static scanner and source-aware review.
+The shared skill adds no cloud provider or always-on scanner.
 
 ```sh
 nstack search room clap decay

@@ -40,6 +40,23 @@ class NativeSetup(unittest.TestCase):
    self.assertEqual([r['name'] for r in index],['agent-reach','repository-docs'])
    self.assertEqual(fingerprint(second),before)
    self.assertEqual(json.loads((first/'NATIVE-MANIFEST.json').read_text())['inputs']['adaptation'],'full-bundle-natural-entry-v2')
+ def test_durable_code_retains_complete_council_payload_bytes_and_source_modes(self):
+  with tempfile.TemporaryDirectory() as temp:
+   state=pathlib.Path(temp).resolve()/'state';code=native.profile_install.stage(state)
+   for name in ['roast-room','council-of-high-intelligence','llm-council']:
+    direct=native.addon_definition(name)['frozen_files']
+    with patch.object(native,'ROOT',code):durable=native.addon_definition(name)['frozen_files']
+    self.assertEqual(direct,durable,name)
+   self.assertTrue((code/'addons/roast-room/patches/native.patch').is_file())
+   self.assertTrue((code/'addons/council-of-high-intelligence/patches/native.patch').is_file())
+ def test_addon_executable_mode_changes_identity_and_cached_mode_tampering_fails(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();root=base/'source';file=root/'addons/example/scripts/helper.py';file.parent.mkdir(parents=True);file.write_text('print("fixture")\n');file.chmod(0o644)
+   with patch.object(native.profile_install,'ROOT',root):
+    first=native.profile_install.stage(base/'state');self.assertEqual((first/file.relative_to(root)).stat().st_mode & 0o777,0o444)
+    file.chmod(0o755);second=native.profile_install.stage(base/'state');self.assertNotEqual(first,second)
+    target=second/file.relative_to(root);self.assertEqual(target.stat().st_mode & 0o777,0o555);target.chmod(0o444)
+    with self.assertRaisesRegex(ValueError,'executable mode changed'):native.profile_install.stage(base/'state')
  def test_addon_runtime_caches_do_not_change_deployable_inputs(self):
   with tempfile.TemporaryDirectory() as temp:
    root=pathlib.Path(temp);source=root/'addons/fixture';source.mkdir(parents=True)
@@ -90,11 +107,27 @@ class NativeSetup(unittest.TestCase):
    args=self.args(home,state);args.llm_council=True
    with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
     result=native.apply(args);shared=home/'.agents/skills';self.assertEqual({p.name for p in shared.iterdir()},{'obsidian-markdown','llm-council'})
-    entry=shared/'llm-council';self.assertTrue((entry/'references/contracts.md').is_file());self.assertTrue((entry/'references/scenarios.md').is_file())
-    self.assertEqual(json.loads((entry/'SOURCE.json').read_text())['method_sources'][0]['revision'],'92e1fccb1bdcf1bab7221aa9ed90f9dc72529131')
+    entry=shared/'llm-council';self.assertTrue((entry/'references/contracts.md').is_file());self.assertTrue((entry/'references/five-lens.md').is_file())
+    self.assertEqual(json.loads((entry/'SOURCE.json').read_text())['revision'],'55ee36e89e0f3f780099ac50332fbb3ec8d14738');self.assertTrue((entry/'private-source.json').is_file());self.assertTrue((entry/'scripts/fetch_source.py').is_file())
     subprocess.run([sys.executable,str(entry/'scripts/blind_review.py'),'--help'],check=True,capture_output=True)
     journal=pathlib.Path(result['run'])/'journal.json';before=journal.read_bytes();self.assertFalse(native.apply(args)['changed']);self.assertEqual(journal.read_bytes(),before)
    subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True);self.assertEqual(fingerprint(legacy.parent),original)
+ def test_distinct_councils_keep_full_source_support_without_implicit_private_fetch(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';home.mkdir();state=base/'state';source,leaf,r=self.fixture(base)
+   args=self.args(home,state);args.llm_council=True;args.roast_room=True;args.council_of_high_intelligence=True
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
+    result=native.apply(args);shared=home/'.agents/skills';self.assertEqual(result['skills'],4)
+    self.assertEqual(len(list((shared/'roast-room/personas').glob('*.md'))),12)
+    self.assertEqual(len(list((shared/'council-of-high-intelligence/personas').glob('*.md'))),18)
+    for name in ['llm-council','roast-room']:
+     self.assertTrue((shared/name/'private-source.json').is_file());self.assertTrue((shared/name/'scripts/fetch_source.py').is_file())
+    self.assertFalse((state/'source-packs').exists());self.assertFalse((state/'native-tools').exists())
+    before={p:fingerprint(p)for p in [shared,state/'native-skill-index.json',pathlib.Path(result['run'])/'journal.json']}
+    self.assertFalse(native.apply(args)['changed'])
+    for p,prior in before.items():self.assertEqual(fingerprint(p),prior)
+   subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True)
+   self.assertFalse(shared.exists())
  def test_security_additions_preserve_complete_bundles_repeat_and_dirty_rollback(self):
   with tempfile.TemporaryDirectory() as temp:
    base=pathlib.Path(temp).resolve();home=base/'home';home.mkdir();state=base/'state';source,leaf,r=self.fixture(base)
@@ -110,6 +143,17 @@ class NativeSetup(unittest.TestCase):
     for p,old in journals.items():self.assertEqual(fingerprint(p),old)
     self.assertFalse((state/'native-tools/strix').exists())
    subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True);self.assertEqual(fingerprint(legacy.parent),original)
+ def test_skillspector_addition_is_complete_and_does_not_activate_scanner(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';home.mkdir();state=base/'state';source,leaf,r=self.fixture(base)
+   legacy=home/'.agents/skills/own';legacy.mkdir(parents=True);(legacy/'SKILL.md').write_text('uncommitted original\n');old=fingerprint(legacy.parent)
+   args=self.args(home,state);args.skillspector=True
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
+    result=native.apply(args);entry=home/'.agents/skills/skillspector';self.assertEqual(result['skills'],2)
+    self.assertTrue((entry/'upstream/ORIGINAL-SKILL.md').is_file());self.assertTrue((entry/'references/native-operation.md').is_file())
+    provenance=json.loads((entry/'SOURCE.json').read_text());recipe=pathlib.Path(provenance['runtime_recipe']);self.assertTrue(recipe.is_relative_to(state/'releases'));self.assertEqual(recipe.read_bytes(),(ROOT/'recipes/skillspector.py').read_bytes())
+    self.assertFalse((state/'native-tools/skillspector').exists());journal=pathlib.Path(result['run'])/'journal.json';before=journal.read_bytes();self.assertFalse(native.apply(args)['changed']);self.assertEqual(journal.read_bytes(),before)
+   subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True);self.assertEqual(fingerprint(legacy.parent),old)
  def test_raea_and_01_keep_support_and_use_durable_recipe_without_installing_engine(self):
   with tempfile.TemporaryDirectory() as temp:
    base=pathlib.Path(temp).resolve();home=base/'home';home.mkdir();state=base/'state';source,leaf,r=self.fixture(base)

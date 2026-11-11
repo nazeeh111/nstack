@@ -1,12 +1,18 @@
 {
-  "repository": "nazeeh111/nstack",
-  "revision": null,
-  "source_path": "addons/llm-council",
-  "license": "MIT",
-  "installation_adaptation": "Authored native council method and offline blind-review utility. No upstream application code, provider transport, credential access or service.",
-  "method_sources": [
-    {"repository": "karpathy/llm-council", "revision": "92e1fccb1bdcf1bab7221aa9ed90f9dc72529131", "scope": "Independent proposals, peer review, synthesis; upstream license undeclared, code not redistributed"},
-    {"url": "https://arxiv.org/abs/2305.17926v2", "scope": "Evidence-first and balanced-position evaluation"},
-    {"url": "https://arxiv.org/abs/2406.07791v9", "scope": "Position-consistency limitations"}
+  "repository": "aiwithremy/claude-skills-llm-council",
+  "revision": "55ee36e89e0f3f780099ac50332fbb3ec8d14738",
+  "license": "undeclared upstream; authored adapter/helper MIT under local LICENSE",
+  "source_path": "SKILL.md",
+  "private_source_manifest": "private-source.json",
+  "private_source_recipe": "scripts/fetch_source.py",
+  "source_pack_directory": "~/Library/Application Support/nstack/source-packs/remy-council/55ee36e89e0f3f780099ac50332fbb3ec8d14738",
+  "installation_adaptation": "Complete actual original SKILL.md and README.md fetched privately; native adapter keeps five original lenses, five fresh shared-order reviews and separate Chairman. Optional existing blinded-comparison helper retains contracts. No unlicensed upstream prose/code redistributed. Separate Roast Room and High Intelligence source-derived skills are not merged modes.",
+  "changes": [
+    "Native active host/model/effort and fresh task contexts; host-sized waves",
+    "Task-scoped source reading, no global memory/context scans",
+    "Missing actual calls stay missing; no simulated replacement votes",
+    "Evidence-based uncertainty and decisive checks replace unsupported certainty/agreement claims",
+    "Chat default and requested artifacts resolve upstream HTML contradiction; transcript only on request",
+    "Balanced/paired helper progressive and explicit, not forced into original shared-order review"
   ]
 }

@@ -1,38 +1,61 @@
-# Council and bias checks
+# Council skills
 
-Add `--llm-council` to the native installation command, retaining your other
-chosen addon flags. It exposes one naturally named skill to Codex and OpenCode.
-01 can select it from current metadata when a council or conflicting proposals
-warrant comparison. Ordinary work remains direct; 01's entrypoint is unchanged.
+Choose `--llm-council`, `--council-of-high-intelligence` and `--roast-room` in
+the same native install command as the other additions you intend to retain.
+These are three distinct shared skills. 01 can choose them from current
+metadata when a task benefits from their methods. Routine work stays direct.
 
-The authored method combines independent proposals and synthesis from
-[LLM Council](https://github.com/karpathy/llm-council/tree/92e1fccb1bdcf1bab7221aa9ed90f9dc72529131)
-with evidence-first and balanced-position evaluation from
-[FairEval](https://arxiv.org/abs/2305.17926v2).
-Its standard-library helper prepares blinded packets and summarizes judgments.
-No provider transport, key, dashboard, daemon or model weight is installed.
-The reviewed upstream Council has no license file; its code is not redistributed.
+| Skill | Upstream method retained |
+|---|---|
+| LLM Council | Remy's five thinking styles, five fresh anonymous peer reviews, separate fresh Chairman |
+| Council of High Intelligence | Original eighteen-persona roster, triads/profiles, duo/quick/full rounds, dissent and separate chair |
+| Roast Room | Original business roster and twelve personas, source brains, board selection, debate, resolution and ratification |
 
-Use a shared rubric, fresh proposal contexts and fresh forward/reverse critic
-contexts. Critics get packet contents without declared identities or earlier
-critiques. The helper binds packet hashes, validates complete unique labels,
-allows ties, preserves reasons and flags order disagreements. Missing reviews
-remain incomplete. Final acceptance still requires source or artifact checks.
+These preserve source identity rather than merging the methods into a generic
+panel. The historical-persona council includes Aristotle and Socrates, along
+with other historical and contemporary thinkers. It is not a Greek-gods roster.
+Persona outputs are simulations, not real endorsements or factual proof.
 
-These controls address particular failure modes, not all bias. Different
-sessions on one model are not diverse-model evidence. Declared origin labels
-do not verify runtime model identity. Blinding metadata cannot hide all style
-cues or enforce filesystem isolation. Reversed-order disagreement may reflect
-order or randomness. See the [position-bias study](https://arxiv.org/abs/2406.07791v9).
-Ranks do not establish truth, calibrated confidence or real-user preferences.
+Read each skill's complete method and relevant support. Use the active host's
+actual delegation and preserve the user's model and effort. Run host-sized
+waves without leaking opening positions. Missing calls remain missing, and
+same-model contexts remain same-model evidence. Check decisive claims
+independently. No council grants spending or external-action authority.
 
-Use existing native account access and the selected model. A genuine
-multi-provider run needs explicit provider/data/budget authority; the original
-OpenRouter app has no total-spend bound and is not launched by this adapter.
-Keep credentials outside task inputs and public Git. The installed skill's
-upstream reference records the reviewed application's activation prerequisites.
+## Original sources and private source packs
 
-For hypothetical persona testing, TinyTroupe is a conditional starting point;
-Concordia suits explicit environment rules and OASIS social propagation.
-MiroFish's additional graph/cloud stack is not a default reasoning-bias fix.
-The skill links pinned sources and activation gates. No simulator was installed.
+- [Remy](https://github.com/aiwithremy/claude-skills-llm-council/tree/55ee36e89e0f3f780099ac50332fbb3ec8d14738) declares no license. Its complete original method is fetched privately and read before execution; public nstack contains its pinned manifest and native adapter.
+- [High Intelligence](https://github.com/0xNyk/council-of-high-intelligence/tree/79a36a8561c34df4f2df172bd5b0fd5f3e174834) is MIT. Full persona files, both original coordinators, panel support and an auditable native patch are bundled.
+- [Roast Room](https://github.com/nateherkai/roast-room/tree/e40f40652d5690c4d9f928c4794c673a99f2cd0e) licenses code under MIT but excludes brain quotations. Full licensed skill/support/personas are bundled. The complete original source brain pack is fetched privately, never published in nstack.
+
+The two private-source helpers accept a new private destination whose parent
+exists:
+
+```sh
+python3 /installed/skill/scripts/fetch_source.py /new/private/source-root
+```
+
+Use `--source-dir /existing/original/repository` for offline replay. Every
+file is pinned and hash-checked; existing destinations refuse overwrite.
+The helpers fetch static source only and execute no upstream code. Each
+`SOURCE.json` records its standard optional private path. Source access is
+required, not silently replaced with an invented summary when unavailable.
+
+Roast's quote checker tests membership in the local corpus. It does not prove
+original-source authenticity, correct source IDs or factual accuracy. Its
+viewer, portraits and provider application are separate, unactivated products.
+No dashboard, daemon, provider transport or extra memory database is installed.
+
+## Optional comparison helper
+
+LLM Council retains the authored standard-library `blind_review.py` helper for
+explicitly chosen comparisons. Default paired version-1 packets remain
+compatible. Explicit balanced version-2 packets rotate candidate positions;
+five candidates and five reviewers cover each position once. Balanced mode
+reports within-reviewer reversal as **not performed**.
+
+This helper is not Remy's default shared-random-order peer-review prompt.
+Neither rotation nor paired reversal proves unbiased or correct judgment.
+It makes no model calls. Its sources and limits remain in the skill's
+progressive comparison references. Karpathy's application and Codex Council's
+larger scaffolder remain reviewed references, not additional installed councils.

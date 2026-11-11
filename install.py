@@ -11,13 +11,14 @@ def portable_files():
   if any(x.startswith('.') or x in ['__pycache__','node_modules','private'] for x in rel.parts):continue
   if p.is_symlink():raise ValueError('Portable source must not contain linked files')
   if p.name=='INSTALL-MANIFEST.json':continue
-  if p.is_file() and (p.suffix in ['.py','.cjs','.json','.md','.txt','.in','.lock','.sh','.yml','.yaml','.base','.canvas'] or p.name in ('LICENSE','METADATA','RECORD','WHEEL','py.typed')):yield p,rel
+  if p.is_file() and (p.suffix in ['.py','.cjs','.json','.md','.txt','.in','.lock','.sh','.yml','.yaml','.base','.canvas','.patch'] or p.name in ('LICENSE','METADATA','RECORD','WHEEL','py.typed')):yield p,rel
 
 def stage(state):
- files=list(portable_files());hashes={str(rel):hashlib.sha256(p.read_bytes()).hexdigest() for p,rel in files};digest=hashlib.sha256(json.dumps(hashes,sort_keys=True).encode()).hexdigest();dest=state/'releases'/digest
+ files=list(portable_files());hashes={str(rel):hashlib.sha256(p.read_bytes()).hexdigest() for p,rel in files};addon_exec={str(rel):bool(p.stat().st_mode & 0o111) for p,rel in files if rel.parts[0]=='addons'};digest=hashlib.sha256(json.dumps({'files':hashes,'addon_executable':addon_exec},sort_keys=True).encode()).hexdigest();dest=state/'releases'/digest
  if dest.exists():
   actual={str(p.relative_to(dest)):hashlib.sha256(p.read_bytes()).hexdigest() for p in dest.rglob('*') if p.is_file() and p.name!='INSTALL-MANIFEST.json'}
   if actual!=hashes:raise ValueError('Installed code release changed')
+  if any(bool((dest/rel).stat().st_mode & 0o111)!=executable for rel,executable in addon_exec.items()):raise ValueError('Installed addon executable mode changed')
   return dest
  dest.parent.mkdir(parents=True,exist_ok=True)
  with tempfile.TemporaryDirectory(prefix='.release-',dir=dest.parent) as temp:
@@ -25,7 +26,12 @@ def stage(state):
   for src,rel in files:
    target=out/rel;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(src,target)
   atomic_json(out/'INSTALL-MANIFEST.json',hashes);os.rename(out,dest)
-  for p in dest.rglob('*'):p.chmod(0o555 if p.is_dir() or p.suffix in ['.py','.sh'] else 0o444)
+  for p in dest.rglob('*'):
+   # Addon payload modes are part of native identity. Preserve their source
+   # executable bits; code entrypoints outside addons remain directly runnable.
+   addon=p.relative_to(dest).parts[0]=='addons'
+   executable=bool(p.stat().st_mode & 0o111) if addon else p.suffix in ['.py','.sh']
+   p.chmod(0o555 if p.is_dir() or executable else 0o444)
   dest.chmod(0o555)
  return dest
 
