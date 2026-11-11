@@ -8,6 +8,7 @@ sys.path.insert(0, str(ROOT / "lib"))
 import nstack
 import install as profile_install
 from transaction import Transaction, atomic_json, copy, fingerprint, same
+from native_copy import copy_generated_tree
 
 def sha(data):
     return hashlib.sha256(data).hexdigest()
@@ -172,7 +173,7 @@ def prepare(state, chosen, addons):
         (out / "skills").mkdir()
         for name, s, source, r in originals:
             dest = out / "bundles" / name
-            shutil.copytree(source, dest)
+            copy_generated_tree(source, dest)
             dest.chmod(0o755)
             entry = dest / r.get("entry_dir", ".")
             skill = entry / "SKILL.md"
