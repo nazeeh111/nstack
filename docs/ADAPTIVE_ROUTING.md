@@ -40,10 +40,11 @@ second install with unchanged inputs is a no-op. Terminal recovery remains:
 "$HOME/Library/Application Support/nstack/rollback.sh"
 ```
 
-The shared collection also exposes01 to OpenCode. Its supported
-`disable-model-invocation` frontmatter and Codex's `allow_implicit_invocation`
-metadata both preserve explicit entry. Use the host's own skill selector;
-sharing the files does not merge generated memories or conversations.
+The shared collection also exposes01 to OpenCode. Its
+`metadata.opencode/autoinvoke: false` setting preserves explicit selection in
+OpenCode. Codex uses `policy.allow_implicit_invocation: false` in
+`agents/openai.yaml`. Use the host's own skill selector; sharing the files does
+not merge generated memories or conversations.
 
 ## Capability lookup
 
@@ -85,12 +86,6 @@ Additional trials exercise real native process restart/resume, changed input,
 an interrupted operation and independently owned specialist work with an
 integration review. Report first-attempt results and trace evidence separately;
 these examples do not establish universal reliability or every tool's readiness.
-
-The generic skill-creator validator's allowlist does not include OpenCode's
-manual-invocation flag. Keep that host-supported field and validate it in the
-actual native loaders rather than changing a built-in validator or removing
-the explicit-entry protection. Codex-only schema checks can separately inspect
-a temporary projection without the OpenCode field; label that scope accurately.
 
 A skill supplies guidance in the conversation context. It cannot guarantee a
 host's future summarization, grant unavailable tools, bypass permissions or
