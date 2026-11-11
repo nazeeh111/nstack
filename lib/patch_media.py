@@ -1,6 +1,65 @@
 """Selected media expertise ports; editable source and requested final artifact control."""
-import pathlib,re
+import pathlib,re,json,hashlib,difflib
 P=pathlib.Path
+PRIVACY_BOUNDARY='''## Native media client admission
+
+**UNADMITTED: credential-discovering clients.** Do not invoke the bundled audio engine, direct HeyGen TTS/voice scripts, cloud/provider/avatar clients, or the HyperFrames CLI `media-use` and `auth` commands. This includes `media-use --local-only`, cache/doctor/list modes and an explicitly approved cloud budget: those paths can inspect credentials before selecting a provider. The three bundled audio command entrypoints fail closed; the shared HeyGen helper performs no environment-file or global-store discovery. Full original methods remain in the source archive for review. Do not bypass the gate by importing another provider helper, changing environment variables, choosing another working directory for `media-use`, or running the archive.
+
+Preserve the full story, timing, audio, asset, caption, local treatment and editing methods below. Use user-supplied media and current authorized native tools. The separate locked CLI `tts` command uses local Kokoro, but startup reads cwd `.env` and checks desktop catch-up records for argument paths. Its conditional local route therefore requires a newly created, empty task-owned temporary working directory AND a separate fresh empty process home. Use a clean process environment containing only the approved toolchain PATH, locale, owned HOME/TMPDIR and HYPERFRAMES_NO_TELEMETRY=1, DO_NOT_TRACK=1, HYPERFRAMES_NO_UPDATE_CHECK=1, HYPERFRAMES_NO_AUTO_INSTALL=1, HYPERFRAMES_SKIP_SKILLS=1; inherit no provider keys, config-directory overrides or NODE_OPTIONS. Copy only the authorized script text into that working directory, then use `tts --text-file <owned-temp/script.txt> --output <owned-temp/narration.wav>`. Keep every CLI file argument inside it: no literal script text or project paths in argv, and no environment/chat/config files copied. Copy the finished audio back with native tools afterward. Verify the recorded executable and already available local model/dependencies first; do not download or install them incidentally. If this isolated route lacks its model/runtime, report the gap. This is source-reviewed, not evidence that synthesis ran. Other local CLI commands need their own source/effect check; `--local-only` alone proves neither credential privacy nor admission. A missing key-safe capability is a gap to report, not permission to discover credentials. Re-admit cloud clients only after a separate review establishes explicit task-scoped input, no file/store discovery or refresh, and actual account/spending authority.
+
+Cloud, sign-in, provider and bundled-audio examples below retain upstream method detail as reference only; they are blocked under this boundary. See the bundle's NATIVE-PRIVACY provenance and exact original source copies.
+'''
+UNADMITTED='UNADMITTED media client: credential discovery is disabled; use an admitted native/local route.'
+
+def finalize_credentials(source,out,spec):
+ """Gate every mirrored P215 client copy after support closure is complete."""
+ if spec['candidate_id']!='P215':raise ValueError('Media privacy gate is P215-only')
+ record=out/'NATIVE-PRIVACY'
+ if record.exists():raise ValueError('Media privacy gate must run once after closure')
+ changes=[]
+ def retain(file,text):
+  before=file.read_text()
+  if before==text:return
+  rel=file.relative_to(out);origin=source/rel
+  if not origin.is_file():raise ValueError('Missing pinned media original: '+str(rel))
+  original=origin.read_bytes();archive=record/'upstream'/P(str(rel)+'.reference.txt')
+  archive.parent.mkdir(parents=True,exist_ok=True);archive.write_bytes(original)
+  file.write_text(text)
+  changes.append({'path':str(rel),'upstream_sha256':hashlib.sha256(original).hexdigest(),
+                  'active_sha256':hashlib.sha256(file.read_bytes()).hexdigest(),
+                  'original':str(archive.relative_to(out)),
+                  'patch':''.join(difflib.unified_diff(original.decode().splitlines(True),text.splitlines(True),fromfile='upstream/'+str(rel),tofile='native/'+str(rel)))})
+ for file in sorted(out.rglob('*.md')):
+  if record in file.parents:continue
+  text=file.read_text()
+  if file.name!='SKILL.md' and not re.search(r'heygen|audio\.mjs|media-use|--provider|auth (?:login|status|refresh)',text,re.I):continue
+  # Keep frontmatter first and retain the complete source method after the boundary.
+  offset=text.index('\n---',3)+4 if text.startswith('---\n') else 0
+  retain(file,text[:offset]+'\n\n'+PRIVACY_BOUNDARY+'\n'+text[offset:].lstrip('\n'))
+ for file in sorted(out.rglob('heygen.mjs')):
+  if record in file.parents or file.parts[-3:]!=('scripts','lib','heygen.mjs'):continue
+  text=file.read_text()
+  start=text.index('// Walk up ≤5 dirs');end=text.index('// → { headers }',start)
+  text=text[:start]+'// Native admission: never load a project or ancestor environment file.\nexport function loadEnvFromDir(_startDir) {}\n\n'+text[end:]
+  start=text.index('function resolveCredential()');end=text.index('// → "oauth"',start)
+  text=text[:start]+'// No cloud client is admitted here, including explicit process credentials.\nfunction resolveCredential() { return null; }\n\n'+text[end:]
+  start=text.index('// → auth headers object');end=text.index('// Authed JSON request',start)
+  text=text[:start]+'export function heygenAuthHeaders() { throw new Error('+json.dumps(UNADMITTED)+'); }\n\n'+text[end:]
+  start=text.index('export async function heygenJSON(');end=text.index('function errorCode(',start)
+  text=text[:start]+'export async function heygenJSON() { throw new Error('+json.dumps(UNADMITTED)+'); }\n\n'+text[end:]
+  retain(file,text)
+ for name in ('audio.mjs','heygen-tts.mjs','heygen-voice.mjs'):
+  for file in sorted(out.rglob(name)):
+   if record in file.parents or file.parent.name!='scripts' or file.parent.parent.name!='audio':continue
+   text=file.read_text();offset=text.index('\n')+1 if text.startswith('#!') else 0
+   retain(file,text[:offset]+'// Native command admission; full method retained below and in the source archive.\nthrow new Error('+json.dumps(UNADMITTED)+');\n'+text[offset:])
+ if not changes:raise ValueError('P215 media privacy closure was empty')
+ record.mkdir(exist_ok=True)
+ (record/'ADAPTATION.patch').write_text(''.join(x.pop('patch') for x in changes))
+ (record/'SOURCE-ADAPTATION.json').write_text(json.dumps({'candidate_id':'P215','repository':spec['source_repository'],'revision':spec['revision'],
+  'boundary':'Credential-discovering bundled command clients and CLI media-use/auth/cloud/provider/avatar routes are unadmitted; source methods remain available for review. This instruction gate does not sandbox arbitrary archived/direct source execution.',
+  'local_limit':'CLI tts is local Kokoro but requires empty owned working directory to avoid startup .env, telemetry opt-outs, exact commissioned runtime and already available models. No runtime/provider execution is claimed.',
+  'files':changes},indent=2)+'\n')
 ROUTING='''## Source, timing and output contract
 
 The requested editable source controls dispatch: keep React scenes in Remotion, standalone HTML motion in HyperFrames, and native shots/grades/buses in the chosen engine or Resolve/Fusion/Fairlight. Transfer cue IDs, frame rate/origin, stems and asset receipts rather than screenshots alone. Keep a paused timeline registered after fonts/async setup; deterministic renderAt(time) and seeded inputs must reproduce the same frame. Check representative moving frames plus endpoint/blank-frame controls and the final mux. A launch-film aesthetic checker does not validate scientific values or gameplay readability. Keep the last successful artifact until replacement succeeds.

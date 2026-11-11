@@ -61,12 +61,16 @@ def materialize(source,out,s,c,m,support=None,_inside=False):
    for core in ('kicad','datasheets'):
     rel='skills/'+core+'/SKILL.md'
     if not (out/rel).exists():selected_support(rel,out/P(rel).parent)
-  mirror_support(source,out,selected_support,{'runtime/career-ops':'.'} if s['candidate_id']=='P354' else None);validate(out)
+  mirror_support(source,out,selected_support,{'runtime/career-ops':'.'} if s['candidate_id']=='P354' else None)
+  if s['candidate_id']=='P215':
+   from patch_media import finalize_credentials
+   finalize_credentials(source,out,s)
+  validate(out)
   return str(path.parent)
  if s['candidate_id']=='P343' and name in ('prospecting','cold-email'):
   from patch_prospecting import materialize as scoped
   return scoped(source,out,s)
- if s['delivery']=='narrow-patched leaf' and not ((s['candidate_id']=='P001' and name in ('diagnosing-bugs','tdd','codebase-design')) or s['candidate_id'] in ('P112','P119') or s['candidate_id'] in ('P343','P347','P351','P354','P357','L036','X-AUTO-EVE','X-CREATIVE-BLENDER-SKILLS','X-CREATIVE-UNREAL','L006','L014','L020','L050','P183','P321','P094','P215','P226','P224','P238') or s['candidate_id'] in ('P200','P328','P403','X-CREATIVE-COLORFIGURES','X-CREATIVE-ARCHIFY') or s['candidate_id']=='P195' or s['candidate_id']=='P150' or s['candidate_id'] in ('P007','P016','P037','L010','P008','P011','P013','P028','P062','P064','P066','P068','P083')):raise ValueError('Required narrow patch not yet commissioned: '+s['candidate_id']+'/'+name)
+ if s['delivery']=='narrow-patched leaf' and not ((s['candidate_id']=='P001' and name in ('diagnosing-bugs','tdd','codebase-design')) or s['candidate_id'] in ('P112','P119') or s['candidate_id'] in ('P343','P347','P351','P354','P357','L036','X-AUTO-EVE','X-CREATIVE-BLENDER-SKILLS','X-CREATIVE-UNREAL','L006','L014','L020','L050','P183','P321','P094','P215','P226','P224','P238') or s['candidate_id'] in ('P200','P328','P403','X-CREATIVE-COLORFIGURES','X-CREATIVE-ARCHIFY') or s['candidate_id']=='P195' or s['candidate_id']=='P150' or s['candidate_id'] in ('P007','P016','P037','L010','P008','P011','P013','P028','P062','P064','P065','P066','P068','P083')):raise ValueError('Required narrow patch not yet commissioned: '+s['candidate_id']+'/'+name)
  folder=source/path.parent
  for f in folder.rglob('*'):
   # This root-level source is explicitly a three-reference expertise port,
@@ -129,6 +133,9 @@ def materialize(source,out,s,c,m,support=None,_inside=False):
   elif s['candidate_id'] in ('P008','P011','P013'):
    from patch_workflows import patch
    patch(s['candidate_id'],name,source,out)
+  elif s['candidate_id']=='P065' and name=='memory-leak-debugging':
+   from patch_devtools import patch
+   patch(out)
   elif s['candidate_id'] in ('P028','P062','P064','P066','P068','P083'):
    from patch_interfaces import patch
    patch(s['candidate_id'],name,source,out)

@@ -34,3 +34,18 @@ Use [SkillSpector](SKILLSPECTOR.md) for explicit source audits. Keep integrity,
 static findings, source review and real behavior tests distinct. Preserve
 coverage limits and failed checks; neither a clean pattern scan nor a loader
 count proves every capability works on every task.
+
+Current privacy adaptations are specific to demonstrated callers. Last30days'
+native adapter runs its unmodified engine for anonymous Reddit, Hacker News and
+Polymarket research with isolated configuration and no credential discovery.
+Other authenticated source routes require a separately reviewed client. The
+DevTools memory skill checks non-secret native tool availability instead of
+reading MCP configuration.
+
+Bundled media clients that discover `.env`, credentials or desktop chat history
+remain unadmitted, including the CLI's misleading `--local-only` route. Their
+original methods remain available as reference. Native/local asset workflows
+continue; the documented local TTS alternative has strict temporary-directory,
+environment and existing-model prerequisites. A budget alone does not clear an
+unsafe credential or history reader. Inspect the skill's current admission
+conditions before selecting a provider client.

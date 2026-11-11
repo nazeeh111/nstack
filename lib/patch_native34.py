@@ -183,6 +183,9 @@ def materialize(source,out,s,c):
  a=text.index('\n---\n')+5;text=text[:a]+'\n'+NATIVE_SCOPE+text[a:];skill.write_text(text)
  from closure import support,validate
  support(source,root,text_transform=lambda text,file:native_text(text,s['candidate_id'],file,root))
+ if s['candidate_id']=='P111':
+  from patch_last30days import patch_bundle
+  patch_bundle(source,root,leaf)
  if s['candidate_id']=='P401':
   from patch_paperbanana import helpers
   helpers(root)

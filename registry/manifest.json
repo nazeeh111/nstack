@@ -7321,9 +7321,9 @@
       "source_path": "skills/memory-leak-debugging/SKILL.md",
       "revision": "0877ee00d2e43c1c04bba275e7d08cc1033e36e9",
       "source_url": "https://github.com/ChromeDevTools/chrome-devtools-mcp/blob/0877ee00d2e43c1c04bba275e7d08cc1033e36e9/skills/memory-leak-debugging/SKILL.md",
-      "delivery": "intact upstream leaf",
-      "decision": "adopt",
-      "details": "Heap/growth investigation used only for leak symptoms.",
+      "delivery": "narrow-patched leaf",
+      "decision": "adapt",
+      "details": "Preserve heap/growth investigation; replace missing-tool MCP configuration reads with native tool names and non-secret capability status.",
       "closure": "Resolve and preserve referenced support files and parent-level dependencies at the same pin.",
       "rights": "Apache-2.0"
     },
