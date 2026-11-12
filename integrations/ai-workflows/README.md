@@ -4,7 +4,7 @@ This integration provides a real, isolated Python runtime for explicitly request
 
 The locked Linux arm64 image contains Python3.12.16, LangChain1.5.0, LangChain Core1.8.0, LangGraph1.2.20 and SQLite checkpoint3.1.3 with42 exact wheel hashes. `SOURCE.json` records official release commits, wheel URLs/hashes and base-image manifests. The wheels are official registry artifacts; this is not a reproducible build from Git source. The Python base pin is a multi-platform official manifest, while this dependency lock supports **Linux arm64 only**.
 
-Use LangGraph when a produced application needs explicit branching, durable state and human pauses. Add LangChain when its agent/tool/middleware interfaces help the application. Ordinary Codex/OpenCode work and Obsidian notes continue through their existing tools. No provider integration extra is installed. LangSmith is a transitive library dependency; hosted tracing is disabled.
+Use LangGraph when a produced application needs explicit branching, durable state and human pauses. Add LangChain when its agent/tool/middleware interfaces help the application. Ordinary Codex/OpenCode work and Obsidian notes continue through their existing tools. No provider integration extra is installed. [LangSmith](langsmith/README.md) is available on demand through its pinned SDK and local tracing/evaluation example; hosted tracing is disabled.
 
 From the nstack repository:
 
