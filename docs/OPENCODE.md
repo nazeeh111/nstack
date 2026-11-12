@@ -35,7 +35,9 @@ capture behavior to both hosts. OpenCode V2 [documents global instruction update
 before its next model request; start a fresh Codex session after editing it.
 Vault reads and writes use native permissions. `--vault /absolute/vault
 --vault-write allow` explicitly permits edits there for build/general agents;
-read-only roles and existing narrow denials remain intact. Without this option,
+direct file edits to `.git` and `.obsidian` metadata remain denied. These guards
+survive a later return to `ask`; normal Git CLI commands still follow native
+shell approval. Read-only roles and existing narrow denials remain intact. Without this option,
 the adapter preserves the current vault write choice, initially `ask`.
 On the author Mac the private vault is `~/Knowledge`, with private local Git
 history. Keep source, scope, note ID, generation/hash, dates and correction path

@@ -60,6 +60,13 @@ def knowledge_permissions(config, home, vault, write=None):
         rules = [rule for rule in rules if not (rule.get('action') == 'edit' and expanded(rule.get('resource','')) == pattern)]
         preserved = [rule for rule in global_edit_denials if rule not in rules]
         rules = [{'action':'edit','resource':pattern,'effect':effect}, *preserved, *rules]
+        if effect == 'allow':
+            # Ordinary note edits do not grant direct access to Git/Obsidian
+            # metadata. Put guards last, including after existing agent rules.
+            guards = [{'action':'edit','resource':str(vault / folder) + suffix,'effect':'deny'}
+                      for folder in ('.git', '.obsidian') for suffix in ('', '/*')]
+            rules = [rule for rule in rules if rule not in guards] + guards
+        # An explicit return to ask keeps any previously installed guards.
         current['permissions'] = rules; agents[name] = current
     return {**config, 'permissions': rows, 'agents': agents}
 

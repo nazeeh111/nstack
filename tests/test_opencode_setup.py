@@ -19,20 +19,42 @@ class OpenCodeSetupTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             home, state, cli = self.fixture(P(tmp).resolve())
             vault = home / 'Knowledge'; vault.mkdir()
+            note = vault / 'Home.md'; note.write_text('Preserve this note\n')
             denied = {'action': 'edit', 'resource': str(vault / 'private') + '/*', 'effect': 'deny'}
             plan = {'permissions': [{'action': 'edit', 'resource': '*', 'effect': 'deny'}]}
             data = {'permissions': [denied], 'agents': {'plan': plan, 'explore': {'permissions': [{'action': 'edit', 'resource': '*', 'effect': 'deny'}]}}}
             actual = m.knowledge_permissions(data, home, vault, 'allow')
+            guards = [{'action': 'edit', 'resource': str(vault / folder) + suffix, 'effect': 'deny'}
+                      for folder in ('.git', '.obsidian') for suffix in ('', '/*')]
             self.assertEqual(actual['agents']['plan'], plan)
             self.assertEqual(actual['agents']['explore'], data['agents']['explore'])
             for role in ('build', 'general'):
                 rules = actual['agents'][role]['permissions']
-                self.assertEqual(rules, [{'action': 'edit', 'resource': str(vault) + '/*', 'effect': 'allow'}, denied])
+                self.assertEqual(rules, [{'action': 'edit', 'resource': str(vault) + '/*', 'effect': 'allow'}, denied, *guards])
             self.assertEqual(m.knowledge_permissions(actual, home, vault), actual)
             prompted = m.knowledge_permissions(actual, home, vault, 'ask')
-            self.assertEqual(prompted['agents']['build']['permissions'][0]['effect'], 'ask')
+            for role in ('build', 'general'):
+                self.assertEqual(prompted['agents'][role]['permissions'],
+                                 [{'action': 'edit', 'resource': str(vault) + '/*', 'effect': 'ask'}, denied, *guards])
+            self.assertEqual(m.knowledge_permissions(prompted, home, vault), prompted)
+            self.assertEqual(m.knowledge_permissions(prompted, home, vault, 'allow'), actual)
+            # A pre-existing scoped metadata allow cannot override the guards.
+            scoped = {'action': 'edit', 'resource': str(vault / '.git/config'), 'effect': 'allow'}
+            custom = {**data, 'agents': {**data['agents'], 'build': {'permissions': [guards[0], scoped, guards[0]]}}}
+            protected = m.knowledge_permissions(custom, home, vault, 'allow')
+            rules = protected['agents']['build']['permissions']
+            self.assertEqual(rules[-4:], guards)
+            self.assertEqual(rules.count(guards[0]), 1)
+            self.assertLess(rules.index(scoped), rules.index(guards[0]))
+            self.assertEqual(m.knowledge_permissions(protected, home, vault), protected)
             with self.assertRaisesRegex(ValueError, 'denial'):
                 m.knowledge_permissions({'permissions': [{'action': 'edit', 'resource': str(vault) + '/*', 'effect': 'deny'}]}, home, vault, 'allow')
+            agent_denial = {'agents': {'build': {'permissions': [
+                {'action': 'edit', 'resource': str(vault) + '/*', 'effect': 'deny'}]}}}
+            before_denial = json.dumps(agent_denial)
+            with self.assertRaisesRegex(ValueError, 'denial'):
+                m.knowledge_permissions(agent_denial, home, vault, 'allow')
+            self.assertEqual(json.dumps(agent_denial), before_denial)
             with self.assertRaisesRegex(ValueError, 'explicit vault'):
                 m.plan(home, state, cli, vault_write='allow')
             m.apply(home, state, cli)
@@ -43,10 +65,15 @@ class OpenCodeSetupTests(unittest.TestCase):
             actual = json.loads(path.read_text())
             self.assertEqual(actual['agents']['build']['permissions'][0]['effect'], 'allow')
             self.assertEqual(actual['agents']['plan'], plan)
+            self.assertEqual(actual['agents']['explore'], data['agents']['explore'])
+            self.assertEqual(actual['permissions'], m.knowledge_permissions(data, home, vault, 'allow')['permissions'])
+            for role in ('build', 'general'):
+                self.assertEqual(actual['agents'][role]['permissions'][-4:], guards)
             raw = path.read_bytes(); journal = P(result['run']) / 'journal.json'; receipt = journal.read_bytes()
             self.assertFalse(m.apply(home, state, cli, vault=vault)['changed'])
             self.assertEqual(path.read_bytes(), raw); self.assertEqual(journal.read_bytes(), receipt)
             m.rollback(result['run']); self.assertEqual(path.read_text(), original)
+            self.assertEqual(note.read_text(), 'Preserve this note\n')
 
     def test_shared_files_repeat_and_rollback_preserve_later_artifact(self):
         with tempfile.TemporaryDirectory() as tmp:
