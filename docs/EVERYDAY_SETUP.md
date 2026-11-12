@@ -112,6 +112,22 @@ retain prior generations in Git, and exclude historical/test/archive records fro
 current views. Project source and evidence stay with their owning project.
 Use explicit `vault=` and `path=` arguments with the native Obsidian CLI.
 
+The shared guidance tells new sessions to consult Home and relevant current
+notes when earlier decisions, preferences or project context can affect the task.
+It also asks them to save useful durable decisions, lessons and corrections in
+the owning note. Routine transcripts, guesses and duplicate history are omitted.
+This uses normal agent file access; no background memory service is installed.
+Verify natural retrieval with an ordinary task that does not name a note path,
+and inspect actual note reads and the resulting artifact. A model still has to
+follow the guidance; an explicit-path round trip alone does not prove this behavior.
+
+[Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)
+informs this layout: original sources stay with their owner, the vault contains
+maintained synthesis, and AGENTS.md plus Home describe the workflow. Link related
+notes and flag contradictions when integrating sources. Check source hashes,
+current state and unresolved links after material updates. Bases supplies a live
+index; private Git can retain meaningful revisions without a duplicate chat log.
+
 Enable the core Templates plugin and set **Settings → Templates → Template
 folder location** to `Templates`. The folder existing on disk does not configure
 the plugin. Verify with `obsidian vault=YOUR_VAULT templates`, then create a

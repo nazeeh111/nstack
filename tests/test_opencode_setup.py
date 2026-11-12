@@ -15,6 +15,39 @@ class OpenCodeSetupTests(unittest.TestCase):
         cli = base / 'opencode'; cli.write_text('#!/bin/sh\necho "opencode v2.2.6"\n'); cli.chmod(0o755)
         return home, state, cli
 
+    def test_opted_in_vault_writes_preserve_denials_readonly_roles_and_repeat(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            home, state, cli = self.fixture(P(tmp).resolve())
+            vault = home / 'Knowledge'; vault.mkdir()
+            denied = {'action': 'edit', 'resource': str(vault / 'private') + '/*', 'effect': 'deny'}
+            plan = {'permissions': [{'action': 'edit', 'resource': '*', 'effect': 'deny'}]}
+            data = {'permissions': [denied], 'agents': {'plan': plan, 'explore': {'permissions': [{'action': 'edit', 'resource': '*', 'effect': 'deny'}]}}}
+            actual = m.knowledge_permissions(data, home, vault, 'allow')
+            self.assertEqual(actual['agents']['plan'], plan)
+            self.assertEqual(actual['agents']['explore'], data['agents']['explore'])
+            for role in ('build', 'general'):
+                rules = actual['agents'][role]['permissions']
+                self.assertEqual(rules, [{'action': 'edit', 'resource': str(vault) + '/*', 'effect': 'allow'}, denied])
+            self.assertEqual(m.knowledge_permissions(actual, home, vault), actual)
+            prompted = m.knowledge_permissions(actual, home, vault, 'ask')
+            self.assertEqual(prompted['agents']['build']['permissions'][0]['effect'], 'ask')
+            with self.assertRaisesRegex(ValueError, 'denial'):
+                m.knowledge_permissions({'permissions': [{'action': 'edit', 'resource': str(vault) + '/*', 'effect': 'deny'}]}, home, vault, 'allow')
+            with self.assertRaisesRegex(ValueError, 'explicit vault'):
+                m.plan(home, state, cli, vault_write='allow')
+            m.apply(home, state, cli)
+            path = home / '.config/opencode/opencode.json'
+            installed = json.loads(path.read_text()); installed.update(data)
+            original = json.dumps(installed, indent=2) + '\n'; path.write_text(original)
+            result = m.apply(home, state, cli, vault=vault, vault_write='allow')
+            actual = json.loads(path.read_text())
+            self.assertEqual(actual['agents']['build']['permissions'][0]['effect'], 'allow')
+            self.assertEqual(actual['agents']['plan'], plan)
+            raw = path.read_bytes(); journal = P(result['run']) / 'journal.json'; receipt = journal.read_bytes()
+            self.assertFalse(m.apply(home, state, cli, vault=vault)['changed'])
+            self.assertEqual(path.read_bytes(), raw); self.assertEqual(journal.read_bytes(), receipt)
+            m.rollback(result['run']); self.assertEqual(path.read_text(), original)
+
     def test_shared_files_repeat_and_rollback_preserve_later_artifact(self):
         with tempfile.TemporaryDirectory() as tmp:
             home, state, cli = self.fixture(P(tmp).resolve())

@@ -9,8 +9,10 @@ import install as profile_install
 
 
 
-def knowledge_permissions(config, home, vault):
+def knowledge_permissions(config, home, vault, write=None):
     """Share the explicit vault without weakening native read-only roles."""
+    if write not in (None, 'ask', 'allow'):
+        raise ValueError('Vault writes must preserve current policy, ask, or allow')
     home, vault = P(home).resolve(), P(vault).absolute()
     forbidden = {'.ssh', '.aws', '.codex', '.config', '.local', '.kube', '.gnupg',
                  '.azure', '.docker', 'keychains', 'credentials', 'secrets', 'passwords'}
@@ -42,7 +44,7 @@ def knowledge_permissions(config, home, vault):
     rows[index:index] = [grant]
     agents = {key: dict(value) for key,value in config.get('agents',{}).items()}
     # Agent rules run after global rules. Keep global edit denials behind the
-    # new ask, while retaining all existing agent rules as the final authority.
+    # scoped choice, with existing narrower agent rules as the final authority.
     global_edit_denials = []
     for rule in rows:
         if (rule.get('effect') == 'deny' and matches('edit', rule.get('action', ''))
@@ -52,14 +54,19 @@ def knowledge_permissions(config, home, vault):
         current = dict(agents.get(name, {})); rules = list(current.get('permissions', []))
         if denied(rules):
             raise ValueError('Existing agent knowledge denial preserved')
+        existing = [rule['effect'] for rule in rules if rule.get('action') == 'edit'
+                    and expanded(rule.get('resource', '')) == pattern]
+        effect = write if write is not None else existing[-1] if existing else 'ask'
         rules = [rule for rule in rules if not (rule.get('action') == 'edit' and expanded(rule.get('resource','')) == pattern)]
         preserved = [rule for rule in global_edit_denials if rule not in rules]
-        rules = [{'action':'edit','resource':pattern,'effect':'ask'}, *preserved, *rules]
+        rules = [{'action':'edit','resource':pattern,'effect':effect}, *preserved, *rules]
         current['permissions'] = rules; agents[name] = current
     return {**config, 'permissions': rows, 'agents': agents}
 
 
-def plan(home, state, cli, codex=None, vault=None):
+def plan(home, state, cli, codex=None, vault=None, vault_write=None):
+    if vault_write is not None and vault is None:
+        raise ValueError('An explicit vault is required for its write policy')
     home, state, cli = P(home).resolve(), P(state).resolve(), P(cli).absolute()
     agents = home / '.codex/AGENTS.md'
     skills = home / '.agents/skills'
@@ -132,7 +139,7 @@ def plan(home, state, cli, codex=None, vault=None):
             raise ValueError('Existing configuration is preserved; review before replacing: ' + str(config_path))
     if vault is not None:
         value = json.loads(configured)
-        updated = knowledge_permissions(value, home, vault)
+        updated = knowledge_permissions(value, home, vault, vault_write)
         if updated != value:
             configured = (json.dumps(updated, indent=2) + '\n').encode()
     files[config_path] = configured
@@ -156,9 +163,9 @@ def plan(home, state, cli, codex=None, vault=None):
     return files, links, version
 
 
-def apply(home, state, cli, codex=None, vault=None):
+def apply(home, state, cli, codex=None, vault=None, vault_write=None):
     home, state = P(home).resolve(), P(state).resolve()
-    files, links, version = plan(home, state, cli, codex, vault)
+    files, links, version = plan(home, state, cli, codex, vault, vault_write)
     if all(p.is_file() and p.read_bytes() == d for p, d in files.items()) and all(
             p.is_symlink() and os.readlink(p) == str(t) for p, t in links.items()):
         return {'changed': False, 'version': version, 'shared_skills': str(home / '.agents/skills')}
@@ -169,7 +176,7 @@ def apply(home, state, cli, codex=None, vault=None):
     tx = Transaction(run)
     with tx.lock():
         # Revalidate after acquiring the shared profile writer lock.
-        checked_files, checked_links, checked_version = plan(home, state, cli, codex, vault)
+        checked_files, checked_links, checked_version = plan(home, state, cli, codex, vault, vault_write)
         if checked_files != files or checked_links != links or checked_version != version:
             raise ValueError('OpenCode configuration changed during preparation; preserved for review')
         before = {p: fingerprint(p) for p in [*files, *links]}
@@ -223,10 +230,11 @@ def main():
     install.add_argument('--state', default=str(P.home() / 'Library/Application Support/nstack'))
     install.add_argument('--cli', default='/Applications/OpenCode.app/Contents/Resources/opencode-cli')
     install.add_argument('--codex-harness', metavar='EXECUTABLE', help='Add an explicit native Codex terminal command in OpenCode Desktop 2.2.6')
-    install.add_argument('--vault', metavar='DIRECTORY', help='Allow the explicit shared vault directory; retain edit prompts and other policies')
+    install.add_argument('--vault', metavar='DIRECTORY', help='Share the explicit vault directory; preserve its write choice, initially ask')
+    install.add_argument('--vault-write', choices=('ask', 'allow'), help='Explicit vault edit choice for build/general only; otherwise preserve its current policy')
     undo = sub.add_parser('rollback'); undo.add_argument('run'); undo.add_argument('--chain', action='store_true')
     args = parser.parse_args()
-    result = apply(args.home, args.state, args.cli, args.codex_harness, args.vault) if args.command == 'install' else rollback(args.run, args.chain)
+    result = apply(args.home, args.state, args.cli, args.codex_harness, args.vault, args.vault_write) if args.command == 'install' else rollback(args.run, args.chain)
     print(json.dumps(result, indent=2))
 
 if __name__ == '__main__': main()
