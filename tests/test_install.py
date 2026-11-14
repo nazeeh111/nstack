@@ -98,6 +98,41 @@ class PredictableFailureTests(unittest.TestCase):
 
 
 class InterpreterLauncherTests(unittest.TestCase):
+ def test_node_fallback_is_scoped_and_current_node_keeps_precedence(self):
+  with tempfile.TemporaryDirectory() as temporary:
+   base=P(temporary).resolve();release=base/'release';release.mkdir()
+   (release/'nstack.py').write_text('import json,os,subprocess,sys\nprint(json.dumps({"node":subprocess.check_output(["node"],text=True).strip(),"path":os.environ["PATH"],"arguments":sys.argv[1:]}))\n')
+   recorded=base/"recorded node's bin";current=base/'current node';hostile=base/'hostile'
+   for directory,label in [(recorded,'recorded-node'),(current,'current-node')]:
+    directory.mkdir();binary=directory/'node';binary.write_text('#!/bin/sh\nprintf '+label+'\n');binary.chmod(0o755)
+   hostile.mkdir();(hostile/'python3').write_text('#!/bin/sh\nexit 97\n');(hostile/'python3').chmod(0o755)
+   launcher=base/'nstack'
+   with patch.dict(os.environ,{'PATH':str(recorded)}):launcher.write_text(i.launcher_script(release))
+   launcher.chmod(0o755)
+   for runtime_path,label,expected_path in [(str(hostile),'recorded-node',str(recorded)+':'+str(hostile)),
+       (str(current)+':'+str(hostile),'current-node',str(current)+':'+str(hostile)),
+       ('','recorded-node',str(recorded))]:
+    with self.subTest(runtime_path=runtime_path):
+     env={'PATH':runtime_path};original_env=dict(env)
+     result=json.loads(subprocess.check_output([str(launcher),'argument with spaces'],env=env,text=True))
+     self.assertEqual(result['node'],label);self.assertEqual(result['path'],expected_path)
+     self.assertEqual(result['arguments'],['argument with spaces']);self.assertEqual(env,original_env)
+   # A removed recorded executable is a real runtime gap, never an installer
+   # or a reason to replace a current user-selected Node.
+   (recorded/'node').unlink()
+   missing=subprocess.run([str(launcher)],env={'PATH':str(hostile)},capture_output=True,text=True)
+   self.assertNotEqual(missing.returncode,0);self.assertIn('node',missing.stderr)
+   preferred=json.loads(subprocess.check_output([str(launcher)],env={'PATH':str(current)},text=True))
+   self.assertEqual(preferred['node'],'current-node');self.assertEqual(preferred['path'],str(current))
+
+ def test_no_install_time_node_does_not_add_a_fallback(self):
+  with tempfile.TemporaryDirectory() as temporary:
+   base=P(temporary).resolve();release=base/'release';release.mkdir()
+   (release/'nstack.py').write_text('import os\nprint(os.environ["PATH"])\n')
+   with patch.dict(os.environ,{'PATH':''}):script=i.launcher_script(release)
+   launcher=base/'nstack';launcher.write_text(script);launcher.chmod(0o755)
+   self.assertEqual(subprocess.check_output([str(launcher)],env={'PATH':'/synthetic/current'},text=True).strip(),'/synthetic/current')
+
  def test_launcher_uses_installing_python_under_hostile_path_and_restores_prior_entries(self):
   for prior_kind in ('file','link'):
    with self.subTest(prior_kind=prior_kind),tempfile.TemporaryDirectory() as temporary:

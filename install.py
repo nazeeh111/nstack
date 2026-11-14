@@ -209,9 +209,13 @@ def shlex_quote(value):
  return shlex.quote(value)
 
 def launcher_script(release):
- """Bind the supported installing interpreter without relying on later PATH."""
+ """Bind Python and reuse an existing Node only when the command lacks one."""
  require_python()
- return '#!/bin/sh\nexec '+shlex_quote(str(P(sys.executable).absolute()))+' '+shlex_quote(str(release/'nstack.py'))+' "$@"\n'
+ script='#!/bin/sh\n'
+ node=shutil.which('node')
+ if node:
+  script+='if ! command -v node >/dev/null 2>&1; then\n PATH='+shlex_quote(str(P(node).absolute().parent))+'${PATH:+:$PATH}\n export PATH\nfi\n'
+ return script+'exec '+shlex_quote(str(P(sys.executable).absolute()))+' '+shlex_quote(str(release/'nstack.py'))+' "$@"\n'
 
 def main():
  p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True);a=sub.add_parser('install');a.add_argument('--state',default=str(P.home()/'Library/Application Support/nstack'));a.add_argument('--user-home',default=str(P.home()));a.add_argument('--codex-home',default=os.environ.get('CODEX_HOME',str(P.home()/'.codex')));a.add_argument('--bin-dir',default=str(P.home()/'.local/bin'));a.add_argument('--run-id',default='cutover');a.add_argument('--retire-personal',action='store_true');a.add_argument('--disable-mcp',action='append',default=[]);a.add_argument('--disable-plugin',action='append',default=[]);a.add_argument('--stage-only',action='store_true');a.add_argument('--bootstrap-cli',action='store_true');a.add_argument('--cli-path');a=sub.add_parser('rollback');a.add_argument('run')

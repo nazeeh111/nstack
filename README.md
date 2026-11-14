@@ -32,6 +32,10 @@ to an older system version. The installed `nstack` launcher binds the installing
 interpreter, so later PATH changes do not select another Python. Keep that
 interpreter available; reinstall with a new run ID after moving or replacing it.
 The installer leaves system Python and PATH unchanged.
+When Node is available during installation, the launcher also records its
+directory as a command-local fallback for Node-based tools. A Node already on
+the current PATH keeps precedence. This does not install Node or alter shell
+configuration.
 The pinned CLI bootstrap currently supports native Apple Silicon macOS only.
 The independently managed desktop app is preserved. No API key, purchase or
 provider signup is part of installation. `uv` is needed only for the selected

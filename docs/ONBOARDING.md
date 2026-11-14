@@ -39,6 +39,12 @@ docs/SOURCE_FIDELITY.md and docs/WORKFLOWS.md. Inspect installer help and releva
 source before executing it. Preserve a dirty existing checkout instead of
 resetting it. Use the reviewed pins, not automatic latest substitutions.
 
+For Node-based tools, establish a supported existing Node in the command's PATH
+and verify command -v node. A Codex launcher records an available Node directory
+as a fallback only when the current command cannot find Node; the user's current
+Node choice keeps precedence. No global PATH or shell initialization edit is
+needed. Claude's direct Python invocation needs the command-local Node path too.
+
 Make ordinary implementation choices yourself. Ask a short question only for a
 choice the machine cannot establish and that materially changes the setup, such
 as permission to use a specific existing knowledge vault or whether academic
