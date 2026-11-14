@@ -95,3 +95,49 @@ class PredictableFailureTests(unittest.TestCase):
     before=i.fingerprint(user);args=argparse.Namespace(state=str(base/'state'),user_home=str(user),codex_home=str(codex),bin_dir=str(user/'bin'),run_id='preflight',disable_mcp=[],disable_plugin=[],retire_personal=True,stage_only=False)
     with self.assertRaises(ValueError):i.install(args)
     self.assertEqual(i.fingerprint(user),before)
+
+
+class InterpreterLauncherTests(unittest.TestCase):
+ def test_launcher_uses_installing_python_under_hostile_path_and_restores_prior_entries(self):
+  for prior_kind in ('file','link'):
+   with self.subTest(prior_kind=prior_kind),tempfile.TemporaryDirectory() as temporary:
+    base=P(temporary).resolve();user=base/"user's home";codex=user/'.codex';codex.mkdir(parents=True)
+    bin_dir=user/'bin tools';bin_dir.mkdir();entry=bin_dir/'nstack'
+    original=base/'original.py';original.write_text('Original uncommitted launcher bytes.\n')
+    if prior_kind=='link':entry.symlink_to(original)
+    else:entry.write_text('Original uncommitted executable.\n');entry.chmod(0o751)
+    prior=i.fingerprint(entry)
+    state=base/'private state'
+    args=argparse.Namespace(state=str(state),user_home=str(user),codex_home=str(codex),bin_dir=str(bin_dir),run_id='bound-python',disable_mcp=[],disable_plugin=[],retire_personal=False,stage_only=False)
+    result=i.install(args);journal=state/'runs/bound-python/journal.json';journal_before=journal.read_bytes()
+    self.assertFalse(entry.is_symlink());self.assertTrue(os.access(entry,os.X_OK))
+    i.install(args);self.assertEqual(journal.read_bytes(),journal_before)
+    hostile=base/'hostile-path';hostile.mkdir();fake=hostile/'python3'
+    fake.write_text('#!/bin/sh\nprintf intercepted > "$NSTACK_TEST_MARKER"\nexit 97\n');fake.chmod(0o755)
+    marker=base/'intercepted';env={'PATH':str(hostile),'HOME':str(user),'CODEX_HOME':str(codex),'NSTACK_STATE':str(state),'NSTACK_TEST_MARKER':str(marker)}
+    legacy=base/'legacy-nstack';legacy.symlink_to(P(result['release'])/'nstack.py')
+    failed=subprocess.run([str(legacy),'doctor'],env=env,capture_output=True)
+    self.assertEqual(failed.returncode,97);self.assertTrue(marker.exists());marker.unlink()
+    report=json.loads(subprocess.check_output([str(entry),'doctor'],env=env,text=True))
+    self.assertEqual(report['python'],sys.version.split()[0]);self.assertEqual(report['components'],262)
+    # This real CLI path imports config_merge/tomllib and writes only the owned
+    # temporary project. A passing metadata-only doctor is insufficient.
+    project=user/'project';(project/'.codex').mkdir(parents=True)
+    config=project/'.codex/config.toml';config.write_text('user_note="retained"\n');project_before=i.fingerprint(config)
+    subprocess.run([str(entry),'project-init',str(project)],env=env,capture_output=True,check=True)
+    installed=i.cm.tomllib.loads(config.read_text())
+    self.assertEqual(installed['mcp_servers']['nstack_project']['command'],str(P(sys.executable).absolute()))
+    self.assertEqual(installed['user_note'],'retained')
+    subprocess.run([str(entry),'project-remove',str(project)],env=env,capture_output=True,check=True)
+    self.assertEqual(i.fingerprint(config),project_before);self.assertFalse(marker.exists())
+    subprocess.run([result['rollback']],env=env,capture_output=True,check=True)
+    self.assertEqual(i.fingerprint(entry),prior);self.assertFalse(marker.exists())
+
+ def test_unsupported_python_stops_before_imports_or_profile_mutation(self):
+  with tempfile.TemporaryDirectory() as temporary:
+   base=P(temporary).resolve();user=base/'user';user.mkdir();state=base/'state'
+   argv=[str(root/'install.py'),'install','--state',str(state),'--user-home',str(user),'--codex-home',str(user/'.codex'),'--bin-dir',str(user/'bin')]
+   code='import runpy,sys; sys.version_info=(3,10,0); sys.argv='+repr(argv)+'; runpy.run_path('+repr(str(root/'install.py'))+',run_name="__main__")'
+   result=subprocess.run([sys.executable,'-c',code],capture_output=True,text=True)
+   self.assertNotEqual(result.returncode,0);self.assertIn('requires Python 3.11 or later',result.stderr)
+   self.assertNotIn('tomllib',result.stderr);self.assertFalse(state.exists());self.assertEqual(list(user.iterdir()),[])

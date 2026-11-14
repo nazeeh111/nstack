@@ -27,6 +27,11 @@ analysis addition; its static tooling and rebuild workflows have distinct checks
 
 
 Requirements: Git, Python 3.11 or later, and existing Codex subscription access.
+Run the installer with that supported Python explicitly if `python3` resolves
+to an older system version. The installed `nstack` launcher binds the installing
+interpreter, so later PATH changes do not select another Python. Keep that
+interpreter available; reinstall with a new run ID after moving or replacing it.
+The installer leaves system Python and PATH unchanged.
 The pinned CLI bootstrap currently supports native Apple Silicon macOS only.
 The independently managed desktop app is preserved. No API key, purchase or
 provider signup is part of installation. `uv` is needed only for the selected

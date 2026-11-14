@@ -29,8 +29,11 @@ within scope when needed; do not download every dormant engine or model.
 
 Inspect the host, macOS architecture, Git/Python and current non-secret tool
 availability. Detect custom CODEX_HOME or CLAUDE_CONFIG_DIR without opening auth
-stores. Obtain a clean nstack checkout in a user-owned tools directory, record
-its exact Git revision, and read README.md, docs/ONBOARDING.md, the chosen host
+stores. Run setup with an existing Python 3.11 or later explicitly; system
+python3 may be older. A Codex nstack launcher installed by install.py binds that interpreter;
+leave system Python and PATH unchanged. Obtain a clean nstack checkout in a
+user-owned tools directory, record its exact Git revision, and read README.md,
+docs/ONBOARDING.md, the chosen host
 adapter docs, docs/EVERYDAY_SETUP.md, docs/ADAPTIVE_ROUTING.md,
 docs/SOURCE_FIDELITY.md and docs/WORKFLOWS.md. Inspect installer help and relevant
 source before executing it. Preserve a dirty existing checkout instead of
@@ -43,8 +46,11 @@ noncommercial terms cover my use. Do not make me choose browser technologies or
 complete a questionnaire. Learn my working preferences from actual tasks; save
 only useful confirmed decisions in my authorized knowledge location.
 
-Install through claude_setup.py when the target is Claude Code. Do not run the
-Codex profile cutover merely because Claude can execute shell commands. For a
+Install through claude_setup.py when the target is Claude Code. That adapter
+does not create an nstack command. For the nstack commands below, use an existing
+verified launcher or the selected supported Python followed by the absolute
+retained checkout's nstack.py path. Keep that checkout available. Do not run the
+Codex profile cutover merely to obtain a CLI in Claude. For a
 Codex target use native_setup.py, with install.py only for the needed nstack CLI
 and supported bootstrap. An existing supported Codex binary need not be replaced.
 The pinned CLI bootstrap supports Apple Silicon macOS; do not force that binary

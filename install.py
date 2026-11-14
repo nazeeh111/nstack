@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """Stage nstack and apply a journaled, rollbackable user-profile installation."""
 import argparse,hashlib,json,os,pathlib,platform,shutil,stat,subprocess,sys,tempfile,urllib.request
-P=pathlib.Path;ROOT=P(__file__).resolve().parent;sys.path.insert(0,str(ROOT/'lib'))
+P=pathlib.Path;ROOT=P(__file__).resolve().parent
+
+def require_python():
+ if sys.version_info<(3,11):raise SystemExit('nstack setup requires Python 3.11 or later. Run this installer with an existing supported interpreter.')
+
+require_python()
+sys.path.insert(0,str(ROOT/'lib'))
 import config_merge as cm
 from transaction import Transaction,atomic_json,fingerprint,copy,same
 
@@ -118,6 +124,7 @@ def rollback_chain(run):
     if tx is not first:tx.held=False
 
 def install(args):
+ require_python()
  state=P(args.state).expanduser().resolve();user=P(args.user_home).expanduser().resolve();codex=P(args.codex_home).expanduser().resolve();bin_dir=P(args.bin_dir).expanduser().resolve()
  for root in [codex/'skills',user/'.agents/skills']:
   if state.is_relative_to(root):raise ValueError('Private state must be outside discovery roots')
@@ -184,10 +191,11 @@ def install(args):
   prepared_config=tx.stage_file(config,after.encode(),0o600,expected=config_baseline)
   instructions_mode=stat.S_IMODE(instructions.stat().st_mode) if instructions.exists() else 0o644
   prepared_instructions=tx.stage_file(instructions,new.encode(),instructions_mode,expected=instructions_baseline)
+  launcher=launcher_script(release).encode();prepared_launcher=tx.stage_file(bin_dir/'nstack',launcher,0o755,expected=baselines[bin_dir/'nstack'])
   for target in targets:tx.retire(target,expected=baselines[target])
   tx.replace_file(config,after.encode(),0o600,config_spec,expected=config_baseline,prepared=prepared_config)
   tx.replace_file(instructions,new.encode(),instructions_mode,expected=instructions_baseline,prepared=prepared_instructions)
-  tx.link(bin_dir/'nstack',release/'nstack.py',expected=baselines[bin_dir/'nstack'])
+  tx.replace_file(bin_dir/'nstack',launcher,0o755,expected=baselines[bin_dir/'nstack'],prepared=prepared_launcher)
   if pinned_cli is not None:
    tx.link(cli_entry,pinned_cli,expected=baselines[cli_entry])
    companion=cli_entry.with_name('codex-code-mode-host');tx.link(companion,pinned_cli.with_name('codex-code-mode-host'),expected=baselines[companion])
@@ -199,6 +207,11 @@ def install(args):
 def shlex_quote(value):
  import shlex
  return shlex.quote(value)
+
+def launcher_script(release):
+ """Bind the supported installing interpreter without relying on later PATH."""
+ require_python()
+ return '#!/bin/sh\nexec '+shlex_quote(str(P(sys.executable).absolute()))+' '+shlex_quote(str(release/'nstack.py'))+' "$@"\n'
 
 def main():
  p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='command',required=True);a=sub.add_parser('install');a.add_argument('--state',default=str(P.home()/'Library/Application Support/nstack'));a.add_argument('--user-home',default=str(P.home()));a.add_argument('--codex-home',default=os.environ.get('CODEX_HOME',str(P.home()/'.codex')));a.add_argument('--bin-dir',default=str(P.home()/'.local/bin'));a.add_argument('--run-id',default='cutover');a.add_argument('--retire-personal',action='store_true');a.add_argument('--disable-mcp',action='append',default=[]);a.add_argument('--disable-plugin',action='append',default=[]);a.add_argument('--stage-only',action='store_true');a.add_argument('--bootstrap-cli',action='store_true');a.add_argument('--cli-path');a=sub.add_parser('rollback');a.add_argument('run')
