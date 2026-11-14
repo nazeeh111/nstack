@@ -64,10 +64,10 @@ def addon_definition(name):
             frozen[str(file.relative_to(source))] = (file.read_bytes(), 0o555 if file.stat().st_mode & 0o111 else 0o444)
     provenance = json.loads(frozen["SOURCE.json"][0])
     overrides = {}
-    if name in ("google-maps-scraper", "raea", "skillspector"):
+    if name in ("google-maps-scraper", "raea", "skillspector", "craft-anything"):
         # The recipe stays usable after the checkout is moved or removed.
         code = profile_install.stage(nstack.STATE)
-        provenance["runtime_recipe"] = str(code / "recipes" / {"google-maps-scraper": "maps_scraper.py", "raea": "raea.py", "skillspector": "skillspector.py"}[name])
+        provenance["runtime_recipe"] = str(code / "recipes" / {"google-maps-scraper": "maps_scraper.py", "raea": "raea.py", "skillspector": "skillspector.py", "craft-anything": "craft_anything.py"}[name])
         overrides["SOURCE.json"] = (json.dumps(provenance, sort_keys=True, indent=2) + "\n").encode()
     return {"source": source, "entry": P("."), "provenance": provenance, "overrides": overrides, "frozen_files": frozen}
 
@@ -311,18 +311,26 @@ def apply(args):
     home = P(args.home).expanduser().resolve()
     state = P(args.state).expanduser().resolve()
     state.mkdir(parents=True, exist_ok=True, mode=0o700)
-    for root in (home / ".agents/skills", home / ".codex/skills"):
+    configured_home = getattr(args, "codex_home", None)
+    if configured_home is None and home == P.home().resolve():
+        configured_home = os.environ.get("CODEX_HOME")
+    codex_home = P(configured_home).expanduser().absolute() if configured_home else home / ".codex"
+    for root in (home / ".agents/skills", codex_home / "skills"):
         if state.is_relative_to(root.resolve()):
             raise ValueError("Private state must remain outside skill discovery")
     nstack.STATE = state
-    target, agents = home / ".agents/skills", home / ".codex/AGENTS.md"
+    target, agents = home / ".agents/skills", codex_home / "AGENTS.md"
     index_path, profile = state / "native-skill-index.json", state / "native-profile.json"
     allowed = {target: {"absent", "file", "directory", "link"},
                agents: {"absent", "file"}, index_path: {"absent", "file", "link"},
                profile: {"absent", "file"}}
     preflight(allowed, state)
-    if profile.is_file() and json.loads(profile.read_text()).get("home") != str(home):
-        raise ValueError("Native state belongs to another home; use a separate state directory")
+    if profile.is_file():
+        existing_profile = json.loads(profile.read_text())
+        if existing_profile.get("home") != str(home):
+            raise ValueError("Native state belongs to another home; use a separate state directory")
+        if existing_profile.get("codex_home", str(home / ".codex")) != str(codex_home):
+            raise ValueError("Native state belongs to another Codex instructions path; reconcile before changing it")
     chosen = selection()
     if args.only:
         names = set(args.only)
@@ -344,6 +352,8 @@ def apply(args):
         addons.append("untangle-codebase")
     if getattr(args, "adaptive_routing", False):
         addons.append("01")
+    if getattr(args, "craft_anything", False):
+        addons.append("craft-anything")
     if getattr(args, "raea", False):
         addons.append("raea")
     if getattr(args, "llm_council", False):
@@ -368,7 +378,7 @@ def apply(args):
     content = guidance(agents.read_text() if agents.exists() else "", state, args.vault)
     same(agents, derived_before)
     index_bytes = (json.dumps(index, sort_keys=True, indent=2) + "\n").encode()
-    profile_bytes = (json.dumps({"release": str(release), "home": str(home), "names": [r["name"] for r in index]},
+    profile_bytes = (json.dumps({"release": str(release), "home": str(home), "codex_home": str(codex_home), "names": [r["name"] for r in index]},
                                 sort_keys=True, indent=2) + "\n").encode()
     desired = {agents: content.encode(), index_path: index_bytes, profile: profile_bytes}
     run = state / "runs" / ("native-" + release.name[:16])
@@ -479,6 +489,7 @@ def main():
     a = sub.add_parser("install")
     a.add_argument("--state", default=str(nstack.STATE))
     a.add_argument("--home", default=str(P.home()))
+    a.add_argument("--codex-home", help="Codex instructions directory; defaults to CODEX_HOME for the current user, otherwise HOME/.codex")
     a.add_argument("--only", action="append", help="Exact natural name, for a deliberately limited install")
     a.add_argument("--replace", action="store_true")
     a.add_argument("--agent-reach", action="store_true", help="Explicitly add the separately reviewed Agent Reach skill")
@@ -489,6 +500,7 @@ def main():
     a.add_argument("--maps-scraper", action="store_true", help="Add public-place extraction guidance; install the pinned runtime on demand")
     a.add_argument("--untangle-codebase", action="store_true", help="Add the pinned, explicitly invoked codebase refactoring skill")
     a.add_argument("--adaptive-routing", action="store_true", help="Add explicit 01 for adaptive skill/tool selection throughout a session")
+    a.add_argument("--craft-anything", action="store_true", help="Add reviewed local binary/app analysis guidance; notarized runtime installed separately, rebuild and MCP remain explicit")
     a.add_argument("--raea", action="store_true", help="Add RAEA guidance for offline local GPU rendering; pinned runtime installed separately")
     a.add_argument("--llm-council", action="store_true", help="Add native council and offline blinded evaluation; no provider or server activation")
     a.add_argument("--cloudflare-security-audit", action="store_true", help="Add the pinned repository audit method and offline validators; no account or scan activation")

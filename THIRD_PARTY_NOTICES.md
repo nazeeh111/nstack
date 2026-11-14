@@ -60,3 +60,16 @@ reference-only; native host hooks and graph-first startup are not installed.
 The compiled runtime and dependency wheels stay private. A dependency's declared
 license whose full text could not be located is recorded explicitly in the
 integration's provenance instead of being silently redistributed.
+
+
+## Craft Anything optional method
+
+[storytold/craft-anything](https://github.com/storytold/craft-anything) v0.6.1,
+revision `48a9c5a60ff83ff620f98661339be6281a7debc6`, is MIT OR Apache-2.0.
+The selected complete investigation method, recovery reference and exact
+supporting documentation are retained in `addons/craft-anything`, with original
+entry, both upstream licenses, NOTICE, attribution and a recorded native binding
+patch. The Mac application is acquired separately from its official notarized
+distribution and is not redistributed in nstack. Optional dependencies, engines
+and assets retain their own notices and terms; method admission does not enable
+rebuild agents, device operations, account access or paid services.

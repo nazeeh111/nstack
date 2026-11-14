@@ -5,8 +5,14 @@ the evaluated manifest. It excludes trial/substitute/reference/rejected leaves.
 Natural names and complete bundles are verified independently against the
 registered original releases. Optional `--only EXACT-NAME` deliberately narrows
 an installation; it is not the full setup. The explicit additions are
-`--agent-reach`, `--repository-docs`, `--academic-research`, `--ecc`, `--unslop`
-and `--maps-scraper`.
+`--agent-reach`, `--repository-docs`, `--academic-research`, `--ecc`, `--unslop`,
+`--maps-scraper`, `--untangle-codebase`, `--adaptive-routing`, `--raea`,
+`--llm-council`, `--roast-room`, `--council-of-high-intelligence`,
+`--cloudflare-security-audit`, `--strix`, `--skillspector` and `--craft-anything`.
+See [the host-aware onboarding guide](ONBOARDING.md) for a complete selection.
+`native_setup.py --codex-home /absolute/profile` targets custom Codex instructions;
+for the current user it also honors `CODEX_HOME`. The optional
+[Claude adapter](CLAUDE.md) uses Claude's own skill and instruction locations.
 Repository Docs guides public repository lookups and strict version handling in Context7.
 
 `--unslop` adds Unslop by Damir Sokolovsky, pinned at
@@ -52,6 +58,22 @@ login for the tested public queries. Hosted service code and corpora are mutable
 reviewed source revisions are not a claim of a pinned hosted deployment.
 Reject an explicit missing-version fallback to current docs as version evidence.
 Never send private code, vault notes or account information to these services.
+
+Choose an available control surface for the current outcome and evidence. The
+host browser is useful for one-off page work; the commissioned Playwright runtime
+adds repeatable journeys, isolated contexts and traces; agent-browser provides
+compact page snapshots and task-owned CLI sessions. Native host computer use
+reaches Mac windows, menus and dialogs. Compare their current capabilities and
+cost for the task rather than imposing a fixed fallback sequence. Use the actual
+host schema; the optional cua-driver guide describes a different API and does
+not prove that standalone driver is installed.
+
+An input success result is not always a visible effect. On the author Mac on
+November14, native Obsidian AX reads worked while pointer calls returned
+`noWindowsAvailable`; a current semantic control completed the operation. This
+was a delivery limitation, not an OS permission denial. Verify the expected
+state, refresh stale targets, and use an independently available supported
+operation when it helps. Actual permission and target denials remain binding.
 
 ChromeDevTools stays an explicit per-task tool, not another globally active
 browser. Use isolated/headless profiles, no usage statistics/performance CrUX,

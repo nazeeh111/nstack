@@ -9,9 +9,25 @@ import unittest
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(ROOT), str(ROOT / 'lib')]
 from patch_native34 import front, materialize, native_text
+from patch_pstack import entry_policy
 
 
 class NativeFrontmatter(unittest.TestCase):
+    def test_pstack_methods_are_available_to_automatic_selection_without_changing_the_body(self):
+        original = ('---\nname: pstack-method\ndescription: Scoped concurrency design\n'
+                    'disable-model-invocation: true\nmetadata:\n  retained: yes\n---\n'
+                    '\nApply when several writers can update the same state.\n')
+        active = entry_policy(original)
+        self.assertEqual(active.split('\n---\n', 1)[1], original.split('\n---\n', 1)[1])
+        self.assertIn('metadata:\n  retained: yes\n', active)
+        self.assertNotIn('disable-model-invocation:', active)
+        import claude_setup
+        derived, removed, manual = claude_setup.adapt_entry(active.encode(), 'pstack-shared-state')
+        self.assertFalse(manual)
+        self.assertEqual(derived.decode().split('\n---\n', 1)[1], active.split('\n---\n', 1)[1])
+        with self.assertRaisesRegex(ValueError, 'policy changed'):
+            entry_policy(original.replace('disable-model-invocation: true', 'disable-model-invocation: false'))
+
     def test_prose_bindings_do_not_rewrite_metadata_values(self):
         header = ('---\nname: source-name\ndescription: Source description\n'
                   'model: opus\nmetadata:\n  invocation: claude -p task\n'

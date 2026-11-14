@@ -21,6 +21,18 @@ class NativeSetup(unittest.TestCase):
   receipt={'content_sha256':'fixture','builder_sha256':'fixture','entry_dir':'skills/entry','files':{str(p.relative_to(source)):native.sha(p.read_bytes()) for p in source.rglob('*') if p.is_file()}}
   (source/'.nstack-release.json').write_text(json.dumps(receipt,sort_keys=True,indent=2,ensure_ascii=False)+'\n')
   return source,leaf,receipt
+ def test_explicit_codex_home_preserves_default_guidance_and_rolls_back(self):
+  with tempfile.TemporaryDirectory() as temp:
+   base=pathlib.Path(temp).resolve();home=base/'home';home.mkdir();state=base/'state';source,leaf,r=self.fixture(base)
+   default=home/'.codex/AGENTS.md';default.parent.mkdir();default.write_text('Default host guidance untouched.\n');before=fingerprint(default)
+   custom=home/'custom-codex';custom.mkdir();(custom/'AGENTS.md').write_text('Custom host guidance.\n');original=fingerprint(custom/'AGENTS.md')
+   args=self.args(home,state);args.codex_home=str(custom)
+   with patch.object(native.nstack,'build',return_value=source),patch.object(native.nstack,'registered_release',return_value=(r,{},leaf)):
+    result=native.apply(args);self.assertIn('Custom host guidance.',(custom/'AGENTS.md').read_text());self.assertIn('<!-- nstack:start -->',(custom/'AGENTS.md').read_text());self.assertEqual(fingerprint(default),before)
+    self.assertFalse(native.apply(args)['changed'])
+    args.codex_home=str(home/'different-codex')
+    with self.assertRaisesRegex(ValueError,'another Codex instructions path'):native.apply(args)
+   subprocess.run([str(state/'rollback.sh')],check=True,capture_output=True);self.assertEqual(fingerprint(custom/'AGENTS.md'),original);self.assertEqual(fingerprint(default),before)
  def test_complete_support_is_retained_but_only_the_selected_entry_is_exposed(self):
   with tempfile.TemporaryDirectory() as temp:
    base=pathlib.Path(temp).resolve();source,leaf,r=self.fixture(base);state=base/'state'

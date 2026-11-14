@@ -122,7 +122,16 @@ def frontmatter(entry):
                         quoted = re.match(r"^'((?:[^']|'')*)'(?:\s+#.*)?$", value)
                         value = quoted.group(1).replace("''", "'") if quoted else value.strip("'")
                     else:
-                        value = re.split(r'\s+#', value, maxsplit=1)[0].strip()
+                        # YAML also permits a plain scalar to start on the next
+                        # indented line, without a > or | block marker.
+                        plain = [re.split(r'\s+#', value, maxsplit=1)[0].strip()]
+                        for following in lines[i + 1:]:
+                            if following.strip() and not following[0].isspace():
+                                break
+                            if following.lstrip().startswith('#'):
+                                continue
+                            plain.append(re.split(r'\s+#', following.strip(), maxsplit=1)[0])
+                        value = re.sub(r'(?<=\S)\n(?=\S)', ' ', '\n'.join(plain)).strip()
                     if isinstance(value, str):
                         values[key] = value
                 return values, raw
@@ -143,10 +152,19 @@ def skill_record(entry, name, deployment, metadata=None):
     return record
 
 
-def inventory(state, skill_roots=None):
+def active_host(host=None):
+    if host is not None and host not in ('native', 'claude'):
+        raise ValueError('Discovery host must be native or claude')
+    return host or ('claude' if 'claude-releases' in Path(__file__).resolve().parts else 'native')
+
+
+def inventory(state, skill_roots=None, host=None):
     state = Path(state).expanduser().resolve()
+    host = active_host(host)
+    release_root = state / ('claude-releases' if host == 'claude' else 'native-releases')
+    skill_index = 'claude-skill-index.json' if host == 'claude' else 'native-skill-index.json'
     records, sources, seen = [], [], set()
-    for filename, kind in (("native-skill-index.json", "skill"),
+    for filename, kind in ((skill_index, "skill"),
                            ("native-tools/index.json", "runtime")):
         source = state / filename
         resolved = source.resolve()
@@ -169,7 +187,7 @@ def inventory(state, skill_roots=None):
                     resolved = entry.resolve()
                     if (entry.name != 'SKILL.md' or resolved.name != 'SKILL.md'
                             or not safe(resolved)
-                            or not resolved.is_relative_to((state / 'native-releases').resolve())):
+                            or not resolved.is_relative_to(release_root.resolve())):
                         continue
                     if resolved in seen:
                         continue
@@ -180,14 +198,20 @@ def inventory(state, skill_roots=None):
                     continue
             else:
                 record = {'kind': 'runtime', 'name': row['name']}
-                for key in ('description', 'activation', 'version', 'source_revision', 'native_mcp', 'binary', 'python', 'node', 'entrypoint', 'recipe', 'instructions'):
+                for key in ('description', 'activation', 'version', 'source_revision', 'native_mcp', 'binary', 'python', 'node', 'entrypoint', 'recipe', 'instructions', 'guide', 'documentation'):
                     if isinstance(row.get(key), str):
                         record[key] = row[key]
+                # These are inert invocation metadata, never executed here.
+                for key in ('command', 'invoke'):
+                    value = row.get(key)
+                    if isinstance(value, str) or (isinstance(value, list)
+                            and value and all(isinstance(part, str) for part in value)):
+                        record[key] = value
                 if isinstance(row.get('checks'), str):
                     record['recorded_checks'] = row['checks']
             records.append(record)
     roots = [Path(p).expanduser().absolute() for p in (skill_roots or [])]
-    allowed = [(state / 'native-releases').resolve()]
+    allowed = [release_root.resolve()]
     for root in roots:
         try:
             if safe(root) and safe(root.resolve()):
@@ -251,8 +275,8 @@ def inventory(state, skill_roots=None):
     return records, sources
 
 
-def search(state, terms, limit=8, skill_roots=None):
-    records, sources = inventory(Path(state), skill_roots=skill_roots)
+def search(state, terms, limit=8, skill_roots=None, host=None):
+    records, sources = inventory(Path(state), skill_roots=skill_roots, host=host)
     words = [word.casefold() for word in terms if word.strip()]
     ranked = []
     for record in records:
@@ -262,18 +286,26 @@ def search(state, terms, limit=8, skill_roots=None):
         if score:
             ranked.append((score, record))
     ranked.sort(key=lambda item: (-item[0], item[1]['kind'], item[1]['name']))
-    return {'matches': [row for _, row in ranked[:limit]], 'total_matches': len(ranked),
+    return {'matches': [row for _, row in ranked[:limit]], 'total_matches': len(ranked), 'host': active_host(host),
             'sources': sources,
             'scope': 'Fresh local metadata discovery only. A record or current file does not prove host '
                      'enablement, callability, authorization or successful execution. '
                      'Connected host tools and plugins require native discovery separately.'}
 
 
-def default_skill_roots(home=None, cwd=None):
+def default_skill_roots(home=None, cwd=None, host=None):
     home, cwd = Path(home or Path.home()), Path(cwd or Path.cwd())
-    roots = [home / '.agents/skills', home / '.codex/skills', home / '.config/opencode/skills']
+    claude = active_host(host) == 'claude'
+    current_user = home.resolve() == Path.home().resolve()
+    configured = os.environ.get('CLAUDE_CONFIG_DIR') if claude and current_user else None
+    claude_home = Path(configured).expanduser().absolute() if configured else home / '.claude'
+    configured_codex = os.environ.get('CODEX_HOME') if not claude and current_user else None
+    codex_home = Path(configured_codex).expanduser().absolute() if configured_codex else home / '.codex'
+    roots = ([claude_home / 'skills'] if claude else
+             [home / '.agents/skills', codex_home / 'skills', home / '.config/opencode/skills'])
     for folder in [cwd, *cwd.parents]:
-        roots.extend((folder / '.agents/skills', folder / '.opencode/skills'))
+        roots.extend([folder / '.claude/skills'] if claude else
+                     [folder / '.agents/skills', folder / '.opencode/skills'])
         if (folder / '.git').exists() or folder == home:
             break
     return list(dict.fromkeys(roots))
@@ -285,13 +317,14 @@ def main():
     parser.add_argument('--state', type=Path, help='Isolated index lookup unless --skills-root is also supplied')
     parser.add_argument('--skills-root', type=Path, action='append', help='Also enumerate this skill root; repeatable')
     parser.add_argument('--limit', type=int, default=8)
+    parser.add_argument('--host', choices=('native', 'claude'), help='Default follows this helper’s installed release; native covers Codex/OpenCode')
     args = parser.parse_args()
     if not 1 <= args.limit <= 30:
         parser.error('--limit must be between 1 and 30')
-    roots = args.skills_root if args.skills_root is not None else (None if args.state is not None else default_skill_roots())
+    roots = args.skills_root if args.skills_root is not None else (None if args.state is not None else default_skill_roots(host=args.host))
     state = args.state or Path(os.environ.get('NSTACK_STATE', Path.home() / 'Library/Application Support/nstack'))
     try:
-        print(json.dumps(search(state, args.terms, args.limit, skill_roots=roots), indent=2))
+        print(json.dumps(search(state, args.terms, args.limit, skill_roots=roots, host=args.host), indent=2))
     except (OSError, ValueError, RuntimeError) as error:
         parser.exit(2, str(error) + '\n')
 

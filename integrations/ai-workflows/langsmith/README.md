@@ -2,14 +2,14 @@
 
 LangSmith SDK 0.14.17 is already hash-pinned in the shared LangChain/LangGraph runtime. No extra image, daemon or Python environment is needed. This integration registers a discoverable runtime entry for Codex and OpenCode and supplies a local example. It does not install a replacement host harness or copy upstream skills into custom versions.
 
-After commissioning the existing AI workflow runtime:
+After commissioning the existing AI workflow runtime (`python3 recipes/ai_workflows.py install`):
 
 ```sh
 python3 recipes/langsmith.py install
 python3 recipes/langsmith.py check
 ```
 
-The check executes a real LangGraph node inside a LangSmith `traceable` workflow using `tracing_context(enabled="local")`. It saves the nested trace and deterministic evaluation to `langsmith-local.json` in its unique private run directory. The correct result must pass and a wrong result must fail. The existing wrapper enforces no network, no credentials, a read-only root, bounded resources and no host-project mount for this check. It makes no inference calls and uploads nothing. Repeat installation preserves the same runtime entry without changing unrelated records.
+The check executes a real LangGraph node inside a LangSmith `traceable` workflow using `tracing_context(enabled="local")`. It saves the nested trace and deterministic evaluation to `langsmith-local.json` in its unique private run directory. The correct result must pass and a wrong result must fail. The existing wrapper enforces no network, no credentials, a read-only root, bounded resources and no host-project mount for this check. It makes no inference calls and uploads nothing. Registration derives its identity from the verified runtime receipt. A new machine needs no prewritten tool index: registration adds LangSmith and a minimal LangChain/LangGraph discovery entry when absent. It preserves an existing matching, richer base record and unrelated entries, and refuses stale or duplicate records. Repeat installation leaves the index and journal unchanged.
 
 Use the SDK in an explicitly selected application project when inspecting nested execution, comparing outputs or building evaluations will help. Keep the application's code and test data in that project. The normal AI-workflow `run --project ... --script ...` interface remains offline, with global hosted tracing disabled.
 

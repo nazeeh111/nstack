@@ -1,0 +1,15 @@
+--- upstream/crates/setup/src/skill.md
++++ SKILL.md
+@@ -1,9 +1,11 @@
+ ---
+ name: craft-anything
+-description: Investigate how shipped software works (programs, apps, packages, firmware, web bundles) with evidence-backed answers through the Craft Anything MCP tools, keeping a durable brief, plan, hypotheses, findings and handoff in the project.
++description: Investigate authorized shipped programs, app packages and compiled artifacts with Craft Anything static-file analysis and evidence-backed findings; use when source inspection cannot answer how the shipped software works.
+ metadata:
+   version: "2"
+ ---
++
++> nstack native binding: read [NATIVE-BINDINGS.md](NATIVE-BINDINGS.md) before using this method. It defines this installation’s available static CLI route and takes precedence over the upstream setup and runtime instructions below.
+ 
+ # Craft Anything: evidence-first investigation
+ 

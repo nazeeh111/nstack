@@ -1,0 +1,114 @@
+{
+  "repository": "storytold/craft-anything",
+  "revision": "48a9c5a60ff83ff620f98661339be6281a7debc6",
+  "version": "0.6.1",
+  "source_path": "crates/setup/src/skill.md",
+  "license": "MIT OR Apache-2.0",
+  "runtime_recipe": "recipes/craft_anything.py",
+  "installation_adaptation": "Complete upstream investigation skill and its recovery reference retained unchanged; active entry narrows discovery to the available static route and adds one native binding link. Host setup, model/provider operations, rebuilds and runtime/device effects are not activated. Static analysis CLI is separately commissioned only after native assessment accepts its supported distribution.",
+  "upstream_files": {
+    "upstream/ORIGINAL-SKILL.md": {
+      "source_path": "crates/setup/src/skill.md",
+      "sha256": "67af4e9bd3658d277eb057789bdff0d60fbae8df94995d18e444546f1ae1f529",
+      "git_blob": "e444d68edd037ce6d0ae1e3c176a7cdc0b46dd4d",
+      "modification": "Unchanged bytes; relocated support where stated"
+    },
+    "upstream/references/recovery.md": {
+      "source_path": "crates/setup/src/skill_recovery.md",
+      "sha256": "f983ea2dfb9ea0706fcc49fe274964d79f84eda68cf0fc58e60541eb16376a3a",
+      "git_blob": "5bc0334953c396a4fac55f8e0c6ee604b8429206",
+      "modification": "Unchanged bytes; relocated support where stated"
+    },
+    "LICENSE-MIT": {
+      "source_path": "LICENSE-MIT",
+      "sha256": "777b5f0c65bd9c289cb234e32857b594745d5c76d613034870aa05bd00d32622",
+      "git_blob": "8e63994018e4058c76afe447b01e1a10120b7c58",
+      "modification": "Unchanged bytes; relocated support where stated"
+    },
+    "LICENSE-APACHE": {
+      "source_path": "LICENSE-APACHE",
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+      "git_blob": "f433b1a53f5b830a205fd2df78e2b34974656c7b",
+      "modification": "Unchanged bytes; relocated support where stated"
+    },
+    "NOTICE": {
+      "source_path": "NOTICE",
+      "sha256": "16958e6200bd35164e2cab1dbfa3120d48123163dadc2c5b72c6c26ffb493d82",
+      "git_blob": "e3f21dccaa114da8b04ee132ea0042b07ffe5b82",
+      "modification": "Unchanged bytes; relocated support where stated"
+    },
+    "upstream/ATTRIBUTION.md": {
+      "source_path": "ATTRIBUTION.md",
+      "sha256": "277ac4c86c7889bfe5dab9a7321954de1e7ace36311c4bd36008dd25cc4b0265",
+      "git_blob": "3a5f2037733eec197534a784a788d8058add07b3",
+      "modification": "Unchanged bytes; relocated support where stated"
+    },
+    "upstream/SECURITY.md": {
+      "source_path": "SECURITY.md",
+      "sha256": "afd613781cc613d89e18bbefe479e0212e49ce4dd4fa7b60fdc65b6352aa3e0a",
+      "git_blob": "7683ea47ee66fa45ee4950aa2ffc9ed7df015dcd",
+      "modification": "Unchanged bytes; relocated support where stated"
+    },
+    "upstream/docs/codex.md": {
+      "source_path": "docs/codex.md",
+      "sha256": "9f47af1ff734065937bd63efe94039c9bbf5860ce72e6cd57fc9d5d54ab58565",
+      "git_blob": "15800e8c56a31bb0ee469d8db040267c03dd84a0",
+      "modification": "Unchanged bytes; relocated support where stated"
+    },
+    "upstream/docs/tools.md": {
+      "source_path": "docs/tools.md",
+      "sha256": "c56d876e6a5d4c375235df6398f97163ce0f7ccb0e04a427d13716f5c83a6dfb",
+      "git_blob": "568c6c9c7d27696211a5032977dac1b6fb531c73",
+      "modification": "Unchanged bytes; relocated support where stated"
+    },
+    "upstream/docs/tool-status.md": {
+      "source_path": "docs/tool-status.md",
+      "sha256": "d6997693341e7f584c40afdb3b88657050937777d0aae17ac78fd4dceaef3e1e",
+      "git_blob": "ab2af500f491e1dc74e97c2fab3b39936a1a5e33",
+      "modification": "Unchanged bytes; relocated support where stated"
+    },
+    "upstream/docs/file-formats.md": {
+      "source_path": "docs/file-formats.md",
+      "sha256": "b0e820c7cea7f2cc4e7dc9cd19094460b386bea5894b7fb784cc770c23b4495a",
+      "git_blob": "43e286c6959d985cd6fc987f2f7f753146fa227e",
+      "modification": "Unchanged bytes; relocated support where stated"
+    },
+    "upstream/docs/licences.md": {
+      "source_path": "docs/licences.md",
+      "sha256": "3c7a302393d85548c515efe8b44c704f3af8aa7769ab421aaf1800a14a9b4e42",
+      "git_blob": "df55d90ee57cb86b5a58a1d02de8dda1ffe6c040",
+      "modification": "Unchanged bytes; relocated support where stated"
+    },
+    "upstream/docs/schemas/craft.schema.json": {
+      "source_path": "docs/schemas/craft.schema.json",
+      "sha256": "d923e4454996d189fb25f2588242490fc34b06ad12951c227631b835e55aa2ba",
+      "git_blob": "a5ee456719fb630a5db4c26da79399415b8f4718",
+      "modification": "Unchanged bytes; relocated support where stated"
+    },
+    "upstream/docs/schemas/mechanics.schema.json": {
+      "source_path": "docs/schemas/mechanics.schema.json",
+      "sha256": "826d9328f7c27c642ba0f27c3ab867662defef96d93c4c39ded7278f9a013640",
+      "git_blob": "dc35c7b1e01d9f7b88751f8e8067fca92d709bfe",
+      "modification": "Unchanged bytes; relocated support where stated"
+    },
+    "upstream/docs/schemas/self-test.schema.json": {
+      "source_path": "docs/schemas/self-test.schema.json",
+      "sha256": "ce94252320eb0ec12bf35603db76df73979b21a534ac239dba2896796ce6cd88",
+      "git_blob": "e0a7557219a1889579ca215d95a037fa6e95b755",
+      "modification": "Unchanged bytes; relocated support where stated"
+    },
+    "LICENSE": {
+      "source_path": "LICENSE-MIT",
+      "sha256": "777b5f0c65bd9c289cb234e32857b594745d5c76d613034870aa05bd00d32622",
+      "git_blob": "8e63994018e4058c76afe447b01e1a10120b7c58",
+      "modification": "Unchanged MIT option; conventional addon license entry"
+    }
+  },
+  "port_patch_sha256": "9b1966568b0ae2519ec25b6905caab6a6296411d0efd40035aa002a1224f5f78",
+  "native_files": [
+    "SKILL.md",
+    "NATIVE-BINDINGS.md",
+    "PORT.patch"
+  ],
+  "readiness": "Method/source integration; runtime acceptance recorded separately. Alpha software; no whole-toolset guarantee."
+}

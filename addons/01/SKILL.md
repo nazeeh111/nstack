@@ -11,7 +11,7 @@ Invoke once for the active session, including follow-ups and resumed work, until
 
 ## Select and adapt
 
-Derive relevant quality dimensions from the intended result, audience, current artifact and constraints. For “maximize every aspect,” inspect those dimensions and missing expertise, beyond literal task keywords. Build a fresh shortlist from current capability descriptions; consider complementary methods and combinations. Categories are temporary views, not fixed task-to-skill rules.
+Derive relevant quality dimensions from the intended result, audience, current artifact and constraints. For “maximize every aspect,” inspect those dimensions and missing expertise, beyond literal task keywords. Build a fresh shortlist from current capability descriptions; consider complementary methods by the bottleneck they address, including expertise outside the task’s usual discipline. Categories are temporary views, not fixed task-to-skill rules.
 
 For specialist work, choose relevant expertise before committing to the approach. Consider native tools, connected plugins/MCPs, installed skills, available frameworks and callable runtimes together. Read the selected complete SKILL.md and needed support, then apply its method and helpers.
 

@@ -1,0 +1,13 @@
+# Native binding for the retained upstream method
+
+Use the complete method in SKILL.md to investigate explicitly selected shipped artifacts when their bytes or recorded behavior answer the question. Ordinary source questions keep native search and semantic navigation. The untouched [original](upstream/ORIGINAL-SKILL.md), [recovery guide](upstream/references/recovery.md), [tool catalogue](upstream/docs/tools.md) and [tool readiness](upstream/docs/tool-status.md) remain inspectable.
+
+## This installation
+
+Discover an actually available native Craft Anything interface first. Otherwise use the recorded `runtime_recipe` in SOURCE.json or the installation-local runtime index. The portable recipe is `recipes/craft_anything.py` in the nstack checkout/durable code release. Read its help. It is a bounded static-file route; installing the skill does not commission an app, MCP server or engine.
+
+The static route reads only the explicitly chosen regular input file and writes a separate owned output directory. It uses fresh empty HOME/config, no inherited account/provider/proxy settings, no network and OS write confinement. It does not execute the target, start a rebuild harness, install engines/plugins, access accounts or change host setup. Authorization to inspect bytes permits the per-run static Deep mode for that target; it does not authorize device operations or execution. Honor native assessment and tool refusals. Do not remove quarantine, relax Gatekeeper or use a second route to evade a denial.
+
+Retain the upstream observe/derive/infer distinction, coverage bounds, prediction checks and actual evidence IDs. For a short question, use the existing task record and saved raw output; do not create a second mandatory brief/plan/hypothesis/handoff system. For a substantial resumed investigation using an available native MCP project, its project evidence functions can maintain that same task's durable state. A successful parser call does not establish runtime behavior or complete language/tool coverage.
+
+Upstream `doctor`, `setup`, `uninstall`, settings edits, global MCP registration, `--allow-run`, provider/asset-key helpers and automatic engine installs are outside this binding. Never read a real credential/configuration store to diagnose setup. Any future reconstruction, browser capture, debugging, runtime/device action, model call or external data transfer needs its own executable route and existing task authority. The current alpha Codex builder has no real-account build acceptance here. Ordinary website building and existing UI polish retain their established tools.

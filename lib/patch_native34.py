@@ -229,6 +229,9 @@ def materialize(source,out,s,c):
  for file in transformed:
   file.write_text(native_text(file.read_text(),s['candidate_id'],file,root))
  skill=leaf/'SKILL.md';text=skill.read_text();text=front(text,s['candidate_id'].lower()+'-'+name)
+ if s['candidate_id']=='P028':
+  from patch_pstack import entry_policy
+  text=entry_policy(text)
  skill.write_text(text)
  from closure import support,validate
  support(source,root,text_transform=lambda text,file:native_text(text,s['candidate_id'],file,root))

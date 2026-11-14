@@ -58,12 +58,26 @@ complementary expertise across disciplines, instead of mapping a task noun to
 one skill. Categories are temporary views of the current capabilities, not a
 maintained task-to-skill table or a requirement to use every available tool.
 
+The six selected pstack specialists are available for relevance-based automatic
+selection. Their upstream manual-only header is removed in the shared native
+adaptation; method bodies and original source remain intact. This avoids hiding
+useful concurrency, retry, performance and design methods on Claude. 01 itself
+and the broad untangle-codebase refactor retain explicit invocation.
+
 When native summaries are incomplete, its bundled scripts/capabilities.py
 refreshes bounded metadata from current user/project skill roots and searches
-nstack’s recorded skill/runtime indexes. Added skills can be found on the next
+nstack’s recorded skill/runtime indexes. It accepts plain multiline descriptions
+and retains inert runtime launch commands and instruction paths, so a matching
+result can be followed to its actual interface. Added skills can be found on the next
 lookup without regenerating a category file. It reads frontmatter rather than
 executing skill bodies, returns a small ranked result and records discovery
 provenance. Explicit isolated-state lookup does not read unrelated host skills.
+
+The installed helper selects its own host's index and roots: native releases
+use Codex/OpenCode entries, and derived Claude releases use Claude entries.
+`--host native` or `--host claude` can request an explicit metadata scope. This
+keeps coexisting variants from crowding the same result list; it does not grant
+tools from one host to another.
 
 This file discovery does not establish host enablement, permissions, current
 runtime callability or that a method actually ran. Native connected-tool/plugin

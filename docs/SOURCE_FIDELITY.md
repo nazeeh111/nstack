@@ -25,6 +25,13 @@ copying and unrequested external effects. These are explicit bindings or narrow
 patches, with originals retained. Unsupported capabilities remain unavailable;
 never silently weaken a source's required review or call an unrun workflow tested.
 
+The six selected pstack methods remove the upstream manual-only header to match
+the requested relevance-based selection; their method bodies are unchanged by
+that policy adjustment. 01 and untangle-codebase retain explicit invocation.
+The optional Claude view also removes headers that would preapprove tools,
+switch models or start hooks, while preserving complete method bodies and support.
+Its original entry bytes and exact host-policy delta are recorded separately.
+
 Reference-only and rejected sources remain outside skill discovery. Private or
 rights-restricted source packs remain outside public nstack Git. Native generated
 memories and the private knowledge vault are never publication inputs.

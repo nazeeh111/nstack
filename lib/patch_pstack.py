@@ -1,6 +1,14 @@
 """Native platform bindings for the complete selected pstack methods."""
 import re
 
+def entry_policy(text):
+ """Expose the six selected conditional methods to native skill selection."""
+ header, body = text.split('\n---\n', 1)
+ if len(re.findall(r'(?m)^disable-model-invocation: true$', header)) != 1:
+  raise ValueError('Pinned pstack invocation policy changed')
+ header = re.sub(r'(?m)^disable-model-invocation: true\n?', '', header).rstrip('\n')
+ return header+'\n---\n'+body
+
 def text_port(text,file):
  text=text.replace("<skill dir>/scripts/statechart SPEC.tla", 'node "<skill dir>/scripts/statechart.ts" SPEC.tla')
  text=text.replace('The first run installs TLC and Java with mise and needs the network.', 'Use existing compatible Node and Java11+. Set JAVA to the actual Java executable and TLA2TOOLS to the locally verified TLC1.7.4 jar (SHA256936a262061c914694dfd669a543be24573c45d5aa0ff20a8b96b23d01e050e88). No automatic dependency bootstrap occurs. Inspect custom view code before execution; bound model size and run time.')

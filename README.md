@@ -1,6 +1,7 @@
 # nstack
 
-A native-first Codex setup with 170 reviewed specialist skills available across
+A native-first Codex setup with optional Claude Code and OpenCode adapters, and
+170 reviewed base specialist skills available across
 ordinary projects. Skills use their actual names, retain their required support
 files, and load their full instructions when needed. Routine work stays native.
 Agent Reach, public repository documentation and five academic research skills
@@ -16,6 +17,14 @@ specific gate is implemented and satisfied. Consultation and excluded entries
 cannot become standalone installs.
 
 ## Install on a Mac
+
+For a new installation in Codex or Claude Code, use the
+[host-aware installation prompt](docs/ONBOARDING.md). The
+[Claude Code adapter](docs/CLAUDE.md) exposes the same selected methods through
+Claude's own discovery and permissions, without configuring Codex or copying
+accounts. [Craft Anything](docs/CRAFT_ANYTHING.md) is an optional local software
+analysis addition; its static tooling and rebuild workflows have distinct checks.
+
 
 Requirements: Git, Python 3.11 or later, and existing Codex subscription access.
 The pinned CLI bootstrap currently supports native Apple Silicon macOS only.
@@ -39,7 +48,7 @@ Choose optional additions in that single `native_setup.py` command rather than
 running successive replacements: `--academic-research`, `--ecc`, `--unslop`,
 `--maps-scraper`, `--untangle-codebase`, `--raea`, `--adaptive-routing`,
 `--llm-council`, `--roast-room`, `--council-of-high-intelligence`,
-`--cloudflare-security-audit`, `--strix` and `--skillspector`.
+`--cloudflare-security-audit`, `--strix`, `--skillspector` and `--craft-anything`.
 Academic sources are fetched privately under their noncommercial license.
 [Source fidelity](docs/SOURCE_FIDELITY.md) explains upstream methods, native ports and private source packs.
 When replacing a collection, include all additions you intend to retain.

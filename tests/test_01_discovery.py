@@ -94,6 +94,21 @@ class CurrentSkillDiscoveryTests(unittest.TestCase):
             entry.unlink()
             self.assertEqual(module.search(state, ['uncertainty'], skill_roots=[root])['matches'], [])
 
+    def test_plain_multiline_description_is_searchable_and_refreshes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp); state = base / 'state'; state.mkdir(); root = base / 'skills'
+            entry = self.skill(root, 'composition-patterns',
+                               '\n  React composition patterns that scale. Use when refactoring components with\n'
+                               '  boolean prop proliferation, building flexible component libraries, or\n'
+                               '  designing reusable APIs. Triggers on tasks involving compound components,\n'
+                               '  render props, context providers, or component architecture.')
+            found = module.search(state, ['compound', 'render props'], skill_roots=[root])
+            self.assertEqual(found['total_matches'], 1)
+            self.assertIn('compound components, render props', found['matches'][0]['description'])
+            entry.write_bytes(entry.read_bytes().replace(b'compound components', b'composable controls'))
+            self.assertEqual(module.search(state, ['compound'], skill_roots=[root])['total_matches'], 0)
+            self.assertEqual(module.search(state, ['composable'], skill_roots=[root])['total_matches'], 1)
+
     def test_literal_metadata_stops_before_body_and_nested_support_skills(self):
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp); root = base / 'skills'; state = base / 'state'; state.mkdir()
@@ -264,3 +279,76 @@ class DescriptorBoundaryTests(unittest.TestCase):
             with patch.object(module.os, 'supports_dir_fd', set()):
                 with self.assertRaisesRegex(ValueError, 'unavailable'):
                     module.frontmatter(entry)
+
+
+class ClaudeDiscoveryTests(unittest.TestCase):
+    def fixture(self, base):
+        state, home, project = base / 'state', base / 'home', base / 'project'
+        state.mkdir(); home.mkdir(); project.mkdir(); (project / '.git').mkdir()
+        for host, prefix in [('native', 'native'), ('claude', 'claude')]:
+            entry = state / (prefix + '-releases') / 'fixture/bundles/shared/SKILL.md'
+            entry.parent.mkdir(parents=True)
+            entry.write_text('---\nname: shared\ndescription: beacon ' + host + ' methods\n---\n')
+            (state / (prefix + '-skill-index.json')).write_text(json.dumps([{'name': 'shared', 'skill_path': str(entry)}]))
+            root = home / ('.claude/skills' if host == 'claude' else '.agents/skills')
+            root.mkdir(parents=True)
+            (root / 'shared').symlink_to(entry.parent)
+        (state / 'native-tools').mkdir()
+        (state / 'native-tools/index.json').write_text(json.dumps([{'name': 'beacon-runtime', 'command': '/example/bin'}]))
+        return state, home, project
+
+    def test_native_and_claude_default_scopes_do_not_crowd_each_other(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            state, home, project = self.fixture(Path(temporary).resolve())
+            for host in ('native', 'claude'):
+                roots = module.default_skill_roots(home, project, host=host)
+                result = module.search(state, ['beacon'], skill_roots=roots, host=host)
+                self.assertEqual(result['host'], host)
+                self.assertEqual(result['total_matches'], 2)
+                skills = [row for row in result['matches'] if row['kind'] == 'skill']
+                self.assertEqual(len(skills), 1)
+                self.assertEqual(skills[0]['description'], 'beacon ' + host + ' methods')
+            local = project / '.claude/skills/project/SKILL.md'
+            local.parent.mkdir(parents=True)
+            local.write_text('---\nname: project\ndescription: beacon project-only methods\n---\n')
+            found = module.search(state, ['project-only'], host='claude',
+                                  skill_roots=module.default_skill_roots(home, project, host='claude'))
+            self.assertEqual([row['name'] for row in found['matches']], ['project'])
+
+    def test_installed_claude_helper_infers_host_and_isolated_state_stays_isolated(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            state, home, project = self.fixture(Path(temporary).resolve())
+            script = state / 'claude-releases/helper/scripts/capabilities.py'
+            script.parent.mkdir(parents=True)
+            script.write_bytes(SCRIPT.read_bytes())
+            env = {**os.environ, 'HOME': str(home)}
+            command = [sys.executable, str(script), '--state', str(state), 'beacon']
+            result = json.loads(subprocess.check_output(command, cwd=project, env=env, text=True))
+            self.assertEqual(result['host'], 'claude')
+            self.assertEqual(len(result['sources']), 2)
+            self.assertTrue(all('claude-releases' in row['path'] for row in result['matches'] if row['kind'] == 'skill'))
+            explicit = json.loads(subprocess.check_output(command + ['--host', 'native'], cwd=project, env=env, text=True))
+            self.assertEqual(explicit['host'], 'native')
+            self.assertTrue(all('native-releases' in row['path'] for row in explicit['matches'] if row['kind'] == 'skill'))
+
+    def test_custom_config_env_only_changes_current_user_claude_root(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary).resolve()
+            current, other, configured, project = base / 'current', base / 'other', base / 'custom', base / 'project'
+            codex = base / 'custom-codex'
+            project.mkdir(); (project / '.git').mkdir()
+            with patch.object(Path, 'home', return_value=current), patch.dict(os.environ, {
+                    'CLAUDE_CONFIG_DIR': str(configured), 'CODEX_HOME': str(codex)}):
+                roots = module.default_skill_roots(current, project, host='claude')
+                self.assertEqual(roots[0], configured / 'skills')
+                self.assertNotIn(current / '.claude/skills', roots)
+                self.assertIn(project / '.claude/skills', roots)
+                foreign = module.default_skill_roots(other, project, host='claude')
+                self.assertEqual(foreign[0], other / '.claude/skills')
+                native = module.default_skill_roots(current, project, host='native')
+                self.assertNotIn(configured / 'skills', native)
+                self.assertIn(codex / 'skills', native)
+                self.assertNotIn(current / '.codex/skills', native)
+                foreign_native = module.default_skill_roots(other, project, host='native')
+                self.assertIn(other / '.codex/skills', foreign_native)
+                self.assertNotIn(codex / 'skills', foreign_native)
