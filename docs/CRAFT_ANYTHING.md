@@ -39,4 +39,38 @@ The standalone CLI ZIP was checksum/signature-valid but rejected by macOS `spctl
 
 Craft Anything is early alpha. A tiny synthetic Mach-O fixture checks only version/help, triage, a known function/string, an absent-string control, input preservation and OS containment. Runtime acceptance is recorded in the local `CHECK.json`; skill/source installation alone is not a passing runtime check. A parser result does not establish actual program behavior, safety of all possible inputs, completeness of decompilation or all-format/tool coverage.
 
-The broader upstream methods remain available for later explicitly scoped commissioning. Rebuilds launch a coding harness; the upstream Codex adapter has not established a real-account rebuild here. Global MCP setup can add a preapproval for `rebuild_start`. Browser/runtime/device operations, upstream doctor/setup/auth checks, credential helpers, remote plugins, generated assets and billed providers are outside this static route. Keep current host controls and obtain any genuinely missing scope before those effects. Do not infer them from installing this skill.
+## Broader workflows on demand
+
+The active skill also exposes upstream investigation, package/format analysis,
+evidence exports and reconstruction. The static recipe is one verified route;
+other routes are uncommissioned, rather than inherently paid or forbidden.
+Choose them for an actual artifact task and check the installed interface,
+source, target authority and outcome. Ordinary source/UI work retains its useful
+existing tools. The current coding host can use Craft MCP/exports and do the
+coding itself; a nested builder is optional.
+
+The native Codex backend can use its existing ChatGPT sign-in without an API key
+or a new provider. It inherits native CLI defaults, not necessarily a desktop
+chat's per-chat model/effort. Bind the user's actual selection through supported
+host options before a later build. It runs the selected CLI with workspace-write
+and project-local MCP; it adds a model argument only when explicitly configured.
+Its own consent and Codex's native controls still apply. The adapter conditionally
+preapproves only `rebuild_start` for that process, not every tool. Real-account
+reconstruction remains unverified here; the source-derived route is not acceptance.
+
+For a later scoped trial, preserve the host's own HOME/CODEX_HOME, use a fresh
+owned `CRAFT_ANYTHING_CONFIG_DIR` and `CRAFT_ANYTHING_NO_KEYCHAIN=1`, and omit asset
+provider variables/generation. The builder's inbox startup otherwise loads
+optional asset keys even with asset generation disabled. Explicitly select the
+native backend to avoid provider fallback. Do not run upstream global setup or
+add blanket approvals merely to make a trial work.
+
+Supported source-derived commands include a project-local restricted MCP server
+(`CLI --deep --project OWNED/investigation.cany mcp --restricted --all-tools`),
+`core-evidence-export` and `report`. Read the retained
+[Codex contract](../addons/craft-anything/upstream/docs/codex.md),
+[tool catalogue](../addons/craft-anything/upstream/docs/tools.md) and actual help
+before using them. Keep project evidence/output inside an owned task. Browser,
+runtime/device, external transfer and generated-code execution need their real
+task scope and checks. No global MCP, new account, model call or reconstruction
+is enabled merely by installing this skill.

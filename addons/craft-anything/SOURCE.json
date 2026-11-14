@@ -5,7 +5,7 @@
   "source_path": "crates/setup/src/skill.md",
   "license": "MIT OR Apache-2.0",
   "runtime_recipe": "recipes/craft_anything.py",
-  "installation_adaptation": "Complete upstream investigation skill and its recovery reference retained unchanged; active entry narrows discovery to the available static route and adds one native binding link. Host setup, model/provider operations, rebuilds and runtime/device effects are not activated. Static analysis CLI is separately commissioned only after native assessment accepts its supported distribution.",
+  "installation_adaptation": "Complete upstream investigation skill and recovery reference retained unchanged. Active discovery includes artifact investigation, evidence exports and reconstruction through existing coding agents; native bindings distinguish the commissioned static CLI from broader on-demand routes and prerequisites. No global MCP, provider/model change or rebuild is activated by installing the method.",
   "upstream_files": {
     "upstream/ORIGINAL-SKILL.md": {
       "source_path": "crates/setup/src/skill.md",
@@ -104,7 +104,7 @@
       "modification": "Unchanged MIT option; conventional addon license entry"
     }
   },
-  "port_patch_sha256": "9b1966568b0ae2519ec25b6905caab6a6296411d0efd40035aa002a1224f5f78",
+  "port_patch_sha256": "bfd3b655b3df4c54ee49c4f443f8e90e2de0f1ad5c59035bab1008551511389c",
   "native_files": [
     "SKILL.md",
     "NATIVE-BINDINGS.md",

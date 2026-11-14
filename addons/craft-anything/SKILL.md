@@ -1,11 +1,11 @@
 ---
 name: craft-anything
-description: Investigate authorized shipped programs, app packages and compiled artifacts with Craft Anything static-file analysis and evidence-backed findings; use when source inspection cannot answer how the shipped software works.
+description: Investigate or reconstruct authorized shipped software with Craft Anything's artifact analysis, evidence exports and existing coding agents; use source tools for ordinary source questions and check the selected route's readiness.
 metadata:
   version: "2"
 ---
 
-> nstack native binding: read [NATIVE-BINDINGS.md](NATIVE-BINDINGS.md) before using this method. It defines this installation’s available static CLI route and takes precedence over the upstream setup and runtime instructions below.
+> nstack native binding: read [NATIVE-BINDINGS.md](NATIVE-BINDINGS.md) for verified routes, on-demand capabilities and host prerequisites. The static CLI is commissioned; other upstream interfaces need their actual matching route and task acceptance.
 
 # Craft Anything: evidence-first investigation
 
