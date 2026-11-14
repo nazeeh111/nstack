@@ -75,6 +75,17 @@ was a delivery limitation, not an OS permission denial. Verify the expected
 state, refresh stale targets, and use an independently available supported
 operation when it helps. Actual permission and target denials remain binding.
 
+An existing official Cua Driver 0.49.3 also passed real background pixel
+arithmetic and AX Clear on Calculator, with inspected screenshots and an
+independent value check. Its Obsidian input remained unverified, so this is
+per-operation evidence. Where a standalone driver is useful, record its actual
+binary identity, matching complete guides and acceptance in the local runtime
+index. The selected 0.38 guide source does not identify a 0.49 executable. Use
+the live schema: a supplied capture ID is consumed by one pixel action; refresh
+the PNG between captured actions. A failed batch or UNKNOWN predicate needs
+actual readback. Use a temporary owned service/session and clean it up; no
+duplicate skill, global MCP registration or automatic downgrade is needed.
+
 ChromeDevTools stays an explicit per-task tool, not another globally active
 browser. Use isolated/headless profiles, no usage statistics/performance CrUX,
 and `--workspace /exact/authorized/project` for output. A denied output path is
