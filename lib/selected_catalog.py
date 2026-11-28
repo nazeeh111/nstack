@@ -72,6 +72,24 @@ def export_leaf(row, catalog, package, work, local):
     return package/leaf/"SKILL.md"
 
 
+def apply_proof_acceptance(entry, reference):
+    """Attach the selected Lean proof acceptance workflow to its upstream entry."""
+    destination = entry.parent/"references/proof-acceptance.md"
+    link = "[the proof acceptance workflow](references/proof-acceptance.md)"
+    upstream_verification = "Never declare a proof complete while `sorry` placeholders or error diagnostics remain."
+    guidance = f"Before accepting the final proof, follow {link}."
+    original = entry.read_text()
+    if original.count(upstream_verification) != 1:
+        raise ValueError("Review the upstream Lean verification section before attaching proof acceptance")
+    workflow = reference.read_bytes()
+    destination.parent.mkdir(exist_ok=True)
+    if not destination.exists() or destination.read_bytes() != workflow:
+        destination.write_bytes(workflow)
+    if guidance not in original:
+        entry.chmod(entry.stat().st_mode | 0o200)
+        entry.write_text(original.replace(upstream_verification, upstream_verification+"\n\n"+guidance))
+
+
 def stage(row, catalog, destination, local):
     destination = destination.parent.resolve()/destination.name
     if destination.exists() or destination.is_symlink():
@@ -128,6 +146,8 @@ def stage(row, catalog, destination, local):
         if adapted != raw:
             entry.chmod(entry.stat().st_mode | 0o200)
             entry.write_text(adapted)
+        if row.get("proof_acceptance"):
+            apply_proof_acceptance(entry, ROOT/relative(row["proof_acceptance"]))
         (prepared/"skills").mkdir()
         (prepared/"skills"/name).symlink_to(os.path.relpath(entry.parent, prepared/"skills"))
         digest = hashlib.sha256()

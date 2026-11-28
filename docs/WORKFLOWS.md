@@ -15,6 +15,8 @@ own verification. [Creative reframing](../addons/creative-reframing/SKILL.md)
 can improve a weak assumption or approach without adding a controller or
 requiring a brainstorming block in every answer.
 
+For a formal proof, enable `lean-proof` in the math project. Ask 01 for the mathematical result in your own words. The method checks the exported theorem against the intended statement and audits its assumptions. For consequential proofs, it also explains how to replay the export in Nanoda with an explicit axiom policy. [Proof acceptance](../registry/lean-proof/references/proof-acceptance.md)
+
 For RTL/FPGA work, `--fpga` adds the full engineering method, including width,
 arithmetic, handshake, CDC and timing considerations. The optional
 [Icarus/Yosys runtime](../integrations/fpga/README.md) provides CPU simulation and

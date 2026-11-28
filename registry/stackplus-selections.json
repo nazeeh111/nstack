@@ -1109,7 +1109,8 @@
         "revision": "7d3da0282e7b724b07620e45cf212f2e05e19334",
         "path": "skills/lean-proof"
       },
-      "leaf": "skills/lean-proof"
+      "leaf": "skills/lean-proof",
+      "proof_acceptance": "registry/lean-proof/references/proof-acceptance.md"
     },
     {
       "name": "literature-review",
